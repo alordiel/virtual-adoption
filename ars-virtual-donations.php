@@ -22,3 +22,4 @@ define( 'ARSVD_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'ARSVD_ABS', __DIR__ );
 
 require_once (ARSVD_ABS . '/include/cpt-animals.php');
+require_once (ARSVD_ABS . '/include/template-loader.php');

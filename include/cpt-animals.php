@@ -41,11 +41,11 @@ function ars_sheltered_animals() {
     'menu_position'       => null,
     'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' )
   );
-  register_post_type( 'lessons', $args );
+  register_post_type( 'sheltered-animal', $args );
 }
 
-add_action( 'init', 'learning_studio_lessons_taxonomy' );
-function learning_studio_lessons_taxonomy() {
+add_action( 'init', 'sheltered_animal_taxonomy' );
+function sheltered_animal_taxonomy() {
   register_taxonomy(
     'kind-of-animal',
     'sheltered-animal',
