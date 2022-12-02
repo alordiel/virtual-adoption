@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       ARS Virtual Donations
- * Plugin URI:        https://github.com/alordiel/ars-vistual-donation
+ * Plugin URI:        https://github.com/alordiel/ars-virtual-donations
  * Description:       This plugin creates the options add animals from the shelter for virtual donations
  * Version:           1.0.0
  * Requires at least: 5.9.1
@@ -10,7 +10,7 @@
  * Author URI:        https://timelinedev.com/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ars-virtal-donations
+ * Text Domain:       ars-virtual-donations
  * Domain Path:       /languages/
  */
 
@@ -19,5 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'ARSVD_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'ARSVD_ABS', __FILE__ );
+define( 'ARSVD_ABS', __DIR__ );
 
+require_once (ARSVD_ABS . '/include/cpt-animals.php');
