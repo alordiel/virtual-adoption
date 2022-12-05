@@ -103,7 +103,7 @@ function ars_sheltered_animal_details( $post ) {
 	?>
 	<p>
 		<label>
-			<?php _e( 'Age of the dog (years)', 'ars-sheltered-animals' ); ?>
+			<?php _e( 'Age of the animal (years)', 'ars-sheltered-animals' ); ?>
 			<input type="number" value="<?php echo $age; ?>" name="animals-age">
 		</label>
 	</p>
