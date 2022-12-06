@@ -53,51 +53,8 @@ $sex           = get_post_meta( $post_id, 'animals-sex', true );
 		<div class="single-animal-content">
 			<?php the_content(); ?>
 		</div>
-		<div class="how-it-works">
-				<div class="SectionSteppedProcess-module--step--d8ba3">
-					<div class="SectionSteppedProcess-module--stepordering--b7679">
-						<div class="SectionSteppedProcess-module--number--7bef8">
-							<div class="SectionSteppedProcess-module--numbertitle--5d1a0">1</div>
-							<div class="SectionSteppedProcess-module--numberborder--dd04b"></div>
-						</div>
-					</div>
-					<div class="SectionSteppedProcess-module--stepcontent--52101">
-						<h5	class="">Pick a dog to sponsor</h5>
-						<div class="">
-							<p>Choose a dog who reminds you	of a beloved pet, or a dog with a story that tugs simply at your heartstrings. Or why not sponsor both?</p>
-						</div>
-				</div>
-				<div class="SectionSteppedProcess-module--step--d8ba3">
-					<div class="SectionSteppedProcess-module--stepordering--b7679">
-						<div class="SectionSteppedProcess-module--number--7bef8">
-							<div class="SectionSteppedProcess-module--numbertitle--5d1a0">2</div>
-							<div class="SectionSteppedProcess-module--numberborder--dd04b"></div>
-						</div>
-					</div>
-					<div class="SectionSteppedProcess-module--stepcontent--52101">
-						<h5 class="">Set up your sponsorship</h5>
-						<div class="">
-							<p>Tell us how much you'd like to give and whether you want to give monthly or annually. For gift sponsorships we'll
-								just need to know who to send doggy updates too.</p>
-						</div>
-					</div>
-				</div>
-				<div class="SectionSteppedProcess-module--step--d8ba3">
-					<div class="SectionSteppedProcess-module--stepordering--b7679">
-						<div class="SectionSteppedProcess-module--number--7bef8">
-							<div class="SectionSteppedProcess-module--numbertitle--5d1a0">3</div>
-						</div>
-					</div>
-					<div class="SectionSteppedProcess-module--stepcontentbottom--5f0d1">
-						<h5 class="">Enjoy regular updates from your Sponsor Dog</h5>
-						<div class="SectionSteppedProcess-module--stepintrotext--cbfda">
-							<p>As well as the exclusive sponsorship welcome pack you, or your giftee, will receive updates from your chosen
-								sponsor dog three times a year.</p>
-						</div>
-					</div>
-				</div>
-		</div>
-	</div>
 
+	</div>
+	<?php include_once ('how-it-works.html'); ?>
 <?php
 get_footer();
