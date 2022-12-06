@@ -1,0 +1,39 @@
+.single-sheltered-animal {
+
+  .single-animal-infobox {
+    padding: 20px;
+    margin-bottom: 50px;
+    background-color: $rose-dust;
+    display: flex;
+    flex-wrap: wrap;
+
+    .sponsor-me-block {
+      text-align: left;
+    }
+  }
+
+  .animal-details {
+    margin-left: 30px;
+  }
+
+  .animal-additional-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background: $sand-dust;
+    padding: 10px;
+    border-radius: 5px;
+
+    span {
+      font-weight: bold;
+      padding-right: 5px;
+    }
+
+    svg {
+      width: 35px;
+      fill: $orange;
+      stroke: $orange;
+      margin-right: 10px;
+    }
+  }
+}

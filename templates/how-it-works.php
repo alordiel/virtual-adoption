@@ -1,5 +1,5 @@
 <div class="how-it-works">
-
+  <h3>How it works?</h3>
   <div class="single-step-wrapper">
     <div class="step-number-wrapper">
       <div class="number-and-line-wrap">
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="step-single-warapper">
+  <div class="single-step-wrapper">
     <div class="step-number-wrapper">
       <div class="number-and-line-wrap">
         <div class="number-circle">3</div>
