@@ -1,0 +1,18 @@
+{
+  "name": "assets-builder",
+  "version": "1.0.0",
+  "private": true,
+  "main": "js/index.js",
+  "description": "Builds the JS and CSS for the plugin's scripts and styles",
+  "scripts": {
+    "watch": "node index.js"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "sass": "^1.56.1",
+    "dart-sass": "^1.25.0",
+    "gulp-sass": "5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-minify": "^3.1.0"
+  }
+}
