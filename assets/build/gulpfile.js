@@ -5,11 +5,11 @@ const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 
 function buildStyles() {
-  return gulp.src('./sass/index.scss')
+  return gulp.src('./sass/sheltered-animals.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./css/sheltered-animals.css'));
+    .pipe(gulp.dest('./css'));
 }
 
 exports.buildStyles = buildStyles;
