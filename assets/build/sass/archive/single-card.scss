@@ -1,0 +1,51 @@
+.list-of-animals {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.animal-card {
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  margin: 0 10px 30px;
+  box-shadow: $border-shadow;
+
+  img {
+    border-radius: 10px;
+  }
+
+  .wave-cover {
+    margin-top: -38px;
+    margin-bottom: -7px
+  }
+
+  .animal-card-body {
+    padding: 0 10px 15px;
+    background-color: #fff;
+    border-radius: 10px;
+
+    .animal-card-title {
+      text-align: center;
+      margin: 0;
+      padding: 20px 0;
+    }
+
+    .sponsor-me-block {
+      margin: 15px auto;
+    }
+
+    .animal-card-text {
+
+    }
+
+    .animal-additional-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+
+      svg {
+        padding-right: 15px;
+      }
+    }
+  }
+}
