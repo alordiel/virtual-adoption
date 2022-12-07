@@ -13,9 +13,7 @@ get_header();
 			<h3>Choose your sponsor animal</h3>
 		</div>
 
-
 		<div class="list-of-animals">
-
 
 			<?php if ( have_posts() ) : ?>
 				<?php while ( have_posts() ) : the_post(); ?>
@@ -69,6 +67,8 @@ get_header();
 						</div>
 					</div>
 				<?php endwhile; ?>
+			<?php else: ?>
+				<div> No animals were found.</div>
 			<?php endif; ?>
 		</div>
 

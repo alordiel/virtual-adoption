@@ -3,9 +3,10 @@
  * Adds the styles and script files
  * */
 function ars_sheltered_animals_styles_and_scripts() {
-	if ( ! is_singular( 'sheltered-animal' ) && ! is_post_type_archive( 'sheltered-animal' ) ) {
+	if ( ! is_singular( 'sheltered-animal' ) && ! is_post_type_archive( 'sheltered-animal' ) && ! is_tax( 'kind-of-animal' ) ) {
 		return;
 	}
+
 	wp_enqueue_style(
 		'sheltered-animal',
 		ARSVD_URL . '/assets/build/css/sheltered-animals.css',

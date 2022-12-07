@@ -35,7 +35,7 @@ function ars_sheltered_animals() {
 		'query_var'           => true,
 		'rewrite'             => array( 'slug' => 'sheltered-animal' ),
 		'capability_type'     => 'post',
-		'exclude_from_search' => true,
+		'exclude_from_search' => false,
 		'has_archive'         => true,
 		'hierarchical'        => false,
 		'menu_position'       => null,

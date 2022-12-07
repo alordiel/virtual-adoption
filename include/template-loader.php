@@ -8,6 +8,10 @@ function ars_sheltered_animals_template_loader( $template ) {
 		return require_once (ARSVD_ABS . '/templates/archive-sheltered-animal.php');
 	}
 
+	if( is_tax( 'kind-of-animal' ) ) {
+		return require_once (ARSVD_ABS . '/templates/taxonomy-kind-of-animal.php');
+	}
+
 	return $template;
 }
 
