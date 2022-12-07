@@ -13,6 +13,8 @@ get_header();
 			<h3>Choose your sponsor animal</h3>
 		</div>
 
+		<?php require_once ('select-kind-of-animal.php'); ?>
+
 		<div class="list-of-animals">
 
 			<?php if ( have_posts() ) : ?>

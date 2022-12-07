@@ -1,0 +1,29 @@
+.list-of-kind-of-animals {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .kind-of-animal-logo {
+    margin: 10px 20px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 100px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+
+    a {
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $orange;
+    }
+
+    img {
+      width: 100px;
+    }
+  }
+}
