@@ -1,12 +1,14 @@
 <?php
-$selected      = 'all';
-$site_url      = site_url();
+$selected = 'all';
+$site_url = site_url();
+
+
 $category_link = [
-	'dogs' => $site_url . '/kind-of-animal/dogs',
+	'dogs'   => $site_url . '/kind-of-animal/dogs',
 	'horses' => $site_url . '/kind-of-animal/horses',
-	'cats' => $site_url . '/kind-of-animal/cats',
-	'other' => $site_url . '/kind-of-animal/farm-animals',
-	'all' => $site_url . '/kind-of-animal/',
+	'cats'   => $site_url . '/kind-of-animal/cats',
+	'other'  => $site_url . '/kind-of-animal/farm-animals',
+	'all'    => $site_url . '/sheltered-animal /',
 ];
 
 ?>
@@ -20,7 +22,8 @@ $category_link = [
 		</a>
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'horses' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['horses'] ?>" title="<?php _e( 'View all horses', 'ars-sheltered-animals' ); ?>">
+		<a href="<?php echo $category_link['horses'] ?>"
+		   title="<?php _e( 'View all horses', 'ars-sheltered-animals' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/horse.png"
 				 alt="<?php _e( 'Horses', 'ars-sheltered-animals' ) ?>">
 			<?php _e( 'Horses', 'ars-sheltered-animals' ) ?>
@@ -44,7 +47,8 @@ $category_link = [
 		</a>
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'all' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['all'] ?>" title="<?php _e( 'View all animals', 'ars-sheltered-animals' ); ?>">
+		<a href="<?php echo $category_link['all'] ?>"
+		   title="<?php _e( 'View all animals', 'ars-sheltered-animals' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/all.png"
 				 alt="<?php _e( 'All', 'ars-sheltered-animals' ) ?>">
 			<?php _e( 'All', 'ars-sheltered-animals' ) ?>
