@@ -10,10 +10,11 @@ get_header();
 				very best care possible. While most dogs find a loving new home within about six weeks, some dogs need a
 				little bit of extra care and love from us. Your support for these animals can make the world of
 				difference. </p>
-			<h3>Choose your sponsor animal</h3>
 		</div>
 
 		<?php require_once ('select-kind-of-animal.php'); ?>
+
+		<h3 class="text-center">Choose your sponsor animal</h3>
 
 		<div class="list-of-animals">
 
