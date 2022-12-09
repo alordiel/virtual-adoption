@@ -104,13 +104,13 @@ function ars_sheltered_animal_details( $post ) {
 	<p>
 		<label>
 			<?php _e( 'Age of the animal (years)', 'ars-sheltered-animals' ); ?>
-			<input type="number" value="<?php echo $age; ?>" name="animals-age">
+			<input type="text" value="<?php echo $age; ?>" name="animals-age">
 		</label>
 	</p>
 	<p>
 		<label>
 			<?php _e( 'Years spent in the shelter', 'ars-sheltered-animals' ); ?>
-			<input type="number" name="sheltered-years" value="<?php echo $sheltered_for ?>">
+			<input type="text" name="sheltered-years" value="<?php echo $sheltered_for ?>">
 		</label>
 	</p>
 	<p>
@@ -150,13 +150,13 @@ function ars_sheltered_animal_save_meta( $post_id ) {
 	}
 
 	if ( ! empty( $_POST['animals-age'] ) ) {
-		update_post_meta( $post_id, 'animals-age', (int) $_POST['animals-age'] );
+		update_post_meta( $post_id, 'animals-age', $_POST['animals-age'] );
 	} else {
 		delete_post_meta( $post_id, 'animals-age' );
 	}
 
 	if ( ! empty( $_POST['sheltered-years'] ) ) {
-		update_post_meta( $post_id, 'sheltered-years', (int) $_POST['sheltered-years'] );
+		update_post_meta( $post_id, 'sheltered-years', $_POST['sheltered-years'] );
 	} else {
 		delete_post_meta( $post_id, 'sheltered-years' );
 	}
