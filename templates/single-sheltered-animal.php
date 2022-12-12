@@ -1,8 +1,8 @@
 <?php
 get_header();
 $post_id       = get_the_ID();
-$age           = (int) get_post_meta( $post_id, 'animals-age', true );
-$sheltered_for = (int) get_post_meta( $post_id, 'sheltered-years', true );
+$age           = get_post_meta( $post_id, 'animals-age', true );
+$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 $sex           = get_post_meta( $post_id, 'animals-sex', true );
 ?>
 	<div class="sheltered-animal-container">
@@ -38,7 +38,7 @@ $sex           = get_post_meta( $post_id, 'animals-sex', true );
 							d="M28.754 14.815l-2.847-2.502V5.342a.78.78 0 00-.779-.782h-4.67a.78.78 0 00-.778.782v1.501l-4.158-3.65a.776.776 0 00-1.024 0L1.266 14.815a.784.784 0 00-.073 1.103.776.776 0 001.098.074l1.822-1.603v11.267A2.342 2.342 0 006.448 28h17.124a2.342 2.342 0 002.335-2.344V14.389l1.822 1.601a.776.776 0 001.078-.09.783.783 0 00-.053-1.085zM24.35 25.656a.78.78 0 01-.778.781H6.448a.78.78 0 01-.778-.781V13.022l9.34-8.204 9.34 8.204v12.634zm0-14.71L21.237 8.21V6.123h3.113v4.822zm-13.232 2.73v5.209c.003.718.582 1.3 1.297 1.302h5.188a1.304 1.304 0 001.299-1.302v-5.21a1.304 1.304 0 00-1.3-1.301h-5.187a1.303 1.303 0 00-1.297 1.302zm1.557.26h4.67v4.688h-4.67v-4.688z"
 							stroke-width="0.5" fill-rule="nonzero"></path>
 					</svg>
-					<span><?php _e( 'Years in the shelter', 'ars-sheltered-animals' ) ?>:</span> <?php echo $sheltered_for ?>
+					<span><?php _e( 'In the shelter', 'ars-sheltered-animals' ) ?>:</span> <?php echo $sheltered_for ?>
 					<br>
 				</div>
 				<div class="animal-additional-info">
