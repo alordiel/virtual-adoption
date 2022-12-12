@@ -8,7 +8,7 @@ get_header();
 				as little as 1.25 lv. per week* (5.00 BGN per month).</p>
 			<p>With around 100 animals in our care at any one time, your support helps us gives every single one the
 				very best care possible. While most dogs find a loving new home within about six weeks, some dogs need a
-				little bit of extra care and love from us. Your support for these animals can make the world of
+				little of extra care and love from us. Your support for these animals can make the world of
 				difference. </p>
 		</div>
 

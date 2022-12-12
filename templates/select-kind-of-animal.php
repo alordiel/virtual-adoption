@@ -2,19 +2,22 @@
 $selected = 'all';
 $site_url = site_url();
 
+if ( is_tax( 'kind-of-animal' )) {
+	$selected = ars_get_the_current_selected_kind();
+}
 
 $category_link = [
-	'dogs'   => $site_url . '/kind-of-animal/dogs',
-	'horses' => $site_url . '/kind-of-animal/horses',
-	'cats'   => $site_url . '/kind-of-animal/cats',
-	'other'  => $site_url . '/kind-of-animal/farm-animals',
-	'all'    => $site_url . '/sheltered-animal /',
+	'dogs'   => $site_url . '/kind-of-animal/dogs/',
+	'horses' => $site_url . '/kind-of-animal/horses/',
+	'cats'   => $site_url . '/kind-of-animal/cats/',
+	'other'  => $site_url . '/kind-of-animal/farm-animals/',
+	'all'    => $site_url . '/sheltered-animal/',
 ];
 
 ?>
 <div class="list-of-kind-of-animals">
 	<h3>Select category</h3>
-	<div class="kind-of-animal-logo <?php echo $selected === 'dog' ? 'selected-logo' : ''; ?>">
+	<div class="kind-of-animal-logo <?php echo $selected === 'dogs' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['dogs'] ?>" title="<?php _e( 'View all dogs', 'ars-sheltered-animals' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/dog.png"
 				 alt="<?php _e( 'Dogs', 'ars-sheltered-animals' ) ?>">
