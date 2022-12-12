@@ -24,6 +24,7 @@ get_header();
 					$post_id       = get_the_ID();
 					$age           = (int) get_post_meta( $post_id, 'animals-age', true );
 					$sheltered_for = (int) get_post_meta( $post_id, 'sheltered-years', true );
+					$animal_link   = get_the_permalink();
 					?>
 					<div class="animal-card" style="width: 18rem;">
 						<?php
@@ -42,7 +43,7 @@ get_header();
 							</div>
 						</div>
 						<div class="animal-card-body">
-							<h5 class="animal-card-title"><?php echo get_the_title(); ?></h5>
+							<h5 class="animal-card-title"><a href="<?php echo $animal_link; ?>"><?php echo get_the_title(); ?></a></h5>
 							<div class="animal-card-text">
 								<div class="animal-additional-info">
 									<svg viewBox="0 0 30 30" height="30px" width="30px"
