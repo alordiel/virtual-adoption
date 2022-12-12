@@ -25,3 +25,4 @@ require_once (ARSVD_ABS . '/include/cpt-animals.php');
 require_once (ARSVD_ABS . '/include/template-loader.php');
 require_once (ARSVD_ABS . '/include/functions.php');
 require_once (ARSVD_ABS . '/include/enqueue-scripts-and-styles.php');
+require_once (ARSVD_ABS . '/include/admin-settings.php');
