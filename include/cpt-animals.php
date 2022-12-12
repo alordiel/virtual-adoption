@@ -96,7 +96,7 @@ add_action( 'add_meta_boxes', 'ars_register_meta_boxes' );
  *
  * @param WP_Post $post Current post object.
  */
-function ars_sheltered_animal_details( $post ) {
+function ars_sheltered_animal_details( WP_Post $post ) {
 	$age           = (int) get_post_meta( $post->ID, 'animals-age', true );
 	$sheltered_for = (int) get_post_meta( $post->ID, 'sheltered-years', true );
 	$sex           = get_post_meta( $post->ID, 'animals-sex', true );
@@ -136,9 +136,9 @@ function ars_sheltered_animal_details( $post ) {
  *
  * @param int $post_id Post ID
  */
-function ars_sheltered_animal_save_meta( $post_id ) {
+function ars_sheltered_animal_save_meta( int $post_id ) {
 
-	$nonce_name = isset( $_POST['ars-power-dog'] ) ? $_POST['ars-power-dog'] : '';
+	$nonce_name = $_POST['ars-power-dog'] ?? '';
 	if ( ! wp_verify_nonce( $nonce_name, 'ars-shelter-animal-meta' ) ) {
 		return;
 	}

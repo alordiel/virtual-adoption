@@ -1,11 +1,11 @@
 <?php
 $selected = 'all';
 $site_url = site_url();
+$settings = get_option('ars-settings');
 
 if ( is_tax( 'kind-of-animal' )) {
-	$selected = ars_get_the_current_selected_kind();
+	$selected = ars_get_the_current_selected_kind($settings);
 }
-$settings = get_option('ars-settings');
 
 $category_link = [
 	'dogs'   => !empty($settings['animal-terms']['dogs'])  ? get_term_link($settings['animal-terms']['dogs']) : '',
@@ -41,7 +41,7 @@ $category_link = [
 			<?php _e( 'Cats', 'ars-sheltered-animals' ) ?>
 		</a>
 	</div>
-	<div class="kind-of-animal-logo <?php echo $selected === 'other' ? 'selected-logo' : ''; ?>">
+	<div class="kind-of-animal-logo <?php echo $selected === 'farm-animals' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['other'] ?>"
 		   title="<?php _e( 'View all farm animals', 'ars-sheltered-animals' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/farm.png"
