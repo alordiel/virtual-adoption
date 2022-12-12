@@ -5,13 +5,14 @@ $site_url = site_url();
 if ( is_tax( 'kind-of-animal' )) {
 	$selected = ars_get_the_current_selected_kind();
 }
+$settings = get_option('ars-settings');
 
 $category_link = [
-	'dogs'   => $site_url . '/kind-of-animal/dogs/',
-	'horses' => $site_url . '/kind-of-animal/horses/',
-	'cats'   => $site_url . '/kind-of-animal/cats/',
-	'other'  => $site_url . '/kind-of-animal/farm-animals/',
-	'all'    => $site_url . '/sheltered-animal/',
+	'dogs'   => !empty($settings['animal-terms']['dogs'])  ? get_term_link($settings['animal-terms']['dogs']) : '',
+	'horses' => !empty($settings['animal-terms']['horses'])  ? get_term_link($settings['animal-terms']['horses']) : '',
+	'cats'   => !empty($settings['animal-terms']['cats'])  ? get_term_link($settings['animal-terms']['cats']) : '',
+	'other'  => !empty($settings['animal-terms']['other'])  ? get_term_link($settings['animal-terms']['other']) : '',
+	'all'    => get_post_type_archive_link('sheltered-animal'),
 ];
 
 ?>
