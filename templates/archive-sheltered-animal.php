@@ -66,8 +66,8 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 								</div>
 							</div>
 							<div class="blue-button-wrap">
-								<a href="<?php echo $sponsor_link . '?aid=' . $post_id ?>" class="blue-button">Sponsor
-									me</a>
+								<a href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ) ?>"
+								   class="blue-button">Sponsor me</a>
 							</div>
 							<div class="blue-button-wrap">
 								<a href="<?php echo $animal_link ?>" class="blue-button">Read my story</a>

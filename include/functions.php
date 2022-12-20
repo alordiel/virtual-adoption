@@ -52,3 +52,26 @@ function ars_get_the_current_selected_kind( $settings ): string {
 function ars_is_wpml_activated(): bool {
 	return class_exists( 'SitePress' ) && function_exists( 'wpml_is_setup_complete' ) && wpml_is_setup_complete();
 }
+
+/**
+ * an obfuscation of the id
+ * @param int $id
+ *
+ * @return string
+ */
+function ars_encode_id(int $id):string {
+	return 's_' .  (($id * 3 ) + 13);
+}
+
+
+/**
+ * Deobfuscation of the id
+ *
+ * @param string $string
+ *
+ * @return int
+ */
+function ars_decode_id(string $string): int {
+	$int = (int) $string;
+	return ($int - 13) / 3;
+}
