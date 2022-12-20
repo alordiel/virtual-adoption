@@ -25,8 +25,8 @@ $sponsor_link  = get_permalink($ars_settings['checkout-page']);
 				<?php while ( have_posts() ) : the_post(); ?>
 					<?php
 					$post_id       = get_the_ID();
-					$age           = (int) get_post_meta( $post_id, 'animals-age', true );
-					$sheltered_for = (int) get_post_meta( $post_id, 'sheltered-years', true );
+					$age           = get_post_meta( $post_id, 'animals-age', true );
+					$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 					$animal_link   = get_the_permalink();
 					?>
 					<div class="animal-card" style="width: 18rem;">
