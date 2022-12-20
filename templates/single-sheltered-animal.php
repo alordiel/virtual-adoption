@@ -4,6 +4,8 @@ $post_id       = get_the_ID();
 $age           = get_post_meta( $post_id, 'animals-age', true );
 $sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 $sex           = get_post_meta( $post_id, 'animals-sex', true );
+$ars_settings  = get_option( 'ars-settings' );
+$sponsor_link  = get_permalink($ars_settings['checkout-page']);
 ?>
 	<div class="sheltered-animal-container">
 		<div class="single-animal-infobox">
@@ -51,7 +53,7 @@ $sex           = get_post_meta( $post_id, 'animals-sex', true );
 				</div>
 
 				<div class="blue-button-wrap">
-					<a class="blue-button" href="">Sponsor me</a>
+					<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . $post_id; ?>" title="Sponsor me">Sponsor me</a>
 				</div>
 			</div>
 		</div>
@@ -63,7 +65,7 @@ $sex           = get_post_meta( $post_id, 'animals-sex', true );
 		<?php include_once( 'how-it-works.php' ); ?>
 
 		<div class="blue-button-wrap">
-			<a class="blue-button" href="">Sponsor <?php echo get_the_title(); ?></a>
+			<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . $post_id; ?>" title="Sponsor me">Sponsor <?php echo get_the_title(); ?></a>
 		</div>
 	</div>
 <?php

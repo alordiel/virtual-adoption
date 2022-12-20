@@ -15,7 +15,7 @@ function dbga( $arg ) {
  */
 function ars_get_the_current_selected_kind( $settings ): string {
 
-	if ( is_post_type_archive( 'sheltered-animla' ) ) {
+	if ( is_post_type_archive( 'sheltered-animal' ) ) {
 		return 'all';
 	}
 
@@ -41,7 +41,6 @@ function ars_get_the_current_selected_kind( $settings ): string {
 			$sitepress->switch_lang($current_language);
 		}
 	}
-	dbga($term->slug);
 	return $term->slug;
 }
 
