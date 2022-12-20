@@ -65,8 +65,11 @@ get_header();
 									: <?php echo $sheltered_for ?><br>
 								</div>
 							</div>
-							<div class="sponsor-me-block">
-								<button type="button" class="sponsor-me">Sponsor me</button>
+							<div class="blue-button-wrap">
+								<a href="<?php echo $animal_link ?>" class="blue-button">Sponsor me</a>
+							</div>
+							<div class="blue-button-wrap">
+								<a href="<?php echo $animal_link ?>" class="blue-button">Read my story</a>
 							</div>
 						</div>
 					</div>

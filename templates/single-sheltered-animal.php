@@ -50,8 +50,8 @@ $sex           = get_post_meta( $post_id, 'animals-sex', true );
 					<span><?php _e( 'Sex', 'ars-sheltered-animals' ) ?>:</span> <?php echo $sex ?><br>
 				</div>
 
-				<div class="sponsor-me-block">
-					<button class="sponsor-me">Sponsor me</button>
+				<div class="blue-button-wrap">
+					<a class="blue-button" href="">Sponsor me</a>
 				</div>
 			</div>
 		</div>
@@ -62,8 +62,8 @@ $sex           = get_post_meta( $post_id, 'animals-sex', true );
 
 		<?php include_once( 'how-it-works.php' ); ?>
 
-		<div class="sponsor-me-block">
-			<button class="sponsor-me">Sponsor <?php echo get_the_title(); ?></button>
+		<div class="blue-button-wrap">
+			<a class="blue-button" href="">Sponsor <?php echo get_the_title(); ?></a>
 		</div>
 	</div>
 <?php
