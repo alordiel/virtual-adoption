@@ -1,8 +1,8 @@
 <?php
 get_header();
 
-$ars_settings  = get_option( 'ars-settings' );
-$sponsor_link  = get_permalink($ars_settings['checkout-page']);
+$ars_settings = get_option( 'ars-settings' );
+$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 ?>
 	<div class="sheltered-animals-archive">
 		<div class="intro-text">
@@ -15,7 +15,7 @@ $sponsor_link  = get_permalink($ars_settings['checkout-page']);
 				difference. </p>
 		</div>
 
-		<?php require_once ('select-kind-of-animal.php'); ?>
+		<?php require_once( 'select-kind-of-animal.php' ); ?>
 
 		<h3 class="text-center">Choose your sponsor animal</h3>
 
@@ -28,14 +28,10 @@ $sponsor_link  = get_permalink($ars_settings['checkout-page']);
 					$age           = get_post_meta( $post_id, 'animals-age', true );
 					$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 					$animal_link   = get_the_permalink();
+					$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
 					?>
 					<div class="animal-card" style="width: 18rem;">
-						<?php
-						the_post_thumbnail( 'large', [
-							'class' => 'animal-card-image',
-							'title' => get_the_title(),
-						] );
-						?>
+						<div class="animal-card-image" style="background-image: url('<?php echo $image; ?>')"></div>
 						<div class="wave-cover">
 							<div style="transform: rotate(0deg);">
 								<svg viewBox="0 0 1920 230" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +42,8 @@ $sponsor_link  = get_permalink($ars_settings['checkout-page']);
 							</div>
 						</div>
 						<div class="animal-card-body">
-							<h5 class="animal-card-title"><a href="<?php echo $animal_link; ?>"><?php echo get_the_title(); ?></a></h5>
+							<h5 class="animal-card-title"><a
+									href="<?php echo $animal_link; ?>"><?php echo get_the_title(); ?></a></h5>
 							<div class="animal-card-text">
 								<div class="animal-additional-info">
 									<svg viewBox="0 0 30 30" height="30px" width="30px"
@@ -69,7 +66,8 @@ $sponsor_link  = get_permalink($ars_settings['checkout-page']);
 								</div>
 							</div>
 							<div class="blue-button-wrap">
-								<a href="<?php echo $sponsor_link . '?aid=' . $post_id ?>" class="blue-button">Sponsor me</a>
+								<a href="<?php echo $sponsor_link . '?aid=' . $post_id ?>" class="blue-button">Sponsor
+									me</a>
 							</div>
 							<div class="blue-button-wrap">
 								<a href="<?php echo $animal_link ?>" class="blue-button">Read my story</a>
