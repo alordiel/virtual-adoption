@@ -36,11 +36,12 @@ function ars_get_the_current_selected_kind( $settings ): string {
 		if ( ! empty( $term_id ) ) {
 			global $sitepress;
 			$current_language = $sitepress->get_current_language();
-			$sitepress->switch_lang('en');
-			$term = get_term(  $term_id, 'kind-of-animal');
-			$sitepress->switch_lang($current_language);
+			$sitepress->switch_lang( 'en' );
+			$term = get_term( $term_id, 'kind-of-animal' );
+			$sitepress->switch_lang( $current_language );
 		}
 	}
+
 	return $term->slug;
 }
 
@@ -55,12 +56,13 @@ function ars_is_wpml_activated(): bool {
 
 /**
  * an obfuscation of the id
+ *
  * @param int $id
  *
  * @return string
  */
-function ars_encode_id(int $id):string {
-	return 's_' .  (($id * 3 ) + 13);
+function ars_encode_id( int $id ): string {
+	return 's_' . ( ( $id * 3 ) + 13 );
 }
 
 
@@ -71,7 +73,10 @@ function ars_encode_id(int $id):string {
  *
  * @return int
  */
-function ars_decode_id(string $string): int {
-	$int = (int) $string;
-	return ($int - 13) / 3;
+function ars_decode_id( string $string ): int {
+	$int = (int) str_replace( 's_', '', $string );
+	dbga( $string );
+	dbga( $int );
+
+	return ( $int - 13 ) / 3;
 }

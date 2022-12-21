@@ -33,7 +33,6 @@ if ( ! empty( $_GET['aid'] ) ) {
 					$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 					foreach ( $animals as $animal ) {
 						$post_id = $animal->ID;
-						dbga( $post_id );
 						$age           = get_post_meta( $post_id, 'animals-age', true );
 						$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 						$animal_link   = get_the_permalink( $post_id );
