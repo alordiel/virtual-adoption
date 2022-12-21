@@ -5,10 +5,12 @@
 /* Hide sidebar for all pages and fix the content width and position */
 .single-sheltered-animal .sidebar,
 .post-type-archive-sheltered-animal .sidebar,
-.tax-kind-of-animal .sidebar {
+.tax-kind-of-animal .sidebar,
+.page-template-donation-checkout .sidebar {
   display: none !important;
 }
 
+.page-template-donation-checkout .page_wrap > .page_content_wrap > .content_wrap > .content,
 .single-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .post-type-archive-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .tax-kind-of-animal .page_wrap > .page_content_wrap > .content_wrap > .content {

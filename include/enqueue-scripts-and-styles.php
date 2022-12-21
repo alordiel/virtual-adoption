@@ -3,7 +3,8 @@
  * Adds the styles and script files
  * */
 function ars_sheltered_animals_styles_and_scripts() {
-	if ( ! is_singular( 'sheltered-animal' ) && ! is_post_type_archive( 'sheltered-animal' ) && ! is_tax( 'kind-of-animal' ) ) {
+	$is_ars_page = ( get_page_template_slug() === 'donation-checkout.php' ) ;
+	if ( ! $is_ars_page && ! is_singular( 'sheltered-animal' ) && ! is_post_type_archive( 'sheltered-animal' ) && ! is_tax( 'kind-of-animal' ) ) {
 		return;
 	}
 
