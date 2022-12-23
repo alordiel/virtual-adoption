@@ -1,0 +1,29 @@
+.checkout-container {
+  display: flex;
+}
+
+.donation-amounts > label:not(.part-element) {
+  display: inline-block;
+  background-color: #f7a241;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+
+  > input {
+    display: none;
+  }
+}
+
+.custom-amount {
+  width: 100px;
+}
+
+.part-element.selected {
+  display: inline-block;
+}
+
+.part-element {
+  border: 3px solid #40a3e2;
+  padding: 11px 0 9px 5px;
+  border-right: 0;
+}

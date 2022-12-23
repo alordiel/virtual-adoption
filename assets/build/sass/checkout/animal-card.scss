@@ -1,0 +1,29 @@
+.checkout-donation-list {
+  width: 30%;
+  min-width: 320px;
+  margin-right: 30px;
+}
+
+.single-donation-block {
+  display: flex;
+  padding: 20px;
+  max-width: 320px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.3);
+
+  .animal-profile-imag {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    margin-right: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  h5 {
+    margin-top: 0;
+  }
+}
