@@ -50,8 +50,8 @@ if ( empty( $sheltered_animal ) ) {
 			</div>
 			<p><strong><?php _e( 'Details', 'ars-virtual-donation' ) ?></strong>:</p>
 			<div class="contact-details">
-				<?php if ( $user->ID !== 0 ) { ?>
-					<p><?php _e( 'In order to manage your subscription we need to create an account for you. Please fill in the details below.', 'ars-virtual-donation' ); ?></p>
+				<?php if ( $user->ID === 0 ) { ?>
+					<p><?php _e( 'We need to create an account for you so you can manage your monthly support. Please fill in the details below.', 'ars-virtual-donation' ); ?></p>
 					<p>
 						<label for="first-name">
 							<input id="first-name" name="first-name" type="text"
@@ -89,7 +89,7 @@ if ( empty( $sheltered_animal ) ) {
 						<?php _e( 'This will be a gift', 'ars-virtual-donations' ) ?>
 					</label>
 				</p>
-				<p>
+				<p class="email-gift">
 					<label for="email-gift">
 						<input id="email-gift" name="email-gift" type="email"
 							   placeholder="<?php _e( "Gift receiver's email", 'ars-virtual-donations' ); ?>">
@@ -107,11 +107,10 @@ if ( empty( $sheltered_animal ) ) {
 							<img src="<?php echo ARSVD_URL ?>/assets/images/payments/myPos.png" alt="myPos logo">
 						</label>
 						<div class="payment-box payment-method-mypos">
-							<div>
+							<span class="box-arrow"></span>
 								<p>Pay with your Credit Card</p>
 								<p>myPOS Checkout simplifies your online payments by managing the entire payment process
 									from the time your customers wish to make a purchase to the completed purchase.</p>
-							</div>
 						</div>
 					</li>
 					<li class="payment-method payment-method-paypal">

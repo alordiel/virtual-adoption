@@ -1,0 +1,35 @@
+.donation-payment-methods {
+  position: relative;
+
+  .payment-box {
+    background-color: #ebebeb;
+    padding: 10px 20px;
+    position: relative;
+
+    .box-arrow {
+      position: absolute;
+      top: -10px;
+      left: 25px;
+      width: 20px;
+      height: 20px;
+      background-color: #ebebeb;
+      transform: rotate(45deg);
+    }
+  }
+
+  .payment-methods {
+    li.payment-method {
+      list-style: none;
+
+      img {
+        width: 20px;
+      }
+
+      input[type="radio"]:checked + label::before {
+        text-indent: -3px;
+        color: #013185;
+      }
+    }
+
+  }
+}
