@@ -6,6 +6,7 @@
     padding: 10px 20px;
     position: relative;
     margin-top: 20px;
+    display: none;
 
     .box-arrow {
       position: absolute;
@@ -15,6 +16,12 @@
       height: 20px;
       background-color: #ebebeb;
       transform: rotate(45deg);
+    }
+  }
+
+  .payment-method-selected {
+    .payment-box {
+      display: block;
     }
   }
 

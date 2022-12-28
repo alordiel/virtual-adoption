@@ -26,7 +26,9 @@ if ( empty( $sheltered_animal ) ) {
 			<div class="donation-amounts">
 				<?php if ( ars_is_wpml_activated() && ICL_LANGUAGE_CODE === 'en' ) { ?>
 					<label for="eur5"><input id="eur5" value="5" type="radio" name="selected-amount">€ 5.00</label>
-					<label for="eur10" class="selected-donation-amount"><input id="eur10" checked value="10" type="radio" name="selected-amount">€ 10.00</label>
+					<label for="eur10" class="selected-donation-amount"><input id="eur10" checked value="10"
+																			   type="radio" name="selected-amount">€
+						10.00</label>
 					<label for="eur20"><input id="eur20" value="20" type="radio" name="selected-amount">€ 20.00</label>
 					<label for="custom-amount">
 						<input id="custom-amount" value="custom" type="radio" name="selected-amount">Custom
@@ -37,7 +39,8 @@ if ( empty( $sheltered_animal ) ) {
 					</label>
 				<?php } else { ?>
 					<label for="lv5"><input id="lv5" value="5" type="radio" name="selected-amount">5.00 лв.</label>
-					<label for="lv10" class="selected-donation-amount"><input id="lv10" checked value="10" type="radio" name="selected-amount">10.00 лв.</label>
+					<label for="lv10" class="selected-donation-amount"><input id="lv10" checked value="10" type="radio"
+																			  name="selected-amount">10.00 лв.</label>
 					<label for="lv20"><input id="lv20" value="20" type="radio" name="selected-amount">20.00 лв.</label>
 					<label for="custom-amount">
 						<input id=custom-amount"" value="custom" type="radio" name="selected-amount">Посочена сума
@@ -100,17 +103,17 @@ if ( empty( $sheltered_animal ) ) {
 			<div class="donation-payment-methods">
 				<h4><strong><?php _e( 'Payment methods', 'ars-virtual-donation' ) ?></strong>:</h4>
 				<ul class="payment-methods">
-					<li class="payment-method payment-method-mypos">
+					<li class="payment-method payment-method-mypos payment-method-selected">
 						<input id="payment-method-mypos" type="radio" class="input-radio" name="payment-method"
-							   value="stripe" checked="checked">
+							   value="mypos" checked>
 						<label for="payment-method-mypos"> Credit/Debit Card (myPos)
 							<img src="<?php echo ARSVD_URL ?>/assets/images/payments/myPos.png" alt="myPos logo">
 						</label>
 						<div class="payment-box payment-method-mypos">
 							<span class="box-arrow"></span>
-								<p>Pay with your Credit Card</p>
-								<p>myPOS Checkout simplifies your online payments by managing the entire payment process
-									from the time your customers wish to make a purchase to the completed purchase.</p>
+							<p>Pay with your Credit Card</p>
+							<p>myPOS Checkout simplifies your online payments by managing the entire payment process
+								from the time your customers wish to make a purchase to the completed purchase.</p>
 						</div>
 					</li>
 					<li class="payment-method payment-method-paypal">
@@ -120,7 +123,8 @@ if ( empty( $sheltered_animal ) ) {
 							PayPal <img src="<?php echo ARSVD_URL ?>/assets/images/payments/paypal.png"
 										alt="PayPal logo">
 						</label>
-						<div class="payment-box payment-method-paypal hidden">
+						<div class="payment-box payment-method-paypal">
+							<span class="box-arrow"></span>
 							<p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
 						</div>
 					</li>
