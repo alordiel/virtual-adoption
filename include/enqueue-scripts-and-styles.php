@@ -8,6 +8,14 @@ function ars_sheltered_animals_styles_and_scripts() {
 		return;
 	}
 
+	wp_enqueue_script(
+		'sheltered-animal',
+		ARSVD_URL . '/assets/build/js/index.js',
+		'',
+		filemtime( ARSVD_ABS . '/assets/build/js/index.js' ),
+		true,
+	);
+
 	wp_enqueue_style(
 		'sheltered-animal',
 		ARSVD_URL . '/assets/build/css/sheltered-animals.css',

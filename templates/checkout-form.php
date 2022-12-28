@@ -22,11 +22,11 @@ if ( empty( $sheltered_animal ) ) {
 			</div>
 		</div>
 		<div class="checkout-fields">
-			<p><strong><?php _e( 'Sponsorship amount per month', 'ars-virtual-donation' ) ?></strong>:</p>
+			<h4><strong><?php _e( 'Sponsorship amount per month', 'ars-virtual-donation' ) ?></strong></h4>
 			<div class="donation-amounts">
 				<?php if ( ars_is_wpml_activated() && ICL_LANGUAGE_CODE === 'en' ) { ?>
 					<label for="eur5"><input id="eur5" value="5" type="radio" name="selected-amount">€ 5.00</label>
-					<label for="eur10"><input id="eur10" value="10" type="radio" name="selected-amount">€ 10.00</label>
+					<label for="eur10" class="selected-donation-amount"><input id="eur10" checked value="10" type="radio" name="selected-amount">€ 10.00</label>
 					<label for="eur20"><input id="eur20" value="20" type="radio" name="selected-amount">€ 20.00</label>
 					<label for="custom-amount">
 						<input id="custom-amount" value="custom" type="radio" name="selected-amount">Custom
@@ -37,7 +37,7 @@ if ( empty( $sheltered_animal ) ) {
 					</label>
 				<?php } else { ?>
 					<label for="lv5"><input id="lv5" value="5" type="radio" name="selected-amount">5.00 лв.</label>
-					<label for="lv10"><input id="lv10" value="10" type="radio" name="selected-amount">10.00 лв.</label>
+					<label for="lv10" class="selected-donation-amount"><input id="lv10" checked value="10" type="radio" name="selected-amount">10.00 лв.</label>
 					<label for="lv20"><input id="lv20" value="20" type="radio" name="selected-amount">20.00 лв.</label>
 					<label for="custom-amount">
 						<input id=custom-amount"" value="custom" type="radio" name="selected-amount">Посочена сума
@@ -48,7 +48,7 @@ if ( empty( $sheltered_animal ) ) {
 					</label>
 				<?php } ?>
 			</div>
-			<p><strong><?php _e( 'Details', 'ars-virtual-donation' ) ?></strong>:</p>
+			<h4><strong><?php _e( 'Account Details', 'ars-virtual-donation' ) ?></strong></h4>
 			<div class="contact-details">
 				<?php if ( $user->ID === 0 ) { ?>
 					<p><?php _e( 'We need to create an account for you so you can manage your monthly support. Please fill in the details below.', 'ars-virtual-donation' ); ?></p>
@@ -98,7 +98,7 @@ if ( empty( $sheltered_animal ) ) {
 				</p>
 			</div>
 			<div class="donation-payment-methods">
-				<p><strong><?php _e( 'Payment methods', 'ars-virtual-donation' ) ?></strong>:</p>
+				<h4><strong><?php _e( 'Payment methods', 'ars-virtual-donation' ) ?></strong>:</h4>
 				<ul class="payment-methods">
 					<li class="payment-method payment-method-mypos">
 						<input id="payment-method-mypos" type="radio" class="input-radio" name="payment-method"

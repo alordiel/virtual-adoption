@@ -1,5 +1,13 @@
 .checkout-container {
   display: flex;
+
+  h4 {
+    margin-top: 0;
+  }
+}
+
+.donation-amounts {
+  margin-bottom: 40px;
 }
 
 .donation-amounts > label:not(.part-element) {
@@ -8,6 +16,11 @@
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
+
+  &.selected-donation-amount {
+    background-color: $sea-blue;
+    color: #fff;
+  }
 
   > input {
     display: none;
