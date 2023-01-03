@@ -33,6 +33,7 @@ function ars_admin_settings_page() {
 		$ars_settings['animal-terms']['horses'] = (int) $_POST['horses-term-id'];
 		$ars_settings['animal-terms']['other']  = (int) $_POST['farm-animals-term-id'];
 		$ars_settings['checkout-page']          = (int) $_POST['checkout-donation'];
+		$ars_settings['thank-you-page']         = (int) $_POST['thank-you-page'];
 
 		update_option( 'ars-settings', $ars_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
@@ -48,17 +49,19 @@ function ars_admin_settings_page() {
 		'posts_per_page' => - 1,
 	] );
 
-	$dogs_tax_id      = ! empty( $ars_settings['animal-terms']['dogs'] ) ? (int) $ars_settings['animal-terms']['dogs'] : 0;
-	$cats_tax_id      = ! empty( $ars_settings['animal-terms']['cats'] ) ? (int) $ars_settings['animal-terms']['cats'] : 0;
-	$horses_tax_id    = ! empty( $ars_settings['animal-terms']['horses'] ) ? (int) $ars_settings['animal-terms']['horses'] : 0;
-	$other_tax_id     = ! empty( $ars_settings['animal-terms']['other'] ) ? (int) $ars_settings['animal-terms']['other'] : 0;
-	$checkout_page_id = ! empty( $ars_settings['checkout-page'] ) ? (int) $ars_settings['checkout-page'] : 0;
+	$dogs_tax_id       = ! empty( $ars_settings['animal-terms']['dogs'] ) ? (int) $ars_settings['animal-terms']['dogs'] : 0;
+	$cats_tax_id       = ! empty( $ars_settings['animal-terms']['cats'] ) ? (int) $ars_settings['animal-terms']['cats'] : 0;
+	$horses_tax_id     = ! empty( $ars_settings['animal-terms']['horses'] ) ? (int) $ars_settings['animal-terms']['horses'] : 0;
+	$other_tax_id      = ! empty( $ars_settings['animal-terms']['other'] ) ? (int) $ars_settings['animal-terms']['other'] : 0;
+	$checkout_page_id  = ! empty( $ars_settings['checkout-page'] ) ? $ars_settings['checkout-page'] : 0;
+	$thank_you_page_id = ! empty( $ars_settings['thank-you-page'] ) ? $ars_settings['thank-you-page'] : 0;
 
 	$dogs_options   = ars_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
 	$cats_options   = ars_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
 	$horses_options = ars_get_selected_options_for_the_admin_settings( $horses_tax_id, $terms );
 	$farm_options   = ars_get_selected_options_for_the_admin_settings( $other_tax_id, $terms );
 	$checkout_page  = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $checkout_page_id );
+	$thank_you_page = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
 
 
 	?>
@@ -66,6 +69,7 @@ function ars_admin_settings_page() {
 		<p><?php _e( 'Set the categories for the animals', 'ars-virtual-donations' ) ?></p>
 		<table class="form-table">
 			<tbody>
+			<!--Dogs categories-->
 			<tr>
 				<th>
 					<label for="dogs-term-id">
@@ -78,7 +82,7 @@ function ars_admin_settings_page() {
 					</select>
 				</td>
 			</tr>
-
+			<!--Cats categories-->
 			<tr class="form-field">
 				<th>
 					<label for="cats-term-id">
@@ -91,7 +95,7 @@ function ars_admin_settings_page() {
 					</select>
 				</td>
 			</tr>
-
+			<!--Horses Category-->
 			<tr class="form-field">
 				<th>
 					<label for="horses-term-id">
@@ -104,7 +108,7 @@ function ars_admin_settings_page() {
 					</select>
 				</td>
 			</tr>
-
+			<!--Farm animals category-->
 			<tr class="form-field">
 				<th>
 					<label
@@ -118,7 +122,7 @@ function ars_admin_settings_page() {
 					</select>
 				</td>
 			</tr>
-
+			<!--Donation Checkout page-->
 			<tr class="form-field">
 				<th>
 					<label
@@ -129,6 +133,20 @@ function ars_admin_settings_page() {
 				<td>
 					<select name="checkout-donation" id="checkout-donation">
 						<?php echo $checkout_page ?>
+					</select>
+				</td>
+			</tr>
+			<!--Thank you Page -->
+			<tr class="form-field">
+				<th>
+					<label
+						for="thank-you-page">
+						<?php _e( "Thank you page", "ars-virtual-donations" ); ?>
+					</label>
+				</th>
+				<td>
+					<select name="thank-you-page" id="thank-you-page">
+						<?php echo $thank_you_page ?>
 					</select>
 				</td>
 			</tr>
