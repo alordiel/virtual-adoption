@@ -34,7 +34,7 @@ if ( empty( $sheltered_animal ) ) {
 						<input id="custom-amount" value="custom" type="radio" name="selected-amount">Custom
 					</label>
 					<label class="part-element" for="selected-custom-amount">€
-						<input id="selected-custom-amount" class="custom-amount" value="5" type="number"
+						<input id="selected-custom-amount" class="custom-amount" value="15" type="number"
 							   name="selected-custom-amount" min="5">
 					</label>
 				<?php } else { ?>
