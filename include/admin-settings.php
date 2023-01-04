@@ -136,7 +136,7 @@ function ars_admin_settings_page() {
 					</select>
 				</td>
 			</tr>
-			<!--Thank you Page -->
+			<!-- "Thank you" Page -->
 			<tr class="form-field">
 				<th>
 					<label
