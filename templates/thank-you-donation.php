@@ -6,4 +6,4 @@ get_header();
 ?>
 <h2>Thank you for your donation</h2>
 <?php
-get_header();
+get_footer();
