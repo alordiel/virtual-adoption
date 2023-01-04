@@ -22,7 +22,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 				include_once 'no-animals-found.php';
 			} else {
 				?>
-				<div class="intro-tex">
+				<div class="intro-text">
 					<h2>Select an animal to sponsor</h2>
 					<p>It couldn't be easier to sponsor a dog in our care, or to gift a sponsorship to a friend or loved
 						as little as 1.25 lv. per week* (5.00 BGN per month).</p>
