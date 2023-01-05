@@ -19,7 +19,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 				'suppress_filters' => false,
 			] );
 			if ( empty( $animals ) ) {
-				include_once 'no-animals-found.php';
+				include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
 			} else {
 				?>
 				<div class="intro-text">
@@ -38,7 +38,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 						$animal_link   = get_the_permalink( $post_id );
 						$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
 						$the_title     = $animal->post_title;
-						include 'animal-card.php';
+						include( ARSVD_ABS . '/templates/parts/animal-card.php');
 					}
 					?>
 				</div>

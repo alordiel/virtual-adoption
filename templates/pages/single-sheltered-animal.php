@@ -63,7 +63,7 @@ $sponsor_link  = get_permalink( $ars_settings['checkout-page'] );
 		</div>
 
 
-		<?php include_once( 'how-it-works.php' ); ?>
+		<?php include_once( ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
 
 		<div class="blue-button-wrap">
 			<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ); ?>"

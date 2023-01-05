@@ -15,7 +15,7 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 				difference. </p>
 		</div>
 
-		<?php require_once( 'select-kind-of-animal.php' ); ?>
+		<?php require_once( ARSVD_ABS . '/templates/parts/select-kind-of-animal.php' ); ?>
 
 		<h3 class="text-center">Choose your sponsor animal</h3>
 
@@ -32,12 +32,12 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 					include 'animal-card.php';
 				endwhile;
 			else:
-				include_once 'no-animals-found.php';
+				include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
 			endif;
 			?>
 		</div>
 
-		<?php include_once( 'how-it-works.php' ); ?>
+		<?php include_once(  ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
 
 	</div>
 <?php
