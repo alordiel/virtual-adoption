@@ -75,8 +75,49 @@ function ars_encode_id( int $id ): string {
  */
 function ars_decode_id( string $string ): int {
 	$int = (int) str_replace( 's_', '', $string );
-	dbga( $string );
-	dbga( $int );
 
 	return ( $int - 13 ) / 3;
+}
+
+/**
+ * Create
+ *
+ * @param string $page_type
+ *
+ * @return void
+ */
+function ars_create_template_page( string $page_type ) {
+	$templates = [
+		'checkout-page'         => [
+			'title'    => __( 'Donation checkout', 'ars-virtual-donations' ),
+			'template' => 'ars-donation-checkout.php',
+			'slug'     => 'donations-checkout',
+		],
+		'thank-you-page'        => [
+			'title'    => __( 'Virtual adopt - Thank you', 'ars-virtual-donations' ),
+			'template' => 'ars-thank-you-donation.php',
+			'slug'     => 'ars-thank-you',
+		],
+		'my-subscriptions-page' => [
+			'title'    => __( 'Manage my adopted animals', 'ars-virtual-donations' ),
+			'template' => 'ars-my-subscriptions.php',
+			'slug'     => 'ars-my-donations',
+		],
+	];
+
+	$user_id      = get_current_user_id();
+	$current_page = $templates[ $page_type ];
+	$page_id      = wp_insert_post( [
+		'post_type'      => 'page',
+		'post_status'    => 'publish',
+		'post_title'     => $current_page['title'],
+		'post_author'    => $user_id,
+		'comment_status' => 'closed',
+		'page_template'  => $current_page['template'],
+		'post_name'      => $current_page['slug'],
+	] );
+
+	$ars_settings               = get_option( 'ars-settings' );
+	$ars_settings[ $page_type ] = $page_id;
+	update_option( 'ars-settings', $ars_settings );
 }

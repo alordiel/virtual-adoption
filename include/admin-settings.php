@@ -34,6 +34,7 @@ function ars_admin_settings_page() {
 		$ars_settings['animal-terms']['other']  = (int) $_POST['farm-animals-term-id'];
 		$ars_settings['checkout-page']          = (int) $_POST['checkout-donation'];
 		$ars_settings['thank-you-page']         = (int) $_POST['thank-you-page'];
+		$ars_settings['my-subscriptions-page']  = (int) $_POST['my-subscriptions-page'];
 
 		update_option( 'ars-settings', $ars_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
@@ -49,21 +50,21 @@ function ars_admin_settings_page() {
 		'posts_per_page' => - 1,
 	] );
 
-	$dogs_tax_id       = ! empty( $ars_settings['animal-terms']['dogs'] ) ? (int) $ars_settings['animal-terms']['dogs'] : 0;
-	$cats_tax_id       = ! empty( $ars_settings['animal-terms']['cats'] ) ? (int) $ars_settings['animal-terms']['cats'] : 0;
-	$horses_tax_id     = ! empty( $ars_settings['animal-terms']['horses'] ) ? (int) $ars_settings['animal-terms']['horses'] : 0;
-	$other_tax_id      = ! empty( $ars_settings['animal-terms']['other'] ) ? (int) $ars_settings['animal-terms']['other'] : 0;
-	$checkout_page_id  = ! empty( $ars_settings['checkout-page'] ) ? $ars_settings['checkout-page'] : 0;
-	$thank_you_page_id = ! empty( $ars_settings['thank-you-page'] ) ? $ars_settings['thank-you-page'] : 0;
+	$dogs_tax_id         = ! empty( $ars_settings['animal-terms']['dogs'] ) ? (int) $ars_settings['animal-terms']['dogs'] : 0;
+	$cats_tax_id         = ! empty( $ars_settings['animal-terms']['cats'] ) ? (int) $ars_settings['animal-terms']['cats'] : 0;
+	$horses_tax_id       = ! empty( $ars_settings['animal-terms']['horses'] ) ? (int) $ars_settings['animal-terms']['horses'] : 0;
+	$other_tax_id        = ! empty( $ars_settings['animal-terms']['other'] ) ? (int) $ars_settings['animal-terms']['other'] : 0;
+	$checkout_page_id    = ! empty( $ars_settings['checkout-page'] ) ? $ars_settings['checkout-page'] : 0;
+	$thank_you_page_id   = ! empty( $ars_settings['thank-you-page'] ) ? $ars_settings['thank-you-page'] : 0;
+	$my_subscriptions_id = ! empty( $ars_settings['my-subscriptions-page'] ) ? $ars_settings['my-subscriptions-page'] : 0;
 
-	$dogs_options   = ars_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
-	$cats_options   = ars_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
-	$horses_options = ars_get_selected_options_for_the_admin_settings( $horses_tax_id, $terms );
-	$farm_options   = ars_get_selected_options_for_the_admin_settings( $other_tax_id, $terms );
-	$checkout_page  = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $checkout_page_id );
-	$thank_you_page = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
-
-
+	$dogs_options          = ars_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
+	$cats_options          = ars_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
+	$horses_options        = ars_get_selected_options_for_the_admin_settings( $horses_tax_id, $terms );
+	$farm_options          = ars_get_selected_options_for_the_admin_settings( $other_tax_id, $terms );
+	$checkout_page         = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $checkout_page_id );
+	$thank_you_page        = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
+	$my_subscriptions_page = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
 	?>
 	<form name="form1" method="post" action="">
 		<p><?php _e( 'Set the categories for the animals', 'ars-virtual-donations' ) ?></p>
@@ -83,7 +84,7 @@ function ars_admin_settings_page() {
 				</td>
 			</tr>
 			<!--Cats categories-->
-			<tr class="form-field">
+			<tr>
 				<th>
 					<label for="cats-term-id">
 						<?php _e( "Cats Category", "ars-virtual-donations" ); ?>
@@ -96,7 +97,7 @@ function ars_admin_settings_page() {
 				</td>
 			</tr>
 			<!--Horses Category-->
-			<tr class="form-field">
+			<tr>
 				<th>
 					<label for="horses-term-id">
 						<?php _e( "Horses Category", "ars-virtual-donations" ); ?>
@@ -109,7 +110,7 @@ function ars_admin_settings_page() {
 				</td>
 			</tr>
 			<!--Farm animals category-->
-			<tr class="form-field">
+			<tr>
 				<th>
 					<label
 						for="farm-animals-term-id">
@@ -123,7 +124,7 @@ function ars_admin_settings_page() {
 				</td>
 			</tr>
 			<!--Donation Checkout page-->
-			<tr class="form-field">
+			<tr>
 				<th>
 					<label
 						for="checkout-donation">
@@ -137,7 +138,7 @@ function ars_admin_settings_page() {
 				</td>
 			</tr>
 			<!-- "Thank you" Page -->
-			<tr class="form-field">
+			<tr>
 				<th>
 					<label
 						for="thank-you-page">
@@ -147,6 +148,20 @@ function ars_admin_settings_page() {
 				<td>
 					<select name="thank-you-page" id="thank-you-page">
 						<?php echo $thank_you_page ?>
+					</select>
+				</td>
+			</tr>
+			<!-- "My Subscriptions" Page -->
+			<tr>
+				<th>
+					<label
+						for="my-subscriptions-page">
+						<?php _e( "Manage subscriptions page", "ars-virtual-donations" ); ?>
+					</label>
+				</th>
+				<td>
+					<select name="my-subscriptions-page" id="my-subscriptions-page">
+						<?php echo $my_subscriptions_page ?>
 					</select>
 				</td>
 			</tr>
