@@ -11,7 +11,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 	<div class="sheltered-animals-archive">
 		<?php
 		if ( $post_id !== 0 ) {
-			include_once 'checkout-form.php';
+			include_once( ARSVD_ABS . '/templates/parts/checkout-form.php' );
 		} else {
 			$animals = get_posts( [
 				'post_type'        => 'sheltered-animal',

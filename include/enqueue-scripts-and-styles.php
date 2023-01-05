@@ -16,7 +16,7 @@ function ars_sheltered_animals_styles_and_scripts() {
 	wp_enqueue_script(
 		'sheltered-animal',
 		ARSVD_URL . '/assets/build/js/index.js',
-		'',
+		'jquery',
 		filemtime( ARSVD_ABS . '/assets/build/js/index.js' ),
 		true,
 	);
@@ -27,6 +27,16 @@ function ars_sheltered_animals_styles_and_scripts() {
 		'',
 		filemtime( ARSVD_ABS . '/assets/build/css/sheltered-animals.css' )
 	);
+
+	if ( $template_page === 'ars-my-subscriptions.php' ) {
+		wp_enqueue_script(
+			'ars-vue-js',
+			ARSVD_URL . '/assets/inc/vue.min.js',
+			'jquery',
+			filemtime( ARSVD_ABS . '/assets/inc/vue.min.js' ),
+			true,
+		);
+	}
 
 }
 

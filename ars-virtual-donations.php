@@ -27,6 +27,7 @@ require_once( ARSVD_ABS . '/include/functions.php' );
 require_once( ARSVD_ABS . '/include/wordpress.php' );
 require_once( ARSVD_ABS . '/include/enqueue-scripts-and-styles.php' );
 require_once( ARSVD_ABS . '/include/admin-settings.php' );
+require_once( ARSVD_ABS . '/include/ajax.php' );
 
 
 /**

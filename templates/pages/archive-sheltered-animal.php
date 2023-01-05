@@ -29,7 +29,7 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 					$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 					$animal_link   = get_the_permalink();
 					$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
-					include 'animal-card.php';
+					include( ARSVD_ABS . '/templates/parts/animal-card.php' );
 				endwhile;
 			else:
 				include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
