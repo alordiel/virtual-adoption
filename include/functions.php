@@ -122,9 +122,20 @@ function ars_create_template_page( string $page_type ) {
 	update_option( 'ars-settings', $ars_settings );
 }
 
-
-function ars_json_response( $code, $message ) {
-	echo json_encode( [ 'status' => $code, 'message' => $message ] );
+/**
+ * General function that echos the response status and message from an ajax query and terminates the call
+ *
+ * @param int $code
+ * @param string $message
+ *
+ * @return void
+ */
+function ars_json_response( int $code, string $message = '') {
+	$data = ['status' => $code];
+	if ($message !== '') {
+		$data['message'] = $message;
+	}
+	echo json_encode( $data, JSON_NUMERIC_CHECK );
 	wp_die();
 }
 

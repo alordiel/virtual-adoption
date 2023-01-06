@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
       return false;
     }
 
+    button.target.disabled = true;
+
     const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
     const postData = {
       security: document.getElementById('turbo-security').value,
@@ -56,12 +58,19 @@ document.addEventListener('DOMContentLoaded', function () {
       url: '/wp-admin/admin-ajax.php',
       data: postData,
       method: 'POST',
-      dataMethod: 'JSON',
+      dataType: 'JSON',
       success: (response) => {
         console.log(response);
+        if (response.status === 1) {
+          alert('Success')
+        } else {
+          alert(response.message)
+        }
+        button.target.disabled = false;
       },
       error: (error) => {
         console.log(error.code + ' > ' + error.message);
+        button.target.disabled = false;
       }
     });
   });

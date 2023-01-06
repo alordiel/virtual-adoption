@@ -27,8 +27,8 @@ function ars_create_new_donation_subscription() {
 			ars_json_response( 0, $result_message );
 		}
 	}
-	dbga( $_POST );
-	wp_die( 1 );
+
+	ars_json_response(1);
 }
 
 add_action( 'wp_ajax_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription' );
