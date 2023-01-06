@@ -54,6 +54,8 @@ function ars_plugin_activated() {
 	}
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
+
+	ars_create_subscription_tables();
 }
 
 register_activation_hook( __FILE__, 'ars_plugin_activated' );
