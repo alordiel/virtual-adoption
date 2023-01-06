@@ -147,6 +147,7 @@ if ( empty( $sheltered_animal ) ) {
 				>
 					Submit sponsorship <span></span>
 				</button>
+				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
 				<?php wp_nonce_field( 'ars-taina', 'turbo-security' ); ?>
 			</div>
 		</div>

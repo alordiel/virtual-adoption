@@ -42,11 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
       return false;
     }
 
-    let giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
-    let postData = {
+    const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
+    const postData = {
       security: document.getElementById('turbo-security').value,
       action: 'ars_create_new_donation_subscription',
       giftEmail: giftEmail,
+      animalID: document.getElementById('animal-id').value,
       donationAmount: getDonationAmount(),
       acceptedTerms: document.getElementById('terms').checked,
     };
@@ -91,6 +92,13 @@ document.addEventListener('DOMContentLoaded', function () {
       alert('You need to accept the terms and conditions.');
       return false;
     }
+
+    const animalID = document.getElementById('animal-id');
+    if (!animalID) {
+      alert('No animal ID');
+      return false;
+    }
+
     return true;
   }
 

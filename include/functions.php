@@ -121,3 +121,27 @@ function ars_create_template_page( string $page_type ) {
 	$ars_settings[ $page_type ] = $page_id;
 	update_option( 'ars-settings', $ars_settings );
 }
+
+
+function ars_json_response( $code, $message ) {
+	echo json_encode( [ 'status' => $code, 'message' => $message ] );
+	wp_die();
+}
+
+/**
+ * Function will create new WP_User and will automatically log the user in.
+ *
+ * @param array $user_data
+ *
+ * @return string
+ */
+function ars_create_new_user( array $user_data ): string {
+	if ( empty( $user_data['email'] ) || ! is_email( $user_data['email'] ) ) {
+		return __( 'Email does not exist', 'ars-virtual-donations' );
+	}
+	if ( email_exists( $user_data['email'] ) ) {
+		return __( 'There is already an user with that email', 'ars-virtual-donations' );
+	}
+
+	return '';
+}
