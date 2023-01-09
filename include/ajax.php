@@ -22,17 +22,30 @@ function ars_create_new_donation_subscription_ajax() {
 	if ( empty( $the_animal ) || $the_animal->post_type !== 'sheltered-animal' || $the_animal->post_status !== 'publish' ) {
 		ars_json_response( 0, __( 'We do not have record of that animal', 'ars-virtual-donations' ) );
 	}
+
+	// Checks if this is a new user if it needs updating
 	if ( ! is_user_logged_in() ) {
 		$result_message = ars_create_new_user( $_POST );
 		if ( $result_message !== '' ) {
 			ars_json_response( 0, $result_message );
 		}
 	}
+	// Checks the Gift email if given and if valid
+	$gift_email = '';
+	if ( ! empty( $_POST['giftEmail'] ) ) {
+		if ( is_email( $_POST['giftEmail'] ) ) {
+			$gift_email = $_POST['giftEmail'];
+		} else {
+			ars_json_response( 0, __( 'The gift email is not valid.', 'ars-virtual-donations' ) );
+		}
+	}
 
-	$results = ars_create_new_donation_subscription( $animal_id, $donation_amount );
+	// Creating of the wp_post entry and subscription entry. At this point the both will be with inactive status
+	$results = ars_create_new_donation_subscription( $animal_id, $donation_amount, $gift_email );
 	if ( $results['status'] === 'error' ) {
 		ars_json_response( 0, $results['message'] );
 	}
+
 	$ids = [ 'post_id' => $results['post_id'], 'subscription_id' => $results['subscription_id'] ];
 	ars_json_response( 1, '', $ids );
 }

@@ -6,10 +6,11 @@
  *
  * @param int $animal_id
  * @param float $amount
+ * @param string $email
  *
  * @return array
  */
-function ars_create_new_donation_subscription( int $animal_id, float $amount ) {
+function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ) {
 	$user    = wp_get_current_user();
 	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal_id;
 	$post_id = wp_insert_post( [
@@ -19,18 +20,22 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount ) {
 		'post_author' => $user->ID,
 	], true );
 
-	if ($post_id === 0 ) {
+	if ( $post_id === 0 ) {
 		return [
 			'status'  => 'error',
 			'message' => __( 'Creating the subscription entry failed', 'ars-virtual-donations' )
 		];
 	}
 
-	if ( is_wp_error($post_id)) {
+	if ( is_wp_error( $post_id ) ) {
 		return [
 			'status'  => 'error',
 			'message' => $post_id->get_error_message()
 		];
+	}
+
+	if ($email === '') {
+		$email = $user->user_email;
 	}
 
 	global $wpdb;
@@ -45,12 +50,14 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount ) {
 			'completed_cycles'    => 0,
 			'next_due'            => date( "Y-m-d", strtotime( "+1 month", time() ) ),
 			'post_id'             => $post_id,
+			'email_for_updates'   => $email
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%d', '%s', '%d' ],
 	);
 
 	if ( $insert_status === false ) {
-		wp_delete_post($post_id);
+		wp_delete_post( $post_id );
+
 		return [
 			'status'  => 'error',
 			'message' => __( 'Creating the subscription entry failed', 'ars-virtual-donations' )

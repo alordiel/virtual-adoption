@@ -8,8 +8,8 @@
 function ars_create_subscription_tables() {
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	global $wpdb;
-	$subscriptions_table_name =  $wpdb->prefix . 'ars_subscriptions';
-	$transactions_table_name  =  $wpdb->prefix . 'ars_transactions';
+	$subscriptions_table_name   = $wpdb->prefix . 'ars_subscriptions';
+	$transactions_table_name    = $wpdb->prefix . 'ars_transactions';
 	$subscriptions_table_create = "CREATE TABLE $subscriptions_table_name (
     								`ID` INT(10) NOT NULL AUTO_INCREMENT ,
     								`user_id` INT(16) NOT NULL ,
@@ -21,9 +21,10 @@ function ars_create_subscription_tables() {
     								`start_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     								`next_due` DATETIME NOT NULL ,
     								`post_id` INT(16) NOT NULL ,
+    								`email_for_updates` VARCHAR(255) NOT NULL,
     								PRIMARY KEY (`ID`)
                    				) ENGINE = InnoDB;";
-	$transactions_table_create = "CREATE TABLE $transactions_table_name (
+	$transactions_table_create  = "CREATE TABLE $transactions_table_name (
     								`ID` INT NOT NULL AUTO_INCREMENT ,
     								`subscription_id` INT NOT NULL ,
     								`payment_method` VARCHAR(255) NOT NULL ,
