@@ -1,5 +1,5 @@
 <?php
-function ars_create_new_donation_subscription() {
+function ars_create_new_donation_subscription_ajax() {
 	check_ajax_referer( 'ars-taina', 'security' );
 	if ( empty( $_POST['animalID'] ) || empty( $_POST['donationAmount'] ) ) {
 		ars_json_response( 0, __( 'Missing some data.', 'ars-virtual-donations' ) );
@@ -10,9 +10,10 @@ function ars_create_new_donation_subscription() {
 	}
 
 	$donation_amount = (float) $_POST['donationAmount'];
-	if ($donation_amount < 5.00) {
+	if ( $donation_amount < 5.00 ) {
 		ars_json_response( 0, __( 'There is problem with the donation amount.', 'ars-virtual-donations' ) );
 	}
+
 	// Check if animal exists
 	$animal_id  = ars_decode_id( $_POST['animalID'] );
 	$the_animal = get_post( $animal_id );
@@ -28,8 +29,13 @@ function ars_create_new_donation_subscription() {
 		}
 	}
 
-	ars_json_response(1);
+	$results = ars_create_new_donation_subscription( $animal_id, $donation_amount );
+	if ( $results['status'] === 'error' ) {
+		ars_json_response( 0, $results['message'] );
+	}
+	$ids = [ 'post_id' => $results['post_id'], 'subscription_id' => $results['subscription_id'] ];
+	ars_json_response( 1, '', $ids );
 }
 
-add_action( 'wp_ajax_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription' );
-add_action( 'wp_ajax_nopriv_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription' );
+add_action( 'wp_ajax_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription_ajax' );
+add_action( 'wp_ajax_nopriv_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription_ajax' );

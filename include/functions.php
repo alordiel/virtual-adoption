@@ -127,14 +127,20 @@ function ars_create_template_page( string $page_type ) {
  *
  * @param int $code
  * @param string $message
+ * @param array $some_data
  *
  * @return void
  */
-function ars_json_response( int $code, string $message = '') {
+function ars_json_response( int $code, string $message = '', array $some_data = []) {
 	$data = ['status' => $code];
 	if ($message !== '') {
 		$data['message'] = $message;
 	}
+
+	if ($some_data !== []) {
+		$data['data'] = $some_data;
+	}
+
 	echo json_encode( $data, JSON_NUMERIC_CHECK );
 	wp_die();
 }
