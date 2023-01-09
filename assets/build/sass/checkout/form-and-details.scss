@@ -45,6 +45,12 @@
   padding: 11px 0 9px 5px;
   border-right: 0;
 }
+
 #submit-sponsorship[disabled] {
   background: gray !important;
+}
+
+.contact-details label > small {
+  color: red;
+  display: block;
 }

@@ -53,39 +53,11 @@ if ( empty( $sheltered_animal ) ) {
 			</div>
 			<h4><strong><?php _e( 'Account Details', 'ars-virtual-donation' ) ?></strong></h4>
 			<div class="contact-details">
-				<?php if ( $user->ID === 0 ) { ?>
-					<p><?php _e( 'We need to create an account for you so you can manage your monthly support. Please fill in the details below.', 'ars-virtual-donation' ); ?></p>
-					<p>
-						<label for="first-name">
-							<input id="first-name" name="first-name" type="text"
-								   placeholder="<?php _e( 'First name', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="last-name">
-							<input id="last-name" name="last-name" type="text"
-								   placeholder="<?php _e( 'Last name', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="email">
-							<input id="email" name="email" type="email"
-								   placeholder="<?php _e( 'Email', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="contact-phone">
-							<input id="contact-phone" name="contact-phone" type="text"
-								   placeholder="<?php _e( 'Phone (optional)', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="password">
-							<input id="password" name="password"
-								   type="text" placeholder="<?php _e( 'Password', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-				<?php } ?>
+				<?php
+				if ( $user->ID === 0 ) {
+					include_once 'registration-form.php';
+				}
+				?>
 				<p>
 					<label for="gift-donation">
 						<input name="gift-donation" id="gift-donation" type="checkbox">

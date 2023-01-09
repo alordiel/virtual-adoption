@@ -77,7 +77,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Used to validate the contact fields when a non-logged in user is adding a donation
   function validateContactForm() {
+    const firstName = document.getElementById('first-name');
+    const lastName = document.getElementById('last-name');
+    const email = document.getElementById('email');
+    const pass = document.getElementById('password');
+    const pass2 = document.getElementById('re-password');
+    const fields = [firstName, lastName, email, pass, pass2];
+    let hasError = false;
 
+    // clear all previous errors
+    for (let element of fields) {
+      element.nextElementSibling.innerText = '';
+      element.style.borderColor = 'inherit';
+    }
+    if (!firstName.value) {
+      firstName.nextElementSibling.innerText = 'Field can not be empty';
+      firstName.style.borderColor = 'red';
+      hasError = true;
+    }
+
+    if (!lastName.value) {
+      lastName.nextElementSibling.innerText = 'Field can not be empty';
+      lastName.style.borderColor = 'red';
+      hasError = true;
+    }
+
+    if (!email.value) {
+      email.nextElementSibling.innerText = 'Field can not be empty';
+      email.style.borderColor = 'red';
+      hasError = true;
+    }
+
+    if (!pass.value) {
+      pass.nextElementSibling.innerText = 'Field can not be empty';
+      pass.style.borderColor = 'red';
+      hasError = true;
+    }
+    if (!pass2.value) {
+      pass2.nextElementSibling.innerText = 'Field can not be empty';
+      pass2.style.borderColor = 'red';
+      hasError = true;
+    }
+
+    if (pass.value !== pass2.value) {
+      pass.nextElementSibling.innerText = 'Passwords did not matched';
+      pass.style.borderColor = 'red';
+      hasError = true;
+    }
+
+
+    if (hasError) {
+      document.querySelector('.contact-details').scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
+      return false;
+    }
+
+    return true;
   }
 
   // Validates the selected payment method, amount and if it is for a gift
