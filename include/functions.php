@@ -131,13 +131,13 @@ function ars_create_template_page( string $page_type ) {
  *
  * @return void
  */
-function ars_json_response( int $code, string $message = '', array $some_data = []) {
-	$data = ['status' => $code];
-	if ($message !== '') {
+function ars_json_response( int $code, string $message = '', array $some_data = [] ) {
+	$data = [ 'status' => $code ];
+	if ( $message !== '' ) {
 		$data['message'] = $message;
 	}
 
-	if ($some_data !== []) {
+	if ( $some_data !== [] ) {
 		$data['data'] = $some_data;
 	}
 
@@ -156,9 +156,31 @@ function ars_create_new_user( array $user_data ): string {
 	if ( empty( $user_data['email'] ) || ! is_email( $user_data['email'] ) ) {
 		return __( 'Email does not exist', 'ars-virtual-donations' );
 	}
-	if ( email_exists( $user_data['email'] ) ) {
+	if ( email_exists( $user_data['email'] ) || username_exists( $user_data['email'] ) ) {
 		return __( 'There is already an user with that email', 'ars-virtual-donations' );
 	}
+
+	$user_id = wp_insert_user( [
+		'user_login' => $user_data['email'],
+		'user_pass'  => $user_data['password'],
+		'user_email' => $user_data['email'],
+		'first_name' => $user_data['first_name'],
+		'last_name'  => $user_data['last_name'],
+		'role'       => 'virtual-adopter'
+	] );
+
+	if ( is_wp_error( $user_id ) ) {
+		return $user_id->get_error_message();
+	}
+
+	$credentials = array(
+		'user_login'    => $user_data['email'],
+		'user_password' => $user_data['password'],
+		'remember'      => true
+	);
+
+	wp_signon( $credentials, false );
+	wp_set_current_user( $user_id );
 
 	return '';
 }
