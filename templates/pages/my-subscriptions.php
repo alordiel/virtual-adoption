@@ -40,7 +40,7 @@ if ( ! empty( $subscriptions ) ) {
 			$animal = get_post($details->sponsored_animal_id);
 			?>
 			<tr>
-				<td><?php echo $animal->post_title; ?></td>
+				<td><a  href="<?php echo get_permalink($animal->ID) ?>"><?php echo $animal->post_title; ?></a></td>
 				<td><?php echo $details->next_due ?> </td>
 				<td><?php echo $details->amount . ' '. $details->currency ?></td>
 				<td><?php echo $details->status ?></td>
