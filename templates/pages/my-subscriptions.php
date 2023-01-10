@@ -42,8 +42,8 @@ if ( ! empty( $subscriptions ) ) {
 			<tr>
 				<td><?php echo $animal->post_title; ?></td>
 				<td><?php echo $details->next_due ?> </td>
-				<td><?php echo $details->amount . $details->currency ?></td>
-				<td><?php echo $subscription->post_status ?></td>
+				<td><?php echo $details->amount . ' '. $details->currency ?></td>
+				<td><?php echo $details->status ?></td>
 				<td></td>
 			</tr>
 			<?php
