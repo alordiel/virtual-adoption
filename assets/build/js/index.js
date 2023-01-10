@@ -56,12 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // send results
     addSubscriptionToUsersAccount(postData)
       .then((response) => {
+        console.log(response)
         alert('Success')
-        location.href = response.redirect_to;
+        location.href = response.data.redirect_to;
       })
       .catch((message) => {
         alert(message)
-        button.target.disabled = false;
+        document.getElementById('submit-sponsorship').target.disabled = false;
       })
   });
 
@@ -178,16 +179,13 @@ document.addEventListener('DOMContentLoaded', function () {
         dataType: 'JSON',
         success: (response) => {
           if (response.status === 1) {
-            alert('Success')
             resolve(response);
           } else {
             reject(response.message);
           }
-          button.target.disabled = false;
         },
         error: (error) => {
           reject(error.code + ' > ' + error.message);
-          button.target.disabled = false;
         }
       });
     });

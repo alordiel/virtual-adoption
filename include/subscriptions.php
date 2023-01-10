@@ -40,7 +40,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 
 	global $wpdb;
 	$insert_status = $wpdb->insert(
-		$wpdb->prefix . 'ars_subscription',
+		$wpdb->prefix . 'ars_subscriptions',
 		[
 			'user_id'             => $user->ID,
 			'sponsored_animal_id' => $animal_id,
