@@ -54,25 +54,15 @@ document.addEventListener('DOMContentLoaded', function () {
       acceptedTerms: document.getElementById('terms').checked,
     };
     // send results
-    jQuery.ajax({
-      url: '/wp-admin/admin-ajax.php',
-      data: postData,
-      method: 'POST',
-      dataType: 'JSON',
-      success: (response) => {
-        console.log(response);
-        if (response.status === 1) {
-          alert('Success')
-        } else {
-          alert(response.message)
-        }
+    addSubscriptionToUsersAccount(postData)
+      .then((response) => {
+        alert('Success')
+        location.href = response.redirect_to;
+      })
+      .catch((message) => {
+        alert(message)
         button.target.disabled = false;
-      },
-      error: (error) => {
-        console.log(error.code + ' > ' + error.message);
-        button.target.disabled = false;
-      }
-    });
+      })
   });
 
   // Used to validate the contact fields when a non-logged in user is adding a donation
@@ -176,6 +166,31 @@ document.addEventListener('DOMContentLoaded', function () {
       donationValue = document.getElementById('selected-custom-amount').value
     }
     return parseFloat(donationValue);
+  }
+
+  // function for creating the subscription entry
+  function addSubscriptionToUsersAccount(postData) {
+    return new Promise((resolve, reject) => {
+      jQuery.ajax({
+        url: '/wp-admin/admin-ajax.php',
+        data: postData,
+        method: 'POST',
+        dataType: 'JSON',
+        success: (response) => {
+          if (response.status === 1) {
+            alert('Success')
+            resolve(response);
+          } else {
+            reject(response.message);
+          }
+          button.target.disabled = false;
+        },
+        error: (error) => {
+          reject(error.code + ' > ' + error.message);
+          button.target.disabled = false;
+        }
+      });
+    });
   }
 });
 

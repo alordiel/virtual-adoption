@@ -46,7 +46,13 @@ function ars_create_new_donation_subscription_ajax() {
 		ars_json_response( 0, $results['message'] );
 	}
 
-	$ids = [ 'post_id' => $results['post_id'], 'subscription_id' => $results['subscription_id'] ];
+	// get redirection link for "Thank you" page
+	$options = get_option( 'ars-settings' );
+	$ids     = [
+		'post_id'         => $results['post_id'],
+		'subscription_id' => $results['subscription_id'],
+		'redirect_to'     => get_permalink( $options['thank-you-page'] ),
+	];
 	ars_json_response( 1, '', $ids );
 }
 
