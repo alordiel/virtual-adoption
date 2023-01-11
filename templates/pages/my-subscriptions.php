@@ -14,7 +14,7 @@ $subscriptions = get_posts( [
 	'post_status'   => 'any',
 	'post_author'   => $user_id
 ] );
-dbga($subscriptions);
+
 if ( ! empty( $subscriptions ) ) {
 	?>
 	<table>

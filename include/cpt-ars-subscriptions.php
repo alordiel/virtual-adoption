@@ -48,14 +48,16 @@ function ars_custom_post_status_for_subscriptions() {
 		'show_in_admin_status_list' => true,
 		'label_count'               => _n_noop( 'Active <span class="count">(%s)</span>', 'Active <span class="count">(%s)</span>' ),
 	) );
-	register_post_status( 'ars-onhold', array(
-		'label'                     => 'On hold',
+
+	register_post_status( 'ars-pending', array(
+		'label'                     => 'Pending',
 		'public'                    => true,
 		'exclude_from_search'       => false,
 		'show_in_admin_all_list'    => true,
 		'show_in_admin_status_list' => true,
-		'label_count'               => _n_noop( 'On hold <span class="count">(%s)</span>', 'On hold <span class="count">(%s)</span>' ),
+		'label_count'               => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>' ),
 	) );
+
 	register_post_status( 'ars-cancelled', array(
 		'label'                     => 'Cancelled',
 		'public'                    => true,
@@ -75,11 +77,11 @@ function ars_append_post_status_list() {
 	$options = '';
 	$label   = '';
 	if ( $post->post_type === 'ars-subscription' ) {
-		if ( $post->post_status === 'ars-onhold' ) {
-			$options .= '<option value="ars-onhold" selected=\"selected\">On hold</option>';
-			$label   = ' On hold';
+		if ( $post->post_status === 'ars-pending' ) {
+			$options .= '<option value="ars-pending" selected=\"selected\">Pending</option>';
+			$label   = ' Pending';
 		} else {
-			$options .= '<option value="ars-onhold">On hold</option>';
+			$options .= '<option value="ars-pending">Pending</option>';
 		}
 
 		if ( $post->post_status === 'ars-active' ) {
@@ -97,10 +99,10 @@ function ars_append_post_status_list() {
 		}
 		echo '
           <script>
-          jQuery(document).ready(function($){
-              $("select#post_status").html(\'' . $options . '\');
+          jQuery(document).ready(function(){
+              document.getElementById("post_status").innerHTML = \'' . $options . '\'; // Replaces the standard post statuses
 			  document.getElementById("post-status-display").innerText = "' . $label . '";
-              document.getElementById("save-post").remove();
+              document.getElementById("save-post").remove(); // removes the "Save draft" button
           });
           </script>
           ';
@@ -112,8 +114,8 @@ function ars_display_archive_state( $states ) {
 	global $post;
 	$arg = get_query_var( 'post_status' );
 	if ( $arg !== 'archive' ) {
-		if ( $post->post_status === 'ars-onhold' ) {
-			return array( 'On hold' );
+		if ( $post->post_status === 'ars-pending' ) {
+			return array( 'Pending' );
 		}
 		if ( $post->post_status === 'ars-active' ) {
 			return array( 'Active' );

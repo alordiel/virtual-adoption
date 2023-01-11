@@ -46,7 +46,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 			'user_id'             => $user->ID,
 			'sponsored_animal_id' => $animal_id,
 			'amount'              => $amount,
-			'status'              => 'hold',
+			'status'              => 'ars-pending',
 			'period_type'         => 'monthly',
 			'completed_cycles'    => 0,
 			'next_due'            => date( "Y-m-d", strtotime( "+1 month", time() ) ),
