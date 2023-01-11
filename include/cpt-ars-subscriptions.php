@@ -72,26 +72,26 @@ add_action( 'init', 'ars_custom_post_status_for_subscriptions' );
 add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
 function ars_append_post_status_list() {
 	global $post;
-	$options  = '';
-	$label    = '';
+	$options = '';
+	$label   = '';
 	if ( $post->post_type === 'ars-subscription' ) {
 		if ( $post->post_status === 'ars-onhold' ) {
 			$options .= '<option value="ars-onhold" selected=\"selected\">On hold</option>';
-			$label    = ' On hold';
+			$label   = ' On hold';
 		} else {
 			$options .= '<option value="ars-onhold">On hold</option>';
 		}
 
 		if ( $post->post_status === 'ars-active' ) {
 			$options .= '<option value="ars-active" selected=\"selected\">Active</option>';
-			$label    = ' Active';
+			$label   = ' Active';
 		} else {
 			$options .= '<option value="ars-active">Active</option>';
 		}
 
 		if ( $post->post_status === 'ars-cancelled' ) {
 			$options .= '<option value="ars-cancelled" selected=\"selected\">Cancelled</option>';
-			$label    = ' Cancelled';
+			$label   = ' Cancelled';
 		} else {
 			$options .= '<option value="ars-cancelled">Cancelled</option>';
 		}
@@ -127,3 +127,14 @@ function ars_display_archive_state( $states ) {
 }
 
 add_filter( 'display_post_states', 'ars_display_archive_state' );
+
+
+function remove_quick_edit( $actions, $post ) {
+	if ( $post->post_type === 'ars-subscription' ) {
+		unset( $actions['inline hide-if-no-js'] );
+	}
+
+	return $actions;
+}
+
+add_filter( 'post_row_actions', 'remove_quick_edit', 10, 2 );
