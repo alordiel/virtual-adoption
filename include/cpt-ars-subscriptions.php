@@ -1,5 +1,5 @@
 <?php
-add_action( 'init', 'ars_subscription_post_type' );
+
 function ars_subscription_post_type() {
 	$labels = array(
 		'name'               => _x( 'Animal subscriptions', 'post type general name', 'ars-virtual-donations' ),
@@ -38,7 +38,17 @@ function ars_subscription_post_type() {
 	register_post_type( 'ars-subscription', $args );
 }
 
+add_action( 'init', 'ars_subscription_post_type' );
 
+
+/**
+ * Registers 3 extra post types used for the ars-subscription post type
+ * ars-pending - marks all the subscriptions that are pending payment or some other issue to be resolved
+ * ars-active - active subscription that renews every month
+ * ars-cancelled - is an old subscription that was cancelled
+ *
+ * @return void
+ */
 function ars_custom_post_status_for_subscriptions() {
 	register_post_status( 'ars-active', array(
 		'label'                     => 'Active',
@@ -71,7 +81,11 @@ function ars_custom_post_status_for_subscriptions() {
 add_action( 'init', 'ars_custom_post_status_for_subscriptions' );
 
 
-add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
+/**
+ * Handles the custom post statuses for the admin for the subscriptions post type
+ *
+ * @return void
+ */
 function ars_append_post_status_list() {
 	global $post;
 	$options = '';
@@ -108,8 +122,16 @@ function ars_append_post_status_list() {
           ';
 	}
 }
+add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
 
 
+/**
+ * Displays the post status in admin next to the post title for the subscriptions
+ *
+ * @param $states
+ *
+ * @return mixed|string[]
+ */
 function ars_display_archive_state( $states ) {
 	global $post;
 	$arg = get_query_var( 'post_status' );
@@ -162,11 +184,8 @@ function ars_change_of_subscription_post_status( string $new_status, string $old
 	if ( $old_status === $new_status || ( $old_status !== 'pending' && $new_status !== 'active' ) ) {
 		return;
 	}
-	$user    = get_user_by( 'ID', $post->post_author );
-	$subject = '';
-	$content = '';
-	$headers = '';
-	wp_mail( $user->user_email, $subject, $content, $headers );
+
+	ars_send_confirmation_email( $post );
 }
 
 add_action( 'transition_post_status', 'ars_change_of_subscription_post_status', 10, 3 );

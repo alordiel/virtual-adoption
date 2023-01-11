@@ -116,3 +116,21 @@ function ars_get_list_of_adopted_animals(): array {
 
 	return $animals;
 }
+
+/**
+ * Get the details of a subscription by the wp_post subscription ID
+ *
+ * @param int $subscription_post_id
+ *
+ * @return array
+ */
+function ars_get_sponsored_animal_details_by_subscription( int $subscription_post_id):array{
+	global $wpdb;
+	$sql = "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $subscription_post_id";
+	$data = $wpdb->get_row($sql, ARRAY_A);
+	if (empty($data)) {
+		return [];
+	}
+
+	return $data;
+}

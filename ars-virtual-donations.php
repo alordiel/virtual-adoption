@@ -31,6 +31,7 @@ require_once( ARSVD_ABS . '/include/admin-settings.php' );
 require_once( ARSVD_ABS . '/include/ajax.php' );
 require_once( ARSVD_ABS . '/include/database-tables.php' );
 require_once( ARSVD_ABS . '/include/subscriptions.php' );
+require_once( ARSVD_ABS . '/include/mails.php' );
 
 
 /**
