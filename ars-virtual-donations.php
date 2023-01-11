@@ -57,6 +57,7 @@ function ars_plugin_activated() {
 	flush_rewrite_rules();
 
 	ars_create_subscription_tables();
+	ars_custom_post_status_for_subscriptions();
 }
 
 register_activation_hook( __FILE__, 'ars_plugin_activated' );

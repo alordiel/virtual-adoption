@@ -33,7 +33,97 @@ function ars_subscription_post_type() {
 		'has_archive'         => false,
 		'hierarchical'        => false,
 		'menu_position'       => null,
-		'supports'            => array( 'title', 'editor', 'author' )
+		'supports'            => array( 'title' )
 	);
 	register_post_type( 'ars-subscription', $args );
 }
+
+
+function ars_custom_post_status_for_subscriptions() {
+	register_post_status( 'ars-active', array(
+		'label'                     => 'Active',
+		'public'                    => true,
+		'exclude_from_search'       => false,
+		'show_in_admin_all_list'    => true,
+		'show_in_admin_status_list' => true,
+		'label_count'               => _n_noop( 'Active <span class="count">(%s)</span>', 'Active <span class="count">(%s)</span>' ),
+	) );
+	register_post_status( 'ars-onhold', array(
+		'label'                     => 'On hold',
+		'public'                    => true,
+		'exclude_from_search'       => false,
+		'show_in_admin_all_list'    => true,
+		'show_in_admin_status_list' => true,
+		'label_count'               => _n_noop( 'On hold <span class="count">(%s)</span>', 'On hold <span class="count">(%s)</span>' ),
+	) );
+	register_post_status( 'ars-cancelled', array(
+		'label'                     => 'Cancelled',
+		'public'                    => true,
+		'exclude_from_search'       => false,
+		'show_in_admin_all_list'    => true,
+		'show_in_admin_status_list' => true,
+		'label_count'               => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>' ),
+	) );
+}
+
+add_action( 'init', 'ars_custom_post_status_for_subscriptions' );
+
+
+add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
+function ars_append_post_status_list() {
+	global $post;
+	$options  = '';
+	$label    = '';
+	if ( $post->post_type === 'ars-subscription' ) {
+		if ( $post->post_status === 'ars-onhold' ) {
+			$options .= '<option value="ars-onhold" selected=\"selected\">On hold</option>';
+			$label    = ' On hold';
+		} else {
+			$options .= '<option value="ars-onhold">On hold</option>';
+		}
+
+		if ( $post->post_status === 'ars-active' ) {
+			$options .= '<option value="ars-active" selected=\"selected\">Active</option>';
+			$label    = ' Active';
+		} else {
+			$options .= '<option value="ars-active">Active</option>';
+		}
+
+		if ( $post->post_status === 'ars-cancelled' ) {
+			$options .= '<option value="ars-cancelled" selected=\"selected\">Cancelled</option>';
+			$label    = ' Cancelled';
+		} else {
+			$options .= '<option value="ars-cancelled">Cancelled</option>';
+		}
+		echo '
+          <script>
+          jQuery(document).ready(function($){
+              $("select#post_status").html(\'' . $options . '\');
+			  document.getElementById("post-status-display").innerText = "' . $label . '";
+              document.getElementById("save-post").remove();
+          });
+          </script>
+          ';
+	}
+}
+
+
+function ars_display_archive_state( $states ) {
+	global $post;
+	$arg = get_query_var( 'post_status' );
+	if ( $arg !== 'archive' ) {
+		if ( $post->post_status === 'ars-onhold' ) {
+			return array( 'On hold' );
+		}
+		if ( $post->post_status === 'ars-active' ) {
+			return array( 'Active' );
+		}
+		if ( $post->post_status === 'ars-cancelled' ) {
+			return array( 'Cancelled' );
+		}
+	}
+
+	return $states;
+}
+
+add_filter( 'display_post_states', 'ars_display_archive_state' );

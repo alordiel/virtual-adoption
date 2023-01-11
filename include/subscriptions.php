@@ -12,7 +12,8 @@
  */
 function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
 	$user    = wp_get_current_user();
-	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal_id;
+	$animal  = get_post($animal_id);
+	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
 	$post_id = wp_insert_post( [
 		'status'      => 'ars-pending-payment',
 		'post_type'   => 'ars-subscription',
