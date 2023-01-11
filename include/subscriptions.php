@@ -10,7 +10,7 @@
  *
  * @return array
  */
-function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ) {
+function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
 	$user    = wp_get_current_user();
 	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal_id;
 	$post_id = wp_insert_post( [
@@ -34,7 +34,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 		];
 	}
 
-	if ($email === '') {
+	if ( $email === '' ) {
 		$email = $user->user_email;
 	}
 
@@ -72,4 +72,23 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 		'subscription_id' => $subscription_id,
 		'post_id'         => $post_id
 	];
+}
+
+/**
+ * Check is there is a record in ars_subscriptions for the current user and animal
+ * Also checks if the status is different from 'cancelled'
+ *
+ * @param int $user_id
+ * @param int $animal_id
+ *
+ * @return bool
+ */
+function ars_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
+	global $wpdb;
+	$sql    = "SELECT ID
+				FROM {$wpdb->prefix}ars_subscriptions
+				WHERE user_id = $user_id AND sponsored_animal_id = $animal_id AND status != 'cancelled'";
+	$result = $wpdb->get_var( $sql );
+
+	return ! empty( $result );
 }

@@ -6,10 +6,17 @@ $sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 $sex           = get_post_meta( $post_id, 'animals-sex', true );
 $ars_settings  = get_option( 'ars-settings' );
 $sponsor_link  = get_permalink( $ars_settings['checkout-page'] );
+$my_animals    = get_permalink( $ars_settings['my-subscriptions-page'] );
+$is_adopted    = false;
+$user_id       = get_current_user_id();
+
+if ( $user_id !== 0 ) {
+	$is_adopted = ars_is_animal_adopted_by_user( $user_id, $post_id );
+}
 ?>
 	<div class="sheltered-animal-container">
 		<div class="single-animal-infobox">
-			<div class="animal-image">
+			<div>
 				<?php
 				the_post_thumbnail( 'large', [
 					'class' => 'post-thumbnail',
@@ -52,23 +59,29 @@ $sponsor_link  = get_permalink( $ars_settings['checkout-page'] );
 					<span><?php _e( 'Sex', 'ars-sheltered-animals' ) ?>:</span> <?php echo $sex ?><br>
 				</div>
 
-				<div class="blue-button-wrap">
-					<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ); ?>"
-					   title="Sponsor me">Sponsor me</a>
-				</div>
+				<?php
+				if ( $is_adopted ) {
+					include( ARSVD_ABS . '/templates/parts/adopted-animal.php' );
+				} else {
+					include( ARSVD_ABS . '/templates/parts/sponsor-me-button.php' );
+				}
+				?>
 			</div>
 		</div>
 		<div class="single-animal-content">
 			<?php the_content(); ?>
 		</div>
 
+		<?php include( ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
 
-		<?php include_once( ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
-
-		<div class="blue-button-wrap">
-			<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ); ?>"
-			   title="Sponsor me">Sponsor <?php echo get_the_title(); ?></a>
+		<div class="text-center">
+			<?php
+			if ( ! $is_adopted ) {
+				include( ARSVD_ABS . '/templates/parts/sponsor-me-button.php' );
+			}
+			?>
 		</div>
+
 	</div>
 <?php
 get_footer();
