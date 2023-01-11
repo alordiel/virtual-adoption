@@ -31,6 +31,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 					<?php
 					$ars_settings = get_option( 'ars-settings' );
 					$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
+					$adopted_animals = []; // added just to prevent PHP warning from the animal-card.php template
 					foreach ( $animals as $animal ) {
 						$post_id = $animal->ID;
 						$age           = get_post_meta( $post_id, 'animals-age', true );

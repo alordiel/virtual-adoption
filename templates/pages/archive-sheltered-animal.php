@@ -23,12 +23,13 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 
 			<?php if ( have_posts() ) :
 				while ( have_posts() ) : the_post();
-					$post_id       = get_the_ID();
-					$the_title     = get_the_title();
-					$age           = get_post_meta( $post_id, 'animals-age', true );
-					$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
-					$animal_link   = get_the_permalink();
-					$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
+					$post_id         = get_the_ID();
+					$the_title       = get_the_title();
+					$age             = get_post_meta( $post_id, 'animals-age', true );
+					$sheltered_for   = get_post_meta( $post_id, 'sheltered-years', true );
+					$animal_link     = get_the_permalink();
+					$image           = get_the_post_thumbnail_url( $post_id, 'medium' );
+					$adopted_animals = ars_get_list_of_adopted_animals();
 					include( ARSVD_ABS . '/templates/parts/animal-card.php' );
 				endwhile;
 			else:
@@ -37,7 +38,7 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 			?>
 		</div>
 
-		<?php include_once(  ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
+		<?php include_once( ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
 
 	</div>
 <?php

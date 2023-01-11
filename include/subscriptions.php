@@ -92,3 +92,26 @@ function ars_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
 
 	return ! empty( $result );
 }
+
+/**
+ * Gets all animals that are adopted by the current user and are not with 'cancelled' status
+ *
+ * @return array returns an array of animal's IDs or empty array if nothing found
+ */
+function ars_get_list_of_adopted_animals(): array {
+	$user_id = get_current_user_id();
+	if ( $user_id === 0 ) {
+		return [];
+	}
+
+	global $wpdb;
+	$sql     = "SELECT sponsored_animal_id
+				FROM {$wpdb->prefix}ars_subscriptions
+				WHERE user_id = $user_id AND status != 'cancelled'";
+	$animals = $wpdb->get_col( $sql );
+	if ( empty( $animals ) ) {
+		return [];
+	}
+
+	return $animals;
+}
