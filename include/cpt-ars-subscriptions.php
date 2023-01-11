@@ -130,8 +130,15 @@ function ars_display_archive_state( $states ) {
 
 add_filter( 'display_post_states', 'ars_display_archive_state' );
 
-
-function remove_quick_edit( $actions, $post ) {
+/**
+ * This filter will remove the Quick Edit link from the admin list of all post with post type ars-subscription
+ *
+ * @param array $actions
+ * @param WP_Post $post
+ *
+ * @return array
+ */
+function remove_quick_edit( array $actions, WP_Post $post ) {
 	if ( $post->post_type === 'ars-subscription' ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
@@ -140,3 +147,26 @@ function remove_quick_edit( $actions, $post ) {
 }
 
 add_filter( 'post_row_actions', 'remove_quick_edit', 10, 2 );
+
+
+/**
+ * Check if post status of the ars-subscription is changed
+ * It will look only for the case when the subscription is changed from "Pending" to "Active"
+ * On that change it will send an email with success message
+ *
+ * @param string $new_status New post status.
+ * @param string $old_status Old post status.
+ * @param WP_Post $post Post object.
+ */
+function ars_change_of_subscription_post_status( string $new_status, string $old_status, WP_Post $post ) {
+	if ( $old_status === $new_status || ( $old_status !== 'pending' && $new_status !== 'active' ) ) {
+		return;
+	}
+	$user    = get_user_by( 'ID', $post->post_author );
+	$subject = '';
+	$content = '';
+	$headers = '';
+	wp_mail( $user->user_email, $subject, $content, $headers );
+}
+
+add_action( 'transition_post_status', 'ars_change_of_subscription_post_status', 10, 3 );
