@@ -184,3 +184,18 @@ function ars_create_new_user( array $user_data ): string {
 
 	return '';
 }
+
+
+function ars_get_verbose_subscription_status( string $status_code ): string {
+	switch ( $status_code ) {
+		case 'ars-pending':
+			return __( 'Pending', 'ars-virtual-donations' );
+		case 'ars-active':
+			return __( 'Active', 'ars-virtual-donations' );
+		case 'ars-cancelled':
+			return __( 'Cancelled', 'ars-virtual-donations' );
+		default:
+			return 'n/a';
+
+	}
+}

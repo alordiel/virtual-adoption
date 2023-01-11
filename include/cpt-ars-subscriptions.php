@@ -122,6 +122,7 @@ function ars_append_post_status_list() {
           ';
 	}
 }
+
 add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
 
 
@@ -181,8 +182,19 @@ add_filter( 'post_row_actions', 'remove_quick_edit', 10, 2 );
  * @param WP_Post $post Post object.
  */
 function ars_change_of_subscription_post_status( string $new_status, string $old_status, WP_Post $post ) {
-	if ( $old_status === $new_status || ( $old_status !== 'pending' && $new_status !== 'active' ) ) {
+	if ( $old_status === $new_status ) {
 		return;
+	}
+
+	if ( $old_status !== 'ars-pending' && $new_status !== 'ars-active' ) {
+		global $wpdb;
+		$wpdb->update(
+			$wpdb->prefix . 'ars_subscriptions',
+			[ 'status' => $new_status ],
+			[ 'post_id' => $post->ID ],
+			[ '%d' ],
+			[ '%d' ]
+		);
 	}
 
 	ars_send_confirmation_email( $post );

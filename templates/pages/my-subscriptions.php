@@ -37,13 +37,13 @@ if ( ! empty( $subscriptions ) ) {
 				sprintf( __( 'We are missing details for subscription with ID %d', 'ars-virtual-donation' ), $subscription->ID );
 				continue;
 			}
-			$animal = get_post($details->sponsored_animal_id);
+			$animal = get_post( $details->sponsored_animal_id );
 			?>
 			<tr>
-				<td><a  href="<?php echo get_permalink($animal->ID) ?>"><?php echo $animal->post_title; ?></a></td>
+				<td><a href="<?php echo get_permalink( $animal->ID ) ?>"><?php echo $animal->post_title; ?></a></td>
 				<td><?php echo $details->next_due ?> </td>
-				<td><?php echo $details->amount . ' '. $details->currency ?></td>
-				<td><?php echo $details->status ?></td>
+				<td><?php echo $details->amount . ' ' . $details->currency ?></td>
+				<td><?php echo ars_get_verbose_subscription_status( $details->status ) ?></td>
 				<td></td>
 			</tr>
 			<?php
