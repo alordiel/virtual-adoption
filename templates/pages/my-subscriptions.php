@@ -37,7 +37,7 @@ if ( ! empty( $subscriptions ) ) {
 				sprintf( __( 'We are missing details for subscription with ID %d', 'ars-virtual-donation' ), $subscription->ID );
 				continue;
 			}
-			$post_id = $details->sponsored_animal_id;
+			$post_id = $details->post_id;
 			$animal  = get_post( $post_id );
 			?>
 			<tr class="row-<?php echo $post_id; ?>">
