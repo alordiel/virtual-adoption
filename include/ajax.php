@@ -1,6 +1,7 @@
 <?php
 function ars_create_new_donation_subscription_ajax() {
 	check_ajax_referer( 'ars-taina', 'security' );
+
 	if ( empty( $_POST['animalID'] ) || empty( $_POST['donationAmount'] ) ) {
 		ars_json_response( 0, __( 'Missing some data.', 'ars-virtual-donations' ) );
 	}
@@ -58,3 +59,25 @@ function ars_create_new_donation_subscription_ajax() {
 
 add_action( 'wp_ajax_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription_ajax' );
 add_action( 'wp_ajax_nopriv_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription_ajax' );
+
+/**
+ * Function to cancel a given subscription. The ajax can be called by the user only.
+ *
+ * @return void
+ */
+function ars_cancel_subscription_ajax() {
+	check_ajax_referer( 'ars-taina', 'security' );
+
+	if ( empty( $_POST['post_id'] ) || empty( $_POST['post_id'] ) ) {
+		ars_json_response( 0, __( 'No subscription ID.', 'ars-virtual-donations' ) );
+	}
+
+	$result  = ars_cancel_ars_subscription_entry( $_POST['post_id'] );
+	if ( $result !== 'success' ) {
+		ars_json_response( 0, $result );
+	}
+
+	ars_json_response( 1, __( 'Successfully cancelled.', 'ars-virtual-donations' ) );
+}
+
+add_action( 'wp_ajax_ars_cancel_subscription', 'ars_cancel_subscription_ajax' );

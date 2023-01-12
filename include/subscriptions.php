@@ -12,7 +12,7 @@
  */
 function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
 	$user    = wp_get_current_user();
-	$animal  = get_post($animal_id);
+	$animal  = get_post( $animal_id );
 	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
 	$post_id = wp_insert_post( [
 		'status'      => 'ars-pending-payment',
@@ -124,13 +124,37 @@ function ars_get_list_of_adopted_animals(): array {
  *
  * @return array
  */
-function ars_get_sponsored_animal_details_by_subscription( int $subscription_post_id):array{
+function ars_get_sponsored_animal_details_by_subscription( int $subscription_post_id ): array {
 	global $wpdb;
-	$sql = "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $subscription_post_id";
-	$data = $wpdb->get_row($sql, ARRAY_A);
-	if (empty($data)) {
+	$sql  = "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $subscription_post_id";
+	$data = $wpdb->get_row( $sql, ARRAY_A );
+	if ( empty( $data ) ) {
 		return [];
 	}
 
 	return $data;
+}
+
+
+function ars_cancel_ars_subscription_entry( int $post_id ) {
+
+	$result = wp_update_post( [
+		'ID'          => $post_id,
+		'post_status' => 'ars-cancelled',
+	] );
+
+	if ( $result === 0 || is_wp_error( $result ) ) {
+		return __( 'The cancellation failed, please try again', 'ars-virtual-donation' );
+	}
+
+	global $wpdb;
+	$wpdb->update(
+		$wpdb->prefix . 'ars_subscriptions',
+		[ 'status' => 'ars-cancelled' ],
+		[ 'post_id' => $post_id ],
+		[ '%d' ],
+		[ '%d' ]
+	);
+
+	return 'success';
 }

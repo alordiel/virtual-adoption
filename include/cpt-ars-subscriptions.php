@@ -186,15 +186,19 @@ function ars_change_of_subscription_post_status( string $new_status, string $old
 		return;
 	}
 
-	if ( $old_status !== 'ars-pending' && $new_status !== 'ars-active' ) {
-		global $wpdb;
-		$wpdb->update(
-			$wpdb->prefix . 'ars_subscriptions',
-			[ 'status' => $new_status ],
-			[ 'post_id' => $post->ID ],
-			[ '%d' ],
-			[ '%d' ]
-		);
+
+	global $wpdb;
+	$wpdb->update(
+		$wpdb->prefix . 'ars_subscriptions',
+		[ 'status' => $new_status ],
+		[ 'post_id' => $post->ID ],
+		[ '%d' ],
+		[ '%d' ]
+	);
+
+	// In case the admin is cancelling the subscription
+	if ($new_status === 'ars-cancelled') {
+		//TODO Cancel recurring payment
 	}
 
 	ars_send_confirmation_email( $post );
