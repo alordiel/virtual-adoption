@@ -1,0 +1,18 @@
+.page-template-ars-my-subscriptions .page_content_wrap {
+  padding-top: 0;
+}
+
+#manage-my-subscriptions .row-actions {
+  > button.cancel-button {
+    background: linear-gradient(to right, #ff6532 50%,#C42727 50%) no-repeat scroll right bottom / 210% 100% #B9251E !important;
+    &[disabled] {
+      background: linear-gradient(to right, #ff6532 50%, #757575 50%) no-repeat scroll right bottom/210% 100% #b9251e !important;
+    }
+  }
+
+  svg {
+    width: 20px;
+    fill: #fff;
+    @include animate(loading, 1.5s, linear, infinite);
+  }
+}

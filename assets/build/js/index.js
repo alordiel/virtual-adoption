@@ -1,70 +1,113 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // Change on the gift-donation option. Shows/hides the gift's email field.
-  document.getElementById('gift-donation').addEventListener('change', (e) => {
-    if (e.target.checked) {
-      document.querySelector('.email-gift').style.display = 'block';
-    } else {
-      document.querySelector('.email-gift').style.display = 'none';
-    }
-  });
+  if (document.getElementById('gift-donation') !== null) {
+    document.getElementById('gift-donation').addEventListener('change', (e) => {
+      if (e.target.checked) {
+        document.querySelector('.email-gift').style.display = 'block';
+      } else {
+        document.querySelector('.email-gift').style.display = 'none';
+      }
+    });
+  }
 
   // Change of the amount for donation. Watches when to show the custom payment amount
-  document.getElementsByName('selected-amount').forEach((e) => {
-    e.addEventListener('change', function (element) {
-      if (element.target.value === 'custom') {
-        document.querySelector('.part-element').style.display = 'inline';
-      } else {
-        document.querySelector('.part-element').style.display = 'none';
-      }
-      document.querySelector('.selected-donation-amount').classList.remove('selected-donation-amount');
-      element.target.parentNode.classList.add('selected-donation-amount');
-    })
-  });
+  if (document.getElementsByName('selected-amount') !== null) {
+    document.getElementsByName('selected-amount').forEach((e) => {
+      e.addEventListener('change', function (element) {
+        if (element.target.value === 'custom') {
+          document.querySelector('.part-element').style.display = 'inline';
+        } else {
+          document.querySelector('.part-element').style.display = 'none';
+        }
+        document.querySelector('.selected-donation-amount').classList.remove('selected-donation-amount');
+        element.target.parentNode.classList.add('selected-donation-amount');
+      })
+    });
+  }
 
   // Change the payment method and show the related description box
-  document.getElementsByName('payment-method').forEach((e) => {
-    e.addEventListener('change', function (element) {
-      document.querySelector('.payment-method-selected').classList.remove('payment-method-selected');
-      element.target.parentNode.classList.add('payment-method-selected');
+  if (document.getElementsByName('payment-method') !== null) {
+    document.getElementsByName('payment-method').forEach((e) => {
+      e.addEventListener('change', function (element) {
+        document.querySelector('.payment-method-selected').classList.remove('payment-method-selected');
+        element.target.parentNode.classList.add('payment-method-selected');
+      });
     });
-  });
+  }
 
   // Submitting the checkout
-  document.getElementById('submit-sponsorship').addEventListener('click', function (button) {
+  if (document.getElementById('submit-sponsorship') !== null) {
+    document.getElementById('submit-sponsorship').addEventListener('click', function (button) {
 
-    // validate form
-    if (document.getElementById('first-name') !== null && !validateContactForm()) {
-      return false;
-    }
+      // validate form
+      if (document.getElementById('first-name') !== null && !validateContactForm()) {
+        return false;
+      }
 
-    if (!validateCommonFields()) {
-      return false;
-    }
+      if (!validateCommonFields()) {
+        return false;
+      }
 
-    button.target.disabled = true;
+      button.target.disabled = true;
 
-    const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
-    const postData = {
-      security: document.getElementById('turbo-security').value,
-      action: 'ars_create_new_donation_subscription',
-      giftEmail: giftEmail,
-      animalID: document.getElementById('animal-id').value,
-      donationAmount: getDonationAmount(),
-      acceptedTerms: document.getElementById('terms').checked,
-    };
-    // send results
-    addSubscriptionToUsersAccount(postData)
-      .then((response) => {
-        console.log(response)
-        alert('Success')
-        location.href = response.data.redirect_to;
-      })
-      .catch((message) => {
-        alert(message)
-        document.getElementById('submit-sponsorship').target.disabled = false;
-      })
-  });
+      const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
+      const postData = {
+        security: document.getElementById('turbo-security').value,
+        action: 'ars_create_new_donation_subscription',
+        giftEmail: giftEmail,
+        animalID: document.getElementById('animal-id').value,
+        donationAmount: getDonationAmount(),
+        acceptedTerms: document.getElementById('terms').checked,
+      };
+      // send results
+      addSubscriptionToUsersAccount(postData)
+        .then((response) => {
+          console.log(response)
+          alert('Success')
+          location.href = response.data.redirect_to;
+        })
+        .catch((message) => {
+          alert(message)
+          document.getElementById('submit-sponsorship').target.disabled = false;
+        })
+    });
+  }
+
+
+  // Cancelling subscription
+  if (document.querySelector('.cancel-button') !== null) {
+    document.querySelectorAll('.cancel-button').forEach((element) => {
+      element.addEventListener('click', function (e) {
+
+        e.target.disabled = true;
+        e.target.children[0].style.display = 'inline-block';
+
+        const postData = {
+          post_id: e.target.dataset.postId,
+          security: document.getElementById('turbo-security').value,
+          action: 'ars_cancel_subscription_ajax',
+        };
+
+        cancelSubscription(postData)
+          .then( success => {
+            alert(success.data.message);
+            e.target.disabled = false;
+            e.target.children[0].style.display = 'none';
+            // replace the subscription status
+            document.querySelector('.row-' + postData.post_id + ' .subscription-status').innerText = success.data.status;
+            document.querySelector('.row-' + postData.post_id + ' .next-due-date').innerText = 'n/a'; // remove due date
+            e.target.remove() // removes the cancellation button
+          })
+          .catch( error => {
+            alert(error);
+            e.target.disabled = false;
+            e.target.children[0].style.display = 'none';
+          });
+        return false; // since this is clicked link, always return false
+      });
+    });
+  }
 
   // Used to validate the contact fields when a non-logged in user is adding a donation
   function validateContactForm() {
@@ -172,6 +215,27 @@ document.addEventListener('DOMContentLoaded', function () {
   // function for creating the subscription entry
   function addSubscriptionToUsersAccount(postData) {
     return new Promise((resolve, reject) => {
+      jQuery.ajax({
+        url: '/wp-admin/admin-ajax.php',
+        data: postData,
+        method: 'POST',
+        dataType: 'JSON',
+        success: (response) => {
+          if (response.status === 1) {
+            resolve(response);
+          } else {
+            reject(response.message);
+          }
+        },
+        error: (error) => {
+          reject(error.code + ' > ' + error.message);
+        }
+      });
+    });
+  }
+
+  function cancelSubscription(postData){
+    return new Promise( (resolve, reject) => {
       jQuery.ajax({
         url: '/wp-admin/admin-ajax.php',
         data: postData,

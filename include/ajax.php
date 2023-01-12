@@ -72,12 +72,23 @@ function ars_cancel_subscription_ajax() {
 		ars_json_response( 0, __( 'No subscription ID.', 'ars-virtual-donations' ) );
 	}
 
-	$result  = ars_cancel_ars_subscription_entry( $_POST['post_id'] );
+	// Check if the current user is the author (creator) of the requested for cancellation subscription
+	global $wpdb;
+	$post_exist = "SELECT ID FROM $wpdb->posts WHERE ID = %d AND post_author = %d";
+	$user_id    = get_current_user_id();
+	if ( empty( $wpdb->get_var( $wpdb->prepare( $post_exist, $_POST['post_id'], $user_id ) ) ) ) {
+		ars_json_response( 0, __( 'This subscription does not belong to you!', 'ars-virtual-donation' ) );
+	}
+
+	$result = ars_cancel_ars_subscription_entry( $_POST['post_id'] );
 	if ( $result !== 'success' ) {
 		ars_json_response( 0, $result );
 	}
 
-	ars_json_response( 1, __( 'Successfully cancelled.', 'ars-virtual-donations' ) );
+	ars_json_response( 1, '', [
+		'message' => __( 'Successfully cancelled.', 'ars-virtual-donations' ),
+		'status'  => __( 'Cancelled', 'ars-virtual-donations' )
+	] );
 }
 
-add_action( 'wp_ajax_ars_cancel_subscription', 'ars_cancel_subscription_ajax' );
+add_action( 'wp_ajax_ars_cancel_subscription_ajax', 'ars_cancel_subscription_ajax' );

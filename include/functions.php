@@ -185,7 +185,13 @@ function ars_create_new_user( array $user_data ): string {
 	return '';
 }
 
-
+/**
+ * Converts the status code to readable text. Used to display te subscriptions' status codes on front-end
+ *
+ * @param string $status_code
+ *
+ * @return string
+ */
 function ars_get_verbose_subscription_status( string $status_code ): string {
 	switch ( $status_code ) {
 		case 'ars-pending':
@@ -196,6 +202,5 @@ function ars_get_verbose_subscription_status( string $status_code ): string {
 			return __( 'Cancelled', 'ars-virtual-donations' );
 		default:
 			return 'n/a';
-
 	}
 }

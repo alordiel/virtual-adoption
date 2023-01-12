@@ -51,7 +51,8 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 			'completed_cycles'    => 0,
 			'next_due'            => date( "Y-m-d", strtotime( "+1 month", time() ) ),
 			'post_id'             => $post_id,
-			'email_for_updates'   => $email
+			'email_for_updates'   => $email,
+			'currency'            => 'EUR',
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%d', '%s', '%d' ],
 	);
@@ -138,12 +139,12 @@ function ars_get_sponsored_animal_details_by_subscription( int $subscription_pos
 
 function ars_cancel_ars_subscription_entry( int $post_id ) {
 
-	$result = wp_update_post( [
+	$post_update = wp_update_post( [
 		'ID'          => $post_id,
 		'post_status' => 'ars-cancelled',
 	] );
 
-	if ( $result === 0 || is_wp_error( $result ) ) {
+	if ( $post_update === 0 || is_wp_error( $post_update ) ) {
 		return __( 'The cancellation failed, please try again', 'ars-virtual-donation' );
 	}
 

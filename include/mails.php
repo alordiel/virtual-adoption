@@ -1,4 +1,9 @@
 <?php
+/**
+ * @param WP_Post $post
+ *
+ * @return void
+ */
 function ars_send_confirmation_email( WP_Post $post ) {
 	$user    = get_user_by( 'ID', $post->post_author );
 	$details = ars_get_sponsored_animal_details_by_subscription( $post->ID );
