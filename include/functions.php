@@ -1,5 +1,8 @@
 <?php
-/** @noinspection ForgottenDebugOutputInspection */
+/**
+ * @noinspection ForgottenDebugOutputInspection
+ * Internal use only, for debugging purposes
+ */
 function dbga( $arg ) {
 	error_log( print_r( $arg, true ) );
 }
@@ -45,6 +48,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
 	return $term->slug;
 }
 
+
 /**
  * Returns true if WPML is active
  *
@@ -53,6 +57,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
 function ars_is_wpml_activated(): bool {
 	return class_exists( 'SitePress' ) && function_exists( 'wpml_is_setup_complete' ) && wpml_is_setup_complete();
 }
+
 
 /**
  * an obfuscation of the id
@@ -78,6 +83,7 @@ function ars_decode_id( string $string ): int {
 
 	return ( $int - 13 ) / 3;
 }
+
 
 /**
  * Create

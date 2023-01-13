@@ -11,8 +11,8 @@
  * @return array
  */
 function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
-	$user    = wp_get_current_user();
-	if ($user === null) {
+	$user = wp_get_current_user();
+	if ( $user === null ) {
 		return [
 			'status'  => 'error',
 			'message' => __( 'It seems that you are not logged in. Please log in first.', 'ars-virtual-donations' )
@@ -47,7 +47,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 	}
 
 	$currency = 'BGN';
-	if (defined(ICL_LANGUAGE_CODE) && ICL_LANGUAGE_CODE === 'en') {
+	if ( defined( ICL_LANGUAGE_CODE ) && ICL_LANGUAGE_CODE === 'en' ) {
 		$currency = 'EUR';
 	}
 
@@ -88,6 +88,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 	];
 }
 
+
 /**
  * Check is there is a record in ars_subscriptions for the current user and animal
  * Also checks if the status is different from 'cancelled'
@@ -106,6 +107,7 @@ function ars_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
 
 	return ! empty( $result );
 }
+
 
 /**
  * Gets all animals that are adopted by the current user and are not with 'cancelled' status
@@ -149,7 +151,14 @@ function ars_get_sponsored_animal_details_by_subscription( int $subscription_pos
 }
 
 
-function ars_cancel_ars_subscription_entry( int $post_id ) {
+/**
+ * Changes the status of the post and the ars_subscriptions entry to 'cancelled'
+ *
+ * @param int $post_id
+ *
+ * @return string
+ */
+function ars_cancel_ars_subscription_entry( int $post_id ): string {
 
 	$post_update = wp_update_post( [
 		'ID'          => $post_id,
