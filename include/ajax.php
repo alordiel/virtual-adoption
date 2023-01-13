@@ -1,4 +1,10 @@
 <?php
+/**
+ * Ajax callback function for creating the subscriptions.
+ * It will add two DB entries, one in wp_posts and one in the ars_subscriptions
+ *
+ * @return void
+ */
 function ars_create_new_donation_subscription_ajax() {
 	check_ajax_referer( 'ars-taina', 'security' );
 
@@ -59,6 +65,7 @@ function ars_create_new_donation_subscription_ajax() {
 
 add_action( 'wp_ajax_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription_ajax' );
 add_action( 'wp_ajax_nopriv_ars_create_new_donation_subscription', 'ars_create_new_donation_subscription_ajax' );
+
 
 /**
  * Function to cancel a given subscription. The ajax can be called by the user only.

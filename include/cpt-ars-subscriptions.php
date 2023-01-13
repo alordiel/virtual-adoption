@@ -117,6 +117,13 @@ function ars_append_post_status_list() {
               document.getElementById("post_status").innerHTML = \'' . $options . '\'; // Replaces the standard post statuses
 			  document.getElementById("post-status-display").innerText = "' . $label . '";
               document.getElementById("save-post").remove(); // removes the "Save draft" button
+              // Check if button is "publish" or "update" (when it is "publish" we need to change it, else it will change the post type to "publish" and not to what we need"
+              const updateButton = document.getElementById("publish");
+              if (updateButton.value === "Publish") {
+				updateButton.value = "Update";
+                updateButton.name = "save"
+                document.getElementById("original_publish").value = "Update";
+              }
           });
           </script>
           ';
@@ -185,13 +192,13 @@ function ars_change_of_subscription_post_status( string $new_status, string $old
 	if ( $old_status === $new_status ) {
 		return;
 	}
-
+	dbga($new_status);
 	global $wpdb;
 	$wpdb->update(
 		$wpdb->prefix . 'ars_subscriptions',
 		[ 'status' => $new_status ],
 		[ 'post_id' => $post->ID ],
-		[ '%d' ],
+		[ '%s' ],
 		[ '%d' ]
 	);
 

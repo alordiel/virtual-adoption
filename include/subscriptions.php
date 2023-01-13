@@ -60,11 +60,11 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 			'amount'              => $amount,
 			'status'              => 'ars-pending',
 			'period_type'         => 'monthly',
+			'currency'            => $currency,
 			'completed_cycles'    => 0,
 			'next_due'            => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'             => $post_id,
 			'email_for_updates'   => $email,
-			'currency'            => $currency,
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d' ],
 	);
