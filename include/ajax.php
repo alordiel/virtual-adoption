@@ -68,13 +68,13 @@ add_action( 'wp_ajax_nopriv_ars_create_new_donation_subscription', 'ars_create_n
 function ars_cancel_subscription_ajax() {
 	check_ajax_referer( 'ars-taina', 'security' );
 
-	if ( empty( $_POST['post_id'] ) || empty( $_POST['post_id'] ) ) {
+	if ( empty( $_POST['post_id'] ) ) {
 		ars_json_response( 0, __( 'No subscription ID.', 'ars-virtual-donations' ) );
 	}
 
 	// Check if the current user is the author (creator) of the requested for cancellation subscription
 	global $wpdb;
-	$post_exist = "SELECT ID FROM $wpdb->posts WHERE ID = %d AND post_author = %d";
+	$post_exist = "SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_author = %d";
 	$user_id    = get_current_user_id();
 	if ( empty( $wpdb->get_var( $wpdb->prepare( $post_exist, $_POST['post_id'], $user_id ) ) ) ) {
 		ars_json_response( 0, __( 'This subscription does not belong to you!', 'ars-virtual-donation' ) );

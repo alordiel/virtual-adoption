@@ -25,6 +25,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 		'post_type'   => 'ars-subscription',
 		'post_title'  => $title,
 		'post_author' => $user->ID,
+		'post_status' => 'ars-pending',
 	], true );
 
 	if ( $post_id === 0 ) {
