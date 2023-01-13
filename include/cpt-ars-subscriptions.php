@@ -186,7 +186,6 @@ function ars_change_of_subscription_post_status( string $new_status, string $old
 		return;
 	}
 
-
 	global $wpdb;
 	$wpdb->update(
 		$wpdb->prefix . 'ars_subscriptions',
@@ -224,3 +223,21 @@ function ars_on_deleting_subscription_post( int $post_id ) {
 }
 
 add_action( 'delete_post', 'ars_on_deleting_subscription_post', 10, 2 );
+
+
+/**
+ * Hook on moving a post subscription's entry into the trash. Updates the status of the ars-subscriptions entry to "cancelled".
+ *
+ * @param int $post_id
+ *
+ * @return void
+ */
+function ars_change_status_when_post_is_trashed( int $post_id) {
+	global $wpdb;
+	$wpdb->update(
+		$wpdb->prefix . 'ars_subscriptions',
+		[ 'status' => 'ars-cancelled'],
+		[ 'post_id' => $post_id ]
+	);
+}
+add_action('wp_trash_post', 'ars_change_status_when_post_is_trashed');
