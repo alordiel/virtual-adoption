@@ -45,6 +45,11 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 		$email = $user->user_email;
 	}
 
+	$currency = 'BGN';
+	if (defined(ICL_LANGUAGE_CODE) && ICL_LANGUAGE_CODE === 'en') {
+		$currency === 'EUR';
+	}
+
 	global $wpdb;
 	$insert_status = $wpdb->insert(
 		$wpdb->prefix . 'ars_subscriptions',
@@ -58,7 +63,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 			'next_due'            => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'             => $post_id,
 			'email_for_updates'   => $email,
-			'currency'            => 'EUR',
+			'currency'            => $currency,
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d' ],
 	);
