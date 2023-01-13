@@ -12,6 +12,12 @@
  */
 function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
 	$user    = wp_get_current_user();
+	if ($user === null) {
+		return [
+			'status'  => 'error',
+			'message' => __( 'It seems that you are not logged in. Please log in first.', 'ars-virtual-donations' )
+		];
+	}
 	$animal  = get_post( $animal_id );
 	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
 	$post_id = wp_insert_post( [
@@ -49,12 +55,12 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 			'status'              => 'ars-pending',
 			'period_type'         => 'monthly',
 			'completed_cycles'    => 0,
-			'next_due'            => date( "Y-m-d", strtotime( "+1 month", time() ) ),
+			'next_due'            => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'             => $post_id,
 			'email_for_updates'   => $email,
 			'currency'            => 'EUR',
 		],
-		[ '%d', '%d', '%f', '%s', '%s', '%d', '%s', '%d' ],
+		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d' ],
 	);
 
 	if ( $insert_status === false ) {
