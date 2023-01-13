@@ -47,7 +47,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 
 	$currency = 'BGN';
 	if (defined(ICL_LANGUAGE_CODE) && ICL_LANGUAGE_CODE === 'en') {
-		$currency === 'EUR';
+		$currency = 'EUR';
 	}
 
 	global $wpdb;
