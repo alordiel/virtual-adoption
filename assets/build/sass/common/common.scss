@@ -6,21 +6,12 @@
 .single-sheltered-animal .sidebar,
 .post-type-archive-sheltered-animal .sidebar,
 .tax-kind-of-animal .sidebar,
-.page-template-donation-checkout .sidebar,
+.page-template-ars-donation-checkout .sidebar,
 .page-template-thank-you-donation .sidebar {
   display: none !important;
 }
 
-/* Hide the page loader */
-.page-template-donation-checkout #page_preloader,
-.post-type-archive-sheltered-animal #page_preloader,
-.tax-kind-of-animal #page_preloader,
-.page-template-donation-checkout #page_preloader,
-.page-template-thank-you-donation #page_preloader {
-  display: none;
-}
-
-.page-template-donation-checkout .page_wrap > .page_content_wrap > .content_wrap > .content,
+.page-template-ars-donation-checkout .page_wrap > .page_content_wrap > .content_wrap > .content,
 .single-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .post-type-archive-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .tax-kind-of-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
