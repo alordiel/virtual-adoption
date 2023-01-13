@@ -195,16 +195,17 @@ function ars_change_of_subscription_post_status( string $new_status, string $old
 		[ '%d' ]
 	);
 
+	$subscription = ars_get_subscription_by_post_id( $post->ID );
+
 	// In case the admin is cancelling the subscription
-	if ($new_status === 'ars-cancelled') {
-		//TODO Cancel recurring payment
+	if ( $new_status === 'ars-cancelled' && $old_status === 'ars-active') {
+		ars_paypal_cancel_subscription( $subscription );
 	}
 
 	ars_send_confirmation_email( $post );
 }
 
 add_action( 'transition_post_status', 'ars_change_of_subscription_post_status', 10, 3 );
-
 
 
 /**
@@ -232,12 +233,25 @@ add_action( 'delete_post', 'ars_on_deleting_subscription_post', 10, 2 );
  *
  * @return void
  */
-function ars_change_status_when_post_is_trashed( int $post_id) {
+function ars_change_status_when_post_is_trashed( int $post_id ) {
 	global $wpdb;
+	$subscription = ars_get_subscription_by_post_id( $post_id );
+	// Check if status is not already cancelled
+	if ( $subscription['status'] === 'ars-cancelled' ) {
+		return;
+	}
+
+	// In case of active status we need to cancel the PayPal subscription
+	if ( $subscription['status'] === 'ars-active' ) {
+		ars_paypal_cancel_subscription( $subscription );
+	}
+
 	$wpdb->update(
 		$wpdb->prefix . 'ars_subscriptions',
-		[ 'status' => 'ars-cancelled'],
+		[ 'status' => 'ars-cancelled' ],
 		[ 'post_id' => $post_id ]
 	);
+
 }
-add_action('wp_trash_post', 'ars_change_status_when_post_is_trashed');
+
+add_action( 'wp_trash_post', 'ars_change_status_when_post_is_trashed' );

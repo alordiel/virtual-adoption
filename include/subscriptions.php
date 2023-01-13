@@ -180,3 +180,8 @@ function ars_cancel_ars_subscription_entry( int $post_id ): string {
 
 	return 'success';
 }
+
+
+function ars_paypal_cancel_subscription( array $subscription ) {
+
+}
