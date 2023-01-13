@@ -161,7 +161,7 @@ add_filter( 'display_post_states', 'ars_display_archive_state' );
  *
  * @return array
  */
-function remove_quick_edit( array $actions, WP_Post $post ) {
+function remove_quick_edit( array $actions, WP_Post $post ): array {
 	if ( $post->post_type === 'ars-subscription' ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
@@ -205,3 +205,22 @@ function ars_change_of_subscription_post_status( string $new_status, string $old
 }
 
 add_action( 'transition_post_status', 'ars_change_of_subscription_post_status', 10, 3 );
+
+
+
+/**
+ * Hook to the deletion of subscription post and also delete the ars_subscription entry
+ *
+ * @param int $post_id
+ *
+ * @return void
+ */
+function ars_on_deleting_subscription_post( int $post_id ) {
+	global $wpdb;
+	$wpdb->delete(
+		$wpdb->prefix . 'ars_subscriptions',
+		[ 'post_id' => $post_id ]
+	);
+}
+
+add_action( 'delete_post', 'ars_on_deleting_subscription_post', 10, 2 );
