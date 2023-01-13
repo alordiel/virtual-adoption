@@ -4,7 +4,7 @@
  */
 $sheltered_animal = get_post( $post_id );
 if ( empty( $sheltered_animal ) ) {
-	include_once 'no-animals-found.php';
+	include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
 } else {
 	$age   = get_post_meta( $post_id, 'animals-age', true );
 	$image = get_the_post_thumbnail_url( $post_id, 'small' );
@@ -34,7 +34,7 @@ if ( empty( $sheltered_animal ) ) {
 						<input id="custom-amount" value="custom" type="radio" name="selected-amount">Custom
 					</label>
 					<label class="part-element" for="selected-custom-amount">€
-						<input id="selected-custom-amount" class="custom-amount" value="5" type="number"
+						<input id="selected-custom-amount" class="custom-amount" value="15" type="number"
 							   name="selected-custom-amount" min="5">
 					</label>
 				<?php } else { ?>
@@ -53,39 +53,11 @@ if ( empty( $sheltered_animal ) ) {
 			</div>
 			<h4><strong><?php _e( 'Account Details', 'ars-virtual-donation' ) ?></strong></h4>
 			<div class="contact-details">
-				<?php if ( $user->ID === 0 ) { ?>
-					<p><?php _e( 'We need to create an account for you so you can manage your monthly support. Please fill in the details below.', 'ars-virtual-donation' ); ?></p>
-					<p>
-						<label for="first-name">
-							<input id="first-name" name="first-name" type="text"
-								   placeholder="<?php _e( 'First name', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="last-name">
-							<input id="last-name" name="last-name" type="text"
-								   placeholder="<?php _e( 'Last name', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="email">
-							<input id="email" name="email" type="email"
-								   placeholder="<?php _e( 'Email', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="contact-phone">
-							<input id="contact-phone" name="contact-phone" type="text"
-								   placeholder="<?php _e( 'Phone (optional)', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-					<p>
-						<label for="password">
-							<input id="password" name="password"
-								   type="text" placeholder="<?php _e( 'Password', 'ars-virtual-donations' ); ?>">
-						</label>
-					</p>
-				<?php } ?>
+				<?php
+				if ( $user->ID === 0 ) {
+					include_once 'registration-form.php';
+				}
+				?>
 				<p>
 					<label for="gift-donation">
 						<input name="gift-donation" id="gift-donation" type="checkbox">
@@ -132,16 +104,23 @@ if ( empty( $sheltered_animal ) ) {
 				<p class="form-row validate-required">
 					<label for="terms">
 						<input type="checkbox" name="terms" id="terms">
-						<span class="woocommerce-terms-and-conditions-checkbox-text">
+						<span>
 							I have read and agree to the website
 							<a href="https://toafl.com/terms-conditions" target="_blank">terms and conditions</a>
 						</span>&nbsp;<abbr class="required" title="required">*</abbr>
 					</label>
 					<input type="hidden" name="terms-field" value="1">
 				</p>
-				<button type="button" name="virtual-checkout-submit"
-						id="submit-sponsorship" value="Submit sponsorship">Submit sponsorship
+				<button
+					type="button"
+					name="virtual-checkout-submit"
+					id="submit-sponsorship"
+					value="Submit sponsorship"
+				>
+					Submit sponsorship <span></span>
 				</button>
+				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
+				<?php wp_nonce_field( 'ars-taina', 'turbo-security' ); ?>
 			</div>
 		</div>
 	</div>

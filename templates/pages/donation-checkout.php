@@ -11,7 +11,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 	<div class="sheltered-animals-archive">
 		<?php
 		if ( $post_id !== 0 ) {
-			include_once 'checkout-form.php';
+			include_once( ARSVD_ABS . '/templates/parts/checkout-form.php' );
 		} else {
 			$animals = get_posts( [
 				'post_type'        => 'sheltered-animal',
@@ -19,10 +19,10 @@ if ( ! empty( $_GET['aid'] ) ) {
 				'suppress_filters' => false,
 			] );
 			if ( empty( $animals ) ) {
-				include_once 'no-animals-found.php';
+				include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
 			} else {
 				?>
-				<div class="intro-tex">
+				<div class="intro-text">
 					<h2>Select an animal to sponsor</h2>
 					<p>It couldn't be easier to sponsor a dog in our care, or to gift a sponsorship to a friend or loved
 						as little as 1.25 lv. per week* (5.00 BGN per month).</p>
@@ -31,14 +31,19 @@ if ( ! empty( $_GET['aid'] ) ) {
 					<?php
 					$ars_settings = get_option( 'ars-settings' );
 					$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
+					$adopted_animals = ars_get_list_of_adopted_animals();
 					foreach ( $animals as $animal ) {
+						// don't show already adopted animals
+						if ($adopted_animals !== [] && in_array($animal->ID, $adopted_animals)) {
+							continue;
+						}
 						$post_id = $animal->ID;
 						$age           = get_post_meta( $post_id, 'animals-age', true );
 						$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 						$animal_link   = get_the_permalink( $post_id );
 						$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
 						$the_title     = $animal->post_title;
-						include 'animal-card.php';
+						include( ARSVD_ABS . '/templates/parts/animal-card.php');
 					}
 					?>
 				</div>

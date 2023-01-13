@@ -56,3 +56,19 @@
     }
   }
 }
+
+.orange-button-wrap {
+  margin: 15px 0 10px;
+
+  .adopted-button {
+    background-color: #ff6532;
+    text-align: center;
+    min-width: 210px;
+    max-width: 250px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 auto;
+    padding: 10px 0;
+  }
+}

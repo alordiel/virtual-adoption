@@ -75,8 +75,132 @@ function ars_encode_id( int $id ): string {
  */
 function ars_decode_id( string $string ): int {
 	$int = (int) str_replace( 's_', '', $string );
-	dbga( $string );
-	dbga( $int );
 
 	return ( $int - 13 ) / 3;
+}
+
+/**
+ * Create
+ *
+ * @param string $page_type
+ *
+ * @return void
+ */
+function ars_create_template_page( string $page_type ) {
+	$templates = [
+		'checkout-page'         => [
+			'title'    => __( 'Donation checkout', 'ars-virtual-donations' ),
+			'template' => 'ars-donation-checkout.php',
+			'slug'     => 'donations-checkout',
+		],
+		'thank-you-page'        => [
+			'title'    => __( 'Virtual adopt - Thank you', 'ars-virtual-donations' ),
+			'template' => 'ars-thank-you-donation.php',
+			'slug'     => 'ars-thank-you',
+		],
+		'my-subscriptions-page' => [
+			'title'    => __( 'Manage my adopted animals', 'ars-virtual-donations' ),
+			'template' => 'ars-my-subscriptions.php',
+			'slug'     => 'ars-my-donations',
+		],
+	];
+
+	$user_id      = get_current_user_id();
+	$current_page = $templates[ $page_type ];
+	$page_id      = wp_insert_post( [
+		'post_type'      => 'page',
+		'post_status'    => 'publish',
+		'post_title'     => $current_page['title'],
+		'post_author'    => $user_id,
+		'comment_status' => 'closed',
+		'page_template'  => $current_page['template'],
+		'post_name'      => $current_page['slug'],
+	] );
+
+	$ars_settings               = get_option( 'ars-settings' );
+	$ars_settings[ $page_type ] = $page_id;
+	update_option( 'ars-settings', $ars_settings );
+}
+
+/**
+ * General function that echos the response status and message from an ajax query and terminates the call
+ *
+ * @param int $code
+ * @param string $message
+ * @param array $some_data
+ *
+ * @return void
+ */
+function ars_json_response( int $code, string $message = '', array $some_data = [] ) {
+	$data = [ 'status' => $code ];
+	if ( $message !== '' ) {
+		$data['message'] = $message;
+	}
+
+	if ( $some_data !== [] ) {
+		$data['data'] = $some_data;
+	}
+
+	echo json_encode( $data, JSON_NUMERIC_CHECK );
+	wp_die();
+}
+
+/**
+ * Function will create new WP_User and will automatically log the user in.
+ *
+ * @param array $user_data
+ *
+ * @return string
+ */
+function ars_create_new_user( array $user_data ): string {
+	if ( empty( $user_data['email'] ) || ! is_email( $user_data['email'] ) ) {
+		return __( 'Email does not exist', 'ars-virtual-donations' );
+	}
+	if ( email_exists( $user_data['email'] ) || username_exists( $user_data['email'] ) ) {
+		return __( 'There is already an user with that email', 'ars-virtual-donations' );
+	}
+
+	$user_id = wp_insert_user( [
+		'user_login' => $user_data['email'],
+		'user_pass'  => $user_data['password'],
+		'user_email' => $user_data['email'],
+		'first_name' => $user_data['first_name'],
+		'last_name'  => $user_data['last_name'],
+		'role'       => 'virtual-adopter'
+	] );
+
+	if ( is_wp_error( $user_id ) ) {
+		return $user_id->get_error_message();
+	}
+
+	$credentials = array(
+		'user_login'    => $user_data['email'],
+		'user_password' => $user_data['password'],
+		'remember'      => true
+	);
+
+	wp_signon( $credentials, false );
+	wp_set_current_user( $user_id );
+
+	return '';
+}
+
+/**
+ * Converts the status code to readable text. Used to display te subscriptions' status codes on front-end
+ *
+ * @param string $status_code
+ *
+ * @return string
+ */
+function ars_get_verbose_subscription_status( string $status_code ): string {
+	switch ( $status_code ) {
+		case 'ars-pending':
+			return __( 'Pending', 'ars-virtual-donations' );
+		case 'ars-active':
+			return __( 'Active', 'ars-virtual-donations' );
+		case 'ars-cancelled':
+			return __( 'Cancelled', 'ars-virtual-donations' );
+		default:
+			return 'n/a';
+	}
 }

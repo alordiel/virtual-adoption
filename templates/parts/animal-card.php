@@ -8,6 +8,7 @@
  * @var string $sheltered_for
  * @var string $sponsor_link
  * @var int $post_id
+ * @var array $adopted_animals
  */
 
 ?>
@@ -46,10 +47,16 @@
 				: <?php echo $sheltered_for ?><br>
 			</div>
 		</div>
-		<div class="blue-button-wrap">
-			<a href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ) ?>"
-			   class="blue-button">Sponsor me</a>
-		</div>
+		<?php if ( $adopted_animals === [] || ! in_array( $post_id, $adopted_animals ) ): ?>
+			<div class="blue-button-wrap">
+				<a href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ) ?>"
+				   class="blue-button">Sponsor me</a>
+			</div>
+		<?php else: ?>
+			<div class="orange-button-wrap">
+				<div class="adopted-button"><?php _e('Adopted') ?></div>
+			</div>
+		<?php endif; ?>
 		<div class="blue-button-wrap">
 			<a href="<?php echo $animal_link ?>" class="blue-button">Read my story</a>
 		</div>

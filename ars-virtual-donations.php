@@ -21,9 +21,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'ARSVD_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 const ARSVD_ABS = __DIR__;
 
-require_once (ARSVD_ABS . '/include/cpt-animals.php');
-require_once (ARSVD_ABS . '/include/template-loader.php');
-require_once (ARSVD_ABS . '/include/functions.php');
-require_once (ARSVD_ABS . '/include/wordpress.php');
-require_once (ARSVD_ABS . '/include/enqueue-scripts-and-styles.php');
-require_once (ARSVD_ABS . '/include/admin-settings.php');
+require_once( ARSVD_ABS . '/include/cpt-animals.php' );
+require_once( ARSVD_ABS . '/include/cpt-ars-subscriptions.php' );
+require_once( ARSVD_ABS . '/include/template-loader.php' );
+require_once( ARSVD_ABS . '/include/functions.php' );
+require_once( ARSVD_ABS . '/include/wordpress.php' );
+require_once( ARSVD_ABS . '/include/enqueue-scripts-and-styles.php' );
+require_once( ARSVD_ABS . '/include/admin-settings.php' );
+require_once( ARSVD_ABS . '/include/ajax.php' );
+require_once( ARSVD_ABS . '/include/database-tables.php' );
+require_once( ARSVD_ABS . '/include/subscriptions.php' );
+require_once( ARSVD_ABS . '/include/mails.php' );
+
+
+/**
+ * Activate the plugin.
+ */
+function ars_plugin_activated() {
+	// Trigger our function that registers the custom post type plugin.
+	if ( ! post_type_exists( 'sheltered-animal' ) ) {
+		ars_sheltered_animals();
+		sheltered_animal_taxonomy();
+		ars_register_meta_boxes();
+	}
+	$ars_settings = get_option( 'ars-settings' );
+	if(empty($ars_settings['checkout-page'])){
+		ars_create_template_page('checkout-page');
+	}
+	if(empty($ars_settings['thank-you-page'])){
+		ars_create_template_page('thank-you-page');
+	}
+	if(empty($ars_settings['my-subscriptions-page'])){
+		ars_create_template_page('my-subscriptions-page');
+	}
+	// Clear the permalinks after the post type has been registered.
+	flush_rewrite_rules();
+
+	ars_create_subscription_tables();
+	ars_custom_post_status_for_subscriptions();
+}
+
+register_activation_hook( __FILE__, 'ars_plugin_activated' );

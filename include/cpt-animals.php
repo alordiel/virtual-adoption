@@ -45,7 +45,7 @@ function ars_sheltered_animals() {
 }
 
 add_action( 'init', 'sheltered_animal_taxonomy' );
-function sheltered_animal_taxonomy() {
+	function sheltered_animal_taxonomy() {
 	register_taxonomy(
 		'kind-of-animal',
 		'sheltered-animal',
