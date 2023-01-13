@@ -7,7 +7,8 @@
 .post-type-archive-sheltered-animal .sidebar,
 .tax-kind-of-animal .sidebar,
 .page-template-ars-donation-checkout .sidebar,
-.page-template-ars-thank-you-donation .sidebar {
+.page-template-ars-thank-you-donation .sidebar,
+.page-template-ars-my-subscriptions .sidebar{
   display: none !important;
 }
 
@@ -15,7 +16,8 @@
 .single-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .post-type-archive-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .tax-kind-of-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
-.page-template-ars-thank-you-donation .page_wrap > .page_content_wrap > .content_wrap > .content {
+.page-template-ars-thank-you-donation .page_wrap > .page_content_wrap > .content_wrap > .content,
+.page-template-ars-my-subscriptions .page_wrap > .page_content_wrap > .content_wrap > .content {
   width: 100%;
   float: none;
 }
