@@ -38,7 +38,7 @@ if ( ! empty( $subscriptions ) ) {
 				continue;
 			}
 			$post_id = $details->post_id;
-			$animal  = get_post( $post_id );
+			$animal  = get_post( $details->sponsored_animal_id );
 			?>
 			<tr class="row-<?php echo $post_id; ?>">
 				<td><a href="<?php echo get_permalink( $animal->ID ) ?>"><?php echo $animal->post_title; ?></a></td>
