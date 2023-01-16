@@ -28,13 +28,15 @@ function ars_admin_settings_page() {
 			$ars_settings = [ 'animal-terms' ];
 		}
 
-		$ars_settings['animal-terms']['dogs']   = (int) $_POST['dogs-term-id'];
-		$ars_settings['animal-terms']['cats']   = (int) $_POST['cats-term-id'];
-		$ars_settings['animal-terms']['horses'] = (int) $_POST['horses-term-id'];
-		$ars_settings['animal-terms']['other']  = (int) $_POST['farm-animals-term-id'];
-		$ars_settings['checkout-page']          = (int) $_POST['checkout-donation'];
-		$ars_settings['thank-you-page']         = (int) $_POST['thank-you-page'];
-		$ars_settings['my-subscriptions-page']  = (int) $_POST['my-subscriptions-page'];
+		$ars_settings['animal-terms']['dogs']                   = (int) $_POST['dogs-term-id'];
+		$ars_settings['animal-terms']['cats']                   = (int) $_POST['cats-term-id'];
+		$ars_settings['animal-terms']['horses']                 = (int) $_POST['horses-term-id'];
+		$ars_settings['animal-terms']['other']                  = (int) $_POST['farm-animals-term-id'];
+		$ars_settings['checkout-page']                          = (int) $_POST['checkout-donation'];
+		$ars_settings['thank-you-page']                         = (int) $_POST['thank-you-page'];
+		$ars_settings['my-subscriptions-page']                  = (int) $_POST['my-subscriptions-page'];
+		$ars_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
+		$ars_settings['payment-methods']['paypal']['secret']    = ars_encrypt_data( $_POST['paypal-secret-key'] );
 
 		update_option( 'ars-settings', $ars_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
@@ -57,6 +59,8 @@ function ars_admin_settings_page() {
 	$checkout_page_id    = ! empty( $ars_settings['checkout-page'] ) ? $ars_settings['checkout-page'] : 0;
 	$thank_you_page_id   = ! empty( $ars_settings['thank-you-page'] ) ? $ars_settings['thank-you-page'] : 0;
 	$my_subscriptions_id = ! empty( $ars_settings['my-subscriptions-page'] ) ? $ars_settings['my-subscriptions-page'] : 0;
+	$paypal_client_id    = ! empty( $ars_settings['payment-methods']['paypal']['client_id'] ) ? $ars_settings['payment-methods']['paypal']['client_id'] : '';
+	$paypal_secret       = ! empty( $ars_settings['payment-methods']['paypal']['secret'] ) ? ars_decrypt_data( $ars_settings['payment-methods']['paypal']['secret'] ) : '';
 
 	$dogs_options          = ars_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
 	$cats_options          = ars_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
@@ -163,6 +167,39 @@ function ars_admin_settings_page() {
 					<select name="my-subscriptions-page" id="my-subscriptions-page">
 						<?php echo $my_subscriptions_page ?>
 					</select>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<hr>
+
+		<h4><?php _e( "PayPal payment method", "ars-virtual-donations" ); ?></h4>
+
+		<table class="form-table">
+			<tbody>
+			<tr>
+				<th>
+					<label for="paypal-client-id">
+						<?php _e( "Client ID", "ars-virtual-donations" ); ?>
+					</label>
+				</th>
+				<td>
+					<input type="text" name="paypal-client-id" id="paypal-client-id"
+						   style="max-width: 680px;width: 100%;"
+						   value="<?php echo $paypal_client_id ?>">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="paypal-secret-key">
+						<?php _e( "Client ID", "ars-virtual-donations" ); ?>
+					</label>
+				</th>
+				<td>
+					<input type="password" name="paypal-secret-key" id="paypal-secret-key"
+						   style="max-width: 680px;width: 100%;"
+						   value="<?php echo $paypal_secret ?>">
 				</td>
 			</tr>
 			</tbody>

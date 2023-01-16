@@ -227,3 +227,4 @@ function ars_get_subscription_by_post_id( int $post_id ): array {
 
 	return $subscription;
 }
+

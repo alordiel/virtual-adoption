@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+
+
 define( 'ARSVD_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 const ARSVD_ABS = __DIR__;
 
@@ -33,12 +36,14 @@ require_once( ARSVD_ABS . '/include/database-tables.php' );
 require_once( ARSVD_ABS . '/include/subscriptions.php' );
 require_once( ARSVD_ABS . '/include/mails.php' );
 require_once( ARSVD_ABS . '/include/api.php' );
+require_once( ARSVD_ABS . '/include/crypt.php' );
 
 
 /**
  * Activate the plugin.
  */
 function ars_plugin_activated() {
+
 	// Trigger our function that registers the custom post type plugin.
 	if ( ! post_type_exists( 'sheltered-animal' ) ) {
 		ars_sheltered_animals();
