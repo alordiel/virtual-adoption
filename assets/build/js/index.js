@@ -1,3 +1,4 @@
+// Payment and checkout page scripts
 document.addEventListener('DOMContentLoaded', function () {
 
   // Change on the gift-donation option. Shows/hides the gift's email field.

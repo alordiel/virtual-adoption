@@ -5,7 +5,6 @@
 get_header();
 $user_id = wp_get_current_user();
 ?>
-	<h2 xmlns="http://www.w3.org/1999/html">This is the list of your subscriptions</h2>
 
 <?php
 $subscriptions = get_posts( [
@@ -17,6 +16,7 @@ $subscriptions = get_posts( [
 
 if ( ! empty( $subscriptions ) ) {
 	?>
+	<h5><?php _e('This is the list of your subscriptions','ars-virtual-donations'); ?></h5>
 	<table id="manage-my-subscriptions">
 		<thead>
 		<tr>
@@ -69,7 +69,12 @@ if ( ! empty( $subscriptions ) ) {
 	<?php wp_nonce_field( 'ars-taina', 'turbo-security' ); ?>
 	<?php
 } else {
-	_e( 'No subscriptions found', 'ars-virtual-donation' );
+	$animal_archive_link = get_post_type_archive_link( 'sheltered-animal' );
+	?>
+	<h5>
+		<?php echo sprintf( __( 'No subscriptions found. You can check our animals waiting for your sponsorship <a href="%s">here</a>.', 'ars-virtual-donation' ), $animal_archive_link ) ?>
+	</h5>
+	<?php
 }
 ?>
 

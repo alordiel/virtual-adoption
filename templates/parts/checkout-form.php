@@ -75,11 +75,11 @@ if ( empty( $sheltered_animal ) ) {
 			<div class="donation-payment-methods">
 				<h4><strong><?php _e( 'Payment methods', 'ars-virtual-donation' ) ?></strong>:</h4>
 				<ul class="payment-methods">
-					<li class="payment-method payment-method-mypos payment-method-selected">
+					<!--<li class="payment-method payment-method-mypos payment-method-selected">
 						<input id="payment-method-mypos" type="radio" class="input-radio" name="payment-method"
 							   value="mypos" checked>
 						<label for="payment-method-mypos"> Credit/Debit Card (myPos)
-							<img src="<?php echo ARSVD_URL ?>/assets/images/payments/myPos.png" alt="myPos logo">
+							<img src="<?php /*echo ARSVD_URL */?>/assets/images/payments/myPos.png" alt="myPos logo">
 						</label>
 						<div class="payment-box payment-method-mypos">
 							<span class="box-arrow"></span>
@@ -87,18 +87,14 @@ if ( empty( $sheltered_animal ) ) {
 							<p>myPOS Checkout simplifies your online payments by managing the entire payment process
 								from the time your customers wish to make a purchase to the completed purchase.</p>
 						</div>
-					</li>
+					</li>-->
 					<li class="payment-method payment-method-paypal">
 						<input id="payment-method-paypal" type="radio" class="input-radio" name="payment-method"
-							   value="paypal">
+							   value="paypal" checked>
 						<label for="payment-method-paypal">
 							PayPal <img src="<?php echo ARSVD_URL ?>/assets/images/payments/paypal.png"
 										alt="PayPal logo">
 						</label>
-						<div class="payment-box payment-method-paypal">
-							<span class="box-arrow"></span>
-							<p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-						</div>
 					</li>
 				</ul>
 				<p class="form-row validate-required">

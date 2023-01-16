@@ -11,7 +11,13 @@
  * @return array
  */
 function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
-	$user    = wp_get_current_user();
+	$user = wp_get_current_user();
+	if ( $user === null ) {
+		return [
+			'status'  => 'error',
+			'message' => __( 'It seems that you are not logged in. Please log in first.', 'ars-virtual-donations' )
+		];
+	}
 	$animal  = get_post( $animal_id );
 	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
 	$post_id = wp_insert_post( [
@@ -19,6 +25,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 		'post_type'   => 'ars-subscription',
 		'post_title'  => $title,
 		'post_author' => $user->ID,
+		'post_status' => 'ars-pending',
 	], true );
 
 	if ( $post_id === 0 ) {
@@ -39,6 +46,11 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 		$email = $user->user_email;
 	}
 
+	$currency = 'BGN';
+	if ( defined( ICL_LANGUAGE_CODE ) && ICL_LANGUAGE_CODE === 'en' ) {
+		$currency = 'EUR';
+	}
+
 	global $wpdb;
 	$insert_status = $wpdb->insert(
 		$wpdb->prefix . 'ars_subscriptions',
@@ -48,13 +60,13 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 			'amount'              => $amount,
 			'status'              => 'ars-pending',
 			'period_type'         => 'monthly',
+			'currency'            => $currency,
 			'completed_cycles'    => 0,
-			'next_due'            => date( "Y-m-d", strtotime( "+1 month", time() ) ),
+			'next_due'            => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'             => $post_id,
 			'email_for_updates'   => $email,
-			'currency'            => 'EUR',
 		],
-		[ '%d', '%d', '%f', '%s', '%s', '%d', '%s', '%d' ],
+		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d' ],
 	);
 
 	if ( $insert_status === false ) {
@@ -76,6 +88,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 	];
 }
 
+
 /**
  * Check is there is a record in ars_subscriptions for the current user and animal
  * Also checks if the status is different from 'cancelled'
@@ -94,6 +107,7 @@ function ars_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
 
 	return ! empty( $result );
 }
+
 
 /**
  * Gets all animals that are adopted by the current user and are not with 'cancelled' status
@@ -137,7 +151,14 @@ function ars_get_sponsored_animal_details_by_subscription( int $subscription_pos
 }
 
 
-function ars_cancel_ars_subscription_entry( int $post_id ) {
+/**
+ * Changes the status of the post and the ars_subscriptions entry to 'cancelled'
+ *
+ * @param int $post_id
+ *
+ * @return string
+ */
+function ars_cancel_ars_subscription_entry( int $post_id ): string {
 
 	$post_update = wp_update_post( [
 		'ID'          => $post_id,
@@ -158,4 +179,9 @@ function ars_cancel_ars_subscription_entry( int $post_id ) {
 	);
 
 	return 'success';
+}
+
+
+function ars_paypal_cancel_subscription( array $subscription ) {
+
 }

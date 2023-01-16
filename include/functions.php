@@ -1,5 +1,8 @@
 <?php
-/** @noinspection ForgottenDebugOutputInspection */
+/**
+ * @noinspection ForgottenDebugOutputInspection
+ * Internal use only, for debugging purposes
+ */
 function dbga( $arg ) {
 	error_log( print_r( $arg, true ) );
 }
@@ -45,6 +48,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
 	return $term->slug;
 }
 
+
 /**
  * Returns true if WPML is active
  *
@@ -53,6 +57,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
 function ars_is_wpml_activated(): bool {
 	return class_exists( 'SitePress' ) && function_exists( 'wpml_is_setup_complete' ) && wpml_is_setup_complete();
 }
+
 
 /**
  * an obfuscation of the id
@@ -78,6 +83,7 @@ function ars_decode_id( string $string ): int {
 
 	return ( $int - 13 ) / 3;
 }
+
 
 /**
  * Create
@@ -203,4 +209,21 @@ function ars_get_verbose_subscription_status( string $status_code ): string {
 		default:
 			return 'n/a';
 	}
+}
+
+/**
+ * Returns the subscription's details from ars_subscriptions table based on the post_id
+ *
+ * @param int $post_id
+ *
+ * @return array if nothing is found will return empty array
+ */
+function ars_get_subscription_by_post_id( int $post_id ): array {
+	global $wpdb;
+	$subscription = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $post_id", ARRAY_A );
+	if ( empty( $subscription ) ) {
+		return [];
+	}
+
+	return $subscription;
 }
