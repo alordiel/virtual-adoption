@@ -32,6 +32,7 @@ require_once( ARSVD_ABS . '/include/ajax.php' );
 require_once( ARSVD_ABS . '/include/database-tables.php' );
 require_once( ARSVD_ABS . '/include/subscriptions.php' );
 require_once( ARSVD_ABS . '/include/mails.php' );
+require_once( ARSVD_ABS . '/include/api.php' );
 
 
 /**
