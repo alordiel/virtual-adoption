@@ -37,6 +37,7 @@ function ars_admin_settings_page() {
 		$ars_settings['my-subscriptions-page']                  = (int) $_POST['my-subscriptions-page'];
 		$ars_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
 		$ars_settings['payment-methods']['paypal']['secret']    = ars_encrypt_data( $_POST['paypal-secret-key'] );
+		$ars_settings['payment-methods']['paypal']['test']      = isset($_POST['paypal-test-env']) ? 'true' : '';
 
 		update_option( 'ars-settings', $ars_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
@@ -61,6 +62,7 @@ function ars_admin_settings_page() {
 	$my_subscriptions_id = ! empty( $ars_settings['my-subscriptions-page'] ) ? $ars_settings['my-subscriptions-page'] : 0;
 	$paypal_client_id    = ! empty( $ars_settings['payment-methods']['paypal']['client_id'] ) ? $ars_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret       = ! empty( $ars_settings['payment-methods']['paypal']['secret'] ) ? ars_decrypt_data( $ars_settings['payment-methods']['paypal']['secret'] ) : '';
+	$paypal_is_test      = ! empty( $ars_settings['payment-methods']['paypal']['test'] );
 
 	$dogs_options          = ars_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
 	$cats_options          = ars_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
@@ -200,6 +202,17 @@ function ars_admin_settings_page() {
 					<input type="password" name="paypal-secret-key" id="paypal-secret-key"
 						   style="max-width: 680px;width: 100%;"
 						   value="<?php echo $paypal_secret ?>">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="paypal-test-env">
+						<?php _e( "Activate test environment", "ars-virtual-donations" ); ?>
+					</label>
+				</th>
+				<td>
+					<input type="checkbox" name="paypal-test-env" id="paypal-test-env"
+						   <?php echo $paypal_is_test ? 'checked' : ''; ?>>
 				</td>
 			</tr>
 			</tbody>
