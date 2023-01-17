@@ -37,7 +37,7 @@ function ars_admin_settings_page() {
 		$ars_settings['my-subscriptions-page']                  = (int) $_POST['my-subscriptions-page'];
 		$ars_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
 		$ars_settings['payment-methods']['paypal']['secret']    = ars_encrypt_data( $_POST['paypal-secret-key'] );
-		$ars_settings['payment-methods']['paypal']['test']      = isset($_POST['paypal-test-env']) ? 'true' : '';
+		$ars_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
 
 		update_option( 'ars-settings', $ars_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
@@ -212,7 +212,7 @@ function ars_admin_settings_page() {
 				</th>
 				<td>
 					<input type="checkbox" name="paypal-test-env" id="paypal-test-env"
-						   <?php echo $paypal_is_test ? 'checked' : ''; ?>>
+						<?php echo $paypal_is_test ? 'checked' : ''; ?>>
 				</td>
 			</tr>
 			</tbody>
@@ -221,9 +221,29 @@ function ars_admin_settings_page() {
 		<p class="submit">
 			<input type="submit" name="Submit" class="button-primary"
 				   value="<?php esc_attr_e( 'Save Changes', 'ars-virtual-donations' ) ?>"/>
+
+			<input type="button" name="test-api" class="button-secondary" value="test-api" id="test-api">
 		</p>
 	</form>
-
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			document.getElementById('test-api').addEventListener('click', function () {
+				jQuery.ajax({
+					url: '/wp-admin/admin-ajax.php',
+					data: {
+						action: 'ars_test_api'
+					},
+					method: 'POST',
+					success: (response) => {
+						alert(response)
+					},
+					error: (error) => {
+						alert(error.code + ' > ' + error.message);
+					}
+				});
+			})
+		})
+	</script>
 	<?php
 }
 
