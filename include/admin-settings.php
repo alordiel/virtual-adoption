@@ -3,8 +3,8 @@
 add_action( 'admin_menu', 'ee_add_settings_page' );
 function ee_add_settings_page() {
 	add_submenu_page( 'options-general.php',
-		__( 'ARS Settings', 'evirtual-adoption' ),
-		__( 'ARS Settings', 'evirtual-adoption' ),
+		__( 'ARS Settings', 'virtual-adoption' ),
+		__( 'ARS Settings', 'virtual-adoption' ),
 		'manage_options',
 		'va_settings',
 		'va_admin_settings_page' );
@@ -18,7 +18,7 @@ function va_admin_settings_page() {
 	<?php
 
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'evirtual-adoption' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'virtual-adoption' ) );
 	}
 
 	$va_settings = get_option( 'va-settings' );
@@ -35,12 +35,13 @@ function va_admin_settings_page() {
 		$va_settings['page']['checkout']                       = (int) $_POST['checkout-donation'];
 		$va_settings['page']['thank-you']                      = (int) $_POST['thank-you-page'];
 		$va_settings['page']['my-subscriptions']               = (int) $_POST['my-subscriptions-page'];
+		$va_settings['page']['login']                          = (int) $_POST['login-page'];
 		$va_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
 		$va_settings['payment-methods']['paypal']['secret']    = va_encrypt_data( $_POST['paypal-secret-key'] );
 		$va_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
 
 		update_option( 'va-settings', $va_settings );
-		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'evirtual-adoption' ) . '</strong></p></div>';
+		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoption' ) . '</strong></p></div>';
 	}
 
 	$terms = get_terms( [
@@ -60,6 +61,7 @@ function va_admin_settings_page() {
 	$checkout_page_id    = ! empty( $va_settings['page']['checkout'] ) ? $va_settings['page']['checkout'] : 0;
 	$thank_you_page_id   = ! empty( $va_settings['page']['thank-you'] ) ? $va_settings['page']['thank-you'] : 0;
 	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
+	$login_page_id       = ! empty( $va_settings['page']['login'] ) ? $va_settings['page']['login'] : 0;
 	$paypal_client_id    = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret       = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test      = ! empty( $va_settings['payment-methods']['paypal']['test'] );
@@ -71,6 +73,7 @@ function va_admin_settings_page() {
 	$checkout_page         = va_get_selected_options_for_the_admin_settings_by_page( $pages, $checkout_page_id );
 	$thank_you_page        = va_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
 	$my_subscriptions_page = va_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
+	$login_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $login_page_id );
 	?>
 	<form name="form1" method="post" action="">
 		<p><?php _e( 'Set the categories for the animals', 'virtual-adoption' ) ?></p>
@@ -168,6 +171,20 @@ function va_admin_settings_page() {
 				<td>
 					<select name="my-subscriptions-page" id="my-subscriptions-page">
 						<?php echo $my_subscriptions_page ?>
+					</select>
+				</td>
+			</tr>
+			<!-- "Login" Page -->
+			<tr>
+				<th>
+					<label
+						for="login-page">
+						<?php _e( "Login page", "virtual-adoption" ); ?>
+					</label>
+				</th>
+				<td>
+					<select name="login-page" id="login-page">
+						<?php echo $login_page ?>
 					</select>
 				</td>
 			</tr>
