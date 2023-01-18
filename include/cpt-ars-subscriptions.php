@@ -2,32 +2,32 @@
 
 function va_subscription_post_type() {
 	$labels = array(
-		'name'               => _x( 'Animal subscriptions', 'post type general name', 'ars-virtual-donations' ),
-		'singular_name'      => _x( 'Animal subscription', 'post type singular name', 'ars-virtual-donations' ),
-		'menu_name'          => _x( 'Animal subscriptions', 'admin menu', 'ars-virtual-donations' ),
-		'name_admin_bar'     => _x( 'Animal subscription', 'add new on admin bar', 'ars-virtual-donations' ),
-		'add_new'            => _x( 'Add New Animal subscription', 'Animal subscription', 'ars-virtual-donations' ),
-		'add_new_item'       => __( 'Add New Animal subscription', 'ars-virtual-donations' ),
-		'new_item'           => __( 'New animal subscription', 'ars-virtual-donations' ),
-		'edit_item'          => __( 'Edit animal subscription', 'ars-virtual-donations' ),
-		'view_item'          => __( 'View animal subscription', 'ars-virtual-donations' ),
-		'all_items'          => __( 'All animal subscriptions', 'ars-virtual-donations' ),
-		'search_items'       => __( 'Search animal subscriptions', 'ars-virtual-donations' ),
-		'parent_item_colon'  => __( 'Parent animal subscriptions:', 'ars-virtual-donations' ),
-		'not_found'          => __( 'No animal subscription found.', 'ars-virtual-donations' ),
-		'not_found_in_trash' => __( 'No animal subscription found in Trash.', 'ars-virtual-donations' )
+		'name'               => _x( 'Animal subscriptions', 'post type general name', 'va-virtual-donations' ),
+		'singular_name'      => _x( 'Animal subscription', 'post type singular name', 'va-virtual-donations' ),
+		'menu_name'          => _x( 'Animal subscriptions', 'admin menu', 'va-virtual-donations' ),
+		'name_admin_bar'     => _x( 'Animal subscription', 'add new on admin bar', 'va-virtual-donations' ),
+		'add_new'            => _x( 'Add New Animal subscription', 'Animal subscription', 'va-virtual-donations' ),
+		'add_new_item'       => __( 'Add New Animal subscription', 'va-virtual-donations' ),
+		'new_item'           => __( 'New animal subscription', 'va-virtual-donations' ),
+		'edit_item'          => __( 'Edit animal subscription', 'va-virtual-donations' ),
+		'view_item'          => __( 'View animal subscription', 'va-virtual-donations' ),
+		'all_items'          => __( 'All animal subscriptions', 'va-virtual-donations' ),
+		'search_items'       => __( 'Search animal subscriptions', 'va-virtual-donations' ),
+		'parent_item_colon'  => __( 'Parent animal subscriptions:', 'va-virtual-donations' ),
+		'not_found'          => __( 'No animal subscription found.', 'va-virtual-donations' ),
+		'not_found_in_trash' => __( 'No animal subscription found in Trash.', 'va-virtual-donations' )
 	);
 
 	$args = array(
 		'labels'              => $labels,
-		'description'         => __( 'Description.', 'ars-virtual-donations' ),
+		'description'         => __( 'Description.', 'va-virtual-donations' ),
 		'public'              => false,
 		'publicly_queryable'  => false,
 		'show_ui'             => true,
 		'show_in_nav_menus'   => false,
 		'show_in_menu'        => true,
 		'query_var'           => false,
-		'rewrite'             => array( 'slug' => 'ars-subscription' ),
+		'rewrite'             => array( 'slug' => 'va-subscription' ),
 		'capability_type'     => 'post',
 		'exclude_from_search' => true,
 		'has_archive'         => false,
@@ -35,22 +35,22 @@ function va_subscription_post_type() {
 		'menu_position'       => null,
 		'supports'            => array( 'title' )
 	);
-	register_post_type( 'ars-subscription', $args );
+	register_post_type( 'va-subscription', $args );
 }
 
 add_action( 'init', 'va_subscription_post_type' );
 
 
 /**
- * Registers 3 extra post types used for the ars-subscription post type
- * ars-pending - marks all the subscriptions that are pending payment or some other issue to be resolved
- * ars-active - active subscription that renews every month
- * ars-cancelled - is an old subscription that was cancelled
+ * Registers 3 extra post types used for the va-subscription post type
+ * va-pending - marks all the subscriptions that are pending payment or some other issue to be resolved
+ * va-active - active subscription that renews every month
+ * va-cancelled - is an old subscription that was cancelled
  *
  * @return void
  */
 function va_custom_post_status_for_subscriptions() {
-	register_post_status( 'ars-active', array(
+	register_post_status( 'va-active', array(
 		'label'                     => 'Active',
 		'public'                    => true,
 		'exclude_from_search'       => false,
@@ -59,7 +59,7 @@ function va_custom_post_status_for_subscriptions() {
 		'label_count'               => _n_noop( 'Active <span class="count">(%s)</span>', 'Active <span class="count">(%s)</span>' ),
 	) );
 
-	register_post_status( 'ars-pending', array(
+	register_post_status( 'va-pending', array(
 		'label'                     => 'Pending',
 		'public'                    => true,
 		'exclude_from_search'       => false,
@@ -68,7 +68,7 @@ function va_custom_post_status_for_subscriptions() {
 		'label_count'               => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>' ),
 	) );
 
-	register_post_status( 'ars-cancelled', array(
+	register_post_status( 'va-cancelled', array(
 		'label'                     => 'Cancelled',
 		'public'                    => true,
 		'exclude_from_search'       => false,
@@ -90,26 +90,26 @@ function va_append_post_status_list() {
 	global $post;
 	$options = '';
 	$label   = '';
-	if ( $post->post_type === 'ars-subscription' ) {
-		if ( $post->post_status === 'ars-pending' ) {
-			$options .= '<option value="ars-pending" selected=\"selected\">Pending</option>';
+	if ( $post->post_type === 'va-subscription' ) {
+		if ( $post->post_status === 'va-pending' ) {
+			$options .= '<option value="va-pending" selected=\"selected\">Pending</option>';
 			$label   = ' Pending';
 		} else {
-			$options .= '<option value="ars-pending">Pending</option>';
+			$options .= '<option value="va-pending">Pending</option>';
 		}
 
-		if ( $post->post_status === 'ars-active' ) {
-			$options .= '<option value="ars-active" selected=\"selected\">Active</option>';
+		if ( $post->post_status === 'va-active' ) {
+			$options .= '<option value="va-active" selected=\"selected\">Active</option>';
 			$label   = ' Active';
 		} else {
-			$options .= '<option value="ars-active">Active</option>';
+			$options .= '<option value="va-active">Active</option>';
 		}
 
-		if ( $post->post_status === 'ars-cancelled' ) {
-			$options .= '<option value="ars-cancelled" selected=\"selected\">Cancelled</option>';
+		if ( $post->post_status === 'va-cancelled' ) {
+			$options .= '<option value="va-cancelled" selected=\"selected\">Cancelled</option>';
 			$label   = ' Cancelled';
 		} else {
-			$options .= '<option value="ars-cancelled">Cancelled</option>';
+			$options .= '<option value="va-cancelled">Cancelled</option>';
 		}
 		echo '
           <script>
@@ -144,13 +144,13 @@ function va_display_archive_state( $states ) {
 	global $post;
 	$arg = get_query_var( 'post_status' );
 	if ( $arg !== 'archive' ) {
-		if ( $post->post_status === 'ars-pending' ) {
+		if ( $post->post_status === 'va-pending' ) {
 			return array( 'Pending' );
 		}
-		if ( $post->post_status === 'ars-active' ) {
+		if ( $post->post_status === 'va-active' ) {
 			return array( 'Active' );
 		}
-		if ( $post->post_status === 'ars-cancelled' ) {
+		if ( $post->post_status === 'va-cancelled' ) {
 			return array( 'Cancelled' );
 		}
 	}
@@ -161,7 +161,7 @@ function va_display_archive_state( $states ) {
 add_filter( 'display_post_states', 'va_display_archive_state' );
 
 /**
- * This filter will remove the Quick Edit link from the admin list of all post with post type ars-subscription
+ * This filter will remove the Quick Edit link from the admin list of all post with post type va-subscription
  *
  * @param array $actions
  * @param WP_Post $post
@@ -169,7 +169,7 @@ add_filter( 'display_post_states', 'va_display_archive_state' );
  * @return array
  */
 function remove_quick_edit( array $actions, WP_Post $post ): array {
-	if ( $post->post_type === 'ars-subscription' ) {
+	if ( $post->post_type === 'va-subscription' ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
 
@@ -180,7 +180,7 @@ add_filter( 'post_row_actions', 'remove_quick_edit', 10, 2 );
 
 
 /**
- * Check if post status of the ars-subscription is changed
+ * Check if post status of the va-subscription is changed
  * It will look only for the case when the subscription is changed from "Pending" to "Active"
  * On that change it will send an email with success message
  *
@@ -205,7 +205,7 @@ function va_change_of_subscription_post_status( string $new_status, string $old_
 	$subscription = va_get_subscription_by_post_id( $post->ID );
 
 	// In case the admin is cancelling the subscription
-	if ( $new_status === 'ars-cancelled' && $old_status === 'ars-active') {
+	if ( $new_status === 'va-cancelled' && $old_status === 'va-active') {
 		va_paypal_cancel_subscription( $subscription );
 	}
 
@@ -234,7 +234,7 @@ add_action( 'delete_post', 'va_on_deleting_subscription_post', 10, 2 );
 
 
 /**
- * Hook on moving a post subscription's entry into the trash. Updates the status of the ars-subscriptions entry to "cancelled".
+ * Hook on moving a post subscription's entry into the trash. Updates the status of the va-subscriptions entry to "cancelled".
  *
  * @param int $post_id
  *
@@ -244,18 +244,18 @@ function va_change_status_when_post_is_trashed( int $post_id ) {
 	global $wpdb;
 	$subscription = va_get_subscription_by_post_id( $post_id );
 	// Check if status is not already cancelled
-	if ( $subscription['status'] === 'ars-cancelled' ) {
+	if ( $subscription['status'] === 'va-cancelled' ) {
 		return;
 	}
 
 	// In case of active status we need to cancel the PayPal subscription
-	if ( $subscription['status'] === 'ars-active' ) {
+	if ( $subscription['status'] === 'va-active' ) {
 		va_paypal_cancel_subscription( $subscription );
 	}
 
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
-		[ 'status' => 'ars-cancelled' ],
+		[ 'status' => 'va-cancelled' ],
 		[ 'post_id' => $post_id ]
 	);
 
