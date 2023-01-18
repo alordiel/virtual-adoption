@@ -2,35 +2,35 @@
 <p>
 	<label for="first-name">
 		<input id="first-name" name="first-name" type="text"
-		       placeholder="<?php _e( 'First name', 'ars-virtual-donations' ); ?>">
+		       placeholder="<?php _e( 'First name', 'virtual-adoption' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="last-name">
 		<input id="last-name" name="last-name" type="text"
-		       placeholder="<?php _e( 'Last name', 'ars-virtual-donations' ); ?>">
+		       placeholder="<?php _e( 'Last name', 'virtual-adoption' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="email">
 		<input id="email" name="email" type="email"
-		       placeholder="<?php _e( 'Email', 'ars-virtual-donations' ); ?>">
+		       placeholder="<?php _e( 'Email', 'virtual-adoption' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="password">
 		<input id="password" name="password" type="password"
-		       placeholder="<?php _e( 'Password', 'ars-virtual-donations' ); ?>">
+		       placeholder="<?php _e( 'Password', 'virtual-adoption' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="re-password">
 		<input id="re-password" name="re-password"
-		       type="password" placeholder="<?php _e( 'Confirm Password', 'ars-virtual-donations' ); ?>">
+		       type="password" placeholder="<?php _e( 'Confirm Password', 'virtual-adoption' ); ?>">
 		<small></small>
 	</label>
 </p>

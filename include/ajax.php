@@ -9,16 +9,16 @@ function va_create_new_donation_subscription_ajax() {
 	check_ajax_referer( 'ars-taina', 'security' );
 
 	if ( empty( $_POST['animalID'] ) || empty( $_POST['donationAmount'] ) ) {
-		va_json_response( 0, __( 'Missing some data.', 'ars-virtual-donations' ) );
+		va_json_response( 0, __( 'Missing some data.', 'virtual-adoption' ) );
 	}
 
 	if ( $_POST['acceptedTerms'] !== 'true' ) {
-		va_json_response( 0, __( 'You need to accept our terms and conditions.', 'ars-virtual-donations' ) );
+		va_json_response( 0, __( 'You need to accept our terms and conditions.', 'virtual-adoption' ) );
 	}
 
 	$donation_amount = (float) $_POST['donationAmount'];
 	if ( $donation_amount < 5.00 ) {
-		va_json_response( 0, __( 'There is problem with the donation amount.', 'ars-virtual-donations' ) );
+		va_json_response( 0, __( 'There is problem with the donation amount.', 'virtual-adoption' ) );
 	}
 
 	// Check if animal exists
@@ -27,7 +27,7 @@ function va_create_new_donation_subscription_ajax() {
 
 	// Check if the animal's ID is not faked
 	if ( empty( $the_animal ) || $the_animal->post_type !== 'sheltered-animal' || $the_animal->post_status !== 'publish' ) {
-		va_json_response( 0, __( 'We do not have record of that animal', 'ars-virtual-donations' ) );
+		va_json_response( 0, __( 'We do not have record of that animal', 'virtual-adoption' ) );
 	}
 
 	// Checks if this is a new user if it needs updating
@@ -43,7 +43,7 @@ function va_create_new_donation_subscription_ajax() {
 		if ( is_email( $_POST['giftEmail'] ) ) {
 			$gift_email = $_POST['giftEmail'];
 		} else {
-			va_json_response( 0, __( 'The gift email is not valid.', 'ars-virtual-donations' ) );
+			va_json_response( 0, __( 'The gift email is not valid.', 'virtual-adoption' ) );
 		}
 	}
 
@@ -76,7 +76,7 @@ function va_cancel_subscription_ajax() {
 	check_ajax_referer( 'ars-taina', 'security' );
 
 	if ( empty( $_POST['post_id'] ) ) {
-		va_json_response( 0, __( 'No subscription ID.', 'ars-virtual-donations' ) );
+		va_json_response( 0, __( 'No subscription ID.', 'virtual-adoption' ) );
 	}
 
 	// Check if the current user is the author (creator) of the requested for cancellation subscription
@@ -93,8 +93,8 @@ function va_cancel_subscription_ajax() {
 	}
 
 	va_json_response( 1, '', [
-		'message' => __( 'Successfully cancelled.', 'ars-virtual-donations' ),
-		'status'  => __( 'Cancelled', 'ars-virtual-donations' )
+		'message' => __( 'Successfully cancelled.', 'virtual-adoption' ),
+		'status'  => __( 'Cancelled', 'virtual-adoption' )
 	] );
 }
 

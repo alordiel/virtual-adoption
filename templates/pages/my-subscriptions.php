@@ -16,7 +16,7 @@ $subscriptions = get_posts( [
 
 if ( ! empty( $subscriptions ) ) {
 	?>
-	<h5><?php _e('This is the list of your subscriptions','ars-virtual-donations'); ?></h5>
+	<h5><?php _e('This is the list of your subscriptions','virtual-adoption'); ?></h5>
 	<table id="manage-my-subscriptions">
 		<thead>
 		<tr>

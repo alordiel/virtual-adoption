@@ -8,25 +8,25 @@
 add_action( 'init', 'va_sheltered_animals' );
 function va_sheltered_animals() {
 	$labels = array(
-		'name'               => _x( 'Sheltered animals', 'post type general name', 'ars-virtual-donations' ),
-		'singular_name'      => _x( 'Sheltered animal', 'post type singular name', 'ars-virtual-donations' ),
-		'menu_name'          => _x( 'Sheltered animals', 'admin menu', 'ars-virtual-donations' ),
-		'name_admin_bar'     => _x( 'Sheltered animal', 'add new on admin bar', 'ars-virtual-donations' ),
-		'add_new'            => _x( 'Add New', 'Sheltered animal', 'ars-virtual-donations' ),
-		'add_new_item'       => __( 'Add New', 'ars-virtual-donations' ),
-		'new_item'           => __( 'New sheltered animal', 'ars-virtual-donations' ),
-		'edit_item'          => __( 'Edit sheltered animal', 'ars-virtual-donations' ),
-		'view_item'          => __( 'View sheltered animal', 'ars-virtual-donations' ),
-		'all_items'          => __( 'All sheltered animals', 'ars-virtual-donations' ),
-		'search_items'       => __( 'Search sheltered animals', 'ars-virtual-donations' ),
-		'parent_item_colon'  => __( 'Parent sheltered animals:', 'ars-virtual-donations' ),
-		'not_found'          => __( 'No sheltered animal found.', 'ars-virtual-donations' ),
-		'not_found_in_trash' => __( 'No sheltered animal found in Trash.', 'ars-virtual-donations' )
+		'name'               => _x( 'Sheltered animals', 'post type general name', 'virtual-adoption' ),
+		'singular_name'      => _x( 'Sheltered animal', 'post type singular name', 'virtual-adoption' ),
+		'menu_name'          => _x( 'Sheltered animals', 'admin menu', 'virtual-adoption' ),
+		'name_admin_bar'     => _x( 'Sheltered animal', 'add new on admin bar', 'virtual-adoption' ),
+		'add_new'            => _x( 'Add New', 'Sheltered animal', 'virtual-adoption' ),
+		'add_new_item'       => __( 'Add New', 'virtual-adoption' ),
+		'new_item'           => __( 'New sheltered animal', 'virtual-adoption' ),
+		'edit_item'          => __( 'Edit sheltered animal', 'virtual-adoption' ),
+		'view_item'          => __( 'View sheltered animal', 'virtual-adoption' ),
+		'all_items'          => __( 'All sheltered animals', 'virtual-adoption' ),
+		'search_items'       => __( 'Search sheltered animals', 'virtual-adoption' ),
+		'parent_item_colon'  => __( 'Parent sheltered animals:', 'virtual-adoption' ),
+		'not_found'          => __( 'No sheltered animal found.', 'virtual-adoption' ),
+		'not_found_in_trash' => __( 'No sheltered animal found in Trash.', 'virtual-adoption' )
 	);
 
 	$args = array(
 		'labels'              => $labels,
-		'description'         => __( 'Description.', 'ars-virtual-donations' ),
+		'description'         => __( 'Description.', 'virtual-adoption' ),
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'show_ui'             => true,

@@ -3,8 +3,8 @@
 add_action( 'admin_menu', 'ee_add_settings_page' );
 function ee_add_settings_page() {
 	add_submenu_page( 'options-general.php',
-		__( 'ARS Settings', 'ears-virtual-donations' ),
-		__( 'ARS Settings', 'ears-virtual-donations' ),
+		__( 'ARS Settings', 'evirtual-adoption' ),
+		__( 'ARS Settings', 'evirtual-adoption' ),
 		'manage_options',
 		'va_settings',
 		'va_admin_settings_page' );
@@ -13,12 +13,12 @@ function ee_add_settings_page() {
 function va_admin_settings_page() {
 	?>
 
-	<h1><?php _e( 'ARS sheltered animals settings', 'ars-virtual-donations' ) ?></h1>
+	<h1><?php _e( 'ARS sheltered animals settings', 'virtual-adoption' ) ?></h1>
 
 	<?php
 
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'ears-virtual-donations' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'evirtual-adoption' ) );
 	}
 
 	$va_settings = get_option( 'va-settings' );
@@ -40,7 +40,7 @@ function va_admin_settings_page() {
 		$va_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
 
 		update_option( 'va-settings', $va_settings );
-		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
+		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'evirtual-adoption' ) . '</strong></p></div>';
 	}
 
 	$terms = get_terms( [
@@ -73,14 +73,14 @@ function va_admin_settings_page() {
 	$my_subscriptions_page = va_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
 	?>
 	<form name="form1" method="post" action="">
-		<p><?php _e( 'Set the categories for the animals', 'ars-virtual-donations' ) ?></p>
+		<p><?php _e( 'Set the categories for the animals', 'virtual-adoption' ) ?></p>
 		<table class="form-table">
 			<tbody>
 			<!--Dogs categories-->
 			<tr>
 				<th>
 					<label for="dogs-term-id">
-						<?php _e( "Dogs Category", "ars-virtual-donations" ); ?>
+						<?php _e( "Dogs Category", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -93,7 +93,7 @@ function va_admin_settings_page() {
 			<tr>
 				<th>
 					<label for="cats-term-id">
-						<?php _e( "Cats Category", "ars-virtual-donations" ); ?>
+						<?php _e( "Cats Category", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -106,7 +106,7 @@ function va_admin_settings_page() {
 			<tr>
 				<th>
 					<label for="horses-term-id">
-						<?php _e( "Horses Category", "ars-virtual-donations" ); ?>
+						<?php _e( "Horses Category", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -120,7 +120,7 @@ function va_admin_settings_page() {
 				<th>
 					<label
 						for="farm-animals-term-id">
-						<?php _e( "Farm animals Category", "ars-virtual-donations" ); ?>
+						<?php _e( "Farm animals Category", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -134,7 +134,7 @@ function va_admin_settings_page() {
 				<th>
 					<label
 						for="checkout-donation">
-						<?php _e( "Checkout page", "ars-virtual-donations" ); ?>
+						<?php _e( "Checkout page", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -148,7 +148,7 @@ function va_admin_settings_page() {
 				<th>
 					<label
 						for="thank-you-page">
-						<?php _e( "Thank you page", "ars-virtual-donations" ); ?>
+						<?php _e( "Thank you page", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -162,7 +162,7 @@ function va_admin_settings_page() {
 				<th>
 					<label
 						for="my-subscriptions-page">
-						<?php _e( "Manage subscriptions page", "ars-virtual-donations" ); ?>
+						<?php _e( "Manage subscriptions page", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -176,14 +176,14 @@ function va_admin_settings_page() {
 
 		<hr>
 
-		<h4><?php _e( "PayPal payment method", "ars-virtual-donations" ); ?></h4>
+		<h4><?php _e( "PayPal payment method", "virtual-adoption" ); ?></h4>
 
 		<table class="form-table">
 			<tbody>
 			<tr>
 				<th>
 					<label for="paypal-client-id">
-						<?php _e( "Client ID", "ars-virtual-donations" ); ?>
+						<?php _e( "Client ID", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -195,7 +195,7 @@ function va_admin_settings_page() {
 			<tr>
 				<th>
 					<label for="paypal-secret-key">
-						<?php _e( "Client ID", "ars-virtual-donations" ); ?>
+						<?php _e( "Client ID", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -207,7 +207,7 @@ function va_admin_settings_page() {
 			<tr>
 				<th>
 					<label for="paypal-test-env">
-						<?php _e( "Activate test environment", "ars-virtual-donations" ); ?>
+						<?php _e( "Activate test environment", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
@@ -220,7 +220,7 @@ function va_admin_settings_page() {
 
 		<p class="submit">
 			<input type="submit" name="Submit" class="button-primary"
-				   value="<?php esc_attr_e( 'Save Changes', 'ars-virtual-donations' ) ?>"/>
+				   value="<?php esc_attr_e( 'Save Changes', 'virtual-adoption' ) ?>"/>
 
 			<input type="button" name="test-api" class="button-secondary" value="test-api" id="test-api">
 		</p>

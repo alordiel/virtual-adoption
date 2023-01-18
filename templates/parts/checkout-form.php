@@ -61,13 +61,13 @@ if ( empty( $sheltered_animal ) ) {
 				<p>
 					<label for="gift-donation">
 						<input name="gift-donation" id="gift-donation" type="checkbox">
-						<?php _e( 'This will be a gift', 'ars-virtual-donations' ) ?>
+						<?php _e( 'This will be a gift', 'virtual-adoption' ) ?>
 					</label>
 				</p>
 				<p class="email-gift">
 					<label for="email-gift">
 						<input id="email-gift" name="email-gift" type="email"
-							   placeholder="<?php _e( "Gift receiver's email", 'ars-virtual-donations' ); ?>">
+							   placeholder="<?php _e( "Gift receiver's email", 'virtual-adoption' ); ?>">
 					</label><br>
 					<small><?php _e( 'The updates about the selected animal will be sent to that email.' ) ?></small>
 				</p>

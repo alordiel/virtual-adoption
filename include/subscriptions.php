@@ -15,7 +15,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 	if ( $user === null ) {
 		return [
 			'status'  => 'error',
-			'message' => __( 'It seems that you are not logged in. Please log in first.', 'ars-virtual-donations' )
+			'message' => __( 'It seems that you are not logged in. Please log in first.', 'virtual-adoption' )
 		];
 	}
 	$animal  = get_post( $animal_id );
@@ -31,7 +31,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 	if ( $post_id === 0 ) {
 		return [
 			'status'  => 'error',
-			'message' => __( 'Creating the subscription entry failed', 'ars-virtual-donations' )
+			'message' => __( 'Creating the subscription entry failed', 'virtual-adoption' )
 		];
 	}
 
@@ -74,7 +74,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 
 		return [
 			'status'  => 'error',
-			'message' => __( 'Creating the subscription entry failed', 'ars-virtual-donations' )
+			'message' => __( 'Creating the subscription entry failed', 'virtual-adoption' )
 		];
 	}
 

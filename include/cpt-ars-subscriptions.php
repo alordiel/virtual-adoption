@@ -2,25 +2,25 @@
 
 function va_subscription_post_type() {
 	$labels = array(
-		'name'               => _x( 'Animal subscriptions', 'post type general name', 'va-virtual-donations' ),
-		'singular_name'      => _x( 'Animal subscription', 'post type singular name', 'va-virtual-donations' ),
-		'menu_name'          => _x( 'Animal subscriptions', 'admin menu', 'va-virtual-donations' ),
-		'name_admin_bar'     => _x( 'Animal subscription', 'add new on admin bar', 'va-virtual-donations' ),
-		'add_new'            => _x( 'Add New Animal subscription', 'Animal subscription', 'va-virtual-donations' ),
-		'add_new_item'       => __( 'Add New Animal subscription', 'va-virtual-donations' ),
-		'new_item'           => __( 'New animal subscription', 'va-virtual-donations' ),
-		'edit_item'          => __( 'Edit animal subscription', 'va-virtual-donations' ),
-		'view_item'          => __( 'View animal subscription', 'va-virtual-donations' ),
-		'all_items'          => __( 'All animal subscriptions', 'va-virtual-donations' ),
-		'search_items'       => __( 'Search animal subscriptions', 'va-virtual-donations' ),
-		'parent_item_colon'  => __( 'Parent animal subscriptions:', 'va-virtual-donations' ),
-		'not_found'          => __( 'No animal subscription found.', 'va-virtual-donations' ),
-		'not_found_in_trash' => __( 'No animal subscription found in Trash.', 'va-virtual-donations' )
+		'name'               => _x( 'Animal subscriptions', 'post type general name', 'virtual-donations' ),
+		'singular_name'      => _x( 'Animal subscription', 'post type singular name', 'virtual-donations' ),
+		'menu_name'          => _x( 'Animal subscriptions', 'admin menu', 'virtual-donations' ),
+		'name_admin_bar'     => _x( 'Animal subscription', 'add new on admin bar', 'virtual-donations' ),
+		'add_new'            => _x( 'Add New Animal subscription', 'Animal subscription', 'virtual-donations' ),
+		'add_new_item'       => __( 'Add New Animal subscription', 'virtual-donations' ),
+		'new_item'           => __( 'New animal subscription', 'virtual-donations' ),
+		'edit_item'          => __( 'Edit animal subscription', 'virtual-donations' ),
+		'view_item'          => __( 'View animal subscription', 'virtual-donations' ),
+		'all_items'          => __( 'All animal subscriptions', 'virtual-donations' ),
+		'search_items'       => __( 'Search animal subscriptions', 'virtual-donations' ),
+		'parent_item_colon'  => __( 'Parent animal subscriptions:', 'virtual-donations' ),
+		'not_found'          => __( 'No animal subscription found.', 'virtual-donations' ),
+		'not_found_in_trash' => __( 'No animal subscription found in Trash.', 'virtual-donations' )
 	);
 
 	$args = array(
 		'labels'              => $labels,
-		'description'         => __( 'Description.', 'va-virtual-donations' ),
+		'description'         => __( 'Description.', 'virtual-donations' ),
 		'public'              => false,
 		'publicly_queryable'  => false,
 		'show_ui'             => true,
