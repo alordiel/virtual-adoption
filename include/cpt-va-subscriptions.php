@@ -117,7 +117,7 @@ function va_append_post_status_list() {
               document.getElementById("post_status").innerHTML = \'' . $options . '\'; // Replaces the standard post statuses
 			  document.getElementById("post-status-display").innerText = "' . $label . '";
               document.getElementById("save-post").remove(); // removes the "Save draft" button
-              // Check if button is "publish" or "update" (when it is "publish" we need to change it, else it will change the post type to "publish" and not to what we need"
+              // Check if button is "publish" or "update" (when it is "publish" we need to change it, else it will change the post type to "publish" and not to what we need
               const updateButton = document.getElementById("publish");
               if (updateButton.value === "Publish") {
 				updateButton.value = "Update";
@@ -192,7 +192,7 @@ function va_change_of_subscription_post_status( string $new_status, string $old_
 	if ( $old_status === $new_status ) {
 		return;
 	}
-	dbga($new_status);
+	dbga( $new_status );
 	global $wpdb;
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
@@ -205,7 +205,7 @@ function va_change_of_subscription_post_status( string $new_status, string $old_
 	$subscription = va_get_subscription_by_post_id( $post->ID );
 
 	// In case the admin is cancelling the subscription
-	if ( $new_status === 'va-cancelled' && $old_status === 'va-active') {
+	if ( $new_status === 'va-cancelled' && $old_status === 'va-active' ) {
 		va_paypal_cancel_subscription( $subscription );
 	}
 
@@ -262,3 +262,71 @@ function va_change_status_when_post_is_trashed( int $post_id ) {
 }
 
 add_action( 'wp_trash_post', 'va_change_status_when_post_is_trashed' );
+
+
+/**
+ * Register meta box for subscription's details. There is no metadata that is being saved with this meta box.
+ */
+function va_meta_info_about_subscription() {
+	add_meta_box(
+		'subscription-info',
+		__( 'Subscription\'s details', 'virtual-adoption' ),
+		'va_subscription_admin_details',
+		'va-subscription',
+		'normal'
+	);
+}
+
+add_action( 'add_meta_boxes', 'va_meta_info_about_subscription' );
+
+/**
+ * Function to display the details of the subscription in the admin
+ *
+ * @param WP_Post $post
+ *
+ * @return void
+ */
+function va_subscription_admin_details( WP_Post $post ) {
+	$subscription_details = va_get_subscription_by_post_id( $post->ID );
+	$user                 = get_user_by( 'ID', $post->post_author );
+	$supported_animal      = get_post($subscription_details['sponsored_animal_id']);
+	$total = (float) ($subscription_details['completed_cycles'] *  $subscription_details['amount'] );
+	?>
+	<div>
+		<p>
+			<strong><?php _e('Sponsor\'s name', 'virtual-adoption') ?>:</strong>
+			<a href="/wp-admin/user-edit.php?user_id=<?php echo $user->ID  ?>">
+				<?php echo $user->first_name . ' ' . $user->last_name; ?>
+			</a>
+		</p>
+		<p>
+			<strong><?php _e('Sponsor\'s email', 'virtual-adoption') ?>:</strong>
+			<a href="mailto:<?php echo $user->user_email  ?>">
+				<?php echo $user->user_email; ?>
+			</a>
+		</p>
+		<p>
+			<strong><?php _e('Sponsored animal', 'virtual-adoption') ?>:</strong>
+			<a href="<?php echo get_permalink($supported_animal->ID);  ?>">
+				<?php echo $supported_animal->post_title; ?>
+			</a>
+		</p>
+		<p>
+			<strong><?php _e('Start date', 'virtual-adoption') ?>:</strong>
+			<?php echo $subscription_details['start_date']; ?>
+		</p>
+		<p>
+			<strong><?php _e('Subscription amount', 'virtual-adoption') ?>:</strong>
+			<?php echo (float) $subscription_details['amount'] . ' ' . $subscription_details['currency']?>
+		</p>
+		<p>
+			<strong><?php _e('Number of monthly payments', 'virtual-adoption') ?>:</strong>
+			<?php echo $subscription_details['completed_cycles']; ?>
+		</p>
+		<p>
+			<strong><?php _e('Total ', 'virtual-adoption') ?>:</strong>
+			<?php echo $total . ' ' . $subscription_details['currency']; ?>
+		</p>
+	</div>
+	<?php
+}
