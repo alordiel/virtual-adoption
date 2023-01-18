@@ -5,7 +5,7 @@
 get_header();
 $post_id = 0;
 if ( ! empty( $_GET['aid'] ) ) {
-	$post_id = ars_decode_id( $_GET['aid'] );
+	$post_id = va_decode_id( $_GET['aid'] );
 }
 ?>
 	<div class="sheltered-animals-archive">
@@ -29,9 +29,9 @@ if ( ! empty( $_GET['aid'] ) ) {
 				</div>
 				<div class="list-of-animals">
 					<?php
-					$ars_settings = get_option( 'va-settings' );
-					$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
-					$adopted_animals = ars_get_list_of_adopted_animals();
+					$va_settings = get_option( 'va-settings' );
+					$sponsor_link = get_permalink( $va_settings['checkout-page'] );
+					$adopted_animals = va_get_list_of_adopted_animals();
 					foreach ( $animals as $animal ) {
 						// don't show already adopted animals
 						if ($adopted_animals !== [] && in_array($animal->ID, $adopted_animals)) {

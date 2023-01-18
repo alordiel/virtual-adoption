@@ -4,7 +4,7 @@ $site_url = site_url();
 $settings = get_option('va-settings');
 
 if ( is_tax( 'kind-of-animal' )) {
-	$selected = ars_get_the_current_selected_kind($settings);
+	$selected = va_get_the_current_selected_kind($settings);
 }
 
 $category_link = [

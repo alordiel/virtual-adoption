@@ -2,14 +2,14 @@
 /*
  * Adds the styles and script files
  * */
-function ars_sheltered_animals_styles_and_scripts() {
+function va_sheltered_animals_styles_and_scripts() {
 	$template_page     = get_page_template_slug();
-	$list_of_ars_pages = [ 'ars-donation-checkout.php', 'ars-thank-you-donation.php', 'ars-my-subscriptions.php' ];
+	$list_of_va_pages = [ 'ars-donation-checkout.php', 'ars-thank-you-donation.php', 'ars-my-subscriptions.php' ];
 
-	$is_ars_page = in_array( $template_page, $list_of_ars_pages, true );
-	$is_ars_post = ! is_singular( 'sheltered-animal' ) && ! is_post_type_archive( 'sheltered-animal' ) && ! is_tax( 'kind-of-animal' );
+	$is_va_page = in_array( $template_page, $list_of_va_pages, true );
+	$is_va_post = ! is_singular( 'sheltered-animal' ) && ! is_post_type_archive( 'sheltered-animal' ) && ! is_tax( 'kind-of-animal' );
 
-	if ( ! $is_ars_page && $is_ars_post ) {
+	if ( ! $is_va_page && $is_va_post ) {
 		return;
 	}
 
@@ -40,4 +40,4 @@ function ars_sheltered_animals_styles_and_scripts() {
 
 }
 
-add_action( 'wp_enqueue_scripts', 'ars_sheltered_animals_styles_and_scripts' );
+add_action( 'wp_enqueue_scripts', 'va_sheltered_animals_styles_and_scripts' );

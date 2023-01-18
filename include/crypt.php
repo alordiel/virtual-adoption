@@ -1,7 +1,7 @@
 <?php
 
-function ars_encrypt_data(string $data) {
-	$key = ars_get_salt_key();
+function va_encrypt_data(string $data) {
+	$key = va_get_salt_key();
     // Remove the base64 encoding from our key
     $encryption_key = base64_decode($key);
     // Generate an initialization vector
@@ -12,8 +12,8 @@ function ars_encrypt_data(string $data) {
     return base64_encode($encrypted . '::' . $iv);
 }
 
-function ars_decrypt_data(string $data) {
-	$key = ars_get_salt_key();
+function va_decrypt_data(string $data) {
+	$key = va_get_salt_key();
     // Remove the base64 encoding from our key
     $encryption_key = base64_decode($key);
     // To decrypt, split the encrypted data from our IV - our unique separator used was "::"
@@ -21,12 +21,12 @@ function ars_decrypt_data(string $data) {
     return openssl_decrypt($encrypted_data, 'aes-256-cbc', $encryption_key, 0, $iv);
 }
 
-function ars_get_salt_key(): string{
-	$ars_settings = get_option( 'va-settings' );
-	$secret_phrase_key   = ! empty( $ars_settings['phrase-key'] ) ? $ars_settings['phrase-key'] : '';
+function va_get_salt_key(): string{
+	$va_settings = get_option( 'va-settings' );
+	$secret_phrase_key   = ! empty( $va_settings['phrase-key'] ) ? $va_settings['phrase-key'] : '';
 	if ($secret_phrase_key === '') {
-		$ars_settings['phrase-key'] = base64_encode(openssl_random_pseudo_bytes(32));
-		update_option( 'va-settings', $ars_settings );
+		$va_settings['phrase-key'] = base64_encode(openssl_random_pseudo_bytes(32));
+		update_option( 'va-settings', $va_settings );
 	}
-	return $ars_settings['phrase-key'];
+	return $va_settings['phrase-key'];
 }

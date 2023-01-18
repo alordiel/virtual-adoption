@@ -16,7 +16,7 @@ function dbga( $arg ) {
  *
  * @return string
  */
-function ars_get_the_current_selected_kind( $settings ): string {
+function va_get_the_current_selected_kind( $settings ): string {
 
 	if ( is_post_type_archive( 'sheltered-animal' ) ) {
 		return 'all';
@@ -34,7 +34,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
 	$term      = get_term_by( 'slug', $term_slug, 'kind-of-animal' );
 
 	/** @noinspection NotOptimalIfConditionsInspection */
-	if ( ars_is_wpml_activated() && ICL_LANGUAGE_CODE !== 'en' ) {
+	if ( va_is_wpml_activated() && ICL_LANGUAGE_CODE !== 'en' ) {
 		$term_id = apply_filters( 'wpml_object_id', $term->term_id, 'kind-of-animal', false, 'en' );
 		if ( ! empty( $term_id ) ) {
 			global $sitepress;
@@ -54,7 +54,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
  *
  * @return bool
  */
-function ars_is_wpml_activated(): bool {
+function va_is_wpml_activated(): bool {
 	return class_exists( 'SitePress' ) && function_exists( 'wpml_is_setup_complete' ) && wpml_is_setup_complete();
 }
 
@@ -66,7 +66,7 @@ function ars_is_wpml_activated(): bool {
  *
  * @return string
  */
-function ars_encode_id( int $id ): string {
+function va_encode_id( int $id ): string {
 	return 's_' . ( ( $id * 3 ) + 13 );
 }
 
@@ -78,7 +78,7 @@ function ars_encode_id( int $id ): string {
  *
  * @return int
  */
-function ars_decode_id( string $string ): int {
+function va_decode_id( string $string ): int {
 	$int = (int) str_replace( 's_', '', $string );
 
 	return ( $int - 13 ) / 3;
@@ -92,7 +92,7 @@ function ars_decode_id( string $string ): int {
  *
  * @return void
  */
-function ars_create_template_page( string $page_type ) {
+function va_create_template_page( string $page_type ) {
 	$templates = [
 		'checkout-page'         => [
 			'title'    => __( 'Donation checkout', 'va-virtual-donations' ),
@@ -128,9 +128,9 @@ function ars_create_template_page( string $page_type ) {
 		'post_name'      => $current_page['slug'],
 	] );
 
-	$ars_settings               = get_option( 'va-settings' );
-	$ars_settings[ $page_type ] = $page_id;
-	update_option( 'va-settings', $ars_settings );
+	$va_settings               = get_option( 'va-settings' );
+	$va_settings[ $page_type ] = $page_id;
+	update_option( 'va-settings', $va_settings );
 }
 
 /**
@@ -142,7 +142,7 @@ function ars_create_template_page( string $page_type ) {
  *
  * @return void
  */
-function ars_json_response( int $code, string $message = '', array $some_data = [] ) {
+function va_json_response( int $code, string $message = '', array $some_data = [] ) {
 	$data = [ 'status' => $code ];
 	if ( $message !== '' ) {
 		$data['message'] = $message;
@@ -163,7 +163,7 @@ function ars_json_response( int $code, string $message = '', array $some_data = 
  *
  * @return string
  */
-function ars_create_new_user( array $user_data ): string {
+function va_create_new_user( array $user_data ): string {
 	if ( empty( $user_data['email'] ) || ! is_email( $user_data['email'] ) ) {
 		return __( 'Email does not exist', 'va-virtual-donations' );
 	}
@@ -203,7 +203,7 @@ function ars_create_new_user( array $user_data ): string {
  *
  * @return string
  */
-function ars_get_verbose_subscription_status( string $status_code ): string {
+function va_get_verbose_subscription_status( string $status_code ): string {
 	switch ( $status_code ) {
 		case 'va-pending':
 			return __( 'Pending', 'va-virtual-donations' );
@@ -217,15 +217,15 @@ function ars_get_verbose_subscription_status( string $status_code ): string {
 }
 
 /**
- * Returns the subscription's details from ars_subscriptions table based on the post_id
+ * Returns the subscription's details from va_subscriptions table based on the post_id
  *
  * @param int $post_id
  *
  * @return array if nothing is found will return empty array
  */
-function ars_get_subscription_by_post_id( int $post_id ): array {
+function va_get_subscription_by_post_id( int $post_id ): array {
 	global $wpdb;
-	$subscription = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $post_id", ARRAY_A );
+	$subscription = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}va_subscriptions WHERE post_id = $post_id", ARRAY_A );
 	if ( empty( $subscription ) ) {
 		return [];
 	}

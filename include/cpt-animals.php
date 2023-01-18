@@ -5,8 +5,8 @@
  */
 
 //Creating a post type for sheltered animals
-add_action( 'init', 'ars_sheltered_animals' );
-function ars_sheltered_animals() {
+add_action( 'init', 'va_sheltered_animals' );
+function va_sheltered_animals() {
 	$labels = array(
 		'name'               => _x( 'Sheltered animals', 'post type general name', 'ars-virtual-donations' ),
 		'singular_name'      => _x( 'Sheltered animal', 'post type singular name', 'ars-virtual-donations' ),
@@ -79,24 +79,24 @@ add_action( 'init', 'sheltered_animal_taxonomy' );
 /**
  * Register meta box(es).
  */
-function ars_register_meta_boxes() {
+function va_register_meta_boxes() {
 	add_meta_box(
 		'sheltered-animal-meta',
 		__( 'Animal\'s details', 'ars-sheltered-animals' ),
-		'ars_sheltered_animal_details',
+		'va_sheltered_animal_details',
 		'sheltered-animal',
 		'side'
 	);
 }
 
-add_action( 'add_meta_boxes', 'ars_register_meta_boxes' );
+add_action( 'add_meta_boxes', 'va_register_meta_boxes' );
 
 /**
  * Meta box display callback.
  *
  * @param WP_Post $post Current post object.
  */
-function ars_sheltered_animal_details( WP_Post $post ) {
+function va_sheltered_animal_details( WP_Post $post ) {
 	$age           = (int) get_post_meta( $post->ID, 'animals-age', true );
 	$sheltered_for = (int) get_post_meta( $post->ID, 'sheltered-years', true );
 	$sex           = get_post_meta( $post->ID, 'animals-sex', true );
@@ -136,7 +136,7 @@ function ars_sheltered_animal_details( WP_Post $post ) {
  *
  * @param int $post_id Post ID
  */
-function ars_sheltered_animal_save_meta( int $post_id ) {
+function va_sheltered_animal_save_meta( int $post_id ) {
 
 	$nonce_name = $_POST['ars-power-dog'] ?? '';
 	if ( ! wp_verify_nonce( $nonce_name, 'ars-shelter-animal-meta' ) ) {
@@ -163,4 +163,4 @@ function ars_sheltered_animal_save_meta( int $post_id ) {
 
 }
 
-add_action( 'save_post', 'ars_sheltered_animal_save_meta' );
+add_action( 'save_post', 'va_sheltered_animal_save_meta' );

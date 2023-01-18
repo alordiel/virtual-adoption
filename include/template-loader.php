@@ -1,5 +1,5 @@
 <?php
-function ars_sheltered_animals_template_loader( $template ) {
+function va_sheltered_animals_template_loader( $template ) {
 
 	if ( is_singular( 'sheltered-animal' ) ) {
 		return require( ARSVD_ABS . '/templates/pages/single-sheltered-animal.php');
@@ -16,4 +16,4 @@ function ars_sheltered_animals_template_loader( $template ) {
 	return $template;
 }
 
-add_filter( 'template_include', 'ars_sheltered_animals_template_loader' );
+add_filter( 'template_include', 'va_sheltered_animals_template_loader' );

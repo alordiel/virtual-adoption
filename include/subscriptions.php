@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Creates wp_post and ars_subscriptions entry in the database
+ * Creates wp_post and va_subscriptions entry in the database
  * On error it will return the error message
  *
  * @param int $animal_id
@@ -10,7 +10,7 @@
  *
  * @return array
  */
-function ars_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
+function va_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
 	$user = wp_get_current_user();
 	if ( $user === null ) {
 		return [
@@ -53,7 +53,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 
 	global $wpdb;
 	$insert_status = $wpdb->insert(
-		$wpdb->prefix . 'ars_subscriptions',
+		$wpdb->prefix . 'va_subscriptions',
 		[
 			'user_id'             => $user->ID,
 			'sponsored_animal_id' => $animal_id,
@@ -90,7 +90,7 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
 
 
 /**
- * Check is there is a record in ars_subscriptions for the current user and animal
+ * Check is there is a record in va_subscriptions for the current user and animal
  * Also checks if the status is different from 'cancelled'
  *
  * @param int $user_id
@@ -98,10 +98,10 @@ function ars_create_new_donation_subscription( int $animal_id, float $amount, st
  *
  * @return bool
  */
-function ars_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
+function va_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
 	global $wpdb;
 	$sql    = "SELECT ID
-				FROM {$wpdb->prefix}ars_subscriptions
+				FROM {$wpdb->prefix}va_subscriptions
 				WHERE user_id = $user_id AND sponsored_animal_id = $animal_id AND status != 'cancelled'";
 	$result = $wpdb->get_var( $sql );
 
@@ -114,7 +114,7 @@ function ars_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
  *
  * @return array returns an array of animal's IDs or empty array if nothing found
  */
-function ars_get_list_of_adopted_animals(): array {
+function va_get_list_of_adopted_animals(): array {
 	$user_id = get_current_user_id();
 	if ( $user_id === 0 ) {
 		return [];
@@ -122,7 +122,7 @@ function ars_get_list_of_adopted_animals(): array {
 
 	global $wpdb;
 	$sql     = "SELECT sponsored_animal_id
-				FROM {$wpdb->prefix}ars_subscriptions
+				FROM {$wpdb->prefix}va_subscriptions
 				WHERE user_id = $user_id AND status != 'ars-cancelled'";
 	$animals = $wpdb->get_col( $sql );
 	if ( empty( $animals ) ) {
@@ -139,9 +139,9 @@ function ars_get_list_of_adopted_animals(): array {
  *
  * @return array
  */
-function ars_get_sponsored_animal_details_by_subscription( int $subscription_post_id ): array {
+function va_get_sponsored_animal_details_by_subscription( int $subscription_post_id ): array {
 	global $wpdb;
-	$sql  = "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $subscription_post_id";
+	$sql  = "SELECT * FROM {$wpdb->prefix}va_subscriptions WHERE post_id = $subscription_post_id";
 	$data = $wpdb->get_row( $sql, ARRAY_A );
 	if ( empty( $data ) ) {
 		return [];
@@ -152,13 +152,13 @@ function ars_get_sponsored_animal_details_by_subscription( int $subscription_pos
 
 
 /**
- * Changes the status of the post and the ars_subscriptions entry to 'cancelled'
+ * Changes the status of the post and the va_subscriptions entry to 'cancelled'
  *
  * @param int $post_id
  *
  * @return string
  */
-function ars_cancel_ars_subscription_entry( int $post_id ): string {
+function va_cancel_va_subscription_entry( int $post_id ): string {
 
 	$post_update = wp_update_post( [
 		'ID'          => $post_id,
@@ -171,7 +171,7 @@ function ars_cancel_ars_subscription_entry( int $post_id ): string {
 
 	global $wpdb;
 	$wpdb->update(
-		$wpdb->prefix . 'ars_subscriptions',
+		$wpdb->prefix . 'va_subscriptions',
 		[ 'status' => 'ars-cancelled' ],
 		[ 'post_id' => $post_id ],
 		[ '%d' ],
@@ -182,6 +182,6 @@ function ars_cancel_ars_subscription_entry( int $post_id ): string {
 }
 
 
-function ars_paypal_cancel_subscription( array $subscription ) {
+function va_paypal_cancel_subscription( array $subscription ) {
 
 }

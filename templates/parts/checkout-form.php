@@ -24,7 +24,7 @@ if ( empty( $sheltered_animal ) ) {
 		<div class="checkout-fields">
 			<h4><strong><?php _e( 'Sponsorship amount per month', 'ars-virtual-donation' ) ?></strong></h4>
 			<div class="donation-amounts">
-				<?php if ( ars_is_wpml_activated() && ICL_LANGUAGE_CODE === 'en' ) { ?>
+				<?php if ( va_is_wpml_activated() && ICL_LANGUAGE_CODE === 'en' ) { ?>
 					<label for="eur5"><input id="eur5" value="5" type="radio" name="selected-amount">€ 5.00</label>
 					<label for="eur10" class="selected-donation-amount"><input id="eur10" checked value="10"
 																			   type="radio" name="selected-amount">€

@@ -5,6 +5,6 @@
  */
 ?>
 <div class="blue-button-wrap">
-	<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ); ?>"
+	<a class="blue-button" href="<?php echo $sponsor_link . '?aid=' . va_encode_id( $post_id ); ?>"
 	   title="Sponsor me">Sponsor me</a>
 </div>

@@ -42,32 +42,32 @@ require_once( ARSVD_ABS . '/include/crypt.php' );
 /**
  * Activate the plugin.
  */
-function ars_plugin_activated() {
+function va_plugin_activated() {
 
 	// Trigger our function that registers the custom post type plugin.
 	if ( ! post_type_exists( 'sheltered-animal' ) ) {
-		ars_sheltered_animals();
+		va_sheltered_animals();
 		sheltered_animal_taxonomy();
-		ars_register_meta_boxes();
+		va_register_meta_boxes();
 	}
-	$ars_settings = get_option( 'va-settings' );
-	if(empty($ars_settings['checkout-page'])){
-		ars_create_template_page('checkout-page');
+	$va_settings = get_option( 'va-settings' );
+	if(empty($va_settings['checkout-page'])){
+		va_create_template_page('checkout-page');
 	}
-	if(empty($ars_settings['thank-you-page'])){
-		ars_create_template_page('thank-you-page');
+	if(empty($va_settings['thank-you-page'])){
+		va_create_template_page('thank-you-page');
 	}
-	if(empty($ars_settings['my-subscriptions-page'])){
-		ars_create_template_page('my-subscriptions-page');
+	if(empty($va_settings['my-subscriptions-page'])){
+		va_create_template_page('my-subscriptions-page');
 	}
-	if(empty($ars_settings['login-page'])){
-		ars_create_template_page('my-subscriptions-page');
+	if(empty($va_settings['login-page'])){
+		va_create_template_page('my-subscriptions-page');
 	}
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
 
-	ars_create_subscription_tables();
-	ars_custom_post_status_for_subscriptions();
+	va_create_subscription_tables();
+	va_custom_post_status_for_subscriptions();
 }
 
-register_activation_hook( __FILE__, 'ars_plugin_activated' );
+register_activation_hook( __FILE__, 'va_plugin_activated' );

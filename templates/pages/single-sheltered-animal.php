@@ -4,14 +4,14 @@ $post_id       = get_the_ID();
 $age           = get_post_meta( $post_id, 'animals-age', true );
 $sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 $sex           = get_post_meta( $post_id, 'animals-sex', true );
-$ars_settings  = get_option( 'va-settings' );
-$sponsor_link  = get_permalink( $ars_settings['checkout-page'] );
-$my_animals    = get_permalink( $ars_settings['my-subscriptions-page'] );
+$va_settings  = get_option( 'va-settings' );
+$sponsor_link  = get_permalink( $va_settings['checkout-page'] );
+$my_animals    = get_permalink( $va_settings['my-subscriptions-page'] );
 $is_adopted    = false;
 $user_id       = get_current_user_id();
 
 if ( $user_id !== 0 ) {
-	$is_adopted = ars_is_animal_adopted_by_user( $user_id, $post_id );
+	$is_adopted = va_is_animal_adopted_by_user( $user_id, $post_id );
 }
 ?>
 	<div class="sheltered-animal-container">

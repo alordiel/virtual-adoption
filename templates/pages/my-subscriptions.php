@@ -31,7 +31,7 @@ if ( ! empty( $subscriptions ) ) {
 		<?php
 		global $wpdb;
 		foreach ( $subscriptions as $subscription ) {
-			$sql     = "SELECT * FROM {$wpdb->prefix}ars_subscriptions WHERE post_id = $subscription->ID";
+			$sql     = "SELECT * FROM {$wpdb->prefix}va_subscriptions WHERE post_id = $subscription->ID";
 			$details = $wpdb->get_row( $sql );
 			if ( empty( $details ) ) {
 				sprintf( __( 'We are missing details for subscription with ID %d', 'ars-virtual-donation' ), $subscription->ID );
@@ -44,7 +44,7 @@ if ( ! empty( $subscriptions ) ) {
 				<td><a href="<?php echo get_permalink( $animal->ID ) ?>"><?php echo $animal->post_title; ?></a></td>
 				<td><?php echo $details->amount . ' ' . $details->currency ?></td>
 				<td class="next-due-date"><?php echo $details->next_due ?> </td>
-				<td class="subscription-status"><?php echo ars_get_verbose_subscription_status( $details->status ) ?></td>
+				<td class="subscription-status"><?php echo va_get_verbose_subscription_status( $details->status ) ?></td>
 				<td class="row-actions">
 					<?php
 					if ( $details->status === 'ars-active' ) {

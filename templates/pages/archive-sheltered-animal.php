@@ -1,8 +1,8 @@
 <?php
 get_header();
 
-$ars_settings = get_option( 'va-settings' );
-$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
+$va_settings = get_option( 'va-settings' );
+$sponsor_link = get_permalink( $va_settings['checkout-page'] );
 ?>
 	<div class="sheltered-animals-archive">
 		<div class="intro-text">
@@ -22,7 +22,7 @@ $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 		<div class="list-of-animals">
 
 			<?php if ( have_posts() ) :
-				$adopted_animals = ars_get_list_of_adopted_animals();
+				$adopted_animals = va_get_list_of_adopted_animals();
 				while ( have_posts() ) : the_post();
 					$post_id         = get_the_ID();
 					$the_title       = get_the_title();

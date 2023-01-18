@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
       const postData = {
         security: document.getElementById('turbo-security').value,
-        action: 'ars_create_new_donation_subscription',
+        action: 'va_create_new_donation_subscription',
         giftEmail: giftEmail,
         animalID: document.getElementById('animal-id').value,
         donationAmount: getDonationAmount(),
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const postData = {
           post_id: e.target.dataset.postId,
           security: document.getElementById('turbo-security').value,
-          action: 'ars_cancel_subscription_ajax',
+          action: 'va_cancel_subscription_ajax',
         };
 
         cancelSubscription(postData)

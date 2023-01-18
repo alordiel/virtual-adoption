@@ -6,11 +6,11 @@ function ee_add_settings_page() {
 		__( 'ARS Settings', 'ears-virtual-donations' ),
 		__( 'ARS Settings', 'ears-virtual-donations' ),
 		'manage_options',
-		'ars_settings',
-		'ars_admin_settings_page' );
+		'va_settings',
+		'va_admin_settings_page' );
 }
 
-function ars_admin_settings_page() {
+function va_admin_settings_page() {
 	?>
 
 	<h1><?php _e( 'ARS sheltered animals settings', 'ars-virtual-donations' ) ?></h1>
@@ -21,25 +21,25 @@ function ars_admin_settings_page() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'ears-virtual-donations' ) );
 	}
 
-	$ars_settings = get_option( 'va-settings' );
+	$va_settings = get_option( 'va-settings' );
 
 	if ( isset( $_POST['dogs-term-id'] ) ) {
-		if ( empty( $ars_settings ) ) {
-			$ars_settings = [ 'animal-terms' ];
+		if ( empty( $va_settings ) ) {
+			$va_settings = [ 'animal-terms' ];
 		}
 
-		$ars_settings['animal-terms']['dogs']                   = (int) $_POST['dogs-term-id'];
-		$ars_settings['animal-terms']['cats']                   = (int) $_POST['cats-term-id'];
-		$ars_settings['animal-terms']['horses']                 = (int) $_POST['horses-term-id'];
-		$ars_settings['animal-terms']['other']                  = (int) $_POST['farm-animals-term-id'];
-		$ars_settings['checkout-page']                          = (int) $_POST['checkout-donation'];
-		$ars_settings['thank-you-page']                         = (int) $_POST['thank-you-page'];
-		$ars_settings['my-subscriptions-page']                  = (int) $_POST['my-subscriptions-page'];
-		$ars_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
-		$ars_settings['payment-methods']['paypal']['secret']    = ars_encrypt_data( $_POST['paypal-secret-key'] );
-		$ars_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
+		$va_settings['animal-terms']['dogs']                   = (int) $_POST['dogs-term-id'];
+		$va_settings['animal-terms']['cats']                   = (int) $_POST['cats-term-id'];
+		$va_settings['animal-terms']['horses']                 = (int) $_POST['horses-term-id'];
+		$va_settings['animal-terms']['other']                  = (int) $_POST['farm-animals-term-id'];
+		$va_settings['checkout-page']                          = (int) $_POST['checkout-donation'];
+		$va_settings['thank-you-page']                         = (int) $_POST['thank-you-page'];
+		$va_settings['my-subscriptions-page']                  = (int) $_POST['my-subscriptions-page'];
+		$va_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
+		$va_settings['payment-methods']['paypal']['secret']    = va_encrypt_data( $_POST['paypal-secret-key'] );
+		$va_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
 
-		update_option( 'va-settings', $ars_settings );
+		update_option( 'va-settings', $va_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
 	}
 
@@ -53,24 +53,24 @@ function ars_admin_settings_page() {
 		'posts_per_page' => - 1,
 	] );
 
-	$dogs_tax_id         = ! empty( $ars_settings['animal-terms']['dogs'] ) ? (int) $ars_settings['animal-terms']['dogs'] : 0;
-	$cats_tax_id         = ! empty( $ars_settings['animal-terms']['cats'] ) ? (int) $ars_settings['animal-terms']['cats'] : 0;
-	$horses_tax_id       = ! empty( $ars_settings['animal-terms']['horses'] ) ? (int) $ars_settings['animal-terms']['horses'] : 0;
-	$other_tax_id        = ! empty( $ars_settings['animal-terms']['other'] ) ? (int) $ars_settings['animal-terms']['other'] : 0;
-	$checkout_page_id    = ! empty( $ars_settings['checkout-page'] ) ? $ars_settings['checkout-page'] : 0;
-	$thank_you_page_id   = ! empty( $ars_settings['thank-you-page'] ) ? $ars_settings['thank-you-page'] : 0;
-	$my_subscriptions_id = ! empty( $ars_settings['my-subscriptions-page'] ) ? $ars_settings['my-subscriptions-page'] : 0;
-	$paypal_client_id    = ! empty( $ars_settings['payment-methods']['paypal']['client_id'] ) ? $ars_settings['payment-methods']['paypal']['client_id'] : '';
-	$paypal_secret       = ! empty( $ars_settings['payment-methods']['paypal']['secret'] ) ? ars_decrypt_data( $ars_settings['payment-methods']['paypal']['secret'] ) : '';
-	$paypal_is_test      = ! empty( $ars_settings['payment-methods']['paypal']['test'] );
+	$dogs_tax_id         = ! empty( $va_settings['animal-terms']['dogs'] ) ? (int) $va_settings['animal-terms']['dogs'] : 0;
+	$cats_tax_id         = ! empty( $va_settings['animal-terms']['cats'] ) ? (int) $va_settings['animal-terms']['cats'] : 0;
+	$horses_tax_id       = ! empty( $va_settings['animal-terms']['horses'] ) ? (int) $va_settings['animal-terms']['horses'] : 0;
+	$other_tax_id        = ! empty( $va_settings['animal-terms']['other'] ) ? (int) $va_settings['animal-terms']['other'] : 0;
+	$checkout_page_id    = ! empty( $va_settings['checkout-page'] ) ? $va_settings['checkout-page'] : 0;
+	$thank_you_page_id   = ! empty( $va_settings['thank-you-page'] ) ? $va_settings['thank-you-page'] : 0;
+	$my_subscriptions_id = ! empty( $va_settings['my-subscriptions-page'] ) ? $va_settings['my-subscriptions-page'] : 0;
+	$paypal_client_id    = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
+	$paypal_secret       = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
+	$paypal_is_test      = ! empty( $va_settings['payment-methods']['paypal']['test'] );
 
-	$dogs_options          = ars_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
-	$cats_options          = ars_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
-	$horses_options        = ars_get_selected_options_for_the_admin_settings( $horses_tax_id, $terms );
-	$farm_options          = ars_get_selected_options_for_the_admin_settings( $other_tax_id, $terms );
-	$checkout_page         = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $checkout_page_id );
-	$thank_you_page        = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
-	$my_subscriptions_page = ars_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
+	$dogs_options          = va_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
+	$cats_options          = va_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
+	$horses_options        = va_get_selected_options_for_the_admin_settings( $horses_tax_id, $terms );
+	$farm_options          = va_get_selected_options_for_the_admin_settings( $other_tax_id, $terms );
+	$checkout_page         = va_get_selected_options_for_the_admin_settings_by_page( $pages, $checkout_page_id );
+	$thank_you_page        = va_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
+	$my_subscriptions_page = va_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
 	?>
 	<form name="form1" method="post" action="">
 		<p><?php _e( 'Set the categories for the animals', 'ars-virtual-donations' ) ?></p>
@@ -231,7 +231,7 @@ function ars_admin_settings_page() {
 				jQuery.ajax({
 					url: '/wp-admin/admin-ajax.php',
 					data: {
-						action: 'ars_test_api'
+						action: 'va_test_api'
 					},
 					method: 'POST',
 					success: (response) => {
@@ -248,7 +248,7 @@ function ars_admin_settings_page() {
 }
 
 
-function ars_get_selected_options_for_the_admin_settings( $search_term_id, $terms ): string {
+function va_get_selected_options_for_the_admin_settings( $search_term_id, $terms ): string {
 	// build the select options for the categories
 	$options = "<option value='0'>- select -</option>";
 	foreach ( $terms as $term ) {
@@ -259,7 +259,7 @@ function ars_get_selected_options_for_the_admin_settings( $search_term_id, $term
 	return $options;
 }
 
-function ars_get_selected_options_for_the_admin_settings_by_page( $pages, $page_id ): string {
+function va_get_selected_options_for_the_admin_settings_by_page( $pages, $page_id ): string {
 	$options = "<option value='0'>- select -</option>";
 	foreach ( $pages as $page ) {
 		$selected = ( $page_id !== 0 && $page_id === $page->ID ) ? 'selected="selected"' : '';

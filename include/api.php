@@ -2,7 +2,7 @@
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'virtual-donations/v1', '/subscription/', array(
 		'methods'             => 'POST',
-		'callback'            => 'ars_handle_paypal_webhook_triggered_on_subscription_change',
+		'callback'            => 'va_handle_paypal_webhook_triggered_on_subscription_change',
 		'args'                => array(
 			'id' => array(
 				'validate_callback' => function ( $param, $request, $key ) {
@@ -16,16 +16,16 @@ add_action( 'rest_api_init', function () {
 	) );
 } );
 
-function ars_handle_paypal_webhook_triggered_on_subscription_change() {
+function va_handle_paypal_webhook_triggered_on_subscription_change() {
 
 }
 
 
-function ars_create_paypal_authentication_token(): array {
-	$ars_settings       = get_option( 'va-settings' );
-	$paypal_client_id   = ! empty( $ars_settings['payment-methods']['paypal']['client_id'] ) ? $ars_settings['payment-methods']['paypal']['client_id'] : '';
-	$paypal_secret      = ! empty( $ars_settings['payment-methods']['paypal']['secret'] ) ? ars_decrypt_data( $ars_settings['payment-methods']['paypal']['secret'] ) : '';
-	$paypal_is_test_env = ! empty( $ars_settings['payment-methods']['paypal']['test'] );
+function va_create_paypal_authentication_token(): array {
+	$va_settings       = get_option( 'va-settings' );
+	$paypal_client_id   = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
+	$paypal_secret      = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
+	$paypal_is_test_env = ! empty( $va_settings['payment-methods']['paypal']['test'] );
 	$paypal_api_url     = $paypal_is_test_env ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com';
 
 	$url  = $paypal_api_url . '/v1/oauth2/token';
@@ -74,7 +74,7 @@ function ars_create_paypal_authentication_token(): array {
 	];
 }
 
-function ars_get_list_of_subscription_plans( string $token ) {
+function va_get_list_of_subscription_plans( string $token ) {
 	$ch = curl_init();
 
 	curl_setopt( $ch, CURLOPT_URL, 'https://api-m.sandbox.paypal.com/v1/billing/plans' );
@@ -96,7 +96,7 @@ function ars_get_list_of_subscription_plans( string $token ) {
 	dbga( $result );
 }
 
-function ars_build_a_subscription_plan( string $token ) {
+function va_build_a_subscription_plan( string $token ) {
 	$data = array(
 		'product_id'          => 'PROD-XXCD1234QWER65782',
 		'name'                => 'Video Streaming Service Plan',
@@ -161,12 +161,12 @@ function ars_build_a_subscription_plan( string $token ) {
 	curl_close( $ch );
 }
 
-function ars_test_api() {
-	$token = ars_create_paypal_authentication_token();
+function va_test_api() {
+	$token = va_create_paypal_authentication_token();
 	if ( $token['status'] === 'success' ) {
-		ars_build_a_subscription_plan( $token['data']['access_token'] );
+		va_build_a_subscription_plan( $token['data']['access_token'] );
 	}
 	wp_die( 'done' );
 }
 
-add_action( 'wp_ajax_ars_test_api', 'ars_test_api' );
+add_action( 'wp_ajax_va_test_api', 'va_test_api' );

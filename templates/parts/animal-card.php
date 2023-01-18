@@ -48,7 +48,7 @@
 		</div>
 		<?php if ( $adopted_animals === [] || ! in_array( $post_id, $adopted_animals ) ): ?>
 			<div class="blue-button-wrap">
-				<a href="<?php echo $sponsor_link . '?aid=' . ars_encode_id( $post_id ) ?>"
+				<a href="<?php echo $sponsor_link . '?aid=' . va_encode_id( $post_id ) ?>"
 				   class="blue-button"><?php _e('Sponsor me', 'ars-virtual-adopt') ?></a>
 			</div>
 		<?php else: ?>

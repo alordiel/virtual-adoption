@@ -1,6 +1,6 @@
 <?php
 
-function ars_subscription_post_type() {
+function va_subscription_post_type() {
 	$labels = array(
 		'name'               => _x( 'Animal subscriptions', 'post type general name', 'ars-virtual-donations' ),
 		'singular_name'      => _x( 'Animal subscription', 'post type singular name', 'ars-virtual-donations' ),
@@ -38,7 +38,7 @@ function ars_subscription_post_type() {
 	register_post_type( 'ars-subscription', $args );
 }
 
-add_action( 'init', 'ars_subscription_post_type' );
+add_action( 'init', 'va_subscription_post_type' );
 
 
 /**
@@ -49,7 +49,7 @@ add_action( 'init', 'ars_subscription_post_type' );
  *
  * @return void
  */
-function ars_custom_post_status_for_subscriptions() {
+function va_custom_post_status_for_subscriptions() {
 	register_post_status( 'ars-active', array(
 		'label'                     => 'Active',
 		'public'                    => true,
@@ -78,7 +78,7 @@ function ars_custom_post_status_for_subscriptions() {
 	) );
 }
 
-add_action( 'init', 'ars_custom_post_status_for_subscriptions' );
+add_action( 'init', 'va_custom_post_status_for_subscriptions' );
 
 
 /**
@@ -86,7 +86,7 @@ add_action( 'init', 'ars_custom_post_status_for_subscriptions' );
  *
  * @return void
  */
-function ars_append_post_status_list() {
+function va_append_post_status_list() {
 	global $post;
 	$options = '';
 	$label   = '';
@@ -130,7 +130,7 @@ function ars_append_post_status_list() {
 	}
 }
 
-add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
+add_action( 'admin_footer-post.php', 'va_append_post_status_list' );
 
 
 /**
@@ -140,7 +140,7 @@ add_action( 'admin_footer-post.php', 'ars_append_post_status_list' );
  *
  * @return mixed|string[]
  */
-function ars_display_archive_state( $states ) {
+function va_display_archive_state( $states ) {
 	global $post;
 	$arg = get_query_var( 'post_status' );
 	if ( $arg !== 'archive' ) {
@@ -158,7 +158,7 @@ function ars_display_archive_state( $states ) {
 	return $states;
 }
 
-add_filter( 'display_post_states', 'ars_display_archive_state' );
+add_filter( 'display_post_states', 'va_display_archive_state' );
 
 /**
  * This filter will remove the Quick Edit link from the admin list of all post with post type ars-subscription
@@ -188,49 +188,49 @@ add_filter( 'post_row_actions', 'remove_quick_edit', 10, 2 );
  * @param string $old_status Old post status.
  * @param WP_Post $post Post object.
  */
-function ars_change_of_subscription_post_status( string $new_status, string $old_status, WP_Post $post ) {
+function va_change_of_subscription_post_status( string $new_status, string $old_status, WP_Post $post ) {
 	if ( $old_status === $new_status ) {
 		return;
 	}
 	dbga($new_status);
 	global $wpdb;
 	$wpdb->update(
-		$wpdb->prefix . 'ars_subscriptions',
+		$wpdb->prefix . 'va_subscriptions',
 		[ 'status' => $new_status ],
 		[ 'post_id' => $post->ID ],
 		[ '%s' ],
 		[ '%d' ]
 	);
 
-	$subscription = ars_get_subscription_by_post_id( $post->ID );
+	$subscription = va_get_subscription_by_post_id( $post->ID );
 
 	// In case the admin is cancelling the subscription
 	if ( $new_status === 'ars-cancelled' && $old_status === 'ars-active') {
-		ars_paypal_cancel_subscription( $subscription );
+		va_paypal_cancel_subscription( $subscription );
 	}
 
-	ars_send_confirmation_email( $post );
+	va_send_confirmation_email( $post );
 }
 
-add_action( 'transition_post_status', 'ars_change_of_subscription_post_status', 10, 3 );
+add_action( 'transition_post_status', 'va_change_of_subscription_post_status', 10, 3 );
 
 
 /**
- * Hook to the deletion of subscription post and also delete the ars_subscription entry
+ * Hook to the deletion of subscription post and also delete the va_subscription entry
  *
  * @param int $post_id
  *
  * @return void
  */
-function ars_on_deleting_subscription_post( int $post_id ) {
+function va_on_deleting_subscription_post( int $post_id ) {
 	global $wpdb;
 	$wpdb->delete(
-		$wpdb->prefix . 'ars_subscriptions',
+		$wpdb->prefix . 'va_subscriptions',
 		[ 'post_id' => $post_id ]
 	);
 }
 
-add_action( 'delete_post', 'ars_on_deleting_subscription_post', 10, 2 );
+add_action( 'delete_post', 'va_on_deleting_subscription_post', 10, 2 );
 
 
 /**
@@ -240,9 +240,9 @@ add_action( 'delete_post', 'ars_on_deleting_subscription_post', 10, 2 );
  *
  * @return void
  */
-function ars_change_status_when_post_is_trashed( int $post_id ) {
+function va_change_status_when_post_is_trashed( int $post_id ) {
 	global $wpdb;
-	$subscription = ars_get_subscription_by_post_id( $post_id );
+	$subscription = va_get_subscription_by_post_id( $post_id );
 	// Check if status is not already cancelled
 	if ( $subscription['status'] === 'ars-cancelled' ) {
 		return;
@@ -250,15 +250,15 @@ function ars_change_status_when_post_is_trashed( int $post_id ) {
 
 	// In case of active status we need to cancel the PayPal subscription
 	if ( $subscription['status'] === 'ars-active' ) {
-		ars_paypal_cancel_subscription( $subscription );
+		va_paypal_cancel_subscription( $subscription );
 	}
 
 	$wpdb->update(
-		$wpdb->prefix . 'ars_subscriptions',
+		$wpdb->prefix . 'va_subscriptions',
 		[ 'status' => 'ars-cancelled' ],
 		[ 'post_id' => $post_id ]
 	);
 
 }
 
-add_action( 'wp_trash_post', 'ars_change_status_when_post_is_trashed' );
+add_action( 'wp_trash_post', 'va_change_status_when_post_is_trashed' );
