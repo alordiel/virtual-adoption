@@ -2,34 +2,65 @@
 /**
  * Template name: VirtualAdopt - Login Page
  */
+$error = '';
+if ( ! empty( $_POST['login-submit'] ) && ! is_user_logged_in() ) {
+	if ( ! empty( $_POST['email'] ) && ! is_email( $_POST['email'] ) ) {
+		$error = __( 'Invalid email', 'virtual-adoption' );
+	}
+	if ( ! empty( $_POST['email'] ) && ! empty( $_POST['password'] ) ) {
+		$credentials = array(
+			'user_login'    => $_POST['email'],
+			'user_password' => $_POST['password'],
+			'remember'      => ! empty( $_POST['remember-me'] )
+		);
+
+		$user = wp_signon( $credentials, false );
+		if ( ! is_wp_error( $user ) ) {
+			wp_set_current_user( $user->ID );
+		} else {
+			$error .= $user->get_error_message();
+		}
+
+	} else {
+		$error = __( 'Please enter email and password', 'virtual-adoption' );
+	}
+}
+
 
 if ( is_user_logged_in() ) {
-	wp_redirect( get_post_type_archive_link('sheltered-animal') );
+	wp_redirect( get_post_type_archive_link( 'sheltered-animal' ) );
 }
 
 get_header();
 ?>
-
 	<div class="vir-adopt-login">
-		<form name="loginform" id="loginform" action="https://toafl.com/wp-login.php" method="post">
+		<form method="post">
 			<p>
-				<label for="user_login">Username or Email Address</label>
-				<input type="text" name="username" id="user_login" class="input" value="AlexVasilev"
-					   autocapitalize="none" autocomplete="username">
+				<label for="email"><?php _e( 'Email', 'virtual-adoption' ); ?></label><br>
+				<input type="email" name="email" id="email"
+					   value="<?php echo ! empty( $_POST['email'] ) ? $_POST['email'] : '' ?>" autofocus>
 			</p>
 
-			<div class="user-pass-wrap">
-				<label for="user_pass">Password</label>
-				<div class="wp-pwd">
-					<input type="password" name="ppasswordwd" id="user_pass" class="input password-input" value=""
-						   autocomplete="current-password">
-				</div>
+			<div>
+				<label for="user_pass"><?php _e( 'Password', 'virtual-adoption' ); ?></label><br>
+				<input type="password" name="password" id="user_pass" value="">
 			</div>
-			<p class="forgetmenot"><input name="remember-me" type="checkbox" id="remember-me" value="forever"> <label
-					for="remember-me">Remember Me</label></p>
+			<p>
+				<input name="remember-me" type="checkbox" id="remember-me" value="forever">
+				<label for="remember-me"><?php _e( 'Remember Me', 'virtual-adoption' ); ?></label>
+			</p>
+
+			<?php if ( $error !== '' ): ?>
+				<div class="error-box">
+					<p>
+						<?php echo $error; ?>
+					</p>
+				</div>
+			<?php endif; ?>
+
 			<p class="submit">
-				<input type="submit" name="login-submit" id="login-submit" class="button button-primary button-large"
-					   value="Log In">
+				<input type="submit" name="login-submit" id="login-submit" class="button button-primary"
+					   value="<?php _e( 'Log in', 'virtual-adoption' ); ?>">
 			</p>
 		</form>
 	</div>

@@ -1,0 +1,32 @@
+.vir-adopt-login {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ebebeb;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  max-width: 340px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+
+  .button-primary {
+    padding: 10px;
+    width: 100%;
+  }
+
+  input#email,
+  input#user_pass {
+    width: 100%;
+    text-transform: lowercase;
+    font-size: 0.8rem;
+  }
+
+  .error-box {
+    border: 2px solid red;
+    padding: 10px 20px;
+    color: red;
+    margin-bottom: 30px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
