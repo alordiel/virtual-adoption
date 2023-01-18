@@ -111,7 +111,7 @@ function va_create_template_page( string $page_type ) {
 		],
 		'login' => [
 			'title'    => __( 'Login', 'va-virtual-donations' ),
-			'template' => 'login-page.php',
+			'template' => 'va-login-page.php',
 			'slug'     => 'vd-login',
 		],
 	];
@@ -129,7 +129,7 @@ function va_create_template_page( string $page_type ) {
 	] );
 
 	$va_settings               = get_option( 'va-settings' );
-	$va_settings[ $page_type ] = $page_id;
+	$va_settings['page'][ $page_type ] = $page_id;
 	update_option( 'va-settings', $va_settings );
 }
 
