@@ -1,6 +1,6 @@
 <?php
 /**
- * Template name: ARS Donation Checkout
+ * Template name: VirtualAdopt -  Donation Checkout
  */
 get_header();
 $post_id = 0;

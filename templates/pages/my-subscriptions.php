@@ -1,6 +1,6 @@
 <?php
 /**
- * Template name: ARS List of subscriptions
+ * Template name: VirtualAdopt -  List of subscriptions
  */
 get_header();
 $user_id = wp_get_current_user();

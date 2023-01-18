@@ -1,6 +1,6 @@
 <?php
 /**
- * Template name: VirAdopt Login Page
+ * Template name: VirtualAdopt - Login Page
  */
 
 if ( is_user_logged_in() ) {
