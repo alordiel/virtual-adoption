@@ -11,7 +11,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 	<div class="sheltered-animals-archive">
 		<?php
 		if ( $post_id !== 0 ) {
-			include_once( ARSVD_ABS . '/templates/parts/checkout-form.php' );
+			include_once( VA_ABS . '/templates/parts/checkout-form.php' );
 		} else {
 			$animals = get_posts( [
 				'post_type'        => 'sheltered-animal',
@@ -19,7 +19,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 				'suppress_filters' => false,
 			] );
 			if ( empty( $animals ) ) {
-				include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
+				include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
 			} else {
 				?>
 				<div class="intro-text">
@@ -43,7 +43,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 						$animal_link   = get_the_permalink( $post_id );
 						$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
 						$the_title     = $animal->post_title;
-						include( ARSVD_ABS . '/templates/parts/animal-card.php');
+						include( VA_ABS . '/templates/parts/animal-card.php');
 					}
 					?>
 				</div>

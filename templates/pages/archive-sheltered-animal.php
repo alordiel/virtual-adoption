@@ -15,7 +15,7 @@ $sponsor_link = get_permalink( $va_settings['checkout-page'] );
 				difference. </p>
 		</div>
 
-		<?php require_once( ARSVD_ABS . '/templates/parts/select-kind-of-animal.php' ); ?>
+		<?php require_once( VA_ABS . '/templates/parts/select-kind-of-animal.php' ); ?>
 
 		<h3 class="text-center">Choose your sponsor animal</h3>
 
@@ -30,15 +30,15 @@ $sponsor_link = get_permalink( $va_settings['checkout-page'] );
 					$sheltered_for   = get_post_meta( $post_id, 'sheltered-years', true );
 					$animal_link     = get_the_permalink();
 					$image           = get_the_post_thumbnail_url( $post_id, 'medium' );
-					include( ARSVD_ABS . '/templates/parts/animal-card.php' );
+					include( VA_ABS . '/templates/parts/animal-card.php' );
 				endwhile;
 			else:
-				include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
+				include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
 			endif;
 			?>
 		</div>
 
-		<?php include_once( ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
+		<?php include_once( VA_ABS . '/templates/parts/how-it-works.php' ); ?>
 
 	</div>
 <?php

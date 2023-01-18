@@ -15,25 +15,25 @@ function va_sheltered_animals_styles_and_scripts() {
 
 	wp_enqueue_script(
 		'sheltered-animal',
-		ARSVD_URL . '/assets/build/js/index.js',
+		VA_URL . '/assets/build/js/index.js',
 		'jquery',
-		filemtime( ARSVD_ABS . '/assets/build/js/index.js' ),
+		filemtime( VA_ABS . '/assets/build/js/index.js' ),
 		true,
 	);
 
 	wp_enqueue_style(
 		'sheltered-animal',
-		ARSVD_URL . '/assets/build/css/sheltered-animals.css',
+		VA_URL . '/assets/build/css/sheltered-animals.css',
 		'',
-		filemtime( ARSVD_ABS . '/assets/build/css/sheltered-animals.css' )
+		filemtime( VA_ABS . '/assets/build/css/sheltered-animals.css' )
 	);
 
 	if ( $template_page === 'ars-my-subscriptions.php' ) {
 		wp_enqueue_script(
 			'ars-vue-js',
-			ARSVD_URL . '/assets/inc/vue.min.js',
+			VA_URL . '/assets/inc/vue.min.js',
 			'jquery',
-			filemtime( ARSVD_ABS . '/assets/inc/vue.min.js' ),
+			filemtime( VA_ABS . '/assets/inc/vue.min.js' ),
 			true,
 		);
 	}

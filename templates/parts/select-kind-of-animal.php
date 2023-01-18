@@ -20,7 +20,7 @@ $category_link = [
 	<h3>Select category</h3>
 	<div class="kind-of-animal-logo <?php echo $selected === 'dogs' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['dogs'] ?>" title="<?php _e( 'View all dogs', 'virtual-adoption' ); ?>">
-			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/dog.png"
+			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/dog.png"
 				 alt="<?php _e( 'Dogs', 'virtual-adoption' ) ?>">
 			<?php _e( 'Dogs', 'virtual-adoption' ) ?>
 		</a>
@@ -28,7 +28,7 @@ $category_link = [
 	<div class="kind-of-animal-logo <?php echo $selected === 'horses' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['horses'] ?>"
 		   title="<?php _e( 'View all horses', 'virtual-adoption' ); ?>">
-			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/horse.png"
+			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/horse.png"
 				 alt="<?php _e( 'Horses', 'virtual-adoption' ) ?>">
 			<?php _e( 'Horses', 'virtual-adoption' ) ?>
 
@@ -36,7 +36,7 @@ $category_link = [
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'cats' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['cats'] ?>" title="<?php _e( 'View all cats', 'virtual-adoption' ); ?>">
-			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/cat.png"
+			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/cat.png"
 				 alt="<?php _e( 'Cats', 'virtual-adoption' ) ?>">
 			<?php _e( 'Cats', 'virtual-adoption' ) ?>
 		</a>
@@ -44,7 +44,7 @@ $category_link = [
 	<div class="kind-of-animal-logo <?php echo $selected === 'farm-animals' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['other'] ?>"
 		   title="<?php _e( 'View all farm animals', 'virtual-adoption' ); ?>">
-			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/farm.png"
+			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/farm.png"
 				 alt="<?php _e( 'Other', 'virtual-adoption' ) ?>">
 			<?php _e( 'Other', 'virtual-adoption' ) ?>
 
@@ -53,7 +53,7 @@ $category_link = [
 	<div class="kind-of-animal-logo <?php echo $selected === 'all' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['all'] ?>"
 		   title="<?php _e( 'View all animals', 'virtual-adoption' ); ?>">
-			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/all.png"
+			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/all.png"
 				 alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
 			<?php _e( 'All', 'virtual-adoption' ) ?>
 

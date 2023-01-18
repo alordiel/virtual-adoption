@@ -61,9 +61,9 @@ if ( $user_id !== 0 ) {
 
 				<?php
 				if ( $is_adopted ) {
-					include( ARSVD_ABS . '/templates/parts/adopted-animal.php' );
+					include( VA_ABS . '/templates/parts/adopted-animal.php' );
 				} else {
-					include( ARSVD_ABS . '/templates/parts/sponsor-me-button.php' );
+					include( VA_ABS . '/templates/parts/sponsor-me-button.php' );
 				}
 				?>
 			</div>
@@ -72,12 +72,12 @@ if ( $user_id !== 0 ) {
 			<?php the_content(); ?>
 		</div>
 
-		<?php include( ARSVD_ABS . '/templates/parts/how-it-works.php' ); ?>
+		<?php include( VA_ABS . '/templates/parts/how-it-works.php' ); ?>
 
 		<div class="text-center">
 			<?php
 			if ( ! $is_adopted ) {
-				include( ARSVD_ABS . '/templates/parts/sponsor-me-button.php' );
+				include( VA_ABS . '/templates/parts/sponsor-me-button.php' );
 			}
 			?>
 		</div>

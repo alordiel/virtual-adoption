@@ -21,22 +21,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-define( 'ARSVD_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
-const ARSVD_ABS = __DIR__;
+define( 'VA_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+const VA_ABS = __DIR__;
 
-require_once( ARSVD_ABS . '/include/cpt-animals.php' );
-require_once( ARSVD_ABS . '/include/cpt-ars-subscriptions.php' );
-require_once( ARSVD_ABS . '/include/template-loader.php' );
-require_once( ARSVD_ABS . '/include/functions.php' );
-require_once( ARSVD_ABS . '/include/wordpress.php' );
-require_once( ARSVD_ABS . '/include/enqueue-scripts-and-styles.php' );
-require_once( ARSVD_ABS . '/include/admin-settings.php' );
-require_once( ARSVD_ABS . '/include/ajax.php' );
-require_once( ARSVD_ABS . '/include/database-tables.php' );
-require_once( ARSVD_ABS . '/include/subscriptions.php' );
-require_once( ARSVD_ABS . '/include/mails.php' );
-require_once( ARSVD_ABS . '/include/api.php' );
-require_once( ARSVD_ABS . '/include/crypt.php' );
+require_once( VA_ABS . '/include/cpt-animals.php' );
+require_once( VA_ABS . '/include/cpt-ars-subscriptions.php' );
+require_once( VA_ABS . '/include/template-loader.php' );
+require_once( VA_ABS . '/include/functions.php' );
+require_once( VA_ABS . '/include/wordpress.php' );
+require_once( VA_ABS . '/include/enqueue-scripts-and-styles.php' );
+require_once( VA_ABS . '/include/admin-settings.php' );
+require_once( VA_ABS . '/include/ajax.php' );
+require_once( VA_ABS . '/include/database-tables.php' );
+require_once( VA_ABS . '/include/subscriptions.php' );
+require_once( VA_ABS . '/include/mails.php' );
+require_once( VA_ABS . '/include/api.php' );
+require_once( VA_ABS . '/include/crypt.php' );
 
 
 /**

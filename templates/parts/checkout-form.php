@@ -4,7 +4,7 @@
  */
 $sheltered_animal = get_post( $post_id );
 if ( empty( $sheltered_animal ) ) {
-	include_once( ARSVD_ABS . '/templates/parts/no-animals-found.php' );
+	include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
 } else {
 	$age   = get_post_meta( $post_id, 'animals-age', true );
 	$image = get_the_post_thumbnail_url( $post_id, 'small' );
@@ -79,7 +79,7 @@ if ( empty( $sheltered_animal ) ) {
 						<input id="payment-method-mypos" type="radio" class="input-radio" name="payment-method"
 							   value="mypos" checked>
 						<label for="payment-method-mypos"> Credit/Debit Card (myPos)
-							<img src="<?php /*echo ARSVD_URL */?>/assets/images/payments/myPos.png" alt="myPos logo">
+							<img src="<?php /*echo VA_URL */?>/assets/images/payments/myPos.png" alt="myPos logo">
 						</label>
 						<div class="payment-box payment-method-mypos">
 							<span class="box-arrow"></span>
@@ -92,7 +92,7 @@ if ( empty( $sheltered_animal ) ) {
 						<input id="payment-method-paypal" type="radio" class="input-radio" name="payment-method"
 							   value="paypal" checked>
 						<label for="payment-method-paypal">
-							PayPal <img src="<?php echo ARSVD_URL ?>/assets/images/payments/paypal.png"
+							PayPal <img src="<?php echo VA_URL ?>/assets/images/payments/paypal.png"
 										alt="PayPal logo">
 						</label>
 					</li>
