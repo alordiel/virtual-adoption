@@ -123,7 +123,7 @@ function ars_get_list_of_adopted_animals(): array {
 	global $wpdb;
 	$sql     = "SELECT sponsored_animal_id
 				FROM {$wpdb->prefix}ars_subscriptions
-				WHERE user_id = $user_id AND status != 'cancelled'";
+				WHERE user_id = $user_id AND status != 'ars-cancelled'";
 	$animals = $wpdb->get_col( $sql );
 	if ( empty( $animals ) ) {
 		return [];
