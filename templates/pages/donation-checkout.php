@@ -29,7 +29,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 				</div>
 				<div class="list-of-animals">
 					<?php
-					$ars_settings = get_option( 'ars-settings' );
+					$ars_settings = get_option( 'va-settings' );
 					$sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 					$adopted_animals = ars_get_list_of_adopted_animals();
 					foreach ( $animals as $animal ) {

@@ -11,7 +11,7 @@ function ars_send_confirmation_email( WP_Post $post ) {
 		$subject = __( 'Error with the current subscription', 'ars-virtual-donations' );
 		$content = sprintf( __( "Hello, \n We had issues with finding entry with ID %d, please send this message to our admin. \n Thank you.", 'ars-virtual-donations' ), $post->ID );
 	} else {
-		$ars_settings         = get_option( 'ars-settings' );
+		$ars_settings         = get_option( 'va-settings' );
 		$manage_subscriptions = get_permalink( $ars_settings['my-subscriptions-page'] );
 		$animal               = get_post( $details['sponsored_animal_id'] );
 		$subject              = __( 'Successful virtual adoption', 'ars-virtual-donations' );

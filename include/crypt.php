@@ -22,11 +22,11 @@ function ars_decrypt_data(string $data) {
 }
 
 function ars_get_salt_key(): string{
-	$ars_settings = get_option( 'ars-settings' );
+	$ars_settings = get_option( 'va-settings' );
 	$secret_phrase_key   = ! empty( $ars_settings['phrase-key'] ) ? $ars_settings['phrase-key'] : '';
 	if ($secret_phrase_key === '') {
 		$ars_settings['phrase-key'] = base64_encode(openssl_random_pseudo_bytes(32));
-		update_option( 'ars-settings', $ars_settings );
+		update_option( 'va-settings', $ars_settings );
 	}
 	return $ars_settings['phrase-key'];
 }

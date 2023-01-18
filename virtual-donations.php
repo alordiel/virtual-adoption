@@ -50,7 +50,7 @@ function ars_plugin_activated() {
 		sheltered_animal_taxonomy();
 		ars_register_meta_boxes();
 	}
-	$ars_settings = get_option( 'ars-settings' );
+	$ars_settings = get_option( 'va-settings' );
 	if(empty($ars_settings['checkout-page'])){
 		ars_create_template_page('checkout-page');
 	}

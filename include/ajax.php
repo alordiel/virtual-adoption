@@ -54,7 +54,7 @@ function ars_create_new_donation_subscription_ajax() {
 	}
 
 	// get redirection link for "Thank you" page
-	$options = get_option( 'ars-settings' );
+	$options = get_option( 'va-settings' );
 	$ids     = [
 		'post_id'         => $results['post_id'],
 		'subscription_id' => $results['subscription_id'],

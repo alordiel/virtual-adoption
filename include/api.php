@@ -22,7 +22,7 @@ function ars_handle_paypal_webhook_triggered_on_subscription_change() {
 
 
 function ars_create_paypal_authentication_token(): array {
-	$ars_settings       = get_option( 'ars-settings' );
+	$ars_settings       = get_option( 'va-settings' );
 	$paypal_client_id   = ! empty( $ars_settings['payment-methods']['paypal']['client_id'] ) ? $ars_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret      = ! empty( $ars_settings['payment-methods']['paypal']['secret'] ) ? ars_decrypt_data( $ars_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test_env = ! empty( $ars_settings['payment-methods']['paypal']['test'] );

@@ -1,7 +1,7 @@
 <?php
 get_header();
 
-$ars_settings = get_option( 'ars-settings' );
+$ars_settings = get_option( 'va-settings' );
 $sponsor_link = get_permalink( $ars_settings['checkout-page'] );
 ?>
 	<div class="sheltered-animals-archive">

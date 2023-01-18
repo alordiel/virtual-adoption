@@ -21,7 +21,7 @@ function ars_admin_settings_page() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'ears-virtual-donations' ) );
 	}
 
-	$ars_settings = get_option( 'ars-settings' );
+	$ars_settings = get_option( 'va-settings' );
 
 	if ( isset( $_POST['dogs-term-id'] ) ) {
 		if ( empty( $ars_settings ) ) {
@@ -39,7 +39,7 @@ function ars_admin_settings_page() {
 		$ars_settings['payment-methods']['paypal']['secret']    = ars_encrypt_data( $_POST['paypal-secret-key'] );
 		$ars_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
 
-		update_option( 'ars-settings', $ars_settings );
+		update_option( 'va-settings', $ars_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'ears-virtual-donations' ) . '</strong></p></div>';
 	}
 

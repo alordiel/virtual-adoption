@@ -3,7 +3,7 @@
  * Template name: VirtualAdopt - Donation Checkout
  */
 get_header();
-$ars_settings               = get_option( 'ars-settings' );
+$ars_settings               = get_option( 'va-settings' );
 $manage_payments = get_permalink($ars_settings['my-subscriptions-page']);
 ?>
 <h2>Thank you for your donation</h2>
