@@ -16,7 +16,7 @@ $subscriptions = get_posts( [
 
 if ( ! empty( $subscriptions ) ) {
 	?>
-	<h5><?php _e('This is the list of your subscriptions','virtual-adoption'); ?></h5>
+	<h5><?php _e( 'This is the list of your subscriptions', 'virtual-adoption' ); ?></h5>
 	<table id="manage-my-subscriptions">
 		<thead>
 		<tr>
@@ -30,7 +30,11 @@ if ( ! empty( $subscriptions ) ) {
 		<tbody>
 		<?php
 		global $wpdb;
-		foreach ( $subscriptions as $subscription ) {
+		foreach (
+			$subscriptions
+
+			as $subscription
+		) {
 			$sql     = "SELECT * FROM {$wpdb->prefix}va_subscriptions WHERE post_id = $subscription->ID";
 			$details = $wpdb->get_row( $sql );
 			if ( empty( $details ) ) {
@@ -57,13 +61,20 @@ if ( ! empty( $subscriptions ) ) {
 							</svg>
 						</button>
 						<?php
+					} elseif ( $details->status === 'va-cancelled' ) {
+						$settings      = get_option( 'va-settings' );
+						$encrypted_key = va_encode_id( $details->sponsored_animal_id );
+						$re_adopt_link = get_permalink( $settings['page']['checkout'] ) . '?aid=' . $encrypted_key;
+						?>
+						<a href="<?php echo $re_adopt_link; ?>">
+							<?php _e( 'Re-adopt', 'virtual-donation' ); ?>
+						</a>
+						<?php
 					}
 					?>
 				</td>
 			</tr>
-			<?php
-		}
-		?>
+		<?php } ?>
 		</tbody>
 	</table>
 	<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
