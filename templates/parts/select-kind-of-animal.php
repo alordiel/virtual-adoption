@@ -19,43 +19,43 @@ $category_link = [
 <div class="list-of-kind-of-animals">
 	<h3>Select category</h3>
 	<div class="kind-of-animal-logo <?php echo $selected === 'dogs' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['dogs'] ?>" title="<?php _e( 'View all dogs', 'ars-sheltered-animals' ); ?>">
+		<a href="<?php echo $category_link['dogs'] ?>" title="<?php _e( 'View all dogs', 'virtual-adoption' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/dog.png"
-				 alt="<?php _e( 'Dogs', 'ars-sheltered-animals' ) ?>">
-			<?php _e( 'Dogs', 'ars-sheltered-animals' ) ?>
+				 alt="<?php _e( 'Dogs', 'virtual-adoption' ) ?>">
+			<?php _e( 'Dogs', 'virtual-adoption' ) ?>
 		</a>
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'horses' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['horses'] ?>"
-		   title="<?php _e( 'View all horses', 'ars-sheltered-animals' ); ?>">
+		   title="<?php _e( 'View all horses', 'virtual-adoption' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/horse.png"
-				 alt="<?php _e( 'Horses', 'ars-sheltered-animals' ) ?>">
-			<?php _e( 'Horses', 'ars-sheltered-animals' ) ?>
+				 alt="<?php _e( 'Horses', 'virtual-adoption' ) ?>">
+			<?php _e( 'Horses', 'virtual-adoption' ) ?>
 
 		</a>
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'cats' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['cats'] ?>" title="<?php _e( 'View all cats', 'ars-sheltered-animals' ); ?>">
+		<a href="<?php echo $category_link['cats'] ?>" title="<?php _e( 'View all cats', 'virtual-adoption' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/cat.png"
-				 alt="<?php _e( 'Cats', 'ars-sheltered-animals' ) ?>">
-			<?php _e( 'Cats', 'ars-sheltered-animals' ) ?>
+				 alt="<?php _e( 'Cats', 'virtual-adoption' ) ?>">
+			<?php _e( 'Cats', 'virtual-adoption' ) ?>
 		</a>
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'farm-animals' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['other'] ?>"
-		   title="<?php _e( 'View all farm animals', 'ars-sheltered-animals' ); ?>">
+		   title="<?php _e( 'View all farm animals', 'virtual-adoption' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/farm.png"
-				 alt="<?php _e( 'Other', 'ars-sheltered-animals' ) ?>">
-			<?php _e( 'Other', 'ars-sheltered-animals' ) ?>
+				 alt="<?php _e( 'Other', 'virtual-adoption' ) ?>">
+			<?php _e( 'Other', 'virtual-adoption' ) ?>
 
 		</a>
 	</div>
 	<div class="kind-of-animal-logo <?php echo $selected === 'all' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['all'] ?>"
-		   title="<?php _e( 'View all animals', 'ars-sheltered-animals' ); ?>">
+		   title="<?php _e( 'View all animals', 'virtual-adoption' ); ?>">
 			<img src="<?php echo ARSVD_URL; ?>/assets/images/animal-logos/all.png"
-				 alt="<?php _e( 'All', 'ars-sheltered-animals' ) ?>">
-			<?php _e( 'All', 'ars-sheltered-animals' ) ?>
+				 alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
+			<?php _e( 'All', 'virtual-adoption' ) ?>
 
 		</a>
 	</div>

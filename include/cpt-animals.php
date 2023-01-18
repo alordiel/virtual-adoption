@@ -82,7 +82,7 @@ add_action( 'init', 'sheltered_animal_taxonomy' );
 function va_register_meta_boxes() {
 	add_meta_box(
 		'sheltered-animal-meta',
-		__( 'Animal\'s details', 'ars-sheltered-animals' ),
+		__( 'Animal\'s details', 'virtual-adoption' ),
 		'va_sheltered_animal_details',
 		'sheltered-animal',
 		'side'
@@ -103,26 +103,26 @@ function va_sheltered_animal_details( WP_Post $post ) {
 	?>
 	<p>
 		<label>
-			<?php _e( 'Age of the animal (years)', 'ars-sheltered-animals' ); ?>
+			<?php _e( 'Age of the animal (years)', 'virtual-adoption' ); ?>
 			<input type="text" value="<?php echo $age; ?>" name="animals-age">
 		</label>
 	</p>
 	<p>
 		<label>
-			<?php _e( 'Years spent in the shelter', 'ars-sheltered-animals' ); ?>
+			<?php _e( 'Years spent in the shelter', 'virtual-adoption' ); ?>
 			<input type="text" name="sheltered-years" value="<?php echo $sheltered_for ?>">
 		</label>
 	</p>
 	<p>
 		<label>
-			<?php _e( 'Sex of the animal', 'ars-sheltered-animals' ); ?> <br>
+			<?php _e( 'Sex of the animal', 'virtual-adoption' ); ?> <br>
 			<select name="animals-sex">
 				<option value=""></option>
 				<option value="male" <?php echo $sex === 'male' ? 'selected="selected"' : ''; ?>>
-					<?php _e( 'Male', 'ars-sheltered-animals' ) ?>
+					<?php _e( 'Male', 'virtual-adoption' ) ?>
 				</option>
 				<option value="female" <?php echo $sex === 'female' ? 'selected="selected"' : ''; ?>>
-					<?php _e( 'Female', 'ars-sheltered-animals' ) ?>
+					<?php _e( 'Female', 'virtual-adoption' ) ?>
 				</option>
 			</select>
 		</label>
