@@ -60,6 +60,9 @@ function ars_plugin_activated() {
 	if(empty($ars_settings['my-subscriptions-page'])){
 		ars_create_template_page('my-subscriptions-page');
 	}
+	if(empty($ars_settings['login-page'])){
+		ars_create_template_page('my-subscriptions-page');
+	}
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
 

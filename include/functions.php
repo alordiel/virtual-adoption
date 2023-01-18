@@ -23,7 +23,7 @@ function ars_get_the_current_selected_kind( $settings ): string {
 	}
 
 	if ( empty( $settings ) ) {
-		$settings = get_option( 'ars-settings' );
+		$settings = get_option( 'va-settings' );
 	}
 
 	// If we don't have the saved settings we can do much about this
@@ -95,19 +95,24 @@ function ars_decode_id( string $string ): int {
 function ars_create_template_page( string $page_type ) {
 	$templates = [
 		'checkout-page'         => [
-			'title'    => __( 'Donation checkout', 'ars-virtual-donations' ),
-			'template' => 'ars-donation-checkout.php',
+			'title'    => __( 'Donation checkout', 'va-virtual-donations' ),
+			'template' => 'va-donation-checkout.php',
 			'slug'     => 'donations-checkout',
 		],
 		'thank-you-page'        => [
-			'title'    => __( 'Virtual adopt - Thank you', 'ars-virtual-donations' ),
-			'template' => 'ars-thank-you-donation.php',
-			'slug'     => 'ars-thank-you',
+			'title'    => __( 'Virtual adopt - Thank you', 'va-virtual-donations' ),
+			'template' => 'va-thank-you-donation.php',
+			'slug'     => 'va-thank-you',
 		],
 		'my-subscriptions-page' => [
-			'title'    => __( 'Manage my adopted animals', 'ars-virtual-donations' ),
-			'template' => 'ars-my-subscriptions.php',
-			'slug'     => 'ars-my-donations',
+			'title'    => __( 'Manage my adopted animals', 'va-virtual-donations' ),
+			'template' => 'va-my-subscriptions.php',
+			'slug'     => 'va-my-donations',
+		],
+		'login-page' => [
+			'title'    => __( 'Login', 'va-virtual-donations' ),
+			'template' => 'login-page.php',
+			'slug'     => 'vd-login',
 		],
 	];
 
@@ -123,9 +128,9 @@ function ars_create_template_page( string $page_type ) {
 		'post_name'      => $current_page['slug'],
 	] );
 
-	$ars_settings               = get_option( 'ars-settings' );
+	$ars_settings               = get_option( 'va-settings' );
 	$ars_settings[ $page_type ] = $page_id;
-	update_option( 'ars-settings', $ars_settings );
+	update_option( 'va-settings', $ars_settings );
 }
 
 /**
@@ -160,10 +165,10 @@ function ars_json_response( int $code, string $message = '', array $some_data = 
  */
 function ars_create_new_user( array $user_data ): string {
 	if ( empty( $user_data['email'] ) || ! is_email( $user_data['email'] ) ) {
-		return __( 'Email does not exist', 'ars-virtual-donations' );
+		return __( 'Email does not exist', 'va-virtual-donations' );
 	}
 	if ( email_exists( $user_data['email'] ) || username_exists( $user_data['email'] ) ) {
-		return __( 'There is already an user with that email', 'ars-virtual-donations' );
+		return __( 'There is already an user with that email', 'va-virtual-donations' );
 	}
 
 	$user_id = wp_insert_user( [
@@ -200,12 +205,12 @@ function ars_create_new_user( array $user_data ): string {
  */
 function ars_get_verbose_subscription_status( string $status_code ): string {
 	switch ( $status_code ) {
-		case 'ars-pending':
-			return __( 'Pending', 'ars-virtual-donations' );
-		case 'ars-active':
-			return __( 'Active', 'ars-virtual-donations' );
-		case 'ars-cancelled':
-			return __( 'Cancelled', 'ars-virtual-donations' );
+		case 'va-pending':
+			return __( 'Pending', 'va-virtual-donations' );
+		case 'va-active':
+			return __( 'Active', 'va-virtual-donations' );
+		case 'va-cancelled':
+			return __( 'Cancelled', 'va-virtual-donations' );
 		default:
 			return 'n/a';
 	}
