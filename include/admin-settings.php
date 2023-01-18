@@ -32,9 +32,9 @@ function va_admin_settings_page() {
 		$va_settings['animal-terms']['cats']                   = (int) $_POST['cats-term-id'];
 		$va_settings['animal-terms']['horses']                 = (int) $_POST['horses-term-id'];
 		$va_settings['animal-terms']['other']                  = (int) $_POST['farm-animals-term-id'];
-		$va_settings['checkout-page']                          = (int) $_POST['checkout-donation'];
-		$va_settings['thank-you-page']                         = (int) $_POST['thank-you-page'];
-		$va_settings['my-subscriptions-page']                  = (int) $_POST['my-subscriptions-page'];
+		$va_settings['page']['checkout']                       = (int) $_POST['checkout-donation'];
+		$va_settings['page']['thank-you']                      = (int) $_POST['thank-you-page'];
+		$va_settings['page']['my-subscriptions']               = (int) $_POST['my-subscriptions-page'];
 		$va_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
 		$va_settings['payment-methods']['paypal']['secret']    = va_encrypt_data( $_POST['paypal-secret-key'] );
 		$va_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
@@ -57,9 +57,9 @@ function va_admin_settings_page() {
 	$cats_tax_id         = ! empty( $va_settings['animal-terms']['cats'] ) ? (int) $va_settings['animal-terms']['cats'] : 0;
 	$horses_tax_id       = ! empty( $va_settings['animal-terms']['horses'] ) ? (int) $va_settings['animal-terms']['horses'] : 0;
 	$other_tax_id        = ! empty( $va_settings['animal-terms']['other'] ) ? (int) $va_settings['animal-terms']['other'] : 0;
-	$checkout_page_id    = ! empty( $va_settings['checkout-page'] ) ? $va_settings['checkout-page'] : 0;
-	$thank_you_page_id   = ! empty( $va_settings['thank-you-page'] ) ? $va_settings['thank-you-page'] : 0;
-	$my_subscriptions_id = ! empty( $va_settings['my-subscriptions-page'] ) ? $va_settings['my-subscriptions-page'] : 0;
+	$checkout_page_id    = ! empty( $va_settings['page']['checkout'] ) ? $va_settings['page']['checkout'] : 0;
+	$thank_you_page_id   = ! empty( $va_settings['page']['thank-you'] ) ? $va_settings['page']['thank-you'] : 0;
+	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
 	$paypal_client_id    = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret       = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test      = ! empty( $va_settings['payment-methods']['paypal']['test'] );

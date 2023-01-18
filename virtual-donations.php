@@ -51,17 +51,17 @@ function va_plugin_activated() {
 		va_register_meta_boxes();
 	}
 	$va_settings = get_option( 'va-settings' );
-	if(empty($va_settings['checkout-page'])){
-		va_create_template_page('checkout-page');
+	if(empty($va_settings['page']['checkout'])){
+		va_create_template_page('checkout');
 	}
-	if(empty($va_settings['thank-you-page'])){
-		va_create_template_page('thank-you-page');
+	if(empty($va_settings['page']['thank-you'])){
+		va_create_template_page('thank-you');
 	}
-	if(empty($va_settings['my-subscriptions-page'])){
-		va_create_template_page('my-subscriptions-page');
+	if(empty($va_settings['page']['my-subscriptions'])){
+		va_create_template_page('my-subscriptions');
 	}
-	if(empty($va_settings['login-page'])){
-		va_create_template_page('my-subscriptions-page');
+	if(empty($va_settings['page']['login'])){
+		va_create_template_page('login');
 	}
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();

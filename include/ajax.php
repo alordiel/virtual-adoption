@@ -58,7 +58,7 @@ function va_create_new_donation_subscription_ajax() {
 	$ids     = [
 		'post_id'         => $results['post_id'],
 		'subscription_id' => $results['subscription_id'],
-		'redirect_to'     => get_permalink( $options['thank-you-page'] ),
+		'redirect_to'     => get_permalink( $options['page']['thank-you'] ),
 	];
 	va_json_response( 1, '', $ids );
 }

@@ -30,7 +30,7 @@ if ( ! empty( $_GET['aid'] ) ) {
 				<div class="list-of-animals">
 					<?php
 					$va_settings = get_option( 'va-settings' );
-					$sponsor_link = get_permalink( $va_settings['checkout-page'] );
+					$sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 					$adopted_animals = va_get_list_of_adopted_animals();
 					foreach ( $animals as $animal ) {
 						// don't show already adopted animals

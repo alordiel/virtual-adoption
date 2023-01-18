@@ -4,8 +4,9 @@
  */
 
 if ( is_user_logged_in() ) {
-	wp_redirect( site_url() );
+	wp_redirect( get_post_type_archive_link('sheltered-animal') );
 }
+
 get_header();
 ?>
 

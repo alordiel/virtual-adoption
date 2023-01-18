@@ -2,7 +2,7 @@
 get_header();
 
 $va_settings = get_option( 'va-settings' );
-$sponsor_link = get_permalink( $va_settings['checkout-page'] );
+$sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 ?>
 	<div class="sheltered-animals-archive">
 		<div class="intro-text">

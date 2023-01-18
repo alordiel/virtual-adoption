@@ -5,8 +5,8 @@ $age           = get_post_meta( $post_id, 'animals-age', true );
 $sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
 $sex           = get_post_meta( $post_id, 'animals-sex', true );
 $va_settings  = get_option( 'va-settings' );
-$sponsor_link  = get_permalink( $va_settings['checkout-page'] );
-$my_animals    = get_permalink( $va_settings['my-subscriptions-page'] );
+$sponsor_link  = get_permalink( $va_settings['page']['checkout'] );
+$my_animals    = get_permalink( $va_settings['page']['my-subscriptions'] );
 $is_adopted    = false;
 $user_id       = get_current_user_id();
 

@@ -94,22 +94,22 @@ function va_decode_id( string $string ): int {
  */
 function va_create_template_page( string $page_type ) {
 	$templates = [
-		'checkout-page'         => [
+		'checkout'         => [
 			'title'    => __( 'Donation checkout', 'va-virtual-donations' ),
 			'template' => 'va-donation-checkout.php',
 			'slug'     => 'donations-checkout',
 		],
-		'thank-you-page'        => [
+		'thank-you'        => [
 			'title'    => __( 'Virtual adopt - Thank you', 'va-virtual-donations' ),
 			'template' => 'va-thank-you-donation.php',
 			'slug'     => 'va-thank-you',
 		],
-		'my-subscriptions-page' => [
+		'my-subscriptions' => [
 			'title'    => __( 'Manage my adopted animals', 'va-virtual-donations' ),
 			'template' => 'va-my-subscriptions.php',
 			'slug'     => 'va-my-donations',
 		],
-		'login-page' => [
+		'login' => [
 			'title'    => __( 'Login', 'va-virtual-donations' ),
 			'template' => 'login-page.php',
 			'slug'     => 'vd-login',
