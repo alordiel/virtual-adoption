@@ -102,7 +102,7 @@ function va_is_animal_adopted_by_user( int $user_id, int $animal_id ): bool {
 	global $wpdb;
 	$sql    = "SELECT ID
 				FROM {$wpdb->prefix}va_subscriptions
-				WHERE user_id = $user_id AND sponsored_animal_id = $animal_id AND status != 'cancelled'";
+				WHERE user_id = $user_id AND sponsored_animal_id = $animal_id AND status != 'va-cancelled'";
 	$result = $wpdb->get_var( $sql );
 
 	return ! empty( $result );
