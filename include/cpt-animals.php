@@ -128,7 +128,7 @@ function va_sheltered_animal_details( WP_Post $post ) {
 		</label>
 	</p>
 	<?php
-	wp_nonce_field( 'ars-shelter-animal-meta', 'ars-power-dog' );
+	wp_nonce_field( 'va-shelter-animal-meta', 'va-power-dog' );
 }
 
 /**
@@ -138,8 +138,8 @@ function va_sheltered_animal_details( WP_Post $post ) {
  */
 function va_sheltered_animal_save_meta( int $post_id ) {
 
-	$nonce_name = $_POST['ars-power-dog'] ?? '';
-	if ( ! wp_verify_nonce( $nonce_name, 'ars-shelter-animal-meta' ) ) {
+	$nonce_name = $_POST['va-power-dog'] ?? '';
+	if ( ! wp_verify_nonce( $nonce_name, 'va-shelter-animal-meta' ) ) {
 		return;
 	}
 

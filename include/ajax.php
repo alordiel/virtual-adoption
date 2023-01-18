@@ -6,7 +6,7 @@
  * @return void
  */
 function va_create_new_donation_subscription_ajax() {
-	check_ajax_referer( 'ars-taina', 'security' );
+	check_ajax_referer( 'va-taina', 'security' );
 
 	if ( empty( $_POST['animalID'] ) || empty( $_POST['donationAmount'] ) ) {
 		va_json_response( 0, __( 'Missing some data.', 'virtual-adoption' ) );
@@ -73,7 +73,7 @@ add_action( 'wp_ajax_nopriv_va_create_new_donation_subscription', 'va_create_new
  * @return void
  */
 function va_cancel_subscription_ajax() {
-	check_ajax_referer( 'ars-taina', 'security' );
+	check_ajax_referer( 'va-taina', 'security' );
 
 	if ( empty( $_POST['post_id'] ) ) {
 		va_json_response( 0, __( 'No subscription ID.', 'virtual-adoption' ) );
@@ -84,7 +84,7 @@ function va_cancel_subscription_ajax() {
 	$post_exist = "SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_author = %d";
 	$user_id    = get_current_user_id();
 	if ( empty( $wpdb->get_var( $wpdb->prepare( $post_exist, $_POST['post_id'], $user_id ) ) ) ) {
-		va_json_response( 0, __( 'This subscription does not belong to you!', 'ars-virtual-donation' ) );
+		va_json_response( 0, __( 'This subscription does not belong to you!', 'virtual-adoption' ) );
 	}
 
 	$result = va_cancel_va_subscription_entry( $_POST['post_id'] );

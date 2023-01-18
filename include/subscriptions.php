@@ -21,11 +21,11 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 	$animal  = get_post( $animal_id );
 	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
 	$post_id = wp_insert_post( [
-		'status'      => 'ars-pending-payment',
-		'post_type'   => 'ars-subscription',
+		'status'      => 'va-pending-payment',
+		'post_type'   => 'va-subscription',
 		'post_title'  => $title,
 		'post_author' => $user->ID,
-		'post_status' => 'ars-pending',
+		'post_status' => 'va-pending',
 	], true );
 
 	if ( $post_id === 0 ) {
@@ -58,7 +58,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 			'user_id'             => $user->ID,
 			'sponsored_animal_id' => $animal_id,
 			'amount'              => $amount,
-			'status'              => 'ars-pending',
+			'status'              => 'va-pending',
 			'period_type'         => 'monthly',
 			'currency'            => $currency,
 			'completed_cycles'    => 0,
@@ -123,7 +123,7 @@ function va_get_list_of_adopted_animals(): array {
 	global $wpdb;
 	$sql     = "SELECT sponsored_animal_id
 				FROM {$wpdb->prefix}va_subscriptions
-				WHERE user_id = $user_id AND status != 'ars-cancelled'";
+				WHERE user_id = $user_id AND status != 'va-cancelled'";
 	$animals = $wpdb->get_col( $sql );
 	if ( empty( $animals ) ) {
 		return [];
@@ -162,17 +162,17 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
 
 	$post_update = wp_update_post( [
 		'ID'          => $post_id,
-		'post_status' => 'ars-cancelled',
+		'post_status' => 'va-cancelled',
 	] );
 
 	if ( $post_update === 0 || is_wp_error( $post_update ) ) {
-		return __( 'The cancellation failed, please try again', 'ars-virtual-donation' );
+		return __( 'The cancellation failed, please try again', 'va-virtual-donation' );
 	}
 
 	global $wpdb;
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
-		[ 'status' => 'ars-cancelled' ],
+		[ 'status' => 'va-cancelled' ],
 		[ 'post_id' => $post_id ],
 		[ '%d' ],
 		[ '%d' ]

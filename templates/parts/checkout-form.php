@@ -17,12 +17,12 @@ if ( empty( $sheltered_animal ) ) {
 				<div class="animal-profile-imag" style="background-image: url('<?php echo $image; ?>')"></div>
 				<div class="animal-details">
 					<h5><?php echo $name ?></h5>
-					<span><strong><?php _e( 'Age', 'ars-virtual-donation' ) ?>:</strong> <?php echo $age ?></span>
+					<span><strong><?php _e( 'Age', 'virtual-adoption' ) ?>:</strong> <?php echo $age ?></span>
 				</div>
 			</div>
 		</div>
 		<div class="checkout-fields">
-			<h4><strong><?php _e( 'Sponsorship amount per month', 'ars-virtual-donation' ) ?></strong></h4>
+			<h4><strong><?php _e( 'Sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
 			<div class="donation-amounts">
 				<?php if ( va_is_wpml_activated() && ICL_LANGUAGE_CODE === 'en' ) { ?>
 					<label for="eur5"><input id="eur5" value="5" type="radio" name="selected-amount">€ 5.00</label>
@@ -51,7 +51,7 @@ if ( empty( $sheltered_animal ) ) {
 					</label>
 				<?php } ?>
 			</div>
-			<h4><strong><?php _e( 'Account Details', 'ars-virtual-donation' ) ?></strong></h4>
+			<h4><strong><?php _e( 'Account Details', 'virtual-adoption' ) ?></strong></h4>
 			<div class="contact-details">
 				<?php
 				if ( $user->ID === 0 ) {
@@ -73,7 +73,7 @@ if ( empty( $sheltered_animal ) ) {
 				</p>
 			</div>
 			<div class="donation-payment-methods">
-				<h4><strong><?php _e( 'Payment methods', 'ars-virtual-donation' ) ?></strong>:</h4>
+				<h4><strong><?php _e( 'Payment methods', 'virtual-adoption' ) ?></strong>:</h4>
 				<ul class="payment-methods">
 					<!--<li class="payment-method payment-method-mypos payment-method-selected">
 						<input id="payment-method-mypos" type="radio" class="input-radio" name="payment-method"
@@ -116,7 +116,7 @@ if ( empty( $sheltered_animal ) ) {
 					Submit sponsorship <span></span>
 				</button>
 				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
-				<?php wp_nonce_field( 'ars-taina', 'turbo-security' ); ?>
+				<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
 			</div>
 		</div>
 	</div>

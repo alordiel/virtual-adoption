@@ -1,4 +1,4 @@
-<p><?php _e( 'We need to create an account for you so you can manage your monthly support. Please fill in the details below.', 'ars-virtual-donation' ); ?></p>
+<p><?php _e( 'We need to create an account for you so you can manage your monthly support. Please fill in the details below.', 'virtual-adoption' ); ?></p>
 <p>
 	<label for="first-name">
 		<input id="first-name" name="first-name" type="text"

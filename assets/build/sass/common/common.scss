@@ -6,18 +6,18 @@
 .single-sheltered-animal .sidebar,
 .post-type-archive-sheltered-animal .sidebar,
 .tax-kind-of-animal .sidebar,
-.page-template-ars-donation-checkout .sidebar,
-.page-template-ars-thank-you-donation .sidebar,
-.page-template-ars-my-subscriptions .sidebar{
+.page-template-va-donation-checkout .sidebar,
+.page-template-va-thank-you-donation .sidebar,
+.page-template-va-my-subscriptions .sidebar{
   display: none !important;
 }
 
-.page-template-ars-donation-checkout .page_wrap > .page_content_wrap > .content_wrap > .content,
+.page-template-va-donation-checkout .page_wrap > .page_content_wrap > .content_wrap > .content,
 .single-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .post-type-archive-sheltered-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
 .tax-kind-of-animal .page_wrap > .page_content_wrap > .content_wrap > .content,
-.page-template-ars-thank-you-donation .page_wrap > .page_content_wrap > .content_wrap > .content,
-.page-template-ars-my-subscriptions .page_wrap > .page_content_wrap > .content_wrap > .content {
+.page-template-va-thank-you-donation .page_wrap > .page_content_wrap > .content_wrap > .content,
+.page-template-va-my-subscriptions .page_wrap > .page_content_wrap > .content_wrap > .content {
   width: 100%;
   float: none;
 }

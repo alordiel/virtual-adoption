@@ -25,7 +25,7 @@ define( 'VA_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 const VA_ABS = __DIR__;
 
 require_once( VA_ABS . '/include/cpt-animals.php' );
-require_once( VA_ABS . '/include/cpt-ars-subscriptions.php' );
+require_once( VA_ABS . '/include/cpt-va-subscriptions.php' );
 require_once( VA_ABS . '/include/template-loader.php' );
 require_once( VA_ABS . '/include/functions.php' );
 require_once( VA_ABS . '/include/wordpress.php' );
