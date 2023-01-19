@@ -99,3 +99,90 @@ function va_cancel_subscription_ajax() {
 }
 
 add_action( 'wp_ajax_va_cancel_subscription_ajax', 'va_cancel_subscription_ajax' );
+
+
+/**
+ * Ajax callback function used to generate the CSV file with monthly report
+ * It fetches all subscriptions with related information (for all statuses).
+ *
+ * @return void
+ */
+function va_generate_monthly_report() {
+
+	$uploads_directory = wp_upload_dir();
+	$report_link_abs   = $uploads_directory['basedir'] . '/virtual-adoptions/';
+	$report_link_url   = $uploads_directory['baseurl'] . '/virtual-adoptions/monthly-report.csv';
+
+	// checks if the /virtual-adoptions/ folder exists and creates it if not
+	if ( ! is_dir( $report_link_abs ) || ! file_exists( $report_link_abs ) ) {
+		mkdir( $report_link_abs, 0755 );
+	}
+	$report_link_abs .= 'monthly-report.csv';
+
+	global $wpdb;
+	$sql           = "SELECT subs.amount, subs.currency, subs.status, subs.start_date, subs.completed_cycles, animals.post_title animal_name,
+       			      umeta1.meta_value first_name, umeta2.meta_value last_name, users.user_email owner_email,
+       			      subs.email_for_updates gift_email
+						FROM {$wpdb->prefix}va_subscriptions subs
+						LEFT JOIN {$wpdb->prefix}posts as subs_post ON subs_post.ID = subs.post_id
+						LEFT JOIN {$wpdb->prefix}posts as animals ON subs.sponsored_animal_id = animals.ID
+						LEFT JOIN {$wpdb->prefix}usermeta as umeta1 ON umeta1.user_id = subs_post.post_author AND umeta1.meta_key = 'first_name'
+						LEFT JOIN {$wpdb->prefix}usermeta as umeta2 ON umeta2.user_id = subs_post.post_author AND umeta2.meta_key = 'last_name'
+						LEFT JOIN {$wpdb->prefix}users as users ON users.ID  = subs_post.post_author";
+	$subscriptions = $wpdb->get_results( $sql );
+
+	if ( empty( $subscriptions ) ) {
+		echo json_encode( [
+			'status'  => 0,
+			'message' => __( 'No subscriptions found', 'virtual-donations' ),
+		], JSON_NUMERIC_CHECK );
+		wp_die();
+	}
+
+	// check if the old report file exists and delete it
+	if ( file_exists( $report_link_abs ) ) {
+		unlink( $report_link_abs );
+	}
+
+	// Start writing in a csv file
+	$output  = fopen($report_link_abs, 'w');
+	$headers = [
+		'First Name',
+		'Last Name',
+		'Email',
+		'Gifted Email',
+		'Animal Name',
+		'Donated Amount',
+		'Currency',
+		'Status',
+		'Completed cycles',
+		'Start date'
+	];
+	fputcsv($output, $headers);
+	foreach ($subscriptions as $subscription) {
+		$row = [
+			$subscription->first_name,
+			$subscription->last_name,
+			$subscription->owner_email,
+			$subscription->gift_email,
+			$subscription->animal_name,
+			$subscription->amount,
+			$subscription->currency,
+			$subscription->status,
+			$subscription->completed_cycles,
+			$subscription->start_date
+		];
+		fputcsv($output, $row);
+	}
+
+	fclose($output);
+
+	echo json_encode( [
+		'status'  => 1,
+		'message' => __( 'Report successfully created. Please download it from the link.', 'virtual-donations' ),
+		'url'     => $report_link_url,
+	], JSON_NUMERIC_CHECK );
+	wp_die();
+}
+
+add_action( 'wp_ajax_va_get_donations_report', 'va_generate_monthly_report' );

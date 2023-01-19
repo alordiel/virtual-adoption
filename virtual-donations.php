@@ -37,6 +37,7 @@ require_once( VA_ABS . '/include/subscriptions.php' );
 require_once( VA_ABS . '/include/mails.php' );
 require_once( VA_ABS . '/include/api.php' );
 require_once( VA_ABS . '/include/crypt.php' );
+require_once( VA_ABS . '/include/admin-dashboard-widget.php' );
 
 
 /**

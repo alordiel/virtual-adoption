@@ -66,7 +66,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 			'post_id'             => $post_id,
 			'email_for_updates'   => $email,
 		],
-		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d' ],
+		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s' ],
 	);
 
 	if ( $insert_status === false ) {
