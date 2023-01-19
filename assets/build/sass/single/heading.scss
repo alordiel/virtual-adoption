@@ -6,6 +6,14 @@
     background-color: $rose-dust;
     display: flex;
     flex-wrap: wrap;
+    .animal-featured-image {
+      width: 50%;
+      max-width: 500px;
+      height: auto;
+      min-height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
 
     .sponsor-me-block {
       text-align: left;
