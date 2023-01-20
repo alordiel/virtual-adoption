@@ -3,8 +3,8 @@
 add_action( 'admin_menu', 'ee_add_settings_page' );
 function ee_add_settings_page() {
 	add_submenu_page( 'options-general.php',
-		__( 'ARS Settings', 'virtual-adoption' ),
-		__( 'ARS Settings', 'virtual-adoption' ),
+		__( 'Virtual Adoptions', 'virtual-adoption' ),
+		__( 'Virtual Adoptions', 'virtual-adoption' ),
 		'manage_options',
 		'va_settings',
 		'va_admin_settings_page' );
@@ -13,7 +13,7 @@ function ee_add_settings_page() {
 function va_admin_settings_page() {
 	?>
 
-	<h1><?php _e( 'ARS sheltered animals settings', 'virtual-adoption' ) ?></h1>
+	<h1><?php _e( 'Virtual Adoptions settings', 'virtual-adoption' ) ?></h1>
 
 	<?php
 
@@ -28,17 +28,25 @@ function va_admin_settings_page() {
 			$va_settings = [ 'animal-terms' ];
 		}
 
-		$va_settings['animal-terms']['dogs']                   = (int) $_POST['dogs-term-id'];
-		$va_settings['animal-terms']['cats']                   = (int) $_POST['cats-term-id'];
-		$va_settings['animal-terms']['horses']                 = (int) $_POST['horses-term-id'];
-		$va_settings['animal-terms']['other']                  = (int) $_POST['farm-animals-term-id'];
-		$va_settings['page']['checkout']                       = (int) $_POST['checkout-donation'];
-		$va_settings['page']['thank-you']                      = (int) $_POST['thank-you-page'];
-		$va_settings['page']['my-subscriptions']               = (int) $_POST['my-subscriptions-page'];
-		$va_settings['page']['login']                          = (int) $_POST['login-page'];
-		$va_settings['payment-methods']['paypal']['client_id'] = $_POST['paypal-client-id'];
-		$va_settings['payment-methods']['paypal']['secret']    = va_encrypt_data( $_POST['paypal-secret-key'] );
-		$va_settings['payment-methods']['paypal']['test']      = isset( $_POST['paypal-test-env'] ) ? 'true' : '';
+		$va_settings['animal-terms'] = [
+			'dogs'   => (int) $_POST['dogs-term-id'],
+			'cats'   => (int) $_POST['cats-term-id'],
+			'horses' => (int) $_POST['horses-term-id'],
+			'other'  => (int) $_POST['farm-animals-term-id'],
+		];
+
+		$va_settings['page'] = [
+			'checkout'         => (int) $_POST['checkout-donation'],
+			'thank-you'        => (int) $_POST['thank-you-page'],
+			'my-subscriptions' => (int) $_POST['my-subscriptions-page'],
+			'login'            => (int) $_POST['login-page']
+		];
+
+		$va_settings['payment-methods']['paypal'] = [
+			'client_id' => $_POST['paypal-client-id'],
+			'secret'    => va_encrypt_data( $_POST['paypal-secret-key'] ),
+			'test'      => isset( $_POST['paypal-test-env'] ) ? 'true' : ''
+		];
 
 		update_option( 'va-settings', $va_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoption' ) . '</strong></p></div>';
