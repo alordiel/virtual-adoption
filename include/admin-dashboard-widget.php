@@ -23,7 +23,7 @@ function dashboard_widget_function() {
 			$status_active ++;
 			$amount = (float) $subscription->amount;
 			if ( $subscription->currency === 'EUR' ) {
-				$amount = $amount * 1.958;
+				$amount *= 1.958;
 			}
 			$total_donations += $amount;
 		} elseif ( $subscription->status === 'va-pending' ) {

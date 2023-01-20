@@ -212,7 +212,7 @@ function va_admin_settings_page() {
 			<tr>
 				<th>
 					<label for="paypal-secret-key">
-						<?php _e( "Client ID", "virtual-adoption" ); ?>
+						<?php _e( "Secret key", "virtual-adoption" ); ?>
 					</label>
 				</th>
 				<td>
