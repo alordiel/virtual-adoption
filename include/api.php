@@ -60,6 +60,7 @@ function va_create_paypal_authentication_token(): array {
 	$result = json_decode( $curl_response, true );
 	curl_close( $curl );
 
+		dbga($result);
 	if ( ! empty( $result['access_token'] ) ) {
 		return [
 			'status' => 'success',

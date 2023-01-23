@@ -32,7 +32,7 @@ if ( empty( $sheltered_animal ) ) {
 					<input id="eur10" checked value="10" type="radio" name="selected-amount">
 					€ 10.00
 				</label>
-				<label for="eur15" class="selected-donation-amount">
+				<label for="eur15">
 					<input id="eur15" checked value="15" type="radio" name="selected-amount">
 					€ 15.00
 				</label>
