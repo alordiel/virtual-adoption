@@ -22,7 +22,7 @@ function va_handle_paypal_webhook_triggered_on_subscription_change() {
 
 
 function va_create_paypal_authentication_token(): array {
-	$va_settings       = get_option( 'va-settings' );
+	$va_settings        = get_option( 'va-settings' );
 	$paypal_client_id   = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret      = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test_env = ! empty( $va_settings['payment-methods']['paypal']['test'] );
@@ -72,28 +72,6 @@ function va_create_paypal_authentication_token(): array {
 		'status'  => 'error',
 		'message' => 'There was issue with the PayPal response'
 	];
-}
-
-function va_get_list_of_subscription_plans( string $token ) {
-	$ch = curl_init();
-
-	curl_setopt( $ch, CURLOPT_URL, 'https://api-m.sandbox.paypal.com/v1/billing/plans' );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-	curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
-
-
-	$headers   = array();
-	$headers[] = 'Content-Type: application/json';
-	$headers[] = 'Authorization: Bearer ' . $token;
-	curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-
-	$result = curl_exec( $ch );
-	if ( curl_errno( $ch ) ) {
-		echo 'Error:' . curl_error( $ch );
-	}
-	curl_close( $ch );
-
-	dbga( $result );
 }
 
 function va_build_a_subscription_plan( string $token ) {
@@ -154,17 +132,56 @@ function va_build_a_subscription_plan( string $token ) {
 	curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
 
 	$result = curl_exec( $ch );
-	dbga($result);
+	dbga( $result );
 	if ( curl_errno( $ch ) ) {
 		echo 'Error:' . curl_error( $ch );
 	}
 	curl_close( $ch );
 }
 
+function va_get_plans( string $token ) {
+	$curl = curl_init();
+
+	curl_setopt_array( $curl, array(
+		CURLOPT_URL            => 'https://api-m.sandbox.paypal.com/v1/billing/plans',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING       => '',
+		CURLOPT_MAXREDIRS      => 10,
+		CURLOPT_TIMEOUT        => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST  => 'GET',
+		CURLOPT_HTTPHEADER     => array(
+			'Prefer: return=representation'
+		),
+	) );
+
+	$headers   = array();
+	$headers[] = 'Content-Type: application/json';
+	$headers[] = 'Authorization: Bearer ' . $token;
+	curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
+	if ( curl_errno( $curl ) ) {
+		echo 'Error:' . curl_error( $curl );
+	}
+	$response = curl_exec( $curl );
+	$result = json_decode( $response, true );
+	dbga( $result );
+	if (!empty($result['plans'])) {
+		dbga($result['plans']);
+	} else {
+		dbga (' EMPTY ');
+	}
+
+	curl_close( $curl );
+	return $response;
+
+}
+
 function va_test_api() {
 	$token = va_create_paypal_authentication_token();
+	dbga($token);
 	if ( $token['status'] === 'success' ) {
-		va_build_a_subscription_plan( $token['data']['access_token'] );
+		va_get_plans( $token['data']['access_token'] );
 	}
 	wp_die( 'done' );
 }
