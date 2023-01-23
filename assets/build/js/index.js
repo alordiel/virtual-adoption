@@ -12,15 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Change of the amount for donation. Watches when to show the custom payment amount
+  // Change of the amount for donation.
   if (document.getElementsByName('selected-amount') !== null) {
     document.getElementsByName('selected-amount').forEach((e) => {
       e.addEventListener('change', function (element) {
-        if (element.target.value === 'custom') {
-          document.querySelector('.part-element').style.display = 'inline';
-        } else {
-          document.querySelector('.part-element').style.display = 'none';
-        }
         document.querySelector('.selected-donation-amount').classList.remove('selected-donation-amount');
         element.target.parentNode.classList.add('selected-donation-amount');
       })
@@ -61,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         donationAmount: getDonationAmount(),
         acceptedTerms: document.getElementById('terms').checked,
       };
+
       // send results
       addSubscriptionToUsersAccount(postData)
         .then((response) => {
@@ -176,9 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Validates the selected payment method, amount and if it is for a gift
   function validateCommonFields() {
     let donationValue = document.querySelector("input[name='selected-amount']:checked").value;
-    if (donationValue === "custom") {
-      donationValue = document.getElementById('selected-custom-amount').value
-    }
 
     if (parseInt(donationValue) < 5) {
       alert('Donation amount can not be less then 5 eur.');
@@ -207,9 +200,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Gets the value of the donation amount
   function getDonationAmount() {
     let donationValue = document.querySelector("input[name='selected-amount']:checked").value;
-    if (donationValue === "custom") {
-      donationValue = document.getElementById('selected-custom-amount').value
-    }
     return parseFloat(donationValue);
   }
 

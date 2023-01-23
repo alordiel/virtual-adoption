@@ -24,33 +24,32 @@ if ( empty( $sheltered_animal ) ) {
 		<div class="checkout-fields">
 			<h4><strong><?php _e( 'Sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
 			<div class="donation-amounts">
-				<?php if ( va_is_wpml_activated() && ICL_LANGUAGE_CODE === 'en' ) { ?>
-					<label for="eur5"><input id="eur5" value="5" type="radio" name="selected-amount">€ 5.00</label>
-					<label for="eur10" class="selected-donation-amount"><input id="eur10" checked value="10"
-																			   type="radio" name="selected-amount">€
-						10.00</label>
-					<label for="eur20"><input id="eur20" value="20" type="radio" name="selected-amount">€ 20.00</label>
-					<label for="custom-amount">
-						<input id="custom-amount" value="custom" type="radio" name="selected-amount">Custom
-					</label>
-					<label class="part-element" for="selected-custom-amount">€
-						<input id="selected-custom-amount" class="custom-amount" value="15" type="number"
-							   name="selected-custom-amount" min="5">
-					</label>
-				<?php } else { ?>
-					<label for="lv5"><input id="lv5" value="5" type="radio" name="selected-amount">5.00 лв.</label>
-					<label for="lv10" class="selected-donation-amount"><input id="lv10" checked value="10" type="radio"
-																			  name="selected-amount">10.00 лв.</label>
-					<label for="lv20"><input id="lv20" value="20" type="radio" name="selected-amount">20.00 лв.</label>
-					<label for="custom-amount">
-						<input id=custom-amount"" value="custom" type="radio" name="selected-amount">Посочена сума
-					</label>
-					<label class="part-element" for="selected-custom-amount">
-						<input id="selected-custom-amount" class="custom-amount" value="5" type="number"
-							   name="selected-custom-amount" min="5">лв.
-					</label>
-				<?php } ?>
+				<label for="eur5">
+					<input id="eur5" value="5" type="radio" name="selected-amount">
+					€ 5.00
+				</label>
+				<label for="eur10" class="selected-donation-amount">
+					<input id="eur10" checked value="10" type="radio" name="selected-amount">
+					€ 10.00
+				</label>
+				<label for="eur15" class="selected-donation-amount">
+					<input id="eur15" checked value="15" type="radio" name="selected-amount">
+					€ 15.00
+				</label>
+				<label for="eur20">
+					<input id="eur20" value="20" type="radio" name="selected-amount">
+					€ 20.00
+				</label>
+				<label for="eur30">
+					<input id="eur30" value="30" type="radio" name="selected-amount">
+					€ 30.00
+				</label>
+				<label for="eur50">
+					<input id="eur50" value="50" type="radio" name="selected-amount">
+					€ 50.00
+				</label>
 			</div>
+
 			<h4><strong><?php _e( 'Account Details', 'virtual-adoption' ) ?></strong></h4>
 			<div class="contact-details">
 				<?php
@@ -75,19 +74,6 @@ if ( empty( $sheltered_animal ) ) {
 			<div class="donation-payment-methods">
 				<h4><strong><?php _e( 'Payment methods', 'virtual-adoption' ) ?></strong>:</h4>
 				<ul class="payment-methods">
-					<!--<li class="payment-method payment-method-mypos payment-method-selected">
-						<input id="payment-method-mypos" type="radio" class="input-radio" name="payment-method"
-							   value="mypos" checked>
-						<label for="payment-method-mypos"> Credit/Debit Card (myPos)
-							<img src="<?php /*echo VA_URL */?>/assets/images/payments/myPos.png" alt="myPos logo">
-						</label>
-						<div class="payment-box payment-method-mypos">
-							<span class="box-arrow"></span>
-							<p>Pay with your Credit Card</p>
-							<p>myPOS Checkout simplifies your online payments by managing the entire payment process
-								from the time your customers wish to make a purchase to the completed purchase.</p>
-						</div>
-					</li>-->
 					<li class="payment-method payment-method-paypal">
 						<input id="payment-method-paypal" type="radio" class="input-radio" name="payment-method"
 							   value="paypal" checked>
