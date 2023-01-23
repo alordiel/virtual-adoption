@@ -21,11 +21,7 @@ function dashboard_widget_function() {
 	foreach ( $subscriptions as $subscription ) {
 		if ( $subscription->status === 'va-active' ) {
 			$status_active ++;
-			$amount = (float) $subscription->amount;
-			if ( $subscription->currency === 'EUR' ) {
-				$amount *= 1.958;
-			}
-			$total_donations += $amount;
+			$total_donations += (float) $subscription->amount;
 		} elseif ( $subscription->status === 'va-pending' ) {
 			$status_pending ++;
 		} elseif ( $subscription->status === 'va-cancelled' ) {
@@ -40,7 +36,7 @@ function dashboard_widget_function() {
 	<p><?php echo sprintf( __( 'Active subscriptions: %d', 'virtual-adoptions' ), $status_active ); ?></p>
 	<p><?php echo sprintf( __( 'Pending subscriptions: %d', 'virtual-adoptions' ), $status_pending ); ?></p>
 	<p><?php echo sprintf( __( 'Cancelled subscriptions: %d', 'virtual-adoptions' ), $status_cancelled ); ?></p>
-	<p><?php echo sprintf( __( 'Total monthly donations: %s BGN', 'virtual-adoptions' ), $total_donations ); ?></p>
+	<p><?php echo sprintf( __( 'Total monthly donations: %s EUR', 'virtual-adoptions' ), $total_donations ); ?></p>
 	<p id="report-link" style="display:<?php echo (file_exists($report_link_abs)) ? 'block' : 'none'; ?>">
 		<a href="<?php echo $report_link_url; ?>" rel="noopener nofollow noreferrer" target="_blank">
 			<?php _e( 'Download the last generated report', 'virtual-adoptions' ) ?>

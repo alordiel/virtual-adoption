@@ -46,11 +46,6 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 		$email = $user->user_email;
 	}
 
-	$currency = 'BGN';
-	if ( defined( ICL_LANGUAGE_CODE ) && ICL_LANGUAGE_CODE === 'en' ) {
-		$currency = 'EUR';
-	}
-
 	global $wpdb;
 	$insert_status = $wpdb->insert(
 		$wpdb->prefix . 'va_subscriptions',
@@ -60,7 +55,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 			'amount'              => $amount,
 			'status'              => 'va-pending',
 			'period_type'         => 'monthly',
-			'currency'            => $currency,
+			'currency'            => 'EUR',
 			'completed_cycles'    => 0,
 			'next_due'            => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'             => $post_id,
