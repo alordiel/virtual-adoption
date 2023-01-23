@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       // send results
-      addSubscriptionToUsersAccount(postData)
+      makeAjaxCall(postData)
         .then((response) => {
           console.log(response)
           alert('Success')
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
           action: 'va_cancel_subscription_ajax',
         };
 
-        cancelSubscription(postData)
+        makeAjaxCall(postData)
           .then( success => {
             alert(success.data.message);
             e.target.disabled = false;
@@ -203,29 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return parseFloat(donationValue);
   }
 
-  // function for creating the subscription entry
-  function addSubscriptionToUsersAccount(postData) {
-    return new Promise((resolve, reject) => {
-      jQuery.ajax({
-        url: '/wp-admin/admin-ajax.php',
-        data: postData,
-        method: 'POST',
-        dataType: 'JSON',
-        success: (response) => {
-          if (response.status === 1) {
-            resolve(response);
-          } else {
-            reject(response.message);
-          }
-        },
-        error: (error) => {
-          reject(error.code + ' > ' + error.message);
-        }
-      });
-    });
-  }
-
-  function cancelSubscription(postData){
+  function makeAjaxCall(postData) {
     return new Promise( (resolve, reject) => {
       jQuery.ajax({
         url: '/wp-admin/admin-ajax.php',
