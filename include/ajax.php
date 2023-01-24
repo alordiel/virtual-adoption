@@ -102,7 +102,7 @@ add_action( 'wp_ajax_va_cancel_subscription_ajax', 'va_cancel_subscription_ajax'
 
 
 /**
- * Ajax callback function used to generate the CSV file with monthly report
+ * Ajax callback used to generate the CSV file with monthly report
  * It fetches all subscriptions with related information (for all statuses).
  *
  * @return void
@@ -194,7 +194,7 @@ add_action( 'wp_ajax_va_get_donations_report', 'va_generate_monthly_report' );
 
 
 /**
- * Ajax Callback function for connecting to the PayPal API.
+ * Ajax Callback for connecting to the PayPal API.
  *
  * @return void
  */
@@ -217,13 +217,14 @@ function va_test_paypal_api_connection() {
 	}
 
 
-	$token = va_create_paypal_authentication_token();
-	if ( $token['status'] === 'success' ) {
-		va_get_plans( $token['data']['access_token'] );
+	$VA_paypal = new VA_PayPal();
+	if ( $VA_paypal->get_error() === '' ) {
+		$plans = $VA_paypal->va_get_plans();
+		dbga($plans);
 		wp_die( 'PayPal REST API connection - successfully' );
 	}
 
-	wp_die( 'ERROR: ' . $token['message'] );
+	wp_die( 'ERROR: ' .  $VA_paypal->get_error() );
 }
 
 add_action( 'wp_ajax_va_test_paypal_api_connection', 'va_test_paypal_api_connection' );
