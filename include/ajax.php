@@ -236,8 +236,8 @@ add_action( 'wp_ajax_va_test_paypal_api_connection', 'va_test_paypal_api_connect
 function va_test_paypal_api_get_plans() {
 
 	$VA_paypal = new VA_PayPal();
-	$plans     = $VA_paypal->va_get_plans();
-
+	$plans     = $VA_paypal->get_subscription_plans();
+	dbga($plans);
 	if ( $VA_paypal->get_error() !== '' ) {
 		wp_die( $VA_paypal->get_error() );
 	}
