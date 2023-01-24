@@ -114,10 +114,15 @@ function va_generate_monthly_report() {
 	$report_link_url   = $uploads_directory['baseurl'] . '/virtual-adoptions/monthly-report.csv';
 
 	// checks if the /virtual-adoptions/ folder exists and creates it if not
-	if ( ! is_dir( $report_link_abs ) || ! file_exists( $report_link_abs ) ) {
-		mkdir( $report_link_abs, 0755 );
+	if ( ! file_exists( $report_link_abs ) && ! mkdir( $report_link_abs, 0755 ) && ! is_dir( $report_link_abs ) ) {
+		echo json_encode( [
+			'status'  => 0,
+			'message' => sprintf( __( 'Directory "%s" was not created', 'virtual-donations' ), $report_link_abs ),
+		], JSON_NUMERIC_CHECK );
+		wp_die();
 	}
-	$report_link_abs .= 'monthly-report.csv';
+
+	$report_link_abs .= 'monthly-report.csv'; // adds the actual file
 
 	global $wpdb;
 	$sql           = "SELECT subs.amount, subs.currency, subs.status, subs.start_date, subs.completed_cycles, animals.post_title animal_name,
@@ -145,7 +150,7 @@ function va_generate_monthly_report() {
 	}
 
 	// Start writing in a csv file
-	$output  = fopen($report_link_abs, 'w');
+	$output  = fopen( $report_link_abs, 'wb' );
 	$headers = [
 		'First Name',
 		'Last Name',
@@ -158,8 +163,8 @@ function va_generate_monthly_report() {
 		'Completed cycles',
 		'Start date'
 	];
-	fputcsv($output, $headers);
-	foreach ($subscriptions as $subscription) {
+	fputcsv( $output, $headers );
+	foreach ( $subscriptions as $subscription ) {
 		$row = [
 			$subscription->first_name,
 			$subscription->last_name,
@@ -172,10 +177,10 @@ function va_generate_monthly_report() {
 			$subscription->completed_cycles,
 			$subscription->start_date
 		];
-		fputcsv($output, $row);
+		fputcsv( $output, $row );
 	}
 
-	fclose($output);
+	fclose( $output );
 
 	echo json_encode( [
 		'status'  => 1,
@@ -186,3 +191,39 @@ function va_generate_monthly_report() {
 }
 
 add_action( 'wp_ajax_va_get_donations_report', 'va_generate_monthly_report' );
+
+
+/**
+ * Ajax Callback function for connecting to the PayPal API.
+ *
+ * @return void
+ */
+function va_test_paypal_api_connection() {
+	check_ajax_referer( 'va-taina', 'security' );
+
+	if ( empty( $_POST['clientID'] ) || empty( $_POST['secretKey'] ) ) {
+		wp_die( __( 'The PayPal client ID and secret key can not be empty.', 'virtual-adoptions' ) );
+	}
+
+	// We will check if we have the credentials stored in the DB and if not we will save them (most probably the user forgot to click 'Save changes' first)
+	$va_settings      = get_option( 'va-settings' );
+	$paypal_client_id = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
+	$paypal_secret    = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
+
+	if ( $paypal_client_id === '' || $paypal_secret === '' ) {
+		$va_settings['payment-methods']['paypal']['client_id'] = $_POST['clientID'];
+		$va_settings['payment-methods']['paypal']['secret']    = $_POST['secretKey'];
+		update_option( 'va-settings', $va_settings );
+	}
+
+
+	$token = va_create_paypal_authentication_token();
+	if ( $token['status'] === 'success' ) {
+		va_get_plans( $token['data']['access_token'] );
+		wp_die( 'PayPal REST API connection - successfully' );
+	}
+
+	wp_die( 'ERROR: ' . $token['message'] );
+}
+
+add_action( 'wp_ajax_va_test_paypal_api_connection', 'va_test_paypal_api_connection' );
