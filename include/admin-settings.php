@@ -62,10 +62,10 @@ function va_admin_settings_page() {
 		'posts_per_page' => - 1,
 	] );
 
-	$dogs_tax_id         = ! empty( $va_settings['animal-terms']['dogs'] ) ? (int) $va_settings['animal-terms']['dogs'] : 0;
-	$cats_tax_id         = ! empty( $va_settings['animal-terms']['cats'] ) ? (int) $va_settings['animal-terms']['cats'] : 0;
-	$horses_tax_id       = ! empty( $va_settings['animal-terms']['horses'] ) ? (int) $va_settings['animal-terms']['horses'] : 0;
-	$other_tax_id        = ! empty( $va_settings['animal-terms']['other'] ) ? (int) $va_settings['animal-terms']['other'] : 0;
+	$dogs_tax_id         = ! empty( $va_settings['animal-terms']['dogs'] ) ? $va_settings['animal-terms']['dogs'] : 0;
+	$cats_tax_id         = ! empty( $va_settings['animal-terms']['cats'] ) ? $va_settings['animal-terms']['cats'] : 0;
+	$horses_tax_id       = ! empty( $va_settings['animal-terms']['horses'] ) ? $va_settings['animal-terms']['horses'] : 0;
+	$other_tax_id        = ! empty( $va_settings['animal-terms']['other'] ) ? $va_settings['animal-terms']['other'] : 0;
 	$checkout_page_id    = ! empty( $va_settings['page']['checkout'] ) ? $va_settings['page']['checkout'] : 0;
 	$thank_you_page_id   = ! empty( $va_settings['page']['thank-you'] ) ? $va_settings['page']['thank-you'] : 0;
 	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
@@ -245,25 +245,44 @@ function va_admin_settings_page() {
 
 		<p class="submit">
 			<input type="submit" name="Submit" class="button-primary"
-				   value="<?php esc_attr_e( 'Save Changes', 'virtual-adoption' ) ?>"/>
+				   value="<?php _e( 'Save Changes', 'virtual-adoption' ) ?>"/>
 
-			<input type="button" name="test-api" class="button-secondary" value="test-api" id="test-api">
+			<input type="button" name="test-api" class="button-secondary"
+				   value="<?php _e( 'Test PayPal connection', 'virtual-adoption' ) ?>" id="test-api">
 		</p>
+		<?php wp_nonce_field( 'va-taina', 'va-security' ); ?>
 	</form>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			document.getElementById('test-api').addEventListener('click', function () {
+				const thisButton = this;
+				const clientID = document.getElementById('paypal-client-id').value;
+				const secretKey = document.getElementById('paypal-secret-key').value;
+				const security = document.getElementById('va-security').value;
+
+				if (clientID === '' || secretKey === '') {
+					alert('<?php _e('The PayPal client ID and secret key can not be empty.','virtual-adoptions'); ?>');
+					return false;
+				}
+
+				thisButton.disabled = true;
+
 				jQuery.ajax({
 					url: '/wp-admin/admin-ajax.php',
 					data: {
-						action: 'va_test_api'
+						action: 'va_test_paypal_api_connection',
+						clientID: clientID,
+						secretKey: secretKey,
+						security: security,
 					},
 					method: 'POST',
 					success: (response) => {
-						alert(response)
+						alert(response);
+						thisButton.disabled = false;
 					},
 					error: (error) => {
 						alert(error.code + ' > ' + error.message);
+						thisButton.disabled = false;
 					}
 				});
 			})

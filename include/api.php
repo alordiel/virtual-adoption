@@ -60,7 +60,7 @@ function va_create_paypal_authentication_token(): array {
 	$result = json_decode( $curl_response, true );
 	curl_close( $curl );
 
-		dbga($result);
+	dbga( $result );
 	if ( ! empty( $result['access_token'] ) ) {
 		return [
 			'status' => 'success',
@@ -165,26 +165,51 @@ function va_get_plans( string $token ) {
 		echo 'Error:' . curl_error( $curl );
 	}
 	$response = curl_exec( $curl );
-	$result = json_decode( $response, true );
+	$result   = json_decode( $response, true );
 	dbga( $result );
-	if (!empty($result['plans'])) {
-		dbga($result['plans']);
+	if ( ! empty( $result['plans'] ) ) {
+		dbga( $result['plans'] );
 	} else {
-		dbga (' EMPTY ');
+		dbga( ' EMPTY ' );
 	}
 
 	curl_close( $curl );
+
 	return $response;
 
 }
 
-function va_test_api() {
+/**
+ * Ajax Callback function for connecting to the PayPal API.
+ *
+ * @return void
+ */
+function va_test_paypal_api_connection() {
+	check_ajax_referer( 'va-taina', 'security' );
+
+	if ( empty( $_POST['clientID'] ) || empty( $_POST['secretKey'] ) ) {
+		wp_die( __( 'The PayPal client ID and secret key can not be empty.', 'virtual-adoptions' ) );
+	}
+
+	// We will check if we have the credentials stored in the DB and if not we will save them (most probably the user forgot to click 'Save changes' first)
+	$va_settings      = get_option( 'va-settings' );
+	$paypal_client_id = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
+	$paypal_secret    = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
+
+	if ( $paypal_client_id === '' || $paypal_secret === '' ) {
+		$va_settings['payment-methods']['paypal']['client_id'] = $_POST['clientID'];
+		$va_settings['payment-methods']['paypal']['secret']    = $_POST['secretKey'];
+		update_option( 'va-settings', $va_settings );
+	}
+
+
 	$token = va_create_paypal_authentication_token();
-	dbga($token);
 	if ( $token['status'] === 'success' ) {
 		va_get_plans( $token['data']['access_token'] );
+		wp_die( 'PayPal REST API connection - successfully' );
 	}
-	wp_die( 'done' );
+
+	wp_die( 'ERROR: ' . $token['message'] );
 }
 
-add_action( 'wp_ajax_va_test_api', 'va_test_api' );
+add_action( 'wp_ajax_va_test_paypal_api_connection', 'va_test_paypal_api_connection' );
