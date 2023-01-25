@@ -10,6 +10,29 @@ if ( empty( $sheltered_animal ) ) {
 	$image = get_the_post_thumbnail_url( $post_id, 'small' );
 	$name  = $sheltered_animal->post_title;
 	$user  = wp_get_current_user();
+
+	$subscription_plans = get_posts( [
+		'post_type'     => 'va-subscription-plan',
+		'post_status'   => 'publish',
+		'posts_per_age' => - 1,
+	] );
+
+	$plans              = [];
+	$currency_signs     = [
+		'eur' => '€',
+		'usd' => '$',
+		'gbp' => '£'
+	];
+	if ( ! empty( $subscription_plans ) ) {
+		foreach ( $subscription_plans as $plan ) {
+			$meta    = get_post_meta( $plan->ID );
+			$plans[] = [
+				'price'                  => $meta['cost'][0],
+				'currency'               => $currency_signs[ $meta['currency'][0] ],
+				'subscription_paypal_id' => $meta['paypal_plan_id'][0]
+			];
+		}
+	}
 	?>
 	<div class="checkout-container">
 		<div class="checkout-donation-list">
@@ -24,30 +47,22 @@ if ( empty( $sheltered_animal ) ) {
 		<div>
 			<h4><strong><?php _e( 'Sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
 			<div class="donation-amounts">
-				<label>
-					<input value="5" type="radio" name="selected-amount">
-					€ 5.00
-				</label>
-				<label class="selected-donation-amount">
-					<input checked value="10" type="radio" name="selected-amount">
-					€ 10.00
-				</label>
-				<label>
-					<input checked value="15" type="radio" name="selected-amount">
-					€ 15.00
-				</label>
-				<label>
-					<input value="20" type="radio" name="selected-amount">
-					€ 20.00
-				</label>
-				<label>
-					<input value="30" type="radio" name="selected-amount">
-					€ 30.00
-				</label>
-				<label>
-					<input value="50" type="radio" name="selected-amount">
-					€ 50.00
-				</label>
+				<?php
+				if ( $plans !== [] ) {
+					foreach ( $plans as $plan ) {
+						?>
+						<label>
+							<input value="<?php echo $plan['price'] ?>" type="radio" name="selected-amount"
+								   data-subscription="<?php $plan['subscription_paypal_id'] ?>">
+							<?php echo $plan['currency'] . ' ' . $plan['price'] ?>
+						</label>
+						<?php
+					}
+				} else {
+					_e( 'No subscription plans are found.', 'virtual-donations' );
+				}
+				?>
+
 			</div>
 
 			<h4><strong><?php _e( 'Account Details', 'virtual-adoption' ) ?></strong></h4>
