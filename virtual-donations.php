@@ -26,6 +26,7 @@ const VA_ABS = __DIR__;
 
 require_once( VA_ABS . '/include/custom-post-types/animals.php' );
 require_once( VA_ABS . '/include/custom-post-types/va-subscriptions.php' );
+require_once( VA_ABS . '/include/custom-post-types/va-subscription-plans.php' );
 require_once( VA_ABS . '/include/template-loader.php' );
 require_once( VA_ABS . '/include/functions.php' );
 require_once( VA_ABS . '/include/wordpress.php' );
@@ -50,6 +51,8 @@ function va_plugin_activated() {
 		va_sheltered_animals();
 		sheltered_animal_taxonomy();
 		va_register_meta_boxes();
+		va_subscription_post_type();
+		va_subscription_post_type();
 	}
 	$va_settings = get_option( 'va-settings' );
 	if(empty($va_settings['page']['checkout'])){
