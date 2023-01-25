@@ -79,11 +79,11 @@ class VA_PayPal {
 	}
 
 
-	public function create_product() {
+	public function create_product(string $product_name, string $product_id ) {
 		$product_data = [
-			"name"        => "Charity - donate 10 EUR per month",
+			"name"        => $product_name,
 			"type"        => "SERVICE",
-			"id"          => "PRD-" . time(),
+			"id"          => $product_id,
 			"description" => "For virtual adoption of poor animal from the shelter",
 			"category"    => "CHARITY",
 		];
@@ -103,8 +103,21 @@ class VA_PayPal {
 		) );
 
 		$response = curl_exec( $curl );
+
+		if ( curl_errno( $curl ) ) {
+			$info = curl_getinfo( $curl );
+			curl_close( $curl );
+			$this->error = 'ERROR: ' . $info['http_code'];
+
+			return [];
+		}
+
 		$data     = json_decode( $response );
-		/*
+		curl_close( $curl );
+
+		return $data;
+
+		/* This is what is returned from successful added product
 		 (
 		    [id] => PRD-1674576789
 		    [name] => Charity - donate 10 EUR per month
@@ -128,17 +141,12 @@ class VA_PayPal {
 		        )
 		)
 		*/
-
-		curl_close( $curl );
-
-		return $data;
-
 	}
 
-	public function create_subscription_plan() {
+	public function create_subscription_plan(string $product_id, string $name, float $price, string $currency) {
 		$data = array(
-			'product_id'          => 'PRD-1674576789',
-			'name'                => 'Charity - donate 10 EUR per month',
+			'product_id'          => $product_id,
+			'name'                => $name,
 			'description'         => 'For virtual adoption of poor animal from the shelter',
 			'status'              => 'ACTIVE',
 			'billing_cycles'      =>
@@ -152,13 +160,13 @@ class VA_PayPal {
 								),
 							'tenure_type'    => 'REGULAR',
 							'sequence'       => 1,
-							'total_cycles'   => 24,
+							'total_cycles'   => 24, // this is how long it will bill the user
 							'pricing_scheme' =>
 								array(
 									'fixed_price' =>
 										array(
-											'value'         => '10',
-											'currency_code' => 'EUR',
+											'value'         => $price,
+											'currency_code' => $currency,
 										),
 								),
 						),
@@ -172,7 +180,7 @@ class VA_PayPal {
 							'currency_code' => 'EUR',
 						),
 					'setup_fee_failure_action'  => 'CANCEL',
-					'payment_failure_threshold' => 2,
+					'payment_failure_threshold' => 1, // after 1 unsuccessful payment the plan will be cancelled
 				),
 			'taxes'               =>
 				array(
@@ -180,23 +188,28 @@ class VA_PayPal {
 				),
 		);
 		$url  = $this->paypal_url . $this->plans_url;
-		$ch   = curl_init();
+		$curl   = curl_init();
 
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $ch, CURLOPT_POST, 1 );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $data, JSON_NUMERIC_CHECK ) );
+		curl_setopt( $curl, CURLOPT_URL, $url );
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt( $curl, CURLOPT_POST, 1 );
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, json_encode( $data, JSON_NUMERIC_CHECK ) );
 
 		$headers = $this->get_curl_header( true, true );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
 
-		$result = curl_exec( $ch );
-		dbga( $result );
-		if ( curl_errno( $ch ) ) {
-			$this->error = 'Error:' . curl_error( $ch );
+		$result = curl_exec( $curl );
+
+		if ( curl_errno( $curl ) ) {
+			$info = curl_getinfo( $curl );
+			curl_close( $curl );
+			$this->error = 'ERROR: ' . $info['http_code'];
+
+			 return [];
 		}
-		curl_close( $ch );
+		curl_close( $curl );
 
+		return json_decode( $result );
 		/*
 		 (
 		    [id] => P-2B4635940K6518739MPIAP6I
@@ -289,8 +302,6 @@ class VA_PayPal {
 		)
 
 		 * */
-
-		return json_decode( $result );
 	}
 
 	public function get_subscription_plans(): array {

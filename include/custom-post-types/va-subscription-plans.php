@@ -107,16 +107,50 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 		return;
 	}
 
-	if ( ! empty( $_POST['plan-currency'] ) && in_array( $_POST['plan-currency'], [ 'gbp', 'eur', 'usd' ] ) ) {
-		update_post_meta( $post_id, 'currency', $_POST['plan-currency'] );
+	$currency = '';
+	if ( ! empty( $currency ) && in_array( $_POST['plan-currency'], [ 'gbp', 'eur', 'usd' ] ) ) {
+		$currency = $_POST['plan-currency'];
+		update_post_meta( $post_id, 'currency', $currency );
 	} else {
 		delete_post_meta( $post_id, 'currency' );
 	}
 
+	$price = 0;
 	if ( ! empty( $_POST['plan-cost'] ) ) {
+		$price = (float) $_POST['plan-cost'];
 		update_post_meta( $post_id, 'cost', (float) $_POST['plan-cost'] );
 	} else {
 		delete_post_meta( $post_id, 'cost' );
+	}
+
+	if ( $post->post_status === 'publish' && $price !== 0 && $currency !== '' ) {
+
+		$paypal_product_id = get_post_meta( $post_id, 'paypal_product_id', true );
+		$paypal_plan_id    = get_post_meta( $post_id, 'paypal_plan_id', true );
+		// Check if we are missing any of the two PayPal IDs, so we will create them
+		if ( empty( $paypal_product_id ) || empty( $paypal_plan_id ) ) {
+			$VA_paypal = new VA_PayPal();
+			if ( empty( $paypal_product_id ) ) {
+				$paypal_product_id = uniqid( 'PROD-', true );
+				$product           = $VA_paypal->create_product( $post->post_title, '$product_id' );
+				if ( ! empty( $product ) ) {
+					update_post_meta( $post_id, 'paypal_product_id', $paypal_product_id );
+				} else {
+					dbga( $VA_paypal->get_error() );
+
+					return;
+				}
+			}
+
+			if ( empty( $paypal_plan_id ) ) {
+				$subscription_plan = $VA_paypal->create_subscription_plan( $paypal_product_id, $post->post_title, $price, $currency );
+				if ( ! empty( $subscription_plan ) ) {
+					update_post_meta( $post_id, 'paypal_plan_id', $subscription_plan['id'] );
+				} else {
+					dbga( $VA_paypal->get_error() );
+				}
+			}
+		}
 	}
 }
 
