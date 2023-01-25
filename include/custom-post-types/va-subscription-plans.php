@@ -63,16 +63,17 @@ add_action( 'add_meta_boxes', 'va_meta_info_about_subscription_plans' );
  * @return void
  */
 function va_subscription_plan_details( WP_Post $post ) {
-	$plan_meta         = get_post_meta( $post->ID );
-	$plan_costs        = (float) $plan_meta['plan_const'];
-	$currency          = $plan_meta['currency'];
-	$paypal_product_id = $plan_meta['paypal_product_id'];
-	$paypal_plan_id    = $plan_meta['paypal_plan_id'];
+	$plan_meta = get_post_meta( $post->ID );
+
+	$plan_costs        = ! empty( $plan_meta['cost'] ) ? (float) $plan_meta['cost'][0] : '';
+	$currency          = ! empty( $plan_meta['currency'] ) ? $plan_meta['currency'][0] : '';
+	$paypal_product_id = ! empty( $plan_meta['paypal_product_id'] ) ? $plan_meta['paypal_product_id'][0] : '';
+	$paypal_plan_id    = ! empty( $plan_meta['paypal_plan_id'] ) ? $plan_meta['paypal_plan_id'][0] : '';
 	?>
 	<div>
 		<p>
-			<label name="plan-cost"><?php _e( 'Plan cost', 'virtual-adoption' ) ?>:
-				<input type="number" readonly value="<?php echo $plan_costs; ?>">
+			<label><?php _e( 'Plan cost', 'virtual-adoption' ) ?>:
+				<input type="number" value="<?php echo $plan_costs; ?>" name="plan-cost">
 			</label> <br>
 			<label><?php _e( 'Currency', 'virtual-adoption' ) ?>:
 				<select name="plan-currency">
@@ -83,16 +84,40 @@ function va_subscription_plan_details( WP_Post $post ) {
 				</select>
 			</label>
 		</p>
+		<br>
 		<p>
-			<label><?php _e( 'PayPal product ID', 'virtual-adoption' ); ?>:
+			<label><?php _e( 'PayPal product ID', 'virtual-adoption' ); ?>:<br>
 				<input type="text" readonly value="<?php echo $paypal_product_id; ?>">
 			</label>
 		</p>
 		<p>
-			<label><?php _e( 'PayPal subscription plan ID', 'virtual-adoption' ); ?>
+			<label><?php _e( 'PayPal subscription plan ID', 'virtual-adoption' ); ?>:<br>
 				<input type="text" readonly value="<?php echo $paypal_plan_id; ?>">
 			</label>
 		</p>
 	</div>
+	<?php wp_nonce_field( 'va-subscription-plan-meta', 'va-power-dog' ); ?>
 	<?php
 }
+
+
+function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
+	$nonce_name = $_POST['va-power-dog'] ?? '';
+	if ( ! wp_verify_nonce( $nonce_name, 'va-subscription-plan-meta' ) ) {
+		return;
+	}
+
+	if ( ! empty( $_POST['plan-currency'] ) && in_array( $_POST['plan-currency'], [ 'gbp', 'eur', 'usd' ] ) ) {
+		update_post_meta( $post_id, 'currency', $_POST['plan-currency'] );
+	} else {
+		delete_post_meta( $post_id, 'currency' );
+	}
+
+	if ( ! empty( $_POST['plan-cost'] ) ) {
+		update_post_meta( $post_id, 'cost', (float) $_POST['plan-cost'] );
+	} else {
+		delete_post_meta( $post_id, 'cost' );
+	}
+}
+
+add_action( 'save_post_va-subscription-plan', 'va_save_subscription_plan_meta', 10, 2 );

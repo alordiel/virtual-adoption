@@ -98,7 +98,7 @@ add_action( 'add_meta_boxes', 'va_register_meta_boxes' );
  */
 function va_sheltered_animal_details( WP_Post $post ) {
 	$age           = (int) get_post_meta( $post->ID, 'animals-age', true );
-	$sheltered_for = (int) get_post_meta( $post->ID, 'sheltered-years', true );
+	$sheltered_for = get_post_meta( $post->ID, 'sheltered-years', true );
 	$sex           = get_post_meta( $post->ID, 'animals-sex', true );
 	?>
 	<p>
@@ -163,4 +163,4 @@ function va_sheltered_animal_save_meta( int $post_id ) {
 
 }
 
-add_action( 'save_post', 'va_sheltered_animal_save_meta' );
+add_action( 'save_post_sheltered_animal', 'va_sheltered_animal_save_meta' );
