@@ -67,7 +67,7 @@ if ( ! empty( $subscriptions ) ) {
 						$re_adopt_link = get_permalink( $settings['page']['checkout'] ) . '?aid=' . $encrypted_key;
 						?>
 						<a href="<?php echo $re_adopt_link; ?>">
-							<?php _e( 'Re-adopt', 'virtual-donation' ); ?>
+							<?php _e( 'Re-adopt', 'virtual-donations' ); ?>
 						</a>
 						<?php
 					}
