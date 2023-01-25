@@ -63,17 +63,23 @@ add_action( 'add_meta_boxes', 'va_meta_info_about_subscription_plans' );
  * @return void
  */
 function va_subscription_plan_details( WP_Post $post ) {
-	$plan_meta = get_post_meta( $post->ID );
-
+	$plan_meta         = get_post_meta( $post->ID );
+	$va_settings       = get_option( 'va-settings' );
+	$paypal_test       = ! empty( $va_settings['payment-methods']['paypal']['test'] );
 	$plan_costs        = ! empty( $plan_meta['cost'] ) ? (float) $plan_meta['cost'][0] : '';
 	$currency          = ! empty( $plan_meta['currency'] ) ? $plan_meta['currency'][0] : '';
 	$paypal_product_id = ! empty( $plan_meta['paypal_product_id'] ) ? $plan_meta['paypal_product_id'][0] : '';
 	$paypal_plan_id    = ! empty( $plan_meta['paypal_plan_id'] ) ? $plan_meta['paypal_plan_id'][0] : '';
 	?>
 	<div>
+		<?php if ( $paypal_test ) : ?>
+		<div class="error notice-error notice">
+			<p><?php _e('PayPal is set in test mode. Check the plugin\'s settings, as well as your paypal developer\'s account. Creating a new subscription in sandbox mode will reflect only the test business account and not the live account.', 'virtual-adoption'); ?></p>
+		</div>
+		<?php endif; ?>
 		<p>
 			<label><?php _e( 'Plan cost', 'virtual-adoption' ) ?>:
-				<input type="number" value="<?php echo $plan_costs; ?>" name="plan-cost">
+				<input type="number" value="<?php echo $plan_costs; ?>" name="plan-cost" style="width: 150px;">
 			</label> <br>
 			<label><?php _e( 'Currency', 'virtual-adoption' ) ?>:
 				<select name="plan-currency">
@@ -87,12 +93,12 @@ function va_subscription_plan_details( WP_Post $post ) {
 		<br>
 		<p>
 			<label><?php _e( 'PayPal product ID', 'virtual-adoption' ); ?>:<br>
-				<input type="text" readonly value="<?php echo $paypal_product_id; ?>">
+				<input type="text" readonly value="<?php echo $paypal_product_id; ?>" style="width: 300px;">
 			</label>
 		</p>
 		<p>
 			<label><?php _e( 'PayPal subscription plan ID', 'virtual-adoption' ); ?>:<br>
-				<input type="text" readonly value="<?php echo $paypal_plan_id; ?>">
+				<input type="text" readonly value="<?php echo $paypal_plan_id; ?>" style="width: 300px;">
 			</label>
 		</p>
 	</div>
