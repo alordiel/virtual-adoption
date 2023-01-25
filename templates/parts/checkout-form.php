@@ -21,31 +21,31 @@ if ( empty( $sheltered_animal ) ) {
 				</div>
 			</div>
 		</div>
-		<div class="checkout-fields">
+		<div>
 			<h4><strong><?php _e( 'Sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
 			<div class="donation-amounts">
-				<label for="eur5">
-					<input id="eur5" value="5" type="radio" name="selected-amount">
+				<label>
+					<input value="5" type="radio" name="selected-amount">
 					€ 5.00
 				</label>
-				<label for="eur10" class="selected-donation-amount">
-					<input id="eur10" checked value="10" type="radio" name="selected-amount">
+				<label class="selected-donation-amount">
+					<input checked value="10" type="radio" name="selected-amount">
 					€ 10.00
 				</label>
-				<label for="eur15">
-					<input id="eur15" checked value="15" type="radio" name="selected-amount">
+				<label>
+					<input checked value="15" type="radio" name="selected-amount">
 					€ 15.00
 				</label>
-				<label for="eur20">
-					<input id="eur20" value="20" type="radio" name="selected-amount">
+				<label>
+					<input value="20" type="radio" name="selected-amount">
 					€ 20.00
 				</label>
-				<label for="eur30">
-					<input id="eur30" value="30" type="radio" name="selected-amount">
+				<label>
+					<input value="30" type="radio" name="selected-amount">
 					€ 30.00
 				</label>
-				<label for="eur50">
-					<input id="eur50" value="50" type="radio" name="selected-amount">
+				<label>
+					<input value="50" type="radio" name="selected-amount">
 					€ 50.00
 				</label>
 			</div>
@@ -74,16 +74,16 @@ if ( empty( $sheltered_animal ) ) {
 			<div class="donation-payment-methods">
 				<h4><strong><?php _e( 'Payment methods', 'virtual-adoption' ) ?></strong>:</h4>
 				<ul class="payment-methods">
-					<li class="payment-method payment-method-paypal">
+					<li class="payment-method">
 						<input id="payment-method-paypal" type="radio" class="input-radio" name="payment-method"
 							   value="paypal" checked>
 						<label for="payment-method-paypal">
-							PayPal <img src="<?php echo VA_URL ?>/assets/images/payments/paypal.png"
+							PayPal <img src="<?php echo VA_URL . '/assets/images/payments/paypal.png'; ?>"
 										alt="PayPal logo">
 						</label>
 					</li>
 				</ul>
-				<p class="form-row validate-required">
+				<p class="form-row">
 					<label for="terms">
 						<input type="checkbox" name="terms" id="terms">
 						<span>

@@ -43,7 +43,7 @@ add_action( 'init', 'va_subscriptions_plans_post_type' );
 /**
  * Register meta box for subscription's details. There is no metadata that is being saved with this meta box.
  */
-function va_meta_info_about_subscription() {
+function va_meta_info_about_subscription_plans() {
 	add_meta_box(
 		'subscription-plan',
 		__( 'Subscription plan details', 'virtual-adoption' ),
@@ -53,7 +53,7 @@ function va_meta_info_about_subscription() {
 	);
 }
 
-add_action( 'add_meta_boxes', 'va_meta_info_about_subscription' );
+add_action( 'add_meta_boxes', 'va_meta_info_about_subscription_plans' );
 
 /**
  * Function to display the details of the subscription in the admin
