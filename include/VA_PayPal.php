@@ -79,7 +79,16 @@ class VA_PayPal {
 	}
 
 
-	public function create_product(string $product_name, string $product_id ) {
+	/**
+	 * Used to create a PayPal product. The product is used then for creation of subscription plan.
+	 * Full documentation PayPal: https://developer.paypal.com/docs/api/catalog-products/v1/#products_create
+	 *
+	 * @param string $product_name
+	 * @param string $product_id
+	 *
+	 * @return array
+	 */
+	public function create_product( string $product_name, string $product_id ): array {
 		$product_data = [
 			"name"        => $product_name,
 			"type"        => "SERVICE",
@@ -102,48 +111,50 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
 		) );
 
-		$response = curl_exec( $curl );
-
+		$response  = curl_exec( $curl );
+		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+		// Checks for general error with the execution of the curl
 		if ( curl_errno( $curl ) ) {
-			$info = curl_getinfo( $curl );
+			$this->error = 'ERROR: ' . $http_code;
 			curl_close( $curl );
-			$this->error = 'ERROR: ' . $info['http_code'];
 
 			return [];
 		}
 
-		$data     = json_decode( $response );
+		// Check for code 201 - created successfully
+		if ( $http_code !== 201 ) {
+			$response    = json_decode( $response );
+			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
+
+			return [];
+		}
+
+		$data = json_decode( $response, true );
 		curl_close( $curl );
+		// Checks if the response was parsed correctly
+		if ( $data === null ) {
+			$this->error = __( 'ERROR: Could not parse PayPal response. Check error.log for response.', 'virtual-donations' );
+			dbga( $response );
+
+			return [];
+		}
 
 		return $data;
-
-		/* This is what is returned from successful added product
-		 (
-		    [id] => PRD-1674576789
-		    [name] => Charity - donate 10 EUR per month
-		    [description] => For virtual adoption of poor animal from the shelter
-		    [create_time] => 2023-01-24T16:13:10Z
-		    [links] => Array
-		        (
-		            [0] => stdClass Object
-		                (
-		                    [href] => https://api.sandbox.paypal.com/v1/catalogs/products/PRD-1674576789
-		                    [rel] => self
-		                    [method] => GET
-		                )
-
-		            [1] => stdClass Object
-		                (
-		                    [href] => https://api.sandbox.paypal.com/v1/catalogs/products/PRD-1674576789
-		                    [rel] => edit
-		                    [method] => PATCH
-		                )
-		        )
-		)
-		*/
 	}
 
-	public function create_subscription_plan(string $product_id, string $name, float $price, string $currency) {
+
+	/**
+	 * Will create a subscription plan in PayPal
+	 * REST API documentation : https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
+	 *
+	 * @param string $product_id
+	 * @param string $name
+	 * @param float $price
+	 * @param string $currency
+	 *
+	 * @return array|mixed
+	 */
+	public function create_subscription_plan( string $product_id, string $name, float $price, string $currency ) {
 		$data = array(
 			'product_id'          => $product_id,
 			'name'                => $name,
@@ -166,7 +177,7 @@ class VA_PayPal {
 									'fixed_price' =>
 										array(
 											'value'         => $price,
-											'currency_code' => $currency,
+											'currency_code' => strtoupper( $currency ),
 										),
 								),
 						),
@@ -188,7 +199,7 @@ class VA_PayPal {
 				),
 		);
 		$url  = $this->paypal_url . $this->plans_url;
-		$curl   = curl_init();
+		$curl = curl_init();
 
 		curl_setopt( $curl, CURLOPT_URL, $url );
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
@@ -198,110 +209,33 @@ class VA_PayPal {
 		$headers = $this->get_curl_header( true, true );
 		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
 
-		$result = curl_exec( $curl );
+		$response = curl_exec( $curl );
 
+		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
 		if ( curl_errno( $curl ) ) {
-			$info = curl_getinfo( $curl );
 			curl_close( $curl );
-			$this->error = 'ERROR: ' . $info['http_code'];
+			$this->error = 'ERROR: ' . $http_code;
 
-			 return [];
+			return [];
 		}
 		curl_close( $curl );
+		// Check for code 201 - created successfully
+		if ( $http_code !== 201 ) {
+			$response    = json_decode( $response );
+			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
 
-		return json_decode( $result );
-		/*
-		 (
-		    [id] => P-2B4635940K6518739MPIAP6I
-		    [product_id] => PRD-1674576789
-		    [name] => Charity - donate 10 EUR per month
-		    [status] => ACTIVE
-		    [description] => For virtual adoption of poor animal from the shelter
-		    [usage_type] => LICENSED
-		    [billing_cycles] => Array
-		        (
-		            [0] => stdClass Object
-		                (
-		                    [pricing_scheme] => stdClass Object
-		                        (
-		                            [version] => 1
-		                            [fixed_price] => stdClass Object
-		                                (
-		                                    [currency_code] => EUR
-		                                    [value] => 10.0
-		                                )
+			return [];
+		}
+		$data = json_decode( $response, true );
+		// Checks if the response was parsed correctly
+		if ( $data === null ) {
+			$this->error = __( 'ERROR: Could not parse PayPal response. Check error.log for response.', 'virtual-donations' );
+			dbga( $response );
 
-		                            [create_time] => 2023-01-24T16:31:53Z
-		                            [update_time] => 2023-01-24T16:31:53Z
-		                        )
+			return [];
+		}
 
-		                    [frequency] => stdClass Object
-		                        (
-		                            [interval_unit] => MONTH
-		                            [interval_count] => 1
-		                        )
-
-		                    [tenure_type] => REGULAR
-		                    [sequence] => 1
-		                    [total_cycles] => 24
-		                )
-
-		        )
-
-		    [payment_preferences] => stdClass Object
-		        (
-		            [service_type] => PREPAID
-		            [auto_bill_outstanding] => 1
-		            [setup_fee] => stdClass Object
-		                (
-		                    [currency_code] => EUR
-		                    [value] => 0.0
-		                )
-
-		            [setup_fee_failure_action] => CANCEL
-		            [payment_failure_threshold] => 2
-		        )
-
-		    [taxes] => stdClass Object
-		        (
-		            [percentage] => 0.0
-		            [inclusive] => 1
-		        )
-
-		    [quantity_supported] =>
-		    [create_time] => 2023-01-24T16:31:53Z
-		    [update_time] => 2023-01-24T16:31:53Z
-		    [links] => Array
-		        (
-		            [0] => stdClass Object
-		                (
-		                    [href] => https://api.sandbox.paypal.com/v1/billing/plans/P-2B4635940K6518739MPIAP6I
-		                    [rel] => self
-		                    [method] => GET
-		                    [encType] => application/json
-		                )
-
-		            [1] => stdClass Object
-		                (
-		                    [href] => https://api.sandbox.paypal.com/v1/billing/plans/P-2B4635940K6518739MPIAP6I
-		                    [rel] => edit
-		                    [method] => PATCH
-		                    [encType] => application/json
-		                )
-
-		            [2] => stdClass Object
-		                (
-		                    [href] => https://api.sandbox.paypal.com/v1/billing/plans/P-2B4635940K6518739MPIAP6I/deactivate
-		                    [rel] => self
-		                    [method] => POST
-		                    [encType] => application/json
-		                )
-
-		        )
-
-		)
-
-		 * */
+		return $data;
 	}
 
 	public function get_subscription_plans(): array {
@@ -335,9 +269,14 @@ class VA_PayPal {
 
 		$result = json_decode( $response, true );
 
+
 		curl_close( $curl );
 
 		return $result;
 	}
 
+
+	private function curl_executor(array $data, int $options, int $expected_code) {
+
+	}
 }

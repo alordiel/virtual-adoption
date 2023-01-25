@@ -108,7 +108,7 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 	}
 
 	$currency = '';
-	if ( ! empty( $currency ) && in_array( $_POST['plan-currency'], [ 'gbp', 'eur', 'usd' ] ) ) {
+	if ( ! empty( $_POST['plan-currency'] ) && in_array( $_POST['plan-currency'], [ 'gbp', 'eur', 'usd' ] ) ) {
 		$currency = $_POST['plan-currency'];
 		update_post_meta( $post_id, 'currency', $currency );
 	} else {
@@ -127,12 +127,22 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 
 		$paypal_product_id = get_post_meta( $post_id, 'paypal_product_id', true );
 		$paypal_plan_id    = get_post_meta( $post_id, 'paypal_plan_id', true );
+
 		// Check if we are missing any of the two PayPal IDs, so we will create them
 		if ( empty( $paypal_product_id ) || empty( $paypal_plan_id ) ) {
 			$VA_paypal = new VA_PayPal();
+
+			// checks for error during initialization (authentication of PayPal)
+			if ( $VA_paypal->get_error() !== '' ) {
+				dbga( $VA_paypal->get_error() );
+
+				return;
+			}
+
+			// Adds product in PayPal if we don't have one
 			if ( empty( $paypal_product_id ) ) {
-				$paypal_product_id = uniqid( 'PROD-', true );
-				$product           = $VA_paypal->create_product( $post->post_title, '$product_id' );
+				$paypal_product_id = uniqid( 'product-', true );
+				$product           = $VA_paypal->create_product( $post->post_title, $paypal_product_id );
 				if ( ! empty( $product ) ) {
 					update_post_meta( $post_id, 'paypal_product_id', $paypal_product_id );
 				} else {
@@ -142,6 +152,7 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 				}
 			}
 
+			// Creates the subscription
 			if ( empty( $paypal_plan_id ) ) {
 				$subscription_plan = $VA_paypal->create_subscription_plan( $paypal_product_id, $post->post_title, $price, $currency );
 				if ( ! empty( $subscription_plan ) ) {
