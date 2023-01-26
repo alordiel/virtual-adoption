@@ -53,6 +53,13 @@ class VA_PayPal {
 		return $headers;
 	}
 
+
+	/**
+	 * Using OAuth 2.0 authentication by passing PayPal Client ID and secret for creation of access token
+	 * https://developer.paypal.com/api/rest/authentication/
+	 *
+	 * @return void
+	 */
 	private function authenticate(): void {
 
 		$url  = $this->paypal_url . $this->oauth_url;

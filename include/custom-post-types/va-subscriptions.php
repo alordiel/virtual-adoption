@@ -206,7 +206,7 @@ function va_change_of_subscription_post_status( string $new_status, string $old_
 
 	// In case the admin is cancelling the subscription
 	if ( $new_status === 'va-cancelled' && $old_status === 'va-active' ) {
-		va_paypal_cancel_subscription( $subscription );
+		va_paypal_cancel_subscription( $subscription, 'Subscription\'s status was changed' );
 	}
 
 	va_send_confirmation_email( $post );
@@ -262,7 +262,7 @@ function va_change_status_when_post_is_trashed( int $post_id ) {
 
 	// In case of active status we need to cancel the PayPal subscription
 	if ( $subscription['status'] === 'va-active' ) {
-		va_paypal_cancel_subscription( $subscription );
+		va_paypal_cancel_subscription( $subscription, 'Subscription was deleted' );
 	}
 
 	$wpdb->update(

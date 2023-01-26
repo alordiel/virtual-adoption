@@ -176,7 +176,21 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
 	return 'success';
 }
 
+/**
+ *
+ * https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_cancel
+ *
+ * @param array $subscription
+ * @param string $reason
+ *
+ * @return void
+ */
+function va_paypal_cancel_subscription( array $subscription, string $reason ) {
+	$VA_paypal = new VA_PayPal();
+	if ( ! $VA_paypal->get_error() ) {
+		dbga( $VA_paypal->get_error() );
 
-function va_paypal_cancel_subscription( array $subscription ) {
+		return;
+	}
 
 }
