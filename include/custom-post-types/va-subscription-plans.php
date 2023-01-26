@@ -190,7 +190,25 @@ function va_deactivate_subscription_plan_on_trashing_plan( int $post_id ) {
 		return;
 	}
 	// check if there are any subscriptions attached to this plan that are active
+	global $wpdb;
+	$sql = "SELECT ID, post_id FROM {$wpdb->prefix}va_subscriptions
+			WHERE subscription_plan_id = $post_id AND status = 'va-active'";
 
+	$subscriptions = $wpdb->get_results( $sql );
+
+	if ( ! empty( $subscriptions ) ) {
+		// update the post status of the WP posts entries. This will trigger the post-status change hook
+		// and eventually will cancel the PayPal subscriptions as well as update our database
+		foreach ( $subscriptions as $subscription ) {
+			$wpdb->update(
+				$wpdb->prefix . 'posts',
+				[ 'post_status' => 'va-cancelled' ],
+				[ 'post_id' => $subscription->post_id ],
+				[ '%s' ],
+				[ '%d' ]
+			);
+		}
+	}
 
 	// deactivate plan on PayPal
 	$paypal_plan_id = get_post_meta( $post_id, 'paypal_plan_id', true );
@@ -223,14 +241,18 @@ function va_reactivate_plan_when_post_restored_from_trash( int $post_id, string 
 		return;
 	}
 
-	// reactivate the PayPal subscription plan
+	// check if we have connected PayPal plan to our post
 	$paypal_plan_id = get_post_meta( $post_id, 'paypal_plan_id', true );
 	if ( empty( $paypal_plan_id ) ) {
 		return;
 	}
 
+	// reactivate the PayPal subscription plan
 	$VA_paypal = new VA_PayPal();
-	$VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'activate' );
+	$result    = $VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'activate' );
+	if ( $result === false ) {
+		dbga( $VA_paypal->get_error() );
+	}
 }
 
 add_action( 'untrash_post', 'va_reactivate_plan_when_post_restored_from_trash', 10, 2 );
