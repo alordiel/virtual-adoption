@@ -23,13 +23,26 @@ class VA_PayPal {
 		return $this->error;
 	}
 
-	private function get_curl_header( bool $add_paypal_unique_id = false, bool $add_purposes = false ): array {
+
+	/**
+	 * Generates the CURL headers by requested parameters
+	 *
+	 * @param bool $add_unique_id adds a PayPal specific unique ID
+	 * @param bool $add_purposes preferred size and details of the returned results
+	 * @param bool $type_json Content type
+	 *
+	 * @return string[]
+	 */
+	private function get_curl_header( bool $add_unique_id = false, bool $add_purposes = false, bool $type_json = true ): array {
 		$headers = [
-			'Content-Type: application/json',
 			'Authorization: Bearer ' . $this->auth_token
 		];
 
-		if ( $add_paypal_unique_id ) {
+		if ( $type_json ) {
+			$headers[] = 'Content-Type: application/json';
+		}
+
+		if ( $add_unique_id ) {
 			$headers[] = 'PayPal-Request-Id: ' . uniqid( 'PP-', true );
 		}
 
@@ -238,6 +251,45 @@ class VA_PayPal {
 		return $data;
 	}
 
+
+	/**
+	 * Deactivates given PayPal plan by PayPal plan ID
+	 * Documentation: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
+	 *
+	 * @param string $plan_id
+	 * @param string $action can be either "activate" or "deactivated"
+	 *
+	 * @return bool
+	 */
+	public function change_active_state_of_subscription_plan( string $plan_id, string $action ): bool {
+		$url = $this->paypal_url . $this->plans_url . "/:$plan_id/$action";
+
+		$curl = curl_init();
+
+		curl_setopt_array( $curl, array(
+			CURLOPT_URL            => $url,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'POST',
+			CURLOPT_HTTPHEADER     => $this->get_curl_header( true, true, false ),
+		) );
+
+		curl_exec( $curl );
+		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+		if ( $http_code !== 204 ) {
+			$this->error = 'ERROR: ' . $http_code;
+
+			return false;
+		}
+
+		return true;
+	}
+
+
 	public function get_subscription_plans(): array {
 		$curl = curl_init();
 		$url  = $this->paypal_url . $this->plans_url . '?page_size=10&page=1&total_required=true';
@@ -276,7 +328,7 @@ class VA_PayPal {
 	}
 
 
-	private function curl_executor(array $data, int $options, int $expected_code) {
+	private function curl_executor( array $data, int $options, int $expected_code ) {
 
 	}
 }
