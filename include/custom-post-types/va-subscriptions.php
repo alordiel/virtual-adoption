@@ -192,7 +192,7 @@ function va_change_of_subscription_post_status( string $new_status, string $old_
 	if ( $old_status === $new_status ) {
 		return;
 	}
-	dbga( $new_status );
+
 	global $wpdb;
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
@@ -217,12 +217,18 @@ add_action( 'transition_post_status', 'va_change_of_subscription_post_status', 1
 
 /**
  * Hook to the deletion of subscription post and also delete the va_subscription entry
+ * This will not delete the entry from PayPal, but it should be already cancelled there
  *
  * @param int $post_id
  *
  * @return void
  */
 function va_on_deleting_subscription_post( int $post_id ) {
+	$post = get_post($post_id);
+	if ($post->post_status !== 'va-subscription') {
+		return;
+	}
+
 	global $wpdb;
 	$wpdb->delete(
 		$wpdb->prefix . 'va_subscriptions',
@@ -241,6 +247,12 @@ add_action( 'delete_post', 'va_on_deleting_subscription_post', 10, 2 );
  * @return void
  */
 function va_change_status_when_post_is_trashed( int $post_id ) {
+	// execute only if post type is for the subscriptions
+	$post = get_post($post_id);
+	if ($post->post_status !== 'va-subscription') {
+		return;
+	}
+
 	global $wpdb;
 	$subscription = va_get_subscription_by_post_id( $post_id );
 	// Check if status is not already cancelled
@@ -289,8 +301,8 @@ add_action( 'add_meta_boxes', 'va_meta_info_about_subscription' );
 function va_subscription_admin_details( WP_Post $post ) {
 	$subscription_details = va_get_subscription_by_post_id( $post->ID );
 	$user                 = get_user_by( 'ID', $post->post_author );
-	$supported_animal      = get_post($subscription_details['sponsored_animal_id']);
-	$total = (float) ($subscription_details['completed_cycles'] *  $subscription_details['amount'] );
+	$supported_animal     = get_post($subscription_details['sponsored_animal_id']);
+	$total                = (float) ($subscription_details['completed_cycles'] *  $subscription_details['amount'] );
 	?>
 	<div>
 		<p>
