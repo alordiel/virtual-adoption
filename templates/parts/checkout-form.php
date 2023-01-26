@@ -36,8 +36,6 @@ if ( empty( $sheltered_animal ) ) {
 		}
 	}
 	?>
-	<script
-		src="https://www.paypal.com/sdk/js?client-id=<?php echo $paypal_client_id ?>&vault=true&intent=subscription"></script>
 	<div class="checkout-container">
 		<div class="checkout-donation-list">
 			<div class="single-donation-block">
@@ -101,51 +99,14 @@ if ( empty( $sheltered_animal ) ) {
 					</label>
 					<input type="hidden" name="terms-field" value="1">
 				</p>
-
+				<div id='terms-error' class="alert-danger hidden">
+					<?php _e('You need to accept the terms and conditions.','virtual-adoption');?>
+				</div>
+				<div id="subscription-plan-error">
+					<?php _e('You need to select a monthly donation amount','virtual-adoption');?>
+				</div>
 				<div id="paypal-button-container"></div>
 				<input type="hidden" id="plan-id">
-				<div id='terms-error' class="alert alert-danger hidden">
-					<?php _e('Please accept our terms.','virtual-adoption');?>
-				</div>
-				<script>
-					paypal.Buttons({
-						onInit: function (data, actions) {
-							// Disable the buttons
-							actions.disable();
-							const planID =  document.getElementById('plan-id');
-							const terms = document.getElementById('terms');
-							// Listen for changes to the checkbox
-							terms.addEventListener('change', function (event) {
-								(event.target.checked && planID.value !== '') ? actions.enable() : actions.disable();
-							});
-							planID.addEventListener('change', function (event) {
-								(event.target.checked && planID.value !== '') ? actions.enable() : actions.disable();
-							});
-						},
-						onClick: function () {
-							// Show a validation error if the checkbox is not checked
-							if (!document.getElementById('terms').checked) {
-								document.getElementById('terms-error').classList.remove('hidden');
-							}
-						},
-						createSubscription: function (data, actions) {
-							if (document.getElementById('plan-id').value === '') {
-								alert('No donation plan selected');
-								return;
-							}
-							return actions.subscription.create({
-								'plan_id': document.getElementById('plan-id').value
-							});
-						},
-						onApprove: function (data, actions) {
-							console.log(data)
-							console.log(actions)
-							document.getElementById('submit-sponsorship').click();
-							alert('You have successfully created subscription ' + data.subscriptionID); // Optional message given to subscriber
-						}
-					}).render('#paypal-button-container'); // Renders the PayPal button
-
-				</script>
 				<button
 					type="button"
 					hidden

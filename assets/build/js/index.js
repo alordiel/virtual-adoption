@@ -74,6 +74,54 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Render the PayPal Button
+  if (document.getElementById('paypal-button-container') !== null) {
+    paypal.Buttons({
+      onInit: function (data, actions) {
+        // Disable the buttons
+        actions.disable();
+        const planID = document.getElementById('plan-id');
+        const terms = document.getElementById('terms');
+        // Listen for changes to the checkbox
+        terms.addEventListener('change', function (event) {
+          (event.target.checked && planID.value !== '') ? actions.enable() : actions.disable();
+        });
+        planID.addEventListener('change', function (event) {
+          (event.target.checked && planID.value !== '') ? actions.enable() : actions.disable();
+        });
+      },
+      onClick: function () {
+        // Show a validation error if the checkbox for "Terms & Conditions" is not checked
+        if (!document.getElementById('terms').checked) {
+          document.getElementById('terms-error').classList.remove('hidden');
+        } else {
+          document.getElementById('terms-error').classList.add('hidden');
+        }
+        // Show a validation error if there is no selected subscription plan
+        if (document.getElementById('plan-id') === '') {
+          document.getElementById('subscription-plan-error').classList.remove('hidden');
+        } else {
+          document.getElementById('subscription-plan-error').classList.add('hidden');
+        }
+      },
+      createSubscription: function (data, actions) {
+        if (document.getElementById('plan-id').value === '') {
+          alert('No donation plan selected');
+          return;
+        }
+        return actions.subscription.create({
+          'plan_id': document.getElementById('plan-id').value
+        });
+      },
+      onApprove: function (data, actions) {
+        console.log(data)
+        console.log(actions)
+        document.getElementById('submit-sponsorship').click();
+        alert('You have successfully created subscription ' + data.subscriptionID);
+      }
+    }).render('#paypal-button-container');
+  }
+
 
   // Cancelling subscription
   if (document.querySelector('.cancel-button') !== null) {
@@ -177,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let donationValue = document.querySelector("input[name='selected-amount']:checked").value;
 
     if (parseInt(donationValue) < 5) {
-      alert('Donation amount can not be less then 5 eur.');
+      alert('You need to select a monthly donation amount.');
       return false;
     }
 
