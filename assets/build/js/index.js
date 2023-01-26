@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
   if (document.getElementsByName('selected-amount') !== null) {
     document.getElementsByName('selected-amount').forEach((e) => {
       e.addEventListener('change', function (element) {
-        document.querySelector('.selected-donation-amount').classList.remove('selected-donation-amount');
+        const selectedAmount = document.querySelector('.selected-donation-amount');
+        if (selectedAmount !== null) {
+          selectedAmount.classList.remove('selected-donation-amount');
+        }
         element.target.parentNode.classList.add('selected-donation-amount');
       })
     });
@@ -87,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         makeAjaxCall(postData)
-          .then( success => {
+          .then(success => {
             alert(success.data.message);
             e.target.disabled = false;
             e.target.children[0].style.display = 'none';
@@ -96,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.row-' + postData.post_id + ' .next-due-date').innerText = 'n/a'; // remove due date
             e.target.remove() // removes the cancellation button
           })
-          .catch( error => {
+          .catch(error => {
             alert(error);
             e.target.disabled = false;
             e.target.children[0].style.display = 'none';
@@ -204,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function makeAjaxCall(postData) {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       jQuery.ajax({
         url: '/wp-admin/admin-ajax.php',
         data: postData,

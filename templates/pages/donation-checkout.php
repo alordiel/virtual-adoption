@@ -7,6 +7,7 @@ $post_id = 0;
 if ( ! empty( $_GET['aid'] ) ) {
 	$post_id = va_decode_id( $_GET['aid'] );
 }
+$va_settings = get_option( 'va-settings' );
 ?>
 	<div class="sheltered-animals-archive">
 		<?php
@@ -29,7 +30,6 @@ if ( ! empty( $_GET['aid'] ) ) {
 				</div>
 				<div class="list-of-animals">
 					<?php
-					$va_settings = get_option( 'va-settings' );
 					$sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 					$adopted_animals = va_get_list_of_adopted_animals();
 					foreach ( $animals as $animal ) {
