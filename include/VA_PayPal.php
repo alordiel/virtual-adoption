@@ -117,9 +117,7 @@ class VA_PayPal {
 			"description" => "For virtual adoption of poor animal from the shelter",
 			"category"    => "CHARITY",
 		];
-		$curl         = curl_init();
-
-		curl_setopt_array( $curl, array(
+		$options      = [
 			CURLOPT_URL            => $this->paypal_url . $this->product_url,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
@@ -130,35 +128,9 @@ class VA_PayPal {
 			CURLOPT_CUSTOMREQUEST  => 'POST',
 			CURLOPT_POSTFIELDS     => json_encode( $product_data, JSON_NUMERIC_CHECK ),
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
-		) );
+		];
 
-		$response  = curl_exec( $curl );
-		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-		// Checks for general error with the execution of the curl
-		if ( curl_errno( $curl ) ) {
-			$this->error = 'ERROR: ' . $http_code;
-			curl_close( $curl );
-
-			return [];
-		}
-
-		// Check for code 201 - created successfully
-		if ( $http_code !== 201 ) {
-			$response    = json_decode( $response );
-			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
-
-			return [];
-		}
-
-		$data = json_decode( $response, true );
-		curl_close( $curl );
-		// Checks if the response was parsed correctly
-		if ( $data === null ) {
-			$this->error = __( 'ERROR: Could not parse PayPal response. Check error.log for response.', 'virtual-donations' );
-			dbga( $response );
-
-			return [];
-		}
+		$data = $this->curl_executor( $options, 201 );
 
 		return $data;
 	}
@@ -219,42 +191,21 @@ class VA_PayPal {
 					'percentage' => '0',
 				),
 		);
-		$url  = $this->paypal_url . $this->plans_url;
-		$curl = curl_init();
 
-		curl_setopt( $curl, CURLOPT_URL, $url );
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $curl, CURLOPT_POST, 1 );
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, json_encode( $data, JSON_NUMERIC_CHECK ) );
+		$options      = [
+			CURLOPT_URL            => $this->paypal_url . $this->plans_url,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'POST',
+			CURLOPT_POSTFIELDS     => json_encode( $data, JSON_NUMERIC_CHECK ),
+			CURLOPT_HTTPHEADER     => $this->get_curl_header( true, true ),
+		];
 
-		$headers = $this->get_curl_header( true, true );
-		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
-
-		$response = curl_exec( $curl );
-
-		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-		if ( curl_errno( $curl ) ) {
-			curl_close( $curl );
-			$this->error = 'ERROR: ' . $http_code;
-
-			return [];
-		}
-		curl_close( $curl );
-		// Check for code 201 - created successfully
-		if ( $http_code !== 201 ) {
-			$response    = json_decode( $response );
-			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
-
-			return [];
-		}
-		$data = json_decode( $response, true );
-		// Checks if the response was parsed correctly
-		if ( $data === null ) {
-			$this->error = __( 'ERROR: Could not parse PayPal response. Check error.log for response.', 'virtual-donations' );
-			dbga( $response );
-
-			return [];
-		}
+		$data = $this->curl_executor( $options, 201 );
 
 		return $data;
 	}
@@ -336,7 +287,49 @@ class VA_PayPal {
 		return true;
 	}
 
-	private function curl_executor( array $data, int $options, int $expected_code ) {
 
+	/**
+	 * Common method for executing CURL requests
+	 *
+	 * @param array $options
+	 * @param int $expected_code
+	 *
+	 * @return array|mixed
+	 */
+	private function curl_executor( array $options, int $expected_code ) {
+
+		$curl = curl_init();
+
+		curl_setopt_array( $curl, $options );
+
+		$response  = curl_exec( $curl );
+		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+		// Checks for general error with the execution of the curl
+		if ( curl_errno( $curl ) ) {
+			$this->error = 'ERROR: ' . $http_code;
+			curl_close( $curl );
+
+			return [];
+		}
+
+		// Check for the expected code - created successfully
+		if ( $http_code !== $expected_code ) {
+			$response    = json_decode( $response );
+			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
+
+			return [];
+		}
+
+		$data = json_decode( $response, true );
+		curl_close( $curl );
+		// Checks if the response was parsed correctly
+		if ( $data === null ) {
+			$this->error = __( 'ERROR: Could not parse PayPal response. Check error.log for response.', 'virtual-donations' );
+			dbga( $response );
+
+			return [];
+		}
+
+		return $data;
 	}
 }
