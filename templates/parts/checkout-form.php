@@ -91,17 +91,6 @@ if ( empty( $sheltered_animal ) ) {
 				</p>
 			</div>
 			<div class="donation-payment-methods">
-				<h4><strong><?php _e( 'Payment methods', 'virtual-adoption' ) ?></strong>:</h4>
-				<ul class="payment-methods">
-					<li class="payment-method">
-						<input id="payment-method-paypal" type="radio" class="input-radio" name="payment-method"
-							   value="paypal" checked>
-						<label for="payment-method-paypal">
-							PayPal <img src="<?php echo VA_URL . '/assets/images/payments/paypal.png'; ?>"
-										alt="PayPal logo">
-						</label>
-					</li>
-				</ul>
 				<p class="form-row">
 					<label for="terms">
 						<input type="checkbox" name="terms" id="terms">
@@ -115,7 +104,7 @@ if ( empty( $sheltered_animal ) ) {
 
 				<div id="paypal-button-container"></div>
 				<input type="hidden" id="plan-id">
-				<div id='terms-error' class="alert aler-danger hidden">
+				<div id='terms-error' class="alert alert-danger hidden">
 					<?php _e('Please accept our terms.','virtual-adoption');?>
 				</div>
 				<script>
