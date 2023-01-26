@@ -178,7 +178,7 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
 
 /**
  *
- * https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_cancel
+ * This function is called from hooks when subscription post is deleted or post status is changed
  *
  * @param array $subscription
  * @param string $reason
@@ -193,4 +193,5 @@ function va_paypal_cancel_subscription( array $subscription, string $reason ) {
 		return;
 	}
 
+	$VA_paypal->cancel_subscription( $subscription['paypal_id'], $reason );
 }

@@ -7,6 +7,7 @@ class VA_PayPal {
 	private string $paypal_url;
 	private string $oauth_url = '/v1/oauth2/token';
 	private string $plans_url = '/v1/billing/plans';
+	private string $subscription_url = '/v1/billing/subscriptions';
 	private string $product_url = '/v1/catalogs/products';
 	private string $error = '';
 
@@ -296,6 +297,44 @@ class VA_PayPal {
 		return true;
 	}
 
+
+	/**
+	 * Sends "cancel" request to PayPal
+	 * https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_cancel
+	 *
+	 * @param string $subscription_id
+	 * @param string $reason
+	 *
+	 * @return bool
+	 */
+	public function cancel_subscription( string $subscription_id, string $reason ): bool {
+		$url = $this->paypal_url . $this->subscription_url . "/:$subscription_id/cancel";
+
+		$curl = curl_init();
+
+		curl_setopt_array( $curl, array(
+			CURLOPT_URL            => $url,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_POSTFIELDS     => json_encode( [ 'reason' => $reason ] ),
+			CURLOPT_CUSTOMREQUEST  => 'POST',
+			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
+		) );
+
+		curl_exec( $curl );
+		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+		if ( $http_code !== 204 ) {
+			$this->error = 'ERROR: ' . $http_code;
+
+			return false;
+		}
+
+		return true;
+	}
 
 	private function curl_executor( array $data, int $options, int $expected_code ) {
 

@@ -15,6 +15,7 @@ function va_create_subscription_tables() {
     								`user_id` INT(16) NOT NULL ,
     								`sponsored_animal_id` INT(16) NOT NULL ,
     								`subscription_plan_id` INT NOT NULL ,
+    								 `paypal_id` VARCHAR(255) NOT NULL,
     								`amount` INT NOT NULL ,
     								`currency` VARCHAR(126) NOT NULL,
     								`status` VARCHAR(255) NOT NULL ,
