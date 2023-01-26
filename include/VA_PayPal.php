@@ -130,9 +130,7 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
 		];
 
-		$data = $this->curl_executor( $options, 201 );
-
-		return $data;
+		return $this->curl_executor( $options, 201 );
 	}
 
 
@@ -192,7 +190,7 @@ class VA_PayPal {
 				),
 		);
 
-		$options      = [
+		$options = [
 			CURLOPT_URL            => $this->paypal_url . $this->plans_url,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
@@ -205,9 +203,7 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true, true ),
 		];
 
-		$data = $this->curl_executor( $options, 201 );
-
-		return $data;
+		return $this->curl_executor( $options, 201 );
 	}
 
 
@@ -218,15 +214,11 @@ class VA_PayPal {
 	 * @param string $plan_id
 	 * @param string $action can be either "activate" or "deactivated"
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function change_active_state_of_subscription_plan( string $plan_id, string $action ): bool {
-		$url = $this->paypal_url . $this->plans_url . "/:$plan_id/$action";
-
-		$curl = curl_init();
-
-		curl_setopt_array( $curl, array(
-			CURLOPT_URL            => $url,
+	public function change_active_state_of_subscription_plan( string $plan_id, string $action ): void {
+		$options = [
+			CURLOPT_URL            => $this->paypal_url . $this->plans_url . "/:$plan_id/$action",
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
 			CURLOPT_MAXREDIRS      => 10,
@@ -235,17 +227,9 @@ class VA_PayPal {
 			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST  => 'POST',
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true, true, false ),
-		) );
+		];
 
-		curl_exec( $curl );
-		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-		if ( $http_code !== 204 ) {
-			$this->error = 'ERROR: ' . $http_code;
-
-			return false;
-		}
-
-		return true;
+		$this->curl_executor($options,204, false);
 	}
 
 
@@ -258,13 +242,10 @@ class VA_PayPal {
 	 *
 	 * @return bool
 	 */
-	public function cancel_subscription( string $subscription_id, string $reason ): bool {
-		$url = $this->paypal_url . $this->subscription_url . "/:$subscription_id/cancel";
+	public function cancel_subscription( string $subscription_id, string $reason ): void {
 
-		$curl = curl_init();
-
-		curl_setopt_array( $curl, array(
-			CURLOPT_URL            => $url,
+		$options =[
+			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/:$subscription_id/cancel",
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
 			CURLOPT_MAXREDIRS      => 10,
@@ -274,29 +255,22 @@ class VA_PayPal {
 			CURLOPT_POSTFIELDS     => json_encode( [ 'reason' => $reason ] ),
 			CURLOPT_CUSTOMREQUEST  => 'POST',
 			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
-		) );
+		];
 
-		curl_exec( $curl );
-		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-		if ( $http_code !== 204 ) {
-			$this->error = 'ERROR: ' . $http_code;
-
-			return false;
-		}
-
-		return true;
+		$this->curl_executor($options,204, false);
 	}
 
 
 	/**
-	 * Common method for executing CURL requests
+	 * Common method for executing CURL requests, checking the result and parsing it form JSON
 	 *
 	 * @param array $options
 	 * @param int $expected_code
+	 * @param bool $check_response - check the returned response
 	 *
-	 * @return array|mixed
+	 * @return array
 	 */
-	private function curl_executor( array $options, int $expected_code ) {
+	private function curl_executor( array $options, int $expected_code, bool $check_response = true ):array {
 
 		$curl = curl_init();
 
@@ -304,6 +278,7 @@ class VA_PayPal {
 
 		$response  = curl_exec( $curl );
 		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+
 		// Checks for general error with the execution of the curl
 		if ( curl_errno( $curl ) ) {
 			$this->error = 'ERROR: ' . $http_code;
@@ -317,6 +292,11 @@ class VA_PayPal {
 			$response    = json_decode( $response );
 			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
 
+			return [];
+		}
+
+		// Some request doesn't expect any returned value, so we don't need to check this.
+		if ( ! $check_response ) {
 			return [];
 		}
 
