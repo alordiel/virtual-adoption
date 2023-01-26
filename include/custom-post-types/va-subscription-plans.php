@@ -101,6 +101,9 @@ function va_subscription_plan_details( WP_Post $post ) {
 				<input type="text" readonly value="<?php echo $paypal_plan_id; ?>" style="width: 300px;">
 			</label>
 		</p>
+		<div style="background-color: #d7cca1;border: 2px solid gray; padding: 10px 20px">
+			<p><?php _e('Once you have created a plan, and it got its PayPal product and subscription ID it is not possible to change the amount. You may update the amount here, but this will not update the PayPal subscription plan and you will have to do this manually. Moving the current plan to trash will deactivate the plan on PayPal and will also cancel the subscriptions that were made with it. You can restore it later from the the trash, which will reactivate the PayPal plan, but will NOT resubscribe the old subscribers to it.','virtual-adoption') ?></p>
+		</div>
 	</div>
 	<?php wp_nonce_field( 'va-subscription-plan-meta', 'va-power-dog' ); ?>
 	<?php
@@ -172,3 +175,42 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 }
 
 add_action( 'save_post_va-subscription-plan', 'va_save_subscription_plan_meta', 10, 2 );
+
+/**
+ * Hook on moving a post subscription's entry into the trash. Updates the status of the va-subscriptions entry to "cancelled".
+ *
+ * @param int $post_id
+ *
+ * @return void
+ */
+function va_deactivate_subscription_plan_on_trashing_plan( int $post_id ) {
+	$post = get_post($post_id);
+	if ($post->post_status !== 'va-subscription-plan') {
+		return;
+	}
+	// check if there are any subscriptions attached to this plan that are active
+	// deactivate plan on paypal
+}
+
+add_action( 'wp_trash_post', 'va_deactivate_subscription_plan_on_trashing_plan' );
+
+
+/**
+ * When subscription plan is restored from trash reactivate the PayPal plan
+ *
+ * @param string $new_status New post status.
+ * @param string $old_status Old post status.
+ */
+function va_reactivate_plan_when_post_restored_from_trash( int $post_id, string $previous_status ) {
+	$post = get_post($post_id);
+	if ($post->post_status !== 'va-subscription-plan') {
+		return;
+	}
+	if (  $previous_status !== 'publish' ) {
+		return;
+	}
+
+	// reactivate the PayPal subscription plan
+}
+
+add_action( 'untrash_post', 'va_reactivate_plan_when_post_restored_from_trash', 10, 3 );
