@@ -249,9 +249,6 @@ function va_admin_settings_page() {
 
 			<input type="button" name="test-api" class="button-secondary"
 				   value="<?php _e( 'Test PayPal connection', 'virtual-adoption' ) ?>" id="test-api">
-
-			<input type="button" name="test-get-plans" class="button-secondary"
-				   value="<?php _e( 'Test PayPal plans', 'virtual-adoption' ) ?>" id="test-get-plans">
 		</p>
 		<?php wp_nonce_field( 'va-taina', 'va-security' ); ?>
 	</form>
@@ -288,29 +285,8 @@ function va_admin_settings_page() {
 						thisButton.disabled = false;
 					}
 				});
-			})
-
-			document.getElementById('test-get-plans').addEventListener('click', function () {
-				const thisButton = this;
-				thisButton.disabled = true;
-
-				jQuery.ajax({
-					url: '/wp-admin/admin-ajax.php',
-					data: {
-						action: 'va_test_paypal_api_get_plans',
-					},
-					method: 'POST',
-					success: (response) => {
-						alert(response);
-						thisButton.disabled = false;
-					},
-					error: (error) => {
-						alert(error.code + ' > ' + error.message);
-						thisButton.disabled = false;
-					}
-				});
-			})
-		})
+			});
+		});
 	</script>
 	<?php
 }

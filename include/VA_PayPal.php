@@ -297,44 +297,6 @@ class VA_PayPal {
 	}
 
 
-	public function get_subscription_plans(): array {
-		$curl = curl_init();
-		$url  = $this->paypal_url . $this->plans_url . '?page_size=10&page=1&total_required=true';
-
-		curl_setopt_array( $curl, array(
-			CURLOPT_URL            => $url,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING       => '',
-			CURLOPT_MAXREDIRS      => 10,
-			CURLOPT_TIMEOUT        => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST  => 'GET',
-			CURLOPT_HTTPHEADER     => array(
-				'Prefer: return=representation',
-				'Authorization: Bearer ' . $this->auth_token
-			),
-		) );
-
-
-		$response = curl_exec( $curl );
-
-		if ( curl_errno( $curl ) ) {
-			$this->error = 'Error:' . curl_error( $curl );
-			curl_close( $curl );
-
-			return [];
-		}
-
-		$result = json_decode( $response, true );
-
-
-		curl_close( $curl );
-
-		return $result;
-	}
-
-
 	private function curl_executor( array $data, int $options, int $expected_code ) {
 
 	}

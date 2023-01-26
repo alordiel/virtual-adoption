@@ -226,29 +226,3 @@ function va_test_paypal_api_connection() {
 }
 
 add_action( 'wp_ajax_va_test_paypal_api_connection', 'va_test_paypal_api_connection' );
-
-
-/**
- * Ajax Callback for just testing the Plans from the PayPal API.
- *
- * @return void
- */
-function va_test_paypal_api_get_plans() {
-
-	$VA_paypal = new VA_PayPal();
-	$plans     = $VA_paypal->get_subscription_plans();
-	dbga($plans);
-	if ( $VA_paypal->get_error() !== '' ) {
-		wp_die( $VA_paypal->get_error() );
-	}
-
-	if ( $plans === [] || empty( $plans['plans'] ) ) {
-		wp_die( 'No Plans were found' );
-	}
-
-	$count_of_plans = count( $plans['plans'] );
-	wp_die( 'Number of plans: ' . $count_of_plans );
-
-}
-
-add_action( 'wp_ajax_va_test_paypal_api_get_plans', 'va_test_paypal_api_get_plans' );
