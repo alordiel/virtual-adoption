@@ -71,8 +71,6 @@ if ( empty( $sheltered_animal ) ) {
 				?>
 
 			</div>
-
-			<h4><strong><?php _e( 'Account Details', 'virtual-adoption' ) ?></strong></h4>
 			<div class="contact-details">
 				<?php
 				if ( $user->ID === 0 ) {
@@ -103,12 +101,22 @@ if ( empty( $sheltered_animal ) ) {
 					</label>
 					<input type="hidden" name="terms-field" value="1">
 				</p>
+
+				<!-- Error messages -->
 				<div id='terms-error' class="alert-danger hidden">
 					<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
 				</div>
-				<div id="subscription-plan-error">
+				<div id="subscription-plan-error" class="alert-danger hidden">
 					<?php _e( 'You need to select a monthly donation amount', 'virtual-adoption' ); ?>
 				</div>
+				<div id="gift-email-error" class="alert-danger hidden">
+					<?php _e( 'Missing gift email.', 'virtual-adoption' ); ?>
+				</div>
+				<div id="missing-animal-error" class="alert-danger hidden">
+					<?php _e( 'No animal was selected for donation.', 'virtual-adoption' ); ?>
+				</div>
+
+
 				<div id="paypal-button-container"></div>
 				<input type="hidden" id="plan-id">
 				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">

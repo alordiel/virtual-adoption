@@ -20,18 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (selectedAmount !== null) {
           selectedAmount.classList.remove('selected-donation-amount');
         }
+        document.getElementById('plan-id').value = element.target.dataset.subscription;
         element.target.parentNode.classList.add('selected-donation-amount');
       })
-    });
-  }
-
-  // Change the payment method and show the related description box
-  if (document.getElementsByName('payment-method') !== null) {
-    document.getElementsByName('payment-method').forEach((e) => {
-      e.addEventListener('change', function (element) {
-        document.querySelector('.payment-method-selected').classList.remove('payment-method-selected');
-        element.target.parentNode.classList.add('payment-method-selected');
-      });
     });
   }
 
@@ -76,33 +67,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Render the PayPal Button
   if (document.getElementById('paypal-button-container') !== null) {
+    /**
+     * @var paypal
+     */
     paypal.Buttons({
       onInit: function (data, actions) {
         // Disable the buttons
         actions.disable();
         const planID = document.getElementById('plan-id');
         const terms = document.getElementById('terms');
+        const giftCheckbox = document.getElementById('gift-donation');
+        const giftEmail = document.getElementById('email-gift');
         // Listen for changes to the checkbox
-        terms.addEventListener('change', function (event) {
-          (event.target.checked && planID.value !== '') ? actions.enable() : actions.disable();
+        terms.addEventListener('change', function () {
+          const validGift = (giftCheckbox.checked && giftEmail.value !== '') || !giftCheckbox.checked;
+          (terms.checked && planID.value !== '' && validGift) ? actions.enable() : actions.disable();
         });
-        planID.addEventListener('change', function (event) {
-          (event.target.checked && planID.value !== '') ? actions.enable() : actions.disable();
+        // Listen for changes to hidden input for the value of the selected plan
+        planID.addEventListener('change', function () {
+          const validGift = (giftCheckbox.checked && giftEmail.value !== '') || !giftCheckbox.checked;
+          (terms.checked && planID.value !== '' && validGift) ? actions.enable() : actions.disable();
+        });
+        // Listen to changes in the checkbox of the gift
+        giftCheckbox.addEventListener('change', function () {
+          const validGift = (giftCheckbox.checked && giftEmail.value !== '') || !giftCheckbox.checked;
+          (terms.checked && planID.value !== '' && validGift) ? actions.enable() : actions.disable();
+        });
+        // Listen to changes in the gift email filed
+        giftEmail.addEventListener('change', function () {
+          const validGift = (giftCheckbox.checked && giftEmail.value !== '') || !giftCheckbox.checked;
+          (terms.checked && planID.value !== '' && validGift) ? actions.enable() : actions.disable();
         });
       },
       onClick: function () {
-        // Show a validation error if the checkbox for "Terms & Conditions" is not checked
-        if (!document.getElementById('terms').checked) {
-          document.getElementById('terms-error').classList.remove('hidden');
-        } else {
-          document.getElementById('terms-error').classList.add('hidden');
-        }
-        // Show a validation error if there is no selected subscription plan
-        if (document.getElementById('plan-id') === '') {
-          document.getElementById('subscription-plan-error').classList.remove('hidden');
-        } else {
-          document.getElementById('subscription-plan-error').classList.add('hidden');
-        }
+        validateCommonFields();
       },
       createSubscription: function (data, actions) {
         if (document.getElementById('plan-id').value === '') {
@@ -123,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  // Cancelling subscription
+  // Cancelling subscription (fired from My-subscriptions page)
   if (document.querySelector('.cancel-button') !== null) {
     document.querySelectorAll('.cancel-button').forEach((element) => {
       element.addEventListener('click', function (e) {
@@ -220,32 +218,36 @@ document.addEventListener('DOMContentLoaded', function () {
     return true;
   }
 
-  // Validates the selected payment method, amount and if it is for a gift
+  // Validates the selected amount, the gift fields, animal ID and selected terms
   function validateCommonFields() {
-    let donationValue = document.querySelector("input[name='selected-amount']:checked").value;
-
-    if (parseInt(donationValue) < 5) {
-      alert('You need to select a monthly donation amount.');
-      return false;
-    }
-
-    if (document.getElementById('gift-donation').checked && document.getElementById('email-gift').value === '') {
-      alert('Missing gift email.');
-      return false;
-    }
-
+    // Show a validation error if the checkbox for "Terms & Conditions" is not checked
     if (!document.getElementById('terms').checked) {
-      alert('You need to accept the terms and conditions.');
-      return false;
+      document.getElementById('terms-error').classList.remove('hidden');
+    } else {
+      document.getElementById('terms-error').classList.add('hidden');
     }
 
+    // Show a validation error if there is no selected subscription plan
+    if (document.getElementById('plan-id').value === '') {
+      document.getElementById('subscription-plan-error').classList.remove('hidden');
+    } else {
+      document.getElementById('subscription-plan-error').classList.add('hidden');
+    }
+
+    // Check if the gift checkbox is checked and if there is a value for it
+    if (document.getElementById('gift-donation').checked && document.getElementById('email-gift').value === '') {
+      document.getElementById('gift-email-error').classList.remove('hidden');
+    } else {
+      document.getElementById('gift-email-error').classList.add('hidden');
+    }
+
+    // Checks if there is an animal selected for donation
     const animalID = document.getElementById('animal-id');
-    if (!animalID) {
-      alert('No animal ID');
-      return false;
+    if (animalID === null || animalID.value === '') {
+      document.getElementById('missing-animal-error').classList.remove('hidden');
+    } else {
+      document.getElementById('missing-animal-error').classList.add('hidden');
     }
-
-    return true;
   }
 
   // Gets the value of the donation amount
