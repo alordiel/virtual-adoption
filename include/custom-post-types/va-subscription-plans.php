@@ -73,7 +73,7 @@ function va_subscription_plan_details( WP_Post $post ) {
 	?>
 	<div>
 		<?php if ( $paypal_test ) : ?>
-			<div class="error notice-error notice">
+			<div style="background-color: #fd5f5f;border: 2px solid #790707; padding: 10px 20px">
 				<p><?php _e( 'PayPal is set in test mode. Check the plugin\'s settings, as well as your paypal developer\'s account. Creating a new subscription in sandbox mode will reflect only the test business account and not the live account.', 'virtual-adoption' ); ?></p>
 			</div>
 		<?php endif; ?>
@@ -217,8 +217,8 @@ function va_deactivate_subscription_plan_on_trashing_plan( int $post_id ) {
 	}
 
 	$VA_paypal = new VA_PayPal();
-	$result    = $VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'deactivate' );
-	if ( $result === false ) {
+	$VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'deactivate' );
+	if ( $VA_paypal->get_error() ) {
 		dbga( $VA_paypal->get_error() );
 	}
 }
