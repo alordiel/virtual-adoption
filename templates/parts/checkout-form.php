@@ -17,6 +17,9 @@ if ( empty( $sheltered_animal ) ) {
 		'post_type'     => 'va-subscription-plan',
 		'post_status'   => 'publish',
 		'posts_per_age' => - 1,
+		'meta_key'      => 'cost',
+		'orderby'       => 'meta_value_num',
+		'order'         => 'ASC',
 	] );
 
 	$plans          = [];
@@ -55,7 +58,7 @@ if ( empty( $sheltered_animal ) ) {
 						?>
 						<label>
 							<input value="<?php echo $plan['price'] ?>" type="radio" name="selected-amount"
-								   data-subscription="<?php $plan['subscription_paypal_id'] ?>">
+								   data-subscription="<?php echo $plan['subscription_paypal_id'] ?>">
 							<?php echo $plan['currency'] . ' ' . $plan['price'] ?>
 						</label>
 						<?php
@@ -100,10 +103,10 @@ if ( empty( $sheltered_animal ) ) {
 					<input type="hidden" name="terms-field" value="1">
 				</p>
 				<div id='terms-error' class="alert-danger hidden">
-					<?php _e('You need to accept the terms and conditions.','virtual-adoption');?>
+					<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
 				</div>
 				<div id="subscription-plan-error">
-					<?php _e('You need to select a monthly donation amount','virtual-adoption');?>
+					<?php _e( 'You need to select a monthly donation amount', 'virtual-adoption' ); ?>
 				</div>
 				<div id="paypal-button-container"></div>
 				<input type="hidden" id="plan-id">
