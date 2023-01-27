@@ -8,10 +8,12 @@ $paypal_client_id = $va_settings['payment-methods']['paypal']['client_id'];
 if ( empty( $sheltered_animal ) ) {
 	include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
 } else {
-	$age   = get_post_meta( $post_id, 'animals-age', true );
-	$image = get_the_post_thumbnail_url( $post_id, 'small' );
-	$name  = $sheltered_animal->post_title;
-	$user  = wp_get_current_user();
+	$age        = get_post_meta( $post_id, 'animals-age', true );
+	$image      = get_the_post_thumbnail_url( $post_id, 'small' );
+	$name       = $sheltered_animal->post_title;
+	$user       = wp_get_current_user();
+	$terms_page = get_the_permalink( $va_settings['page']['terms'] );
+
 
 	$subscription_plans = get_posts( [
 		'post_type'     => 'va-subscription-plan',
@@ -50,7 +52,7 @@ if ( empty( $sheltered_animal ) ) {
 			</div>
 		</div>
 		<div>
-			<h4><strong><?php _e( 'Sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
+			<h4><strong><?php _e( 'Choose sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
 			<div class="donation-amounts">
 				<?php
 				if ( $plans !== [] ) {
@@ -96,9 +98,8 @@ if ( empty( $sheltered_animal ) ) {
 					<label for="terms">
 						<input type="checkbox" name="terms" id="terms">
 						<span>
-							I have read and agree to the website
-							<a href="https://toafl.com/terms-conditions" target="_blank">terms and conditions</a>
-						</span>&nbsp;<abbr class="required" title="required">*</abbr>
+							<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
+						</span>&nbsp;<abbr class="required" title="<?php _e('Required field.', 'virtual-adoptions');?>">*</abbr>
 					</label>
 					<input type="hidden" name="terms-field" value="1">
 				</p>
@@ -110,15 +111,6 @@ if ( empty( $sheltered_animal ) ) {
 				</div>
 				<div id="paypal-button-container"></div>
 				<input type="hidden" id="plan-id">
-				<button
-					type="button"
-					hidden
-					name="virtual-checkout-submit"
-					id="submit-sponsorship"
-					value="Submit sponsorship"
-				>
-					Submit sponsorship <span></span>
-				</button>
 				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
 				<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
 			</div>

@@ -39,7 +39,8 @@ function va_admin_settings_page() {
 			'checkout'         => (int) $_POST['checkout-donation'],
 			'thank-you'        => (int) $_POST['thank-you-page'],
 			'my-subscriptions' => (int) $_POST['my-subscriptions-page'],
-			'login'            => (int) $_POST['login-page']
+			'login'            => (int) $_POST['login-page'],
+			'terms'            => (int) $_POST['terms-page'],
 		];
 
 		$va_settings['payment-methods']['paypal'] = [
@@ -70,6 +71,7 @@ function va_admin_settings_page() {
 	$thank_you_page_id   = ! empty( $va_settings['page']['thank-you'] ) ? $va_settings['page']['thank-you'] : 0;
 	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
 	$login_page_id       = ! empty( $va_settings['page']['login'] ) ? $va_settings['page']['login'] : 0;
+	$terms_page_id       = ! empty( $va_settings['page']['terms'] ) ? $va_settings['page']['terms'] : 0;
 	$paypal_client_id    = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret       = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test      = ! empty( $va_settings['payment-methods']['paypal']['test'] );
@@ -82,6 +84,7 @@ function va_admin_settings_page() {
 	$thank_you_page        = va_get_selected_options_for_the_admin_settings_by_page( $pages, $thank_you_page_id );
 	$my_subscriptions_page = va_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
 	$login_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $login_page_id );
+	$terms_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $terms_page_id );
 	?>
 	<form name="form1" method="post" action="">
 		<p><?php _e( 'Set the categories for the animals', 'virtual-adoption' ) ?></p>
@@ -193,6 +196,20 @@ function va_admin_settings_page() {
 				<td>
 					<select name="login-page" id="login-page">
 						<?php echo $login_page ?>
+					</select>
+				</td>
+			</tr>
+			<!-- "Login" Page -->
+			<tr>
+				<th>
+					<label
+						for="terms-page">
+						<?php _e( "Terms & Conditions page", "virtual-adoption" ); ?>
+					</label>
+				</th>
+				<td>
+					<select name="terms-page" id="terms-page">
+						<?php echo $terms_page ?>
 					</select>
 				</td>
 			</tr>
