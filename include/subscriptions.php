@@ -7,10 +7,12 @@
  * @param int $animal_id
  * @param float $amount
  * @param string $email
+ * @param string $paypal_subscription_id
+ * @param string $plan_id
  *
  * @return array
  */
-function va_create_new_donation_subscription( int $animal_id, float $amount, string $email = '' ): array {
+function va_create_new_donation_subscription( int $animal_id, float $amount, string $email = '', string $paypal_subscription_id, string $plan_id ): array {
 	$user = wp_get_current_user();
 	if ( $user === null ) {
 		return [
@@ -25,7 +27,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 		'post_type'   => 'va-subscription',
 		'post_title'  => $title,
 		'post_author' => $user->ID,
-		'post_status' => 'va-pending',
+		'post_status' => 'va-active',
 	], true );
 
 	if ( $post_id === 0 ) {
@@ -50,18 +52,20 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 	$insert_status = $wpdb->insert(
 		$wpdb->prefix . 'va_subscriptions',
 		[
-			'user_id'             => $user->ID,
-			'sponsored_animal_id' => $animal_id,
-			'amount'              => $amount,
-			'status'              => 'va-pending',
-			'period_type'         => 'monthly',
-			'currency'            => 'EUR',
-			'completed_cycles'    => 0,
-			'next_due'            => date( "Y-m-d", strtotime( "+1 month" ) ),
-			'post_id'             => $post_id,
-			'email_for_updates'   => $email,
+			'user_id'               => $user->ID,
+			'sponsored_animal_id'   => $animal_id,
+			'amount'                => $amount,  // TODO this value should be fetched from the plan ID
+			'status'                => 'va-active',
+			'period_type'           => 'monthly',
+			'currency'              => 'EUR', // TODO this value should be fetched from the plan ID
+			'completed_cycles'      => 0,
+			'next_due'              => date( "Y-m-d", strtotime( "+1 month" ) ),
+			'post_id'               => $post_id,
+			'email_for_updates'     => $email,
+			'paypal_id'             => $paypal_subscription_id,
+			'subscription_plan_id' => $plan_id,
 		],
-		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s' ],
+		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s' ],
 	);
 
 	if ( $insert_status === false ) {

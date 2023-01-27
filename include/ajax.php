@@ -17,7 +17,7 @@ function va_create_new_donation_subscription_ajax() {
 	}
 
 	$donation_amount = (float) $_POST['donationAmount'];
-	if ( $donation_amount < 5.00 ) {
+	if ( $donation_amount <= 0.00 ) {
 		va_json_response( 0, __( 'There is problem with the donation amount.', 'virtual-adoption' ) );
 	}
 
@@ -30,37 +30,23 @@ function va_create_new_donation_subscription_ajax() {
 		va_json_response( 0, __( 'We do not have record of that animal', 'virtual-adoption' ) );
 	}
 
-	// Checks if this is a new user if it needs updating
-	if ( ! is_user_logged_in() ) {
-		$result_message = va_create_new_user( $_POST );
-		if ( $result_message !== '' ) {
-			va_json_response( 0, $result_message );
-		}
-	}
 	// Checks the Gift email if given and if valid
 	$gift_email = '';
-	if ( ! empty( $_POST['giftEmail'] ) ) {
-		if ( is_email( $_POST['giftEmail'] ) ) {
-			$gift_email = $_POST['giftEmail'];
-		} else {
-			va_json_response( 0, __( 'The gift email is not valid.', 'virtual-adoption' ) );
-		}
+	if ( ! empty( $_POST['giftEmail'] ) && is_email( $_POST['giftEmail'] ) ) {
+		$gift_email = $_POST['giftEmail'];
 	}
-
-	// Creating of the wp_post entry and subscription entry. At this point the both will be with inactive status
-	$results = va_create_new_donation_subscription( $animal_id, $donation_amount, $gift_email );
+	$paypal_subscription_id = !empty($_POST['subscriptionID']) ? $_POST['subscriptionID'] : 0;
+	$paypal_plan_id = !empty($_POST['subscriptionPlanID']) ? $_POST['subscriptionPlanID'] : 0;
+	// Creating of the wp_post entry and subscription entry
+	$results = va_create_new_donation_subscription( $animal_id, $donation_amount, $gift_email, $paypal_subscription_id, $paypal_plan_id );
 	if ( $results['status'] === 'error' ) {
 		va_json_response( 0, $results['message'] );
 	}
 
 	// get redirection link for "Thank you" page
 	$options = get_option( 'va-settings' );
-	$ids     = [
-		'post_id'         => $results['post_id'],
-		'subscription_id' => $results['subscription_id'],
-		'redirect_to'     => get_permalink( $options['page']['thank-you'] ),
-	];
-	va_json_response( 1, '', $ids );
+	$data    = ['redirect_to'     => get_permalink( $options['page']['thank-you'] ),];
+	va_json_response( 1, '', $data );
 }
 
 add_action( 'wp_ajax_va_create_new_donation_subscription', 'va_create_new_donation_subscription_ajax' );

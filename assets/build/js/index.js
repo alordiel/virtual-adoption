@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Change of the amount for donation.
+  // Change of the amount for donation. Adds the subscription plan ID into hidden input
   if (document.getElementsByName('selected-amount') !== null) {
     document.getElementsByName('selected-amount').forEach((e) => {
       e.addEventListener('change', function (element) {
@@ -23,45 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('plan-id').value = element.target.dataset.subscription;
         element.target.parentNode.classList.add('selected-donation-amount');
       })
-    });
-  }
-
-  // Submitting the checkout
-  if (document.getElementById('submit-sponsorship') !== null) {
-    document.getElementById('submit-sponsorship').addEventListener('click', function (button) {
-
-      // validate form
-      if (document.getElementById('first-name') !== null && !validateContactForm()) {
-        return false;
-      }
-
-      if (!validateCommonFields()) {
-        return false;
-      }
-
-      button.target.disabled = true;
-
-      const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
-      const postData = {
-        security: document.getElementById('turbo-security').value,
-        action: 'va_create_new_donation_subscription',
-        giftEmail: giftEmail,
-        animalID: document.getElementById('animal-id').value,
-        donationAmount: getDonationAmount(),
-        acceptedTerms: document.getElementById('terms').checked,
-      };
-
-      // send results
-      makeAjaxCall(postData)
-        .then((response) => {
-          console.log(response)
-          alert('Success')
-          location.href = response.data.redirect_to;
-        })
-        .catch((message) => {
-          alert(message)
-          document.getElementById('submit-sponsorship').target.disabled = false;
-        })
     });
   }
 
@@ -103,18 +64,16 @@ document.addEventListener('DOMContentLoaded', function () {
         validateCommonFields();
       },
       createSubscription: function (data, actions) {
-        if (document.getElementById('plan-id').value === '') {
-          alert('No donation plan selected');
-          return;
-        }
         return actions.subscription.create({
           'plan_id': document.getElementById('plan-id').value
         });
       },
-      onApprove: function (data, actions) {
+      onApprove: async function (data, actions) {
+        console.log('data')
         console.log(data)
+        console.log('actions')
         console.log(actions)
-        document.getElementById('submit-sponsorship').click();
+        await storePaymentToDB(data.subscriptionID);
         alert('You have successfully created subscription ' + data.subscriptionID);
       }
     }).render('#paypal-button-container');
@@ -275,6 +234,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     });
+  }
+
+  async function storePaymentToDB(subscriptionID) {
+
+    const giftEmail = document.getElementById('gift-donation').checked ? document.getElementById('email-gift').value : '';
+    const postData = {
+      security: document.getElementById('turbo-security').value,
+      action: 'va_create_new_donation_subscription',
+      giftEmail: giftEmail,
+      animalID: document.getElementById('animal-id').value,
+      donationAmount: getDonationAmount(),
+      acceptedTerms: document.getElementById('terms').checked,
+      subscriptionID,
+      subscriptionPlanID: document.getElementById('plan-id').value,
+    };
+
+    // send results
+    await makeAjaxCall(postData)
+      .then((response) => {
+        console.log(response)
+        alert('Success')
+        location.href = response.data.redirect_to;
+      })
+      .catch((message) => {
+        alert(message)
+        document.getElementById('submit-sponsorship').target.disabled = false;
+      });
   }
 });
 
