@@ -229,7 +229,7 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true, true, false ),
 		];
 
-		$this->curl_executor($options,204, false);
+		$this->curl_executor( $options, 204, false );
 	}
 
 
@@ -244,7 +244,7 @@ class VA_PayPal {
 	 */
 	public function cancel_subscription( string $subscription_id, string $reason ): void {
 
-		$options =[
+		$options = [
 			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/:$subscription_id/cancel",
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
@@ -257,7 +257,7 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
 		];
 
-		$this->curl_executor($options,204, false);
+		$this->curl_executor( $options, 204, false );
 	}
 
 
@@ -270,7 +270,7 @@ class VA_PayPal {
 	 *
 	 * @return array
 	 */
-	private function curl_executor( array $options, int $expected_code, bool $check_response = true ):array {
+	private function curl_executor( array $options, int $expected_code, bool $check_response = true ): array {
 
 		$curl = curl_init();
 
@@ -311,5 +311,34 @@ class VA_PayPal {
 		}
 
 		return $data;
+	}
+
+
+	/**
+	 * Used to validate the webhook hits
+	 * Documentation: https://developer.paypal.com/docs/api/webhooks/v1/#verify-webhook-signature
+	 *
+	 * @param array $details
+	 *
+	 * @return bool
+	 */
+	public function verify_webhook_signature( array $details ): bool {
+
+		$options = [
+			CURLOPT_URL            => $this->paypal_url . '/v1/notifications/verify-webhook-signature',
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'POST',
+			CURLOPT_POSTFIELDS     => json_encode( $details, JSON_NUMERIC_CHECK ),
+			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
+		];
+
+		$result = $this->curl_executor( $options, 200, true );
+
+		return $result !== [] && ! empty( $result['verification_status'] ) && $result['verification_status'] === 'SUCCESS';
 	}
 }

@@ -30,6 +30,7 @@ require_once( VA_ABS . '/include/custom-post-types/va-subscription-plans.php' );
 require_once( VA_ABS . '/include/template-loader.php' );
 require_once( VA_ABS . '/include/functions.php' );
 require_once( VA_ABS . '/include/wordpress.php' );
+require_once( VA_ABS . '/include/webhooks.php' );
 require_once( VA_ABS . '/include/enqueue-scripts-and-styles.php' );
 require_once( VA_ABS . '/include/admin-settings.php' );
 require_once( VA_ABS . '/include/ajax.php' );
