@@ -35,9 +35,9 @@ function va_sheltered_animals_styles_and_scripts() {
 
 	wp_enqueue_script(
 		'sheltered-animal',
-		VA_URL . '/assets/build/js/index.js',
+		VA_URL . '/assets/build/js/sheltered-animals.js',
 		$sheltered_animal_depends,
-		filemtime( VA_ABS . '/assets/build/js/index.js' ),
+		filemtime( VA_ABS . '/assets/build/js/sheltered-animals.js' ),
 		true,
 	);
 
