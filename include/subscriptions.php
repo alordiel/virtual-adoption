@@ -63,7 +63,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 			'post_id'               => $post_id,
 			'email_for_updates'     => $email,
 			'paypal_id'             => $paypal_subscription_id,
-			'subscription_plan_id' => $plan_id,
+			'subscription_plan_id'  => $plan_id,
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s' ],
 	);

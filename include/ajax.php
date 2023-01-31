@@ -50,7 +50,6 @@ function va_create_new_donation_subscription_ajax() {
 }
 
 add_action( 'wp_ajax_va_create_new_donation_subscription', 'va_create_new_donation_subscription_ajax' );
-add_action( 'wp_ajax_nopriv_va_create_new_donation_subscription', 'va_create_new_donation_subscription_ajax' );
 
 
 /**
