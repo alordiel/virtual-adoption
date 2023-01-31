@@ -5,14 +5,12 @@
  * On error it will return the error message
  *
  * @param int $animal_id
- * @param float $amount
+ * @param array $paypal
  * @param string $email
- * @param string $paypal_subscription_id
- * @param string $plan_id
  *
  * @return array
  */
-function va_create_new_donation_subscription( int $animal_id, float $amount, string $email = '', string $paypal_subscription_id, string $plan_id ): array {
+function va_create_new_donation_subscription( int $animal_id, array $paypal, string $email = '' ): array {
 	$user = wp_get_current_user();
 	if ( $user === null ) {
 		return [
@@ -54,7 +52,7 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 		[
 			'user_id'               => $user->ID,
 			'sponsored_animal_id'   => $animal_id,
-			'amount'                => $amount,  // TODO this value should be fetched from the plan ID
+			'amount'                => $paypal['amount'],  // TODO this value should be fetched from the plan ID
 			'status'                => 'va-active',
 			'period_type'           => 'monthly',
 			'currency'              => 'EUR', // TODO this value should be fetched from the plan ID
@@ -62,8 +60,8 @@ function va_create_new_donation_subscription( int $animal_id, float $amount, str
 			'next_due'              => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'               => $post_id,
 			'email_for_updates'     => $email,
-			'paypal_id'             => $paypal_subscription_id,
-			'subscription_plan_id'  => $plan_id,
+			'paypal_id'             => $paypal['subscription_id'],
+			'subscription_plan_id'  => $paypal['plan_id'],
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s' ],
 	);

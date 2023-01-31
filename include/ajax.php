@@ -35,17 +35,22 @@ function va_create_new_donation_subscription_ajax() {
 	if ( ! empty( $_POST['giftEmail'] ) && is_email( $_POST['giftEmail'] ) ) {
 		$gift_email = $_POST['giftEmail'];
 	}
-	$paypal_subscription_id = !empty($_POST['subscriptionID']) ? $_POST['subscriptionID'] : 0;
-	$paypal_plan_id = !empty($_POST['subscriptionPlanID']) ? $_POST['subscriptionPlanID'] : 0;
+
 	// Creating of the wp_post entry and subscription entry
-	$results = va_create_new_donation_subscription( $animal_id, $donation_amount, $gift_email, $paypal_subscription_id, $paypal_plan_id );
+	$paypal  = [
+		'amount'          => $donation_amount,
+		'subscription_id' =>  ! empty( $_POST['subscriptionID'] ) ? $_POST['subscriptionID'] : 0,
+		'plan_id'         => ! empty( $_POST['subscriptionPlanID'] ) ? $_POST['subscriptionPlanID'] : 0
+	];
+
+	$results = va_create_new_donation_subscription( $animal_id, $paypal, $gift_email );
 	if ( $results['status'] === 'error' ) {
 		va_json_response( 0, $results['message'] );
 	}
 
 	// get redirection link for "Thank you" page
 	$options = get_option( 'va-settings' );
-	$data    = ['redirect_to'     => get_permalink( $options['page']['thank-you'] ),];
+	$data    = [ 'redirect_to' => get_permalink( $options['page']['thank-you'] ), ];
 	va_json_response( 1, '', $data );
 }
 

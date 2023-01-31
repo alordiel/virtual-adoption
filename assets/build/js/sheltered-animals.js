@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
       animalID: document.getElementById('animal-id').value,
       donationAmount: getDonationAmount(),
       acceptedTerms: document.getElementById('terms').checked,
-      subscriptionID,
+      subscriptionID: subscriptionID,
       subscriptionPlanID: document.getElementById('plan-id').value,
     };
 
