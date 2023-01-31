@@ -27,15 +27,6 @@ function va_create_subscription_tables() {
     								`email_for_updates` VARCHAR(255) NOT NULL,
     								PRIMARY KEY (`ID`)
                    				) ENGINE = InnoDB;";
-	$transactions_table_create  = "CREATE TABLE $transactions_table_name (
-    								`ID` INT NOT NULL AUTO_INCREMENT ,
-    								`subscription_id` INT NOT NULL ,
-    								`payment_method` VARCHAR(255) NOT NULL ,
-    								`payment_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-    								`transaction_id` TEXT NOT NULL ,
-    								`payment_status` VARCHAR(255) NOT NULL ,
-    								`currency` VARCHAR(255) NOT NULL , PRIMARY KEY (`ID`)
-                   				) ENGINE = InnoDB; ";
+
 	maybe_create_table( $subscriptions_table_name, $subscriptions_table_create );
-	maybe_create_table( $transactions_table_name, $transactions_table_create );
 }
