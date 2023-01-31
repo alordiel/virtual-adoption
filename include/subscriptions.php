@@ -46,22 +46,25 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 		$email = $user->user_email;
 	}
 
+	$VA_paypal    = new VA_PayPal();
+	$plan_details = $VA_paypal->get_subscription_plan_details( $paypal['plan_id'] );
+
 	global $wpdb;
 	$insert_status = $wpdb->insert(
 		$wpdb->prefix . 'va_subscriptions',
 		[
-			'user_id'               => $user->ID,
-			'sponsored_animal_id'   => $animal_id,
-			'amount'                => $paypal['amount'],  // TODO this value should be fetched from the plan ID
-			'status'                => 'va-active',
-			'period_type'           => 'monthly',
-			'currency'              => 'EUR', // TODO this value should be fetched from the plan ID
-			'completed_cycles'      => 0,
-			'next_due'              => date( "Y-m-d", strtotime( "+1 month" ) ),
-			'post_id'               => $post_id,
-			'email_for_updates'     => $email,
-			'paypal_id'             => $paypal['subscription_id'],
-			'subscription_plan_id'  => $paypal['plan_id'],
+			'user_id'              => $user->ID,
+			'sponsored_animal_id'  => $animal_id,
+			'amount'               => $plan_details['amount'],
+			'status'               => 'va-active',
+			'period_type'          => 'monthly',
+			'currency'             => $plan_details['currency'],
+			'completed_cycles'     => 0,
+			'next_due'             => date( "Y-m-d", strtotime( "+1 month" ) ),
+			'post_id'              => $post_id,
+			'email_for_updates'    => $email,
+			'paypal_id'            => $paypal['subscription_id'],
+			'subscription_plan_id' => $paypal['plan_id'],
 		],
 		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s' ],
 	);
