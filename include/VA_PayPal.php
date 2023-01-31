@@ -338,7 +338,8 @@ class VA_PayPal {
 		];
 
 		$result = $this->curl_executor( $options, 200, true );
-
+		dbga($this->get_error());
+		dbga($result);
 		return $result !== [] && ! empty( $result['verification_status'] ) && $result['verification_status'] === 'SUCCESS';
 	}
 }
