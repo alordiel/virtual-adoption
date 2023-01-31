@@ -206,7 +206,21 @@ class VA_PayPal {
 		return $this->curl_executor( $options, 201 );
 	}
 
+	public function get_subscription_details( string $subscription_id ): array {
+		$options = [
+			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/$subscription_id",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'GET',
+			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
+		];
 
+		return $this->curl_executor( $options, 200, true );
+	}
 	/**
 	 * Deactivates given PayPal plan by PayPal plan ID
 	 * Documentation: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
