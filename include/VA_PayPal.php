@@ -380,10 +380,10 @@ class VA_PayPal {
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST  => 'POST',
-			CURLOPT_POSTFIELDS     => json_encode( $details, JSON_NUMERIC_CHECK ),
+			CURLOPT_POSTFIELDS     => $details,
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
 		];
-
+		dbga($options);
 		$result = $this->curl_executor( $options, 200, true );
 		dbga($this->get_error());
 		dbga($result);

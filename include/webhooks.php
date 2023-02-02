@@ -22,8 +22,7 @@ add_action( 'rest_api_init', 'register_paypal_webhook' );
  */
 function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Request $request ) {
 	$entityBody = file_get_contents('php://input');
-	dbga($entityBody);
-	if ( ! validate_paypal_request( $request ) ) {
+	if ( ! validate_paypal_request( $request, $entityBody ) ) {
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
 
@@ -32,7 +31,7 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 }
 
 
-function validate_paypal_request( WP_REST_Request $request ) {
+function validate_paypal_request( WP_REST_Request $request, string $data ) {
 	$headers = $request->get_headers();
 	// Check if we have the needed headers
 	$headers_list = [
@@ -51,8 +50,6 @@ function validate_paypal_request( WP_REST_Request $request ) {
 
 	// Build the details of the data for verification
 	$va_settings = get_option( 'va-settings' );
-	$data = $request->get_params();
-
 	$details     = [
 		"webhook_id"        => $va_settings['payment-methods']['paypal']['webhook_id'],
 		"transmission_id"   => $headers['paypal_transmission_id'][0],
@@ -60,7 +57,7 @@ function validate_paypal_request( WP_REST_Request $request ) {
 		"cert_url"          => $headers['paypal_cert_url'][0],
 		"auth_algo"         => $headers['paypal_auth_algo'][0],
 		"transmission_sig"  => $headers['paypal_transmission_sig'][0],
-		"webhook_event"     => $data,
+		"webhook_event"     => json_decode($data, ARRAY_A),
 	];
 
 	$VA_paypal = new VA_PayPal();

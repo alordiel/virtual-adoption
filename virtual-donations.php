@@ -36,6 +36,7 @@ require_once( VA_ABS . '/include/ajax.php' );
 require_once( VA_ABS . '/include/database-tables.php' );
 require_once( VA_ABS . '/include/subscriptions.php' );
 require_once( VA_ABS . '/include/mails.php' );
+require_once( VA_ABS . '/include/webhooks.php' );
 require_once( VA_ABS . '/include/VA_PayPal.php' );
 require_once( VA_ABS . '/include/crypt.php' );
 require_once( VA_ABS . '/include/admin-dashboard-widget.php' );
