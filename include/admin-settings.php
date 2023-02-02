@@ -46,7 +46,8 @@ function va_admin_settings_page() {
 		$va_settings['payment-methods']['paypal'] = [
 			'client_id'  => $_POST['paypal-client-id'],
 			'secret'     => va_encrypt_data( $_POST['paypal-secret-key'] ),
-			'test'       => isset( $_POST['paypal-test-env'] ) ? 'true' : ''
+			'test'       => isset( $_POST['paypal-test-env'] ) ? 'true' : '',
+			'webhook_id' => $_POST['paypal-webhook-id'],
 		];
 
 		update_option( 'va-settings', $va_settings );
@@ -75,6 +76,7 @@ function va_admin_settings_page() {
 	$paypal_client_id    = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret       = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test      = ! empty( $va_settings['payment-methods']['paypal']['test'] );
+	$paypal_webhook_id   = ! empty( $va_settings['payment-methods']['paypal']['webhook_id'] ) ?  $va_settings['payment-methods']['paypal']['webhook_id'] : '';
 
 	$dogs_options          = va_get_selected_options_for_the_admin_settings( $dogs_tax_id, $terms );
 	$cats_options          = va_get_selected_options_for_the_admin_settings( $cats_tax_id, $terms );
@@ -244,6 +246,18 @@ function va_admin_settings_page() {
 					<input type="password" name="paypal-secret-key" id="paypal-secret-key"
 						   style="max-width: 680px;width: 100%;"
 						   value="<?php echo $paypal_secret ?>">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="paypal-webhook-id">
+						<?php _e( "Webhook ID", "virtual-adoption" ); ?>
+					</label>
+				</th>
+				<td>
+					<input type="text" name="paypal-webhook-id" id="paypal-webhook-id"
+						   style="max-width: 680px;width: 100%;"
+						   value="<?php echo $paypal_webhook_id ?>">
 				</td>
 			</tr>
 			<tr>

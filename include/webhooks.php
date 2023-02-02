@@ -21,6 +21,8 @@ add_action( 'rest_api_init', 'register_paypal_webhook' );
  *
  */
 function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Request $request ) {
+	$entityBody = file_get_contents('php://input');
+	dbga($entityBody);
 	if ( ! validate_paypal_request( $request ) ) {
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
