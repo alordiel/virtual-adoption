@@ -206,7 +206,21 @@ class VA_PayPal {
 		return $this->curl_executor( $options, 201 );
 	}
 
+	public function get_subscription_details( string $subscription_id ): array {
+		$options = [
+			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/$subscription_id",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'GET',
+			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
+		];
 
+		return $this->curl_executor( $options, 200, true );
+	}
 	/**
 	 * Deactivates given PayPal plan by PayPal plan ID
 	 * Documentation: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
@@ -262,6 +276,39 @@ class VA_PayPal {
 
 
 	/**
+	 * @param string $plan_id
+	 *
+	 * @return array
+	 */
+	public function get_subscription_plan_details( string $plan_id ): array {
+		$options = [
+			CURLOPT_URL            => $this->paypal_url . $this->plans_url . "/$plan_id",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'GET',
+			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
+		];
+
+		$result = $this->curl_executor( $options, 200, true );
+		if ( $result === [] ) {
+			dbga($this->error);
+			return [
+				'amount'   => 0,
+				'currency' => '',
+			];
+		}
+
+		return [
+			'amount'   => $result['billing_cycles'][0]['pricing_scheme']['fixed_price']['value'],
+			'currency' => $result['billing_cycles'][0]['pricing_scheme']['fixed_price']['currency_code'],
+		];
+	}
+
+	/**
 	 * Common method for executing CURL requests, checking the result and parsing it form JSON
 	 *
 	 * @param array $options
@@ -313,7 +360,6 @@ class VA_PayPal {
 		return $data;
 	}
 
-
 	/**
 	 * Used to validate the webhook hits
 	 * The pasted data should be in the same format as received from the Paypal
@@ -343,4 +389,5 @@ class VA_PayPal {
 		dbga($result);
 		return $result !== [] && ! empty( $result['verification_status'] ) && $result['verification_status'] === 'SUCCESS';
 	}
+
 }

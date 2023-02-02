@@ -68,13 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
           'plan_id': document.getElementById('plan-id').value
         });
       },
-      onApprove: async function (data, actions) {
-        console.log('data')
-        console.log(data)
-        console.log('actions')
-        console.log(actions)
+      onApprove: async function (data) {
         await storePaymentToDB(data.subscriptionID);
-        alert('You have successfully created subscription ' + data.subscriptionID);
+        alert('You subscription was successful. Thank you.');
       }
     }).render('#paypal-button-container');
   }
@@ -246,15 +242,13 @@ document.addEventListener('DOMContentLoaded', function () {
       animalID: document.getElementById('animal-id').value,
       donationAmount: getDonationAmount(),
       acceptedTerms: document.getElementById('terms').checked,
-      subscriptionID,
+      subscriptionID: subscriptionID,
       subscriptionPlanID: document.getElementById('plan-id').value,
     };
 
     // send results
     await makeAjaxCall(postData)
       .then((response) => {
-        console.log(response)
-        alert('Success')
         location.href = response.data.redirect_to;
       })
       .catch((message) => {

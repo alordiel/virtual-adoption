@@ -30,25 +30,26 @@ if ( ! empty( $subscriptions ) ) {
 		<tbody>
 		<?php
 		global $wpdb;
-		foreach (
-			$subscriptions
-
-			as $subscription
-		) {
+		$VA_paypal = new VA_PayPal();
+		foreach ( $subscriptions as $subscription ) {
 			$sql     = "SELECT * FROM {$wpdb->prefix}va_subscriptions WHERE post_id = $subscription->ID";
 			$details = $wpdb->get_row( $sql );
 			if ( empty( $details ) ) {
-				sprintf( __( 'We are missing details for subscription with ID %d', 'virtual-adoption' ), $subscription->ID );
+				echo sprintf( __( 'We are missing details for subscription with ID %d', 'virtual-adoption' ), $subscription->ID );
+				echo '<br>';
 				continue;
 			}
-			$post_id = $details->post_id;
-			$animal  = get_post( $details->sponsored_animal_id );
+
+			$post_id        = $details->post_id;
+			$animal         = get_post( $details->sponsored_animal_id );
+			$paypal_details = $VA_paypal->get_subscription_details( $details->paypal_id );
+			dbga($paypal_details);
 			?>
 			<tr class="row-<?php echo $post_id; ?>">
 				<td><a href="<?php echo get_permalink( $animal->ID ) ?>"><?php echo $animal->post_title; ?></a></td>
 				<td><?php echo $details->amount . ' ' . $details->currency ?></td>
-				<td class="next-due-date"><?php echo $details->next_due ?> </td>
-				<td class="subscription-status"><?php echo va_get_verbose_subscription_status( $details->status ) ?></td>
+				<td><?php echo $paypal_details['billing_info']['next_billing_time'] ?> </td>
+				<td><?php echo va_get_verbose_subscription_status( $details->status ) ?></td>
 				<td class="row-actions">
 					<?php
 					if ( $details->status === 'va-active' ) {
