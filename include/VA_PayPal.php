@@ -316,6 +316,7 @@ class VA_PayPal {
 
 	/**
 	 * Used to validate the webhook hits
+	 * The pasted data should be in the same format as received from the Paypal
 	 * Documentation: https://developer.paypal.com/docs/api/webhooks/v1/#verify-webhook-signature
 	 *
 	 * @param array $details

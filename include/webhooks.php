@@ -25,7 +25,6 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
 
-	dbga( $request->get_json_params() );
 
 	return rest_ensure_response( 'This is private data.' );
 }
