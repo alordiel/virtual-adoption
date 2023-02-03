@@ -383,7 +383,7 @@ class VA_PayPal {
 			CURLOPT_POSTFIELDS     => $details,
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
 		];
-		dbga($options);
+
 		$result = $this->curl_executor( $options, 200, true );
 		dbga($this->get_error());
 		dbga($result);

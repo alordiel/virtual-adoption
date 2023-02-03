@@ -50,6 +50,8 @@ function validate_paypal_request( WP_REST_Request $request, string $data ) {
 
 	// Build the details of the data for verification
 	$va_settings = get_option( 'va-settings' );
+	$received    = json_decode($data, ARRAY_A);
+	dbga($received['event_type']);
 	$details     = [
 		"webhook_id"        => $va_settings['payment-methods']['paypal']['webhook_id'],
 		"transmission_id"   => $headers['paypal_transmission_id'][0],
@@ -57,7 +59,7 @@ function validate_paypal_request( WP_REST_Request $request, string $data ) {
 		"cert_url"          => $headers['paypal_cert_url'][0],
 		"auth_algo"         => $headers['paypal_auth_algo'][0],
 		"transmission_sig"  => $headers['paypal_transmission_sig'][0],
-		"webhook_event"     => json_decode($data, ARRAY_A),
+		"webhook_event"     => $received,
 	];
 
 	$VA_paypal = new VA_PayPal();
