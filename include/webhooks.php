@@ -17,17 +17,23 @@ function register_paypal_webhook() {
 add_action( 'rest_api_init', 'register_paypal_webhook' );
 
 /**
- * Callback of the PayPal webhook
- *
+ * Callback of the PayPal webhook, will check first if the request is verified by PayPal and then proceed
+ * with the actual event
  */
 function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Request $request ) {
-	$entityBody = file_get_contents('php://input');
+	$entityBody = file_get_contents( 'php://input' );
 	if ( ! validate_paypal_request( $request, $entityBody ) ) {
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
+	$data = json_decode( $entityBody, ARRAY_A );
+	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.ACTIVATED' ) {
+		dbga($data);
+	}
+	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.CREATED') {
+		dbga($data);
+	}
 
-
-	return rest_ensure_response( 'This is private data.' );
+	return rest_ensure_response( 'Success' );
 }
 
 
@@ -42,6 +48,7 @@ function validate_paypal_request( WP_REST_Request $request, string $data ) {
 		'paypal_transmission_sig'
 	];
 
+	// Validates if we have the needed request headers
 	foreach ( $headers_list as $header ) {
 		if ( empty( $headers[ $header ][0] ) ) {
 			return false;
@@ -50,8 +57,6 @@ function validate_paypal_request( WP_REST_Request $request, string $data ) {
 
 	// Build the details of the data for verification
 	$va_settings = get_option( 'va-settings' );
-	$received    = json_decode($data, ARRAY_A);
-	dbga($received['event_type']);
 	$details     = [
 		"webhook_id"        => $va_settings['payment-methods']['paypal']['webhook_id'],
 		"transmission_id"   => $headers['paypal_transmission_id'][0],
@@ -59,10 +64,10 @@ function validate_paypal_request( WP_REST_Request $request, string $data ) {
 		"cert_url"          => $headers['paypal_cert_url'][0],
 		"auth_algo"         => $headers['paypal_auth_algo'][0],
 		"transmission_sig"  => $headers['paypal_transmission_sig'][0],
-		"webhook_event"     => $received,
+		"body"              => $data,
 	];
 
 	$VA_paypal = new VA_PayPal();
 
-	return $VA_paypal->verify_webhook_signature( $details );
+	return $VA_paypal->manual_verification( $details );
 }

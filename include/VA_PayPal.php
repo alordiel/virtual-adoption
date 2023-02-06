@@ -221,6 +221,7 @@ class VA_PayPal {
 
 		return $this->curl_executor( $options, 200, true );
 	}
+
 	/**
 	 * Deactivates given PayPal plan by PayPal plan ID
 	 * Documentation: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
@@ -295,7 +296,8 @@ class VA_PayPal {
 
 		$result = $this->curl_executor( $options, 200, true );
 		if ( $result === [] ) {
-			dbga($this->error);
+			dbga( $this->error );
+
 			return [
 				'amount'   => 0,
 				'currency' => '',
@@ -321,8 +323,12 @@ class VA_PayPal {
 
 		$curl = curl_init();
 
-		curl_setopt_array( $curl, $options );
+		$options_status = curl_setopt_array( $curl, $options );
+		if ( ! $options_status ) {
+			$this->error = __( 'Options for cURL not stored correctly.', 'virtual-adoptions' );
 
+			return [];
+		}
 		$response  = curl_exec( $curl );
 		$http_code = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
 
@@ -363,31 +369,36 @@ class VA_PayPal {
 	/**
 	 * Used to validate the webhook hits
 	 * The pasted data should be in the same format as received from the Paypal
-	 * Documentation: https://developer.paypal.com/docs/api/webhooks/v1/#verify-webhook-signature
+	 * Documentation: https://developer.paypal.com/api/rest/webhooks/#link-messagesignature
 	 *
 	 * @param array $details
 	 *
 	 * @return bool
 	 */
-	public function verify_webhook_signature( array $details ): bool {
+	public function manual_verification( array $details ): bool {
+		// Rename the algorithm name as openssl_verify can't recognize it
+		if ( $details['auth_algo'] === 'SHA256withRSA' ) {
+			$details['auth_algo'] = "sha256WithRSAEncryption";
+		}
 
-		$options = [
-			CURLOPT_URL            => $this->paypal_url . '/v1/notifications/verify-webhook-signature',
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING       => '',
-			CURLOPT_MAXREDIRS      => 10,
-			CURLOPT_TIMEOUT        => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST  => 'POST',
-			CURLOPT_POSTFIELDS     => $details,
-			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
-		];
+		$crc32_body      = crc32( $details['body'] );
+		$signature       = "{$details['transmission_id']}|{$details['transmission_time']}|{$details['webhook_id']}|$crc32_body";
+		// Get the public key for verification
+		$public_key      = openssl_pkey_get_public( file_get_contents( $details['cert_url'] ) );
+		$pub_key_details = openssl_pkey_get_details( $public_key );
+		$verify_result   = openssl_verify( $signature, base64_decode( $details['transmission_sig'] ), $pub_key_details['key'], $details['auth_algo'] );
+		// 1 => successful verification
+		if ( $verify_result === 0 ) {
+			$this->get_error = __( 'Signature is incorrect', 'virtual-adoptions' );
 
-		$result = $this->curl_executor( $options, 200, true );
-		dbga($this->get_error());
-		dbga($result);
-		return $result !== [] && ! empty( $result['verification_status'] ) && $result['verification_status'] === 'SUCCESS';
+			return false;
+		} elseif ( $verify_result === - 1 ) {
+			$this->get_error = __( 'Error during signature check.', 'virtual-adoptions' );
+
+			return false;
+		}
+
+		return true;
 	}
 
 }
