@@ -27,13 +27,24 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 	}
 	$data = json_decode( $entityBody, ARRAY_A );
 	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.ACTIVATED' ) {
-		dbga($data);
-	}
-	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.CREATED') {
-		dbga($data);
+		dbga( $data['resource']['id'] );
+		dbga( $data['resource']['plan_id'] );
+		dbga( $data['resource']['status'] );
+		dbga( $data['resource']['billing_info']['cycle_executions'][0]['cycles_completed'] );
+		dbga( $data['resource']['billing_info']['next_billing_time'] );
 	}
 
-	return rest_ensure_response( 'Success' );
+	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.CANCELLED' ) {
+		dbga( $data );
+		dbga( $data['resource']['id'] );
+		dbga( $data['resource']['plan_id'] );
+		dbga( $data['resource']['status'] );
+		dbga( $data['resource']['agreement_details']['id'] );
+		dbga( $data['resource']['billing_info']['next_billing_time'] );
+	}
+
+
+	return new WP_REST_Response( [ 'status' => 'Success' ], 200 );
 }
 
 

@@ -20,6 +20,12 @@ class VA_PayPal {
 		$this->authenticate();
 	}
 
+
+	/**
+	 * Returns the error
+	 *
+	 * @return string if no errors were recorded will return empty string
+	 */
 	public function get_error(): string {
 		return $this->error;
 	}
@@ -206,6 +212,14 @@ class VA_PayPal {
 		return $this->curl_executor( $options, 201 );
 	}
 
+
+	/**
+	 * Checks the PayPal API to get additional details for given subscription
+	 *
+	 * @param string $subscription_id
+	 *
+	 * @return array
+	 */
 	public function get_subscription_details( string $subscription_id ): array {
 		$options = [
 			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/$subscription_id",
@@ -221,6 +235,7 @@ class VA_PayPal {
 
 		return $this->curl_executor( $options, 200, true );
 	}
+
 
 	/**
 	 * Deactivates given PayPal plan by PayPal plan ID
@@ -310,6 +325,7 @@ class VA_PayPal {
 		];
 	}
 
+
 	/**
 	 * Common method for executing CURL requests, checking the result and parsing it form JSON
 	 *
@@ -365,6 +381,7 @@ class VA_PayPal {
 
 		return $data;
 	}
+
 
 	/**
 	 * Used to validate the webhook hits
