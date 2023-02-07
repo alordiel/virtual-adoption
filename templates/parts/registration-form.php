@@ -45,6 +45,9 @@
 		<span>
 			<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
 		</span>
+		<small id="terms-error"  class="alert-danger hidden">
+			<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
+		</small>
 	</label>
 	<input type="hidden" name="terms-field" value="1">
 </p>

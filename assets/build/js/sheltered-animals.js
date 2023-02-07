@@ -12,6 +12,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  if (document.getElementById('register-user') !== null) {
+    document.getElementById('register-user').addEventListener('click', function (element) {
+
+      if (!validateContactForm()) {
+        return;
+      }
+
+      element.disabled = true;
+
+      const registrationData = {
+        action: 'va-register-new-user',
+        security: document.getElementById('turbo-security').value,
+        firstName: document.getElementById('first-name').value,
+        lastName: document.getElementById('last-name').value,
+        email: document.getElementById('email').value,
+        pass: document.getElementById('password').value,
+      };
+
+      makeAjaxCall(registrationData)
+        .then(response => {
+          if(response.status === 1){
+            location.reload();
+          }
+          element.disabled = false;
+        })
+        .catch( error => {
+          alert(error);
+          element.disabled = false;
+        })
+    });
+  }
+
   // Change of the amount for donation. Adds the subscription plan ID into hidden input
   if (document.getElementsByName('selected-amount') !== null) {
     document.getElementsByName('selected-amount').forEach((e) => {
@@ -61,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       },
       onClick: function () {
-        validateCommonFields();
+        validateDonationFields();
       },
       createSubscription: function (data, actions) {
         return actions.subscription.create({
@@ -117,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const email = document.getElementById('email');
     const pass = document.getElementById('password');
     const pass2 = document.getElementById('re-password');
+    const terms = document.getElementById('terms');
     const fields = [firstName, lastName, email, pass, pass2];
     let hasError = false;
 
@@ -160,6 +193,14 @@ document.addEventListener('DOMContentLoaded', function () {
       hasError = true;
     }
 
+    const termsErrorField = document.getElementById('terms-error');
+    if (!terms.checked) {
+      termsErrorField.classList.remove('hidden');
+      hasError = true;
+    } else {
+      termsErrorField.classList.add('hidden')
+    }
+
 
     if (hasError) {
       document.querySelector('.contact-details').scrollIntoView({
@@ -174,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Validates the selected amount, the gift fields, animal ID and selected terms
-  function validateCommonFields() {
+  function validateDonationFields() {
     // Show a validation error if the checkbox for "Terms & Conditions" is not checked
     if (!document.getElementById('terms').checked) {
       document.getElementById('terms-error').classList.remove('hidden');
@@ -225,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
             reject(response.message);
           }
         },
-        error: (xhrObj, status , message) => {
+        error: (xhrObj, status, message) => {
           reject(status + ': ' + message);
         }
       });

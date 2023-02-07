@@ -53,7 +53,7 @@ if ( empty( $sheltered_animal ) ) {
 			</div>
 			<?php endif; ?>
 		</div>
-		<div>
+		<div class="contact-details">
 		    <?php if ( $user->ID === 0 ) : ?>
 			<div class="registration-form">
 				<?php include_once 'registration-form.php'; ?>
