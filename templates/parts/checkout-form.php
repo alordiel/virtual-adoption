@@ -43,6 +43,7 @@ if ( empty( $sheltered_animal ) ) {
 	?>
 	<div class="checkout-container">
 		<div class="checkout-donation-list">
+			<?php if ($user->ID !== 0) : ?>
 			<div class="single-donation-block">
 				<div class="animal-profile-imag" style="background-image: url('<?php echo $image; ?>')"></div>
 				<div class="animal-details">
@@ -50,8 +51,14 @@ if ( empty( $sheltered_animal ) ) {
 					<span><strong><?php _e( 'Age', 'virtual-adoption' ) ?>:</strong> <?php echo $age ?></span>
 				</div>
 			</div>
+			<?php endif; ?>
 		</div>
 		<div>
+		    <?php if ( $user->ID === 0 ) : ?>
+			<div class="registration-form">
+				<?php include_once 'registration-form.php'; ?>
+			</div>
+			<?php  else :  ?>
 			<h4><strong><?php _e( 'Choose sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
 			<div class="donation-amounts">
 				<?php
@@ -71,12 +78,8 @@ if ( empty( $sheltered_animal ) ) {
 				?>
 
 			</div>
+
 			<div class="contact-details">
-				<?php
-				if ( $user->ID === 0 ) {
-					include_once 'registration-form.php';
-				}
-				?>
 				<p>
 					<label for="gift-donation">
 						<input name="gift-donation" id="gift-donation" type="checkbox">
@@ -92,15 +95,15 @@ if ( empty( $sheltered_animal ) ) {
 				</p>
 			</div>
 			<div class="donation-payment-methods">
-				<p class="form-row">
-					<label for="terms">
-						<input type="checkbox" name="terms" id="terms">
-						<span>
-							<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
-						</span>&nbsp;<abbr class="required" title="<?php _e('Required field.', 'virtual-adoptions');?>">*</abbr>
-					</label>
-					<input type="hidden" name="terms-field" value="1">
-				</p>
+					<p class="form-row">
+						<label for="terms">
+							<input type="checkbox" name="terms" id="terms">
+							<span>
+								<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
+							</span>&nbsp;<abbr class="required" title="<?php _e('Required field.', 'virtual-adoptions');?>">*</abbr>
+						</label>
+						<input type="hidden" name="terms-field" value="1">
+					</p>
 
 				<!-- Error messages -->
 				<div id='terms-error' class="alert-danger hidden">
@@ -122,6 +125,7 @@ if ( empty( $sheltered_animal ) ) {
 				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
 				<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 	<?php
