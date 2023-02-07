@@ -192,11 +192,35 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
  */
 function va_paypal_cancel_subscription( array $subscription, string $reason ) {
 	$VA_paypal = new VA_PayPal();
-	if ( ! $VA_paypal->get_error() ) {
-		dbga( $VA_paypal->get_error() );
+	$VA_paypal->cancel_subscription( $subscription['paypal_id'], $reason );
+}
 
-		return;
+
+function va_update_db_for_cancelled_subscription_from_paypal( string $paypal_subscription_id ) {
+	global $wpdb;
+	$sql     = "SELECT post_id, ID FROM {$wpdb->prefix}va_subscriptions WHERE paypal_id = %s";
+	$details = $wpdb->get_row( $wpdb->prepare( $sql, $paypal_subscription_id ) );
+	if (empty($details)) {
+		//TODO log error
+		dbga('Not found subscription with ID: ' . $paypal_subscription_id);
 	}
 
-	$VA_paypal->cancel_subscription( $subscription['paypal_id'], $reason );
+	// Update the wp_post related to that subscription
+	$wpdb->update(
+		$wpdb->prefix . 'posts',
+		['post_status' => 'va-cancelled'],
+		['ID' => $details->post_id],
+		['%s'],
+		['%d']
+	);
+	// Update the wp_va_subscriptions table with the details
+	$wpdb->update(
+		$wpdb->prefix . 'va_subscriptions',
+		['status' => 'va-cancelled'],
+		['ID' => $details->ID],
+		['%s'],
+		['%d']
+	);
+
+	// TODO may be send notification email to the subscriber that the subscription was cancelled
 }

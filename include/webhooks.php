@@ -26,23 +26,21 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
 	$data = json_decode( $entityBody, ARRAY_A );
-	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.ACTIVATED' ) {
-		dbga( $data['resource']['id'] );
-		dbga( $data['resource']['plan_id'] );
-		dbga( $data['resource']['status'] );
-		dbga( $data['resource']['billing_info']['cycle_executions'][0]['cycles_completed'] );
-		dbga( $data['resource']['billing_info']['next_billing_time'] );
-	}
 
 	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.CANCELLED' ) {
+		if (!empty($data['resource']['plan_id'])) {
+			va_update_db_for_cancelled_subscription_from_paypal( $data['resource']['plan_id'] );
+		} else {
+			// TODO LOG the event
+			dbga($data);
+		}
+	} else {
+		// TODO LOG any other event
 		dbga( $data );
-		dbga( $data['resource']['id'] );
-		dbga( $data['resource']['plan_id'] );
-		dbga( $data['resource']['status'] );
-		dbga( $data['resource']['agreement_details']['id'] );
-		dbga( $data['resource']['billing_info']['next_billing_time'] );
 	}
-	dbga( $data['event_type']);
+
+	// TODO reactivate event to update the number of cycles
+
 
 	return new WP_REST_Response( [ 'status' => 'Success' ], 200 );
 }
