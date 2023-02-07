@@ -37,9 +37,9 @@ function va_create_new_donation_subscription_ajax() {
 	}
 
 	// Creating of the wp_post entry and subscription entry
-	$paypal  = [
+	$paypal = [
 		'amount'          => $donation_amount,
-		'subscription_id' =>  ! empty( $_POST['subscriptionID'] ) ? $_POST['subscriptionID'] : 0,
+		'subscription_id' => ! empty( $_POST['subscriptionID'] ) ? $_POST['subscriptionID'] : 0,
 		'plan_id'         => ! empty( $_POST['subscriptionPlanID'] ) ? $_POST['subscriptionPlanID'] : 0
 	];
 
@@ -55,6 +55,40 @@ function va_create_new_donation_subscription_ajax() {
 }
 
 add_action( 'wp_ajax_va_create_new_donation_subscription', 'va_create_new_donation_subscription_ajax' );
+
+
+/**
+ * Ajax callback function for registration
+ *
+ * @return void
+ */
+function va_register_new_user() {
+	check_ajax_referer( 'va-taina', 'security' );
+
+	if ( empty( $_POST['pass'] ) || empty( $_POST['email'] ) || empty( $_POST['firstName'] ) || empty( $_POST['lastName'] ) ) {
+		va_json_response( 0, __( 'There is an empty field from your form. Please check all the fields', 'virtual-adoption' ) );
+	}
+
+	if (  empty( $_POST['terms'] ) || $_POST['terms'] !== 'true' ) {
+		va_json_response( 0, __( 'You need to accept the terms in order to continue.', 'virtual-adoption' ) );
+	}
+
+	$user_data = [
+		'user_pass'  => $_POST['pass'],
+		'email'      => $_POST['email'],
+		'first_name' => $_POST['firstName'],
+		'last_name'  => $_POST['lastName'],
+	];
+
+	$error_message = va_create_new_user_and_login( $user_data );
+
+	if ( $error_message !== '' ) {
+		va_json_response( 0, $error_message );
+	}
+	va_json_response( 1 );
+}
+
+add_action( 'wp_ajax_nopriv_va_register_new_user', 'va_register_new_user' );
 
 
 /**

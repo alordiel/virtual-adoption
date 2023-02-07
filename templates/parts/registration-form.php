@@ -3,7 +3,11 @@
  * @var $terms_page string
  */
 ?>
-<p><?php _e( "First we need to create an account for you, so you can manage your monthly support. <br> Please fill in the details below.", 'virtual-adoption' ); ?></p>
+<p>
+	<?php _e( "First we need to create an account for you, so you can manage your monthly support. <br> Please fill in the details below.", 'virtual-adoption' ); ?>
+	<br>
+	<?php _e("After the registration you will be automatically logged in and you can proceed with the virtual adoption.",'virtual-adoption') ?>
+</p>
 <p>
 	<label for="first-name">
 		<input id="first-name" name="first-name" type="text"

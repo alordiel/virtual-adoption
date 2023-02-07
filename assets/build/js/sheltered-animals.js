@@ -22,12 +22,13 @@ document.addEventListener('DOMContentLoaded', function () {
       element.disabled = true;
 
       const registrationData = {
-        action: 'va-register-new-user',
+        action: 'va_register_new_user',
         security: document.getElementById('turbo-security').value,
         firstName: document.getElementById('first-name').value,
         lastName: document.getElementById('last-name').value,
         email: document.getElementById('email').value,
         pass: document.getElementById('password').value,
+        terms: document.getElementById('terms').checked
       };
 
       makeAjaxCall(registrationData)

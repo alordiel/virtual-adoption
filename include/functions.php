@@ -95,22 +95,22 @@ function va_decode_id( string $string ): int {
 function va_create_template_page( string $page_type ) {
 	$templates = [
 		'checkout'         => [
-			'title'    => __( 'Donation checkout', 'va-virtual-donations' ),
+			'title'    => __( 'Donation checkout', 'virtual-adoptions' ),
 			'template' => 'va-donation-checkout.php',
 			'slug'     => 'donations-checkout',
 		],
 		'thank-you'        => [
-			'title'    => __( 'Virtual adopt - Thank you', 'va-virtual-donations' ),
+			'title'    => __( 'Virtual adopt - Thank you', 'virtual-adoptions' ),
 			'template' => 'va-thank-you-donation.php',
 			'slug'     => 'va-thank-you',
 		],
 		'my-subscriptions' => [
-			'title'    => __( 'Manage my adopted animals', 'va-virtual-donations' ),
+			'title'    => __( 'Manage my adopted animals', 'virtual-adoptions' ),
 			'template' => 'va-my-subscriptions.php',
 			'slug'     => 'va-my-donations',
 		],
-		'login' => [
-			'title'    => __( 'Login', 'va-virtual-donations' ),
+		'login'            => [
+			'title'    => __( 'Login', 'virtual-adoptions' ),
 			'template' => 'va-login-page.php',
 			'slug'     => 'vd-login',
 		],
@@ -128,7 +128,7 @@ function va_create_template_page( string $page_type ) {
 		'post_name'      => $current_page['slug'],
 	] );
 
-	$va_settings               = get_option( 'va-settings' );
+	$va_settings                       = get_option( 'va-settings' );
 	$va_settings['page'][ $page_type ] = $page_id;
 	update_option( 'va-settings', $va_settings );
 }
@@ -163,17 +163,17 @@ function va_json_response( int $code, string $message = '', array $some_data = [
  *
  * @return string
  */
-function va_create_new_user( array $user_data ): string {
+function va_create_new_user_and_login( array $user_data ): string {
 	if ( empty( $user_data['email'] ) || ! is_email( $user_data['email'] ) ) {
-		return __( 'Email does not exist', 'va-virtual-donations' );
+		return __( 'Not valid email', 'virtual-adoptions' );
 	}
 	if ( email_exists( $user_data['email'] ) || username_exists( $user_data['email'] ) ) {
-		return __( 'There is already an user with that email', 'va-virtual-donations' );
+		return __( 'There is already an user with that email', 'virtual-adoptions' );
 	}
 
 	$user_id = wp_insert_user( [
 		'user_login' => $user_data['email'],
-		'user_pass'  => $user_data['password'],
+		'user_pass'  => $user_data['user_pass'],
 		'user_email' => $user_data['email'],
 		'first_name' => $user_data['first_name'],
 		'last_name'  => $user_data['last_name'],
@@ -186,11 +186,15 @@ function va_create_new_user( array $user_data ): string {
 
 	$credentials = array(
 		'user_login'    => $user_data['email'],
-		'user_password' => $user_data['password'],
+		'user_password' => $user_data['user_pass'],
 		'remember'      => true
 	);
 
-	wp_signon( $credentials, false );
+	$result = wp_signon( $credentials, false );
+	if ( is_wp_error( $result ) ) {
+		return $result->get_error_message();
+	}
+
 	wp_set_current_user( $user_id );
 
 	return '';
@@ -206,11 +210,11 @@ function va_create_new_user( array $user_data ): string {
 function va_get_verbose_subscription_status( string $status_code ): string {
 	switch ( $status_code ) {
 		case 'va-pending':
-			return __( 'Pending', 'va-virtual-donations' );
+			return __( 'Pending', 'virtual-adoptions' );
 		case 'va-active':
-			return __( 'Active', 'va-virtual-donations' );
+			return __( 'Active', 'virtual-adoptions' );
 		case 'va-cancelled':
-			return __( 'Cancelled', 'va-virtual-donations' );
+			return __( 'Cancelled', 'virtual-adoptions' );
 		default:
 			return 'n/a';
 	}
