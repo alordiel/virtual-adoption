@@ -42,7 +42,7 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 		dbga( $data['resource']['agreement_details']['id'] );
 		dbga( $data['resource']['billing_info']['next_billing_time'] );
 	}
-
+	dbga( $data['event_type']);
 
 	return new WP_REST_Response( [ 'status' => 'Success' ], 200 );
 }

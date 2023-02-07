@@ -2,6 +2,13 @@
 /**
  * Template name: VirtualAdopt -  List of subscriptions
  */
+
+// If user is not logged in - redirect to login page
+if ( ! is_user_logged_in() ) {
+	$settings = get_option( 'va-settings' );
+	wp_redirect( get_permalink( $settings['page']['login'] ) );
+}
+
 get_header();
 $user_id = wp_get_current_user();
 ?>
@@ -43,13 +50,20 @@ if ( ! empty( $subscriptions ) ) {
 			$post_id        = $details->post_id;
 			$animal         = get_post( $details->sponsored_animal_id );
 			$paypal_details = $VA_paypal->get_subscription_details( $details->paypal_id );
+			if ($paypal_details['status'] === 'CANCELLED') {
+				$next_due = '';
+				$status = __('Cancelled', 'virtual-adoptions');
+			} else {
+				$next_due = $paypal_details['billing_info']['next_billing_time'];
+				$status = va_get_verbose_subscription_status( $details->status );
+			}
 			dbga($paypal_details);
 			?>
 			<tr class="row-<?php echo $post_id; ?>">
 				<td><a href="<?php echo get_permalink( $animal->ID ) ?>"><?php echo $animal->post_title; ?></a></td>
 				<td><?php echo $details->amount . ' ' . $details->currency ?></td>
-				<td><?php echo $paypal_details['billing_info']['next_billing_time'] ?> </td>
-				<td><?php echo va_get_verbose_subscription_status( $details->status ) ?></td>
+				<td class="next-due-date"><?php echo $next_due ?> </td>
+				<td class="subscription-status"><?php echo $status ?></td>
 				<td class="row-actions">
 					<?php
 					if ( $details->status === 'va-active' ) {
@@ -62,7 +76,7 @@ if ( ! empty( $subscriptions ) ) {
 							</svg>
 						</button>
 						<?php
-					} elseif ( $details->status === 'va-cancelled' ) {
+					} elseif ( $details->status === 'va-cancelled'  || $paypal_details['status'] === 'CANCELLED' ) {
 						$settings      = get_option( 'va-settings' );
 						$encrypted_key = va_encode_id( $details->sponsored_animal_id );
 						$re_adopt_link = get_permalink( $settings['page']['checkout'] ) . '?aid=' . $encrypted_key;

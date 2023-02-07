@@ -225,8 +225,8 @@ document.addEventListener('DOMContentLoaded', function () {
             reject(response.message);
           }
         },
-        error: (error) => {
-          reject(error.code + ' > ' + error.message);
+        error: (xhrObj, status , message) => {
+          reject(status + ': ' + message);
         }
       });
     });
