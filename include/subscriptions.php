@@ -196,7 +196,7 @@ function va_paypal_cancel_subscription( array $subscription, string $reason ) {
 }
 
 
-function va_update_db_for_cancelled_subscription_from_paypal( string $paypal_subscription_id ) {
+function va_change_subscription_status_from_paypal( string $paypal_subscription_id, string $status ) {
 	global $wpdb;
 	$sql     = "SELECT post_id, ID FROM {$wpdb->prefix}va_subscriptions WHERE paypal_id = %s";
 	$details = $wpdb->get_row( $wpdb->prepare( $sql, $paypal_subscription_id ) );
@@ -208,7 +208,7 @@ function va_update_db_for_cancelled_subscription_from_paypal( string $paypal_sub
 	// Update the wp_post related to that subscription
 	$wpdb->update(
 		$wpdb->prefix . 'posts',
-		['post_status' => 'va-cancelled'],
+		['post_status' => $status],
 		['ID' => $details->post_id],
 		['%s'],
 		['%d']
@@ -216,7 +216,7 @@ function va_update_db_for_cancelled_subscription_from_paypal( string $paypal_sub
 	// Update the wp_va_subscriptions table with the details
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
-		['status' => 'va-cancelled'],
+		['status' => $status],
 		['ID' => $details->ID],
 		['%s'],
 		['%d']
