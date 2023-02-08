@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
-
+  // Adds the registration functionality
   if (document.getElementById('register-user') !== null) {
     document.getElementById('register-user').addEventListener('click', function (element) {
 
@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       makeAjaxCall(registrationData)
         .then(response => {
-          if(response.status === 1){
+          if (response.status === 1) {
             location.reload();
           }
           element.disabled = false;
         })
-        .catch( error => {
+        .catch(error => {
           alert(error);
           element.disabled = false;
         })
