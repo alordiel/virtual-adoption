@@ -1,3 +1,12 @@
+/**
+ * @var vaL10N object
+ * @property successfulSubscription string
+ * @property canNotBeEmpty string
+ * @property passNoMatch string
+ * @property ajaxURL string
+ * @export confirmCancellation string
+ */
+
 // Payment and checkout page scripts
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -103,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       onApprove: async function (data) {
         await storePaymentToDB(data.subscriptionID);
-        alert('You subscription was successful. Thank you.');
+        alert(vaL10N.successfulSubscription);
       }
     }).render('#paypal-button-container');
   }
@@ -114,6 +123,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.cancel-button').forEach((element) => {
       element.addEventListener('click', function (e) {
         e.preventDefault();
+        if (!confirm(vaL10N.confirmCancellation)) {
+          return ;
+        }
         e.target.disabled = true;
         e.target.children[0].style.display = 'inline-block';
 
@@ -160,36 +172,36 @@ document.addEventListener('DOMContentLoaded', function () {
       element.style.borderColor = 'inherit';
     }
     if (!firstName.value) {
-      firstName.nextElementSibling.innerText = 'Field can not be empty';
+      firstName.nextElementSibling.innerText = vaL10N.canNotBeEmpty;
       firstName.style.borderColor = 'red';
       hasError = true;
     }
 
     if (!lastName.value) {
-      lastName.nextElementSibling.innerText = 'Field can not be empty';
+      lastName.nextElementSibling.innerText = vaL10N.canNotBeEmpty;
       lastName.style.borderColor = 'red';
       hasError = true;
     }
 
     if (!email.value) {
-      email.nextElementSibling.innerText = 'Field can not be empty';
+      email.nextElementSibling.innerText = vaL10N.canNotBeEmpty;
       email.style.borderColor = 'red';
       hasError = true;
     }
 
     if (!pass.value) {
-      pass.nextElementSibling.innerText = 'Field can not be empty';
+      pass.nextElementSibling.innerText = vaL10N.canNotBeEmpty;
       pass.style.borderColor = 'red';
       hasError = true;
     }
     if (!pass2.value) {
-      pass2.nextElementSibling.innerText = 'Field can not be empty';
+      pass2.nextElementSibling.innerText = vaL10N.canNotBeEmpty;
       pass2.style.borderColor = 'red';
       hasError = true;
     }
 
     if (pass.value !== pass2.value) {
-      pass.nextElementSibling.innerText = 'Passwords did not matched';
+      pass.nextElementSibling.innerText = vaL10N.passNoMatch;
       pass.style.borderColor = 'red';
       hasError = true;
     }
@@ -256,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function makeAjaxCall(postData) {
     return new Promise((resolve, reject) => {
       jQuery.ajax({
-        url: '/wp-admin/admin-ajax.php',
+        url: vaL10N.ajaxURL,
         data: postData,
         method: 'POST',
         dataType: 'JSON',

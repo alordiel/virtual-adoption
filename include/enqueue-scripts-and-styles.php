@@ -48,6 +48,15 @@ function va_sheltered_animals_styles_and_scripts() {
 		filemtime( VA_ABS . '/assets/build/css/sheltered-animals.css' )
 	);
 
+	$translation = [
+		'ajaxURL' => admin_url('admin-ajax.php'),
+		'successfulSubscription' => __('You subscription was successful. Thank you.','virtual-adoptions'),
+		'canNotBeEmpty' => __('Field can not be empty','virtual-adoption'),
+		'passNoMatch' => __('Passwords did not matched','virtual-adoption'),
+		'confirmCancellation' => __('Are you sure you want to cancel the support?','virtual-adoption'),
+	];
+	wp_localize_script('sheltered-animal', 'vaL10N', $translation);
+
 }
 
 add_action( 'wp_enqueue_scripts', 'va_sheltered_animals_styles_and_scripts' );
