@@ -19,6 +19,10 @@
     background-size: cover;
     background-position: top;
     border-radius: 10px;
+
+    @media (max-width: 414px) {
+      height: 170px;
+    }
   }
 
   .wave-cover {
@@ -39,10 +43,6 @@
 
     .sponsor-me-block {
       margin: 15px auto;
-    }
-
-    .animal-card-text {
-
     }
 
     .animal-additional-info {
