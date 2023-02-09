@@ -74,3 +74,31 @@
     }
   }
 }
+
+@media (max-width: 415px) {
+
+  .how-it-works {
+    .single-step-wrapper {
+      flex-wrap: wrap;
+
+      .step-number-wrapper {
+        height: auto;
+        position: relative;
+        justify-content: center;
+        display: flex;
+        width: 100%;
+        margin-bottom: 13px;
+
+        .number-border-connection {
+          display: none;
+        }
+      }
+      .step-description {
+        margin-left: 10px;
+        margin-right: 6px;
+      }
+    }
+  }
+
+
+}
