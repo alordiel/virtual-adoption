@@ -1,6 +1,10 @@
 .checkout-container {
   display: flex;
+  flex-wrap: wrap;
 
+  @media (max-width: 515px) {
+    width: 100%;
+  }
   h4 {
     margin-top: 0;
   }
