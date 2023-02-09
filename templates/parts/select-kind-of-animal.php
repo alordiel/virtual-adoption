@@ -17,7 +17,7 @@ $category_link = [
 
 ?>
 <div class="list-of-kind-of-animals">
-	<h3>Select category</h3>
+	<h3><?php _e('Select category','virtual-adoptions'); ?></h3>
 	<div class="kind-of-animal-logo <?php echo $selected === 'dogs' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo $category_link['dogs'] ?>" title="<?php _e( 'View all dogs', 'virtual-adoption' ); ?>">
 			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/dog.png"

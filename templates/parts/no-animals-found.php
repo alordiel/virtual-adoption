@@ -1,1 +1,1 @@
-<h3>Sorry, no animals were found for sponsoring.</h3>
+<h3><?php _e('Sorry, no animals were found for sponsoring.','virtual-adoptions'); ?></h3>

@@ -4,5 +4,5 @@
  */
 ?>
 <p>
-	You have this animal in your adoption list. You can check your list <a href="<?php echo $my_animals; ?>">here</a>.
+	<?php echo sprintf( __('You have this animal in your adoption list. You can check your supported animals <a href="">here</a>.','virtual-adoptions'), $my_animals ); ?>
 </p>
