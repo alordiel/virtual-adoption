@@ -9,7 +9,6 @@ function va_create_subscription_tables() {
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	global $wpdb;
 	$subscriptions_table_name   = $wpdb->prefix . 'va_subscriptions';
-	$transactions_table_name    = $wpdb->prefix . 'va_transactions';
 	$subscriptions_table_create = "CREATE TABLE $subscriptions_table_name (
     								`ID` INT(10) NOT NULL AUTO_INCREMENT ,
     								`user_id` INT(16) NOT NULL ,
