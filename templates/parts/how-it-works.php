@@ -1,5 +1,10 @@
+<?php
+/**
+ * Template for "How it works"
+ */
+?>
 <div class="how-it-works">
-  <h3>How it works?</h3>
+  <h3><?php __('How it works?','virtual-adoptions') ?></h3>
   <div class="single-step-wrapper">
     <div class="step-number-wrapper">
       <div class="number-and-line-wrap">
@@ -8,8 +13,8 @@
       </div>
     </div>
     <div class="step-description">
-      <h5 class="">Pick an animal to sponsor</h5>
-      <p>Choose an animal who appeals most to you, or a dog with a story that tugs simply at your heartstrings.</p>
+      <h5><?php __('Pick an animal to sponsor','virtual-adoptions') ?></h5>
+      <p><?php __('Choose an animal who appeals most to you, or a animal with a story that tugs simply at your heartstrings.','virtual-adoptions') ?></p>
     </div>
   </div>
 
@@ -21,8 +26,8 @@
       </div>
     </div>
     <div class="step-description">
-      <h5>Set up your sponsorship</h5>
-      <p>Tell us how much you'd like to give. For gift sponsorships we'll just need to know who to send animal's updates too. Payment is done securely through PayPal</p>
+      <h5><?php __('Set up your sponsorship','virtual-adoptions') ?></h5>
+      <p><?php __('Tell us how much you\'d like to give. For gift sponsorships we\'ll just need to know who to send animal\'s updates too. Payment is done securely through PayPal','virtual-adoptions') ?></p>
     </div>
   </div>
 
@@ -33,8 +38,8 @@
       </div>
     </div>
     <div class="step-description">
-      <h5>Receive regular updates from your Sponsored animal</h5>
-      <p>You, or your giftee, will receive updates from your chosen sponsored animal three times a year.</p>
+      <h5><?php __('Receive regular updates','virtual-adoptions') ?></h5>
+      <p><?php __('You, or your giftee, will receive updates from your chosen sponsored animal three times a year.','virtual-adoptions') ?></p>
     </div>
   </div>
 
