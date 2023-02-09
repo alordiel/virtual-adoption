@@ -8,9 +8,8 @@
       </div>
     </div>
     <div class="step-description">
-      <h5 class="">Pick a dog to sponsor</h5>
-      <p>Choose a dog who reminds you of a beloved pet, or a dog with a story that tugs simply at your heartstrings.
-        Or why not sponsor both?</p>
+      <h5 class="">Pick an animal to sponsor</h5>
+      <p>Choose an animal who appeals most to you, or a dog with a story that tugs simply at your heartstrings.</p>
     </div>
   </div>
 
@@ -23,8 +22,7 @@
     </div>
     <div class="step-description">
       <h5>Set up your sponsorship</h5>
-      <p>Tell us how much you'd like to give and whether you want to give monthly or annually. For gift sponsorships
-        we'll just need to know who to send doggy updates too.</p>
+      <p>Tell us how much you'd like to give. For gift sponsorships we'll just need to know who to send animal's updates too. Payment is done securely through PayPal</p>
     </div>
   </div>
 
@@ -35,9 +33,8 @@
       </div>
     </div>
     <div class="step-description">
-      <h5>Enjoy regular updates from your Sponsor Dog</h5>
-      <p>As well as the exclusive sponsorship welcome pack you, or your giftee, will receive updates from your chosen
-        sponsor dog three times a year.</p>
+      <h5>Receive regular updates from your Sponsored animal</h5>
+      <p>You, or your giftee, will receive updates from your chosen sponsored animal three times a year.</p>
     </div>
   </div>
 
