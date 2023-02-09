@@ -25,8 +25,8 @@ $va_settings = get_option( 'va-settings' );
 				?>
 				<div class="intro-text">
 					<h2>Select an animal to sponsor</h2>
-					<p>It couldn't be easier to sponsor a dog in our care, or to gift a sponsorship to a friend or loved
-						as little as 1.25 EUR per week* (5.00 EUR per month).</p>
+					<p>It couldn't be easier to sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
+				as little as 5.00 EUR per month.</p>
 				</div>
 				<div class="list-of-animals">
 					<?php

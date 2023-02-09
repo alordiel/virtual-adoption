@@ -7,11 +7,11 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 	<div class="sheltered-animals-archive">
 		<div class="intro-text">
 			<h2>Sponsor animals from "The Farm"</h2>
-			<p>It couldn't be easier to sponsor a dog in our care, or to gift a sponsorship to a friend or loved one for
-				as little as 1.25 EUR per week* (5.00 EUR per month).</p>
-			<p>With around 100 animals in our care at any one time, your support helps us gives every single one the
-				very best care possible. While most dogs find a loving new home within about six weeks, some dogs need a
-				little of extra care and love from us. Your support for these animals can make the world of
+			<p>It couldn't be easier to sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
+				as little as 5.00 EUR per month.</p>
+			<p>With more than 120 animals in our care at any one time, your support helps us gives every single one the
+				very best care possible. While most of them find a loving new home within about six weeks, some need a
+				lot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of
 				difference. </p>
 		</div>
 
