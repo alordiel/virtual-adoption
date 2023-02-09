@@ -6,18 +6,18 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 ?>
 	<div class="sheltered-animals-archive">
 		<div class="intro-text">
-			<h2>Sponsor animals from "The Farm"</h2>
-			<p>It couldn't be easier to sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
-				as little as 5.00 EUR per month.</p>
-			<p>With more than 120 animals in our care at any one time, your support helps us gives every single one the
+			<h2><?php _e('Sponsor animals from "The Farm"','virtual-adoptions')?></h2>
+			<p><?php _e('You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
+				as little as 5.00 EUR per month.','virtual-adoptions')?></p>
+			<p><?php _e('With more than 120 animals in our care at any one time, your support helps us gives every single one the
 				very best care possible. While most of them find a loving new home within about six weeks, some need a
 				lot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of
-				difference. </p>
+				difference. ','virtual-adoptions')?></p>
 		</div>
 
 		<?php require_once( VA_ABS . '/templates/parts/select-kind-of-animal.php' ); ?>
 
-		<h3 class="text-center">Choose your sponsor animal</h3>
+		<h3 class="text-center"><?php _e('Choose your sponsor animal','virtual-adoptions')?></h3>
 
 		<div class="list-of-animals">
 

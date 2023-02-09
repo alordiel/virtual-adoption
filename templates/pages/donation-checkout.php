@@ -24,9 +24,9 @@ $va_settings = get_option( 'va-settings' );
 			} else {
 				?>
 				<div class="intro-text">
-					<h2>Select an animal to sponsor</h2>
-					<p>It couldn't be easier to sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
-				as little as 5.00 EUR per month.</p>
+					<h2><?php _e('Choose your sponsor animal','virtual-adoptions')?></h2>
+					<p><?php _e('You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
+				as little as 5.00 EUR per month.','virtual-adoptions')?></p>
 				</div>
 				<div class="list-of-animals">
 					<?php
@@ -49,7 +49,7 @@ $va_settings = get_option( 'va-settings' );
 				</div>
 				<div class="blue-button-wrap">
 					<a href="<?php echo get_post_type_archive_link( 'sheltered-animal' ) ?>" class="blue-button">
-						View all animals
+						<?php _e('View all animals','virtual-adoptions')?>
 					</a>
 				</div>
 				<?php
