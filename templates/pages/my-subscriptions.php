@@ -24,17 +24,7 @@ $subscriptions = get_posts( [
 if ( ! empty( $subscriptions ) ) {
 	?>
 	<h5><?php _e( 'This is the list of your subscriptions', 'virtual-adoption' ); ?></h5>
-	<table id="manage-my-subscriptions">
-		<thead>
-		<tr>
-			<th><?php _e( 'Animal name', 'virtual-adoption' ) ?></th>
-			<th><?php _e( 'Monthly donation', 'virtual-adoption' ) ?></th>
-			<th><?php _e( 'Next due', 'virtual-adoption' ) ?></th>
-			<th><?php _e( 'Status', 'virtual-adoption' ) ?></th>
-			<th><?php _e( 'Actions', 'virtual-adoption' ) ?></th>
-		</tr>
-		</thead>
-		<tbody>
+	<div class="manage-my-subscriptions">
 		<?php
 		global $wpdb;
 		$VA_paypal = new VA_PayPal();
@@ -50,33 +40,46 @@ if ( ! empty( $subscriptions ) ) {
 			$post_id        = $details->post_id;
 			$animal         = get_post( $details->sponsored_animal_id );
 			$paypal_details = $VA_paypal->get_subscription_details( $details->paypal_id );
-			if ($paypal_details['status'] === 'CANCELLED') {
+			$image          = get_the_post_thumbnail_url( $details->sponsored_animal_id, 'medium' );
+			if ( $paypal_details['status'] === 'CANCELLED' ) {
 				$next_due = '';
-				$status = __('Cancelled', 'virtual-adoptions');
+				$status   = __( 'Cancelled', 'virtual-adoptions' );
 			} else {
 				$next_due = $paypal_details['billing_info']['next_billing_time'];
-				$status = va_get_verbose_subscription_status( $details->status );
+				$status   = va_get_verbose_subscription_status( $details->status );
 			}
-			dbga($paypal_details);
 			?>
-			<tr class="row-<?php echo $post_id; ?>">
-				<td><a href="<?php echo get_permalink( $animal->ID ) ?>"><?php echo $animal->post_title; ?></a></td>
-				<td><?php echo $details->amount . ' ' . $details->currency ?></td>
-				<td class="next-due-date"><?php echo $next_due ?> </td>
-				<td class="subscription-status"><?php echo $status ?></td>
-				<td class="row-actions">
+			<div class="my-sponsored-animal-card">
+				<div class="animal-card-image" style="background-image: url('<?php echo $image; ?>')"></div>
+				<p><?php _e( 'Name', 'virtual-adoption' ) ?>:
+					<a href="<?php echo get_permalink( $animal->ID ) ?>">
+						<?php echo $animal->post_title; ?>
+					</a>
+				</p>
+				<p>
+					<?php echo __( 'Monthly donation', 'virtual-adoption' ) . ': ' . $details->amount . ' ' . $details->currency ?>
+				</p>
+				<?php if (!empty($next_due)) :?>
+					<p class="next-due-date">
+						<?php echo  __( 'Next payment', 'virtual-adoption' ) . ': ' . $next_due ?>
+					</p>
+				<?php endif; ?>
+				<p class="subscription-status">
+					<?php echo __( 'Subscription status', 'virtual-adoption' ) . ': ' . $status ?>
+				</p>
+				<p class="card-actions">
 					<?php
-					if ( $details->status === 'va-active' ) {
+					if ( $details->status === 'va-active' && $paypal_details['status'] !== 'CANCELLED') {
 						?>
-						<button type="button" class="cancel-button" data-post-id="<?php echo $post_id ?>">
-							<?php _e( 'Cancel', 'virtual-adoption' ) ?>
+						<a href="#" class="cancel-button" data-post-id="<?php echo $post_id ?>">
+							<?php _e( 'Cancel subscription', 'virtual-adoption' ) ?>
 							<svg style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 								<path
 									d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/>
 							</svg>
-						</button>
+						</a>
 						<?php
-					} elseif ( $details->status === 'va-cancelled'  || $paypal_details['status'] === 'CANCELLED' ) {
+					} elseif ( $details->status === 'va-cancelled' || $paypal_details['status'] === 'CANCELLED' ) {
 						$settings      = get_option( 'va-settings' );
 						$encrypted_key = va_encode_id( $details->sponsored_animal_id );
 						$re_adopt_link = get_permalink( $settings['page']['checkout'] ) . '?aid=' . $encrypted_key;
@@ -87,11 +90,10 @@ if ( ! empty( $subscriptions ) ) {
 						<?php
 					}
 					?>
-				</td>
-			</tr>
+				</p>
+			</div>
 		<?php } ?>
-		</tbody>
-	</table>
+	</div>
 	<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
 	<?php
 } else {

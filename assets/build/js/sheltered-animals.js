@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (document.querySelector('.cancel-button') !== null) {
     document.querySelectorAll('.cancel-button').forEach((element) => {
       element.addEventListener('click', function (e) {
-
+        e.preventDefault();
         e.target.disabled = true;
         e.target.children[0].style.display = 'inline-block';
 

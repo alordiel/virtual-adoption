@@ -46,7 +46,7 @@
 				<?php echo __( 'In the shelter', 'virtual-adoption' ) . ': '. $sheltered_for?>
 			</div>
 		</div>
-		<?php if ( $adopted_animals === [] || ! in_array( $post_id, $adopted_animals ) ): ?>
+		<?php if ( $adopted_animals === [] || ! in_array( $post_id, $adopted_animals, true ) ): ?>
 			<div class="blue-button-wrap">
 				<a href="<?php echo $sponsor_link . '?aid=' . va_encode_id( $post_id ) ?>"
 				   class="blue-button"><?php _e('Sponsor me', 'virtual-adoption') ?></a>

@@ -2,11 +2,35 @@
   padding-top: 0;
 }
 
-#manage-my-subscriptions .row-actions {
-  > button.cancel-button {
-    background: linear-gradient(to right, #ff6532 50%,#C42727 50%) no-repeat scroll right bottom / 210% 100% #B9251E !important;
-    &[disabled] {
-      background: linear-gradient(to right, #ff6532 50%, #757575 50%) no-repeat scroll right bottom/210% 100% #b9251e !important;
+.manage-my-subscriptions {
+  flex-wrap: wrap;
+  display: flex;
+
+  .animal-card-image {
+    width: calc(100% + 30px);
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    margin-left: -15px;
+    margin-top: -10px;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .my-sponsored-animal-card {
+    border: 1px solid #ebebeb;
+    width: 280px;
+    margin: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+
+  .cancel-button {
+    color: darkred;
+
+    &.disabled-action {
+      color: #464646;
     }
   }
 
