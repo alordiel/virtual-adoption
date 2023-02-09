@@ -27,7 +27,7 @@
     </div>
     <div class="step-description">
       <h5><?php _e('Set up your sponsorship','virtual-adoptions') ?></h5>
-      <p><?php _e('Tell us how much you\'d like to give. For gift sponsorships we\'ll just need to know who to send animal\'s updates too. Payment is done securely through PayPal','virtual-adoptions') ?></p>
+      <p><?php _e('Tell us how much you\'d like to give. For gift sponsorships we\'ll just need to know who to send animal\'s updates too. Payment is done securely through PayPal.','virtual-adoptions') ?></p>
     </div>
   </div>
 
