@@ -4,7 +4,7 @@
  * @property canNotBeEmpty string
  * @property passNoMatch string
  * @property ajaxURL string
- * @export confirmCancellation string
+ * @property confirmCancellation string
  */
 
 // Payment and checkout page scripts
@@ -123,32 +123,36 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.cancel-button').forEach((element) => {
       element.addEventListener('click', function (e) {
         e.preventDefault();
+        const cancellationButton = e.target;
+        // check if it is not already clicked
+        if (cancellationButton.classList.contains('disable-action') ) {
+          return;
+        }
+
         if (!confirm(vaL10N.confirmCancellation)) {
           return ;
         }
-        e.target.disabled = true;
-        e.target.children[0].style.display = 'inline-block';
 
         const postData = {
           post_id: e.target.dataset.postId,
           security: document.getElementById('turbo-security').value,
           action: 'va_cancel_subscription_ajax',
         };
+        
+        // disable the link
+        cancellationButton.classList.add('disable-action');
 
         makeAjaxCall(postData)
           .then(success => {
             alert(success.data.message);
-            e.target.disabled = false;
-            e.target.children[0].style.display = 'none';
             // replace the subscription status
-            document.querySelector('.row-' + postData.post_id + ' .subscription-status').innerText = success.data.status;
-            document.querySelector('.row-' + postData.post_id + ' .next-due-date').innerText = 'n/a'; // remove due date
-            e.target.remove() // removes the cancellation button
+            document.querySelector('.card-id-' + postData.post_id + ' .subscription-status').innerText = success.data.status; // this could be only "Cancelled"
+            document.querySelector('.card-id-' + postData.post_id + ' .next-due-date').remove(); // remove due date
+            cancellationButton.remove();
           })
           .catch(error => {
             alert(error);
-            e.target.disabled = false;
-            e.target.children[0].style.display = 'none';
+            cancellationButton.classList.remove('disable-action');
           });
         return false; // since this is clicked link, always return false
       });

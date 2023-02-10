@@ -237,3 +237,9 @@ function va_get_subscription_by_post_id( int $post_id ): array {
 	return $subscription;
 }
 
+function va_log_report( string $file_name, string $message ): void {
+    $file         = 'path_to_uploads' . 'deleted_media.txt';
+    $file_handler = fopen( $file, 'ab' );
+    fwrite( $file_handler, $file_name . "\n"  .$message);
+    fclose( $file_handler );
+  }

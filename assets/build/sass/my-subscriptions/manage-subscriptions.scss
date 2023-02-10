@@ -28,15 +28,25 @@
 
   .cancel-button {
     color: darkred;
+    display: flex;
 
-    &.disabled-action {
+    &.disable-action {
       color: #464646;
+      cursor: not-allowed;
+      align-items: center;
+
+      svg {
+        display: inline-block;
+      }
+    }
+
+    svg {
+      display: none;
+      margin-left: 10px;
+      width: 20px;
+      fill: #3c3838;
+      @include animate(loading, 1.5s, linear, infinite);
     }
   }
 
-  svg {
-    width: 20px;
-    fill: #fff;
-    @include animate(loading, 1.5s, linear, infinite);
-  }
 }
