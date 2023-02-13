@@ -51,7 +51,10 @@ function va_admin_settings_page() {
 			'webhook_id' => $_POST['paypal-webhook-id'],
 		];
 
-		$va_settings['general']['enable-categories'] = !empty($_POST['enable-categories']) ? 'on' : 'off';
+		$va_settings['general'] = [
+			'enable-categories' => ! empty( $_POST['enable-categories'] ) ? 'on' : 'off',
+			'all-animals-logo'  => ! empty( $_POST['featured-image-id'] ) ? $_POST['featured-image-id'] : '',
+		];
 
 		update_option( 'va-settings', $va_settings );
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoption' ) . '</strong></p></div>';
@@ -78,6 +81,12 @@ function va_admin_settings_page() {
 	$my_subscriptions_page = va_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
 	$login_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $login_page_id );
 	$terms_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $terms_page_id );
+
+	$image_id  = (int) $va_settings['general']['all-animals-logo'];
+	$image_url = '';
+	if ( ! empty( $image_id ) ) {
+		$image_url = wp_get_attachment_image_url( $image_id, 'medium' );
+	}
 	?>
 	<form name="form1" method="post" action="">
 		<table class="form-table">
@@ -89,12 +98,41 @@ function va_admin_settings_page() {
 					</label>
 				</th>
 				<td>
-					<input type="checkbox" name="enable-categories" id="enable-categories" <?php echo $enable_categories; ?>><br>
+					<input type="checkbox" name="enable-categories"
+						   id="enable-categories" <?php echo $enable_categories; ?>><br>
 					<small>
 						<?php _e( 'Enable if you have different kind of animals (like cats, dogs, etc).', 'virtual-adoptions' ); ?>
 					</small>
 				</td>
 			</tr>
+			<?php if ( $enable_categories !== '' ): ?>
+				<th scope="row">
+					<label for="featured-image-id">
+						<?php _e( 'Image for "All animals"', 'virtual-adoptions' ); ?>
+						<input id="featured-image-id" name="featured-image-id" type="hidden"
+							   value="<?php echo $image_id; ?>">
+					</label>
+				</th>
+				<td>
+					<div style="display: flex;align-items: center;">
+						<div style="display: flex;flex-direction: column;text-align: center;">
+							<a id="featured-image-button" href="#" class="button button-primary"
+							   style="margin-bottom: 10px">
+								<?php _e( 'Upload image', 'virtual-adoptions' ); ?>
+							</a>
+							<a id="remove-image-button" href="#" class="button button-secondary"
+							   style="display:<?php echo empty( $image_url ) ? 'none' : 'block'; ?>">
+								<?php _e( 'Remove image', 'virtual-adoptions' ); ?>
+							</a>
+						</div>
+						<div style="margin-left: 20px">
+							<img src="<?php echo $image_url; ?>" width="100" alt="featured-image-for-kind-of-animal"
+								 id="featured-image-block"
+								 style="display: <?php echo ! empty( $image_url ) ? 'block' : 'none'; ?>">
+						</div>
+					</div>
+				</td>
+			<?php endif; ?>
 			</tbody>
 		</table>
 

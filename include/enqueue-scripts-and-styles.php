@@ -56,7 +56,8 @@ add_action( 'wp_enqueue_scripts', 'va_sheltered_animals_styles_and_scripts' );
 function aw_include_script() {
 
 	$screen = get_current_screen();
-	if ( empty( $screen->id ) || $screen->id !== 'edit-kind-of-animal' ) {
+	$pages = ['settings_page_va_settings', 'edit-kind-of-animal'];
+	if ( empty( $screen->id ) || !in_array($screen->id, $pages)  ) {
 		return;
 	}
 
