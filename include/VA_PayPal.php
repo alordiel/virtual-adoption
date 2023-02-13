@@ -333,7 +333,7 @@ class VA_PayPal {
 	 * @param int $expected_code
 	 * @param bool $check_response - check the returned response
 	 *
-	 * @return array
+	 * @return array returns empty array if there is an issue when $check_response is false
 	 */
 	private function curl_executor( array $options, int $expected_code, bool $check_response = true ): array {
 
@@ -398,8 +398,8 @@ class VA_PayPal {
 			$details['auth_algo'] = "sha256WithRSAEncryption";
 		}
 
-		$crc32_body      = crc32( $details['body'] );
-		$signature       = "{$details['transmission_id']}|{$details['transmission_time']}|{$details['webhook_id']}|$crc32_body";
+		$crc32_body = crc32( $details['body'] );
+		$signature  = "{$details['transmission_id']}|{$details['transmission_time']}|{$details['webhook_id']}|$crc32_body";
 		// Get the public key for verification
 		$public_key      = openssl_pkey_get_public( file_get_contents( $details['cert_url'] ) );
 		$pub_key_details = openssl_pkey_get_details( $public_key );
@@ -416,6 +416,48 @@ class VA_PayPal {
 		}
 
 		return true;
+	}
+
+
+	/**
+	 * Creates a webhook entry in PayPal that will send events related with the subscription
+	 * the method will return the PayPal's webhook ID
+	 *
+	 * @return string
+	 */
+	public function create_webhook_endpoint(): string {
+		// TODO change the names of the event types
+		$data    = [
+			"url"         => "",
+			"event_types" => [
+				[
+					"name" => "PAYMENT.AUTHORIZATION.CREATED"
+				],
+				[
+					"name" => "PAYMENT.AUTHORIZATION.VOIDED"
+				]
+			]
+		];
+		$options = [
+			CURLOPT_URL            => $this->paypal_url . '/v1/notifications/webhooks',
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING       => '',
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_TIMEOUT        => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST  => 'POST',
+			CURLOPT_POSTFIELDS     => json_encode( $data, JSON_NUMERIC_CHECK ),
+			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
+		];
+
+		$result = $this->curl_executor( $options, 201, true );
+
+		if ( $result ===  [] ) {
+			return  '';
+		}
+
+		return $result['id'];
 	}
 
 }

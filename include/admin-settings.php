@@ -21,7 +21,8 @@ function va_admin_settings_page() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'virtual-adoption' ) );
 	}
 
-	$va_settings = get_option( 'va-settings' );
+	$va_settings    = get_option( 'va-settings' );
+	$has_webhook_id = ! empty( $va_settings['payment-methods']['paypal']['webhook_id'] );
 
 	// In case we don't have any settings saved, we will create this empty array
 	if ( empty( $va_settings ) ) {
@@ -45,10 +46,9 @@ function va_admin_settings_page() {
 		];
 
 		$va_settings['payment-methods']['paypal'] = [
-			'client_id'  => $_POST['paypal-client-id'],
-			'secret'     => va_encrypt_data( $_POST['paypal-secret-key'] ),
-			'test'       => isset( $_POST['paypal-test-env'] ) ? 'true' : '',
-			'webhook_id' => $_POST['paypal-webhook-id'],
+			'client_id' => $_POST['paypal-client-id'],
+			'secret'    => va_encrypt_data( $_POST['paypal-secret-key'] ),
+			'test'      => isset( $_POST['paypal-test-env'] ) ? 'true' : '',
 		];
 
 		$va_settings['general'] = [
@@ -58,6 +58,11 @@ function va_admin_settings_page() {
 
 		update_option( 'va-settings', $va_settings );
 
+		// check if we have the webhook ID for PayPal and if not - create a new one;
+		if ( ! $has_webhook_id && ! empty( $_POST['paypal-client-id'] ) && ! empty( $_POST['paypal-secret-key'] ) ) {
+			$VA_PayPal = new VA_PayPal();
+			$va_settings['payment-methods']['paypal']['webhook_id'] = $VA_PayPal->create_webhook_endpoint();
+		}
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoption' ) . '</strong></p></div>';
 	}
 
@@ -82,6 +87,7 @@ function va_admin_settings_page() {
 	$login_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $login_page_id );
 	$terms_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $terms_page_id );
 
+	// Image for the "All animals"
 	$image_id  = (int) $va_settings['general']['all-animals-logo'];
 	$image_url = '';
 	if ( ! empty( $image_id ) ) {
