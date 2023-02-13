@@ -65,7 +65,7 @@ function va_admin_settings_page() {
 		'posts_per_page' => - 1,
 	] );
 
-	$enable_categories   = $va_settings['general']['enable-categories'] === 'on' ? 'checked' : 0;
+	$enable_categories   = $va_settings['general']['enable-categories'] === 'on' ? 'checked' : '';
 	$checkout_page_id    = ! empty( $va_settings['page']['checkout'] ) ? $va_settings['page']['checkout'] : 0;
 	$thank_you_page_id   = ! empty( $va_settings['page']['thank-you'] ) ? $va_settings['page']['thank-you'] : 0;
 	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
@@ -317,18 +317,6 @@ function va_admin_settings_page() {
 		});
 	</script>
 	<?php
-}
-
-
-function va_get_selected_options_for_the_admin_settings( $search_term_id, $terms ): string {
-	// build the select options for the categories
-	$options = "<option value='0'>- select -</option>";
-	foreach ( $terms as $term ) {
-		$selected = ( $search_term_id !== 0 && $search_term_id === $term->term_id ) ? 'selected="selected"' : '';
-		$options  .= "<option $selected value='$term->term_id'>$term->name</option>";
-	}
-
-	return $options;
 }
 
 function va_get_selected_options_for_the_admin_settings_by_page( $pages, $page_id ): string {
