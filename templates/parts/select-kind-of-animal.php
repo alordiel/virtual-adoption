@@ -1,14 +1,20 @@
 <?php
-
+/**
+ * @var array $va_settings
+ */
 if ( is_post_type_archive( 'sheltered-animal' ) ) {
 	$selected = 'all';
 } else {
 	global $wp;
-	$request_args = explode('/', $wp->request);
-	$selected = end($request_args);
+	$request_args = explode( '/', $wp->request );
+	$selected     = end( $request_args );
 }
-$terms = get_terms( 'kind-of-animal' );
-
+$terms                    = get_terms( 'kind-of-animal' );
+$image_id                 = (int) $va_settings['general']['all-animals-logo'];
+$all_categories_image_url = '';
+if ( ! empty( $image_id ) ) {
+	$all_categories_image_url = wp_get_attachment_image_url( $image_id, 'medium' );
+}
 ?>
 <div class="list-of-kind-of-animals">
 	<h3>Select category</h3>
@@ -38,10 +44,10 @@ $terms = get_terms( 'kind-of-animal' );
 	<div class="kind-of-animal-logo <?php echo $selected === 'all' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo get_post_type_archive_link( 'sheltered-animal' ) ?>"
 		   title="<?php _e( 'View all', 'virtual-adoption' ); ?>">
-			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/all.png"
-				 alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
+			<?php if ( ! empty( $all_categories_image_url ) ): ?>
+				<img src="<?php echo $all_categories_image_url; ?>" alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
+			<?php endif; ?>
 			<?php _e( 'All', 'virtual-adoption' ) ?>
-
 		</a>
 	</div>
 
