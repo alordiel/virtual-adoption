@@ -39,13 +39,13 @@ function va_sheltered_animals() {
 		'has_archive'         => true,
 		'hierarchical'        => false,
 		'menu_position'       => null,
-		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt','page-attributes' )
+		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'page-attributes' )
 	);
 	register_post_type( 'sheltered-animal', $args );
 }
 
 add_action( 'init', 'sheltered_animal_taxonomy' );
-	function sheltered_animal_taxonomy() {
+function sheltered_animal_taxonomy() {
 	register_taxonomy(
 		'kind-of-animal',
 		'sheltered-animal',
@@ -164,3 +164,66 @@ function va_sheltered_animal_save_meta( int $post_id ) {
 }
 
 add_action( 'save_post_sheltered_animal', 'va_sheltered_animal_save_meta' );
+
+
+/**
+ * Register a field for uploading a featured image for the taxonomy
+ *
+ * @param $term
+ *
+ * @return void
+ */
+function va_kind_of_animal_edit_field( $term ) {
+	$image_id  = get_term_meta( $term->term_id, 'featured-image', true );
+	$image_url = '';
+	if ( ! empty( $image_id ) ) {
+		$image_url = wp_get_attachment_image_url( $image_id, 'medium' );
+	}
+	?>
+	<tr class="form-field">
+		<th scope="row">
+			<label for="featured-image-id">
+				<?php _e( 'Image', 'virtual-adoptions' ); ?>
+				<input id="featured-image-id" name="featured-image-id" type="hidden" value="<?php echo $image_id; ?>">
+			</label>
+		</th>
+		<td>
+			<div style="display: flex;align-items: center;">
+				<div style="display: flex;flex-direction: column;text-align: center;">
+					<a id="featured-image-button" href="#" class="button button-primary" style="margin-bottom: 10px">
+						<?php _e( 'Upload image', 'virtual-adoptions' ); ?>
+					</a>
+					<a id="remove-image-button" href="#" class="button button-secondary"
+					   style="display:<?php echo empty( $image_url ) ? 'none' : 'block'; ?>">
+						<?php _e( 'Remove image', 'virtual-adoptions' ); ?>
+					</a>
+				</div>
+				<div style="margin-left: 20px">
+					<img src="<?php echo $image_url; ?>" width="230" alt="featured-image-for-kind-of-animal"
+						 id="featured-image-block"
+						 style="display: <?php echo ! empty( $image_url ) ? 'block' : 'none'; ?>">
+				</div>
+			</div>
+		</td>
+	</tr>
+	<?php
+}
+
+add_action( 'kind-of-animal_edit_form_fields', 'va_kind_of_animal_edit_field', 10, 2 );
+
+/**
+ * Saves the ID of the featured image (or delete it if it was removed)
+ *
+ * @param int $term_id
+ *
+ * @return void
+ */
+function va_save_kind_of_animal_featured_image( int $term_id ) {
+	if ( isset( $_POST['featured-image-id'] ) ) {
+		update_term_meta( $term_id, 'featured-image', (int) $_POST['featured-image-id'] );
+	} else {
+		delete_term_meta( $term_id, 'featured-image' );
+	}
+}
+
+add_action( 'edited_kind-of-animal', 'va_save_kind_of_animal_featured_image', 10, 2 );
