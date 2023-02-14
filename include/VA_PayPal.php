@@ -429,7 +429,7 @@ class VA_PayPal {
 	public function create_webhook_endpoint(): string {
 
 		$data    = [
-			"url"         =>  get_rest_url( ) . 'virtual-donations/v1/subscription',
+			"url"         => get_rest_url() . 'virtual-donations/v1/subscription',
 			"event_types" => [
 				[
 					"name" => "BILLING.SUBSCRIPTION.CANCELLED"
@@ -457,8 +457,8 @@ class VA_PayPal {
 
 		$result = $this->curl_executor( $options, 201, true );
 
-		if ( $result ===  [] ) {
-			return  '';
+		if ( $result === [] ) {
+			return '';
 		}
 
 		return $result['id'];

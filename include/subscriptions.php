@@ -249,8 +249,8 @@ function va_check_if_payment_is_for_subscription( array $payment_data ): array {
 	}
 
 	// get details from PayPal for the current subscriptions and check if we have the number of completed cycles
-	$subscription_details = (new VA_PayPal())->get_subscription_details($subscription_id);
-	if ($subscription_details === [] || empty($subscription_details['billing_info']['cycle_executions'][0]['cycles_completed'])) {
+	$subscription_details = ( new VA_PayPal() )->get_subscription_details( $subscription_id );
+	if ( $subscription_details === [] || empty( $subscription_details['billing_info']['cycle_executions'][0]['cycles_completed'] ) ) {
 		return [];
 	}
 

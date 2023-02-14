@@ -47,7 +47,7 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 			}
 			break;
 		case  'PAYMENT.SALE.COMPLETED':
-			dbga($data);
+			dbga( $data );
 			if ( ! empty( $data['resource'] ) ) {
 				$subscriptions_new_data = va_check_if_payment_is_for_subscription( $data['resource'] );
 				if ( $subscriptions_new_data === [] ) {

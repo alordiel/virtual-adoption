@@ -59,9 +59,9 @@ if ( ! empty( $subscriptions ) ) {
 				<p>
 					<?php echo __( 'Monthly donation', 'virtual-adoption' ) . ': ' . $details->amount . ' ' . $details->currency ?>
 				</p>
-				<?php if (!empty($next_due)) :?>
+				<?php if ( ! empty( $next_due ) ) : ?>
 					<p class="next-due-date">
-						<?php echo  __( 'Next payment', 'virtual-adoption' ) . ': ' . $next_due ?>
+						<?php echo __( 'Next payment', 'virtual-adoption' ) . ': ' . $next_due ?>
 					</p>
 				<?php endif; ?>
 				<p class="subscription-status">
@@ -69,7 +69,7 @@ if ( ! empty( $subscriptions ) ) {
 				</p>
 				<p class="card-actions">
 					<?php
-					if ( $details->status === 'va-active' && $paypal_details['status'] !== 'CANCELLED') {
+					if ( $details->status === 'va-active' && $paypal_details['status'] !== 'CANCELLED' ) {
 						?>
 						<a href="#" class="cancel-button" data-post-id="<?php echo $post_id ?>">
 							<?php _e( 'Cancel subscription', 'virtual-adoption' ) ?>
