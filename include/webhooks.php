@@ -23,14 +23,11 @@ add_action( 'rest_api_init', 'register_paypal_webhook' );
  */
 function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Request $request ) {
 	$entityBody = file_get_contents( 'php://input' );
-	$data = json_decode( $entityBody, ARRAY_A );
-	dbga( $data );
 	if ( ! validate_paypal_request( $request, $entityBody ) ) {
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
 
 	$data = json_decode( $entityBody, ARRAY_A );
-	dbga( $data );
 	switch ( $data['event_type'] ) {
 		case  'BILLING.SUBSCRIPTION.CANCELLED':
 		case  'BILLING.SUBSCRIPTION.EXPIRED':

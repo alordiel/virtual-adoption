@@ -440,6 +440,15 @@ class VA_PayPal {
 					"name" => "BILLING.SUBSCRIPTION.EXPIRED"
 				],
 				[
+					"name" => "BILLING.SUBSCRIPTION.SUSPENDED"
+				],
+				[
+					"name" => "BILLING.SUBSCRIPTION.RE-ACTIVATED"
+				],
+				[
+					"name" => "BILLING.SUBSCRIPTION.ACTIVATED"
+				],
+				[
 					"name" => "PAYMENT.SALE.COMPLETED"
 				]
 			]
