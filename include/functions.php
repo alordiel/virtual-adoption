@@ -185,9 +185,37 @@ function va_get_subscription_by_post_id( int $post_id ): array {
 	return $subscription;
 }
 
+
+/**
+ * Creates a 'virtual-adoptions' folder in the wp-content/uploads directory, and adds 2 files - error.log and success.log
+ *
+ * @return void
+ */
+function va_create_log_files() {
+	$log_directory = VA_UPLOADS_ABS.'/virtual-adoptions';
+	if ( ! mkdir( $log_directory, 755 ) && ! is_dir( $log_directory ) ) {
+		throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $log_directory ) );
+	}
+
+	$error_file = fopen(VA_UPLOADS_ABS . '/virtual-adoptions/errors.log', 'wb' );
+	fclose($error_file);
+
+	$success_message = fopen(VA_UPLOADS_ABS . '/virtual-adoptions/success.log', 'wb' );
+	fclose($success_message);
+}
+
+
+/**
+ * Writes message into a given file. Used for logging events
+ *
+ * @param string $file_name
+ * @param string $message
+ *
+ * @return void
+ */
 function va_log_report( string $file_name, string $message ): void {
-    $file         = 'path_to_uploads' . 'deleted_media.txt';
+    $file         = VA_UPLOADS_ABS . '/virtual-adoptions/' . $file_name;
     $file_handler = fopen( $file, 'ab' );
-    fwrite( $file_handler, $file_name . "\n"  .$message);
+    fwrite( $file_handler,  "\n"  . $message . "\n");
     fclose( $file_handler );
   }

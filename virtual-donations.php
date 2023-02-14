@@ -19,8 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-define( 'VA_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+$uploads_dir = wp_get_upload_dir();
 const VA_ABS = __DIR__;
+define( 'VA_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( "VA_UPLOADS_ABS", $uploads_dir['basedir'] );
 
 require_once( VA_ABS . '/include/custom-post-types/animals.php' );
 require_once( VA_ABS . '/include/custom-post-types/va-subscriptions.php' );
@@ -51,7 +53,6 @@ function va_plugin_activated() {
 		sheltered_animal_taxonomy();
 		va_register_meta_boxes();
 		va_subscription_post_type();
-		va_subscription_post_type();
 	}
 	$va_settings = get_option( 'va-settings' );
 	if ( empty( $va_settings['page']['checkout'] ) ) {
@@ -70,6 +71,7 @@ function va_plugin_activated() {
 	flush_rewrite_rules();
 
 	va_create_subscription_tables();
+	va_create_log_files();
 	va_custom_post_status_for_subscriptions();
 }
 
