@@ -46,9 +46,10 @@ function va_admin_settings_page() {
 		];
 
 		$va_settings['payment-methods']['paypal'] = [
-			'client_id' => $_POST['paypal-client-id'],
-			'secret'    => va_encrypt_data( $_POST['paypal-secret-key'] ),
-			'test'      => isset( $_POST['paypal-test-env'] ) ? 'true' : '',
+			'client_id'  => $_POST['paypal-client-id'],
+			'secret'     => va_encrypt_data( $_POST['paypal-secret-key'] ),
+			'test'       => isset( $_POST['paypal-test-env'] ) ? 'true' : '',
+			'webhook_id' => $has_webhook_id ?  $va_settings['payment-methods']['paypal']['webhook_id'] : 0,
 		];
 
 		$va_settings['general'] = [
@@ -56,13 +57,14 @@ function va_admin_settings_page() {
 			'all-animals-logo'  => ! empty( $_POST['featured-image-id'] ) ? $_POST['featured-image-id'] : '',
 		];
 
-		update_option( 'va-settings', $va_settings );
-
 		// check if we have the webhook ID for PayPal and if not - create a new one;
 		if ( ! $has_webhook_id && ! empty( $_POST['paypal-client-id'] ) && ! empty( $_POST['paypal-secret-key'] ) ) {
-			$VA_PayPal = new VA_PayPal();
+			$VA_PayPal                                              = new VA_PayPal();
 			$va_settings['payment-methods']['paypal']['webhook_id'] = $VA_PayPal->create_webhook_endpoint();
 		}
+
+		update_option( 'va-settings', $va_settings );
+
 		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoption' ) . '</strong></p></div>';
 	}
 
