@@ -5,7 +5,6 @@
  * @return void
  */
 function register_paypal_webhook() {
-
 	register_rest_route( 'virtual-donations/v1', '/subscription/', array(
 		'methods'             => 'POST',
 		'callback'            => 'va_handle_paypal_webhook_triggered_on_subscription_change',
@@ -28,31 +27,56 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 
 	$data = json_decode( $entityBody, ARRAY_A );
 
-	if ( $data['event_type'] === 'BILLING.SUBSCRIPTION.CANCELLED' ) {
-		if (!empty($data['resource']['plan_id'])) {
-			va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-cancelled' );
-		} else {
-			// TODO LOG the event
+	switch ( $data['event_type'] ) {
+		case  'BILLING.SUBSCRIPTION.CANCELLED':
+		case  'BILLING.SUBSCRIPTION.EXPIRED':
+
+			if ( ! empty( $data['resource']['plan_id'] ) ) {
+				va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-cancelled' );
+			} else {
+				// TODO LOG the event
+				dbga( $data );
+			}
+			break;
+		case  'BILLING.SUBSCRIPTION.RE-ACTIVATED':
+			if ( ! empty( $data['resource']['plan_id'] ) ) {
+				va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-active' );
+			} else {
+				// TODO LOG the event
+				dbga( $data );
+			}
+			break;
+		case  'PAYMENT.SALE.COMPLETED':
 			dbga($data);
-		}
-	} elseif ($data['event_type'] === 'BILLING.SUBSCRIPTION.RE-ACTIVATED') {
-		if (!empty($data['resource']['plan_id'])) {
-			va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-active' );
-		} else {
-			// TODO LOG the event
-			dbga($data);
-		}
-	} else {
-		dbga( $data );
+			if ( ! empty( $data['resource'] ) ) {
+				$subscriptions_new_data = va_check_if_payment_is_for_subscription( $data['resource'] );
+				if ( $subscriptions_new_data === [] ) {
+					break;
+				}
+				global $wpdb;
+				$wpdb->update(
+					$wpdb->prefix . 'va_subscriptions',
+					[ 'completed_cycles' => $subscriptions_new_data['number_of_cycle'] ],
+					[ 'paypal_id' => $subscriptions_new_data['subscription_id'] ],
+					[ '%d' ],
+					[ '%s' ]
+				);
+			} else {
+				// TODO LOG the event
+				dbga( $data );
+			}
+			break;
+		default:
+			dbga( $data );
 	}
 
 	return new WP_REST_Response( [ 'status' => 'Success' ], 200 );
 }
 
 
-function validate_paypal_request( WP_REST_Request $request, string $data ) {
+function validate_paypal_request( WP_REST_Request $request, string $data ): bool {
 	$headers = $request->get_headers();
-	// Check if we have the needed headers
+	// List of the needed headers
 	$headers_list = [
 		'paypal_transmission_id',
 		'paypal_transmission_time',
@@ -80,7 +104,5 @@ function validate_paypal_request( WP_REST_Request $request, string $data ) {
 		"body"              => $data,
 	];
 
-	$VA_paypal = new VA_PayPal();
-
-	return $VA_paypal->manual_verification( $details );
+	return ( new VA_PayPal() )->manual_verification( $details );
 }

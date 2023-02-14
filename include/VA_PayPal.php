@@ -422,19 +422,23 @@ class VA_PayPal {
 	/**
 	 * Creates a webhook entry in PayPal that will send events related with the subscription
 	 * the method will return the PayPal's webhook ID
+	 * documentation: https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_post
 	 *
 	 * @return string
 	 */
 	public function create_webhook_endpoint(): string {
-		// TODO change the names of the event types
+
 		$data    = [
-			"url"         => "",
+			"url"         =>  get_rest_url( ) . 'virtual-donations/v1/subscription',
 			"event_types" => [
 				[
-					"name" => "PAYMENT.AUTHORIZATION.CREATED"
+					"name" => "BILLING.SUBSCRIPTION.CANCELLED"
 				],
 				[
-					"name" => "PAYMENT.AUTHORIZATION.VOIDED"
+					"name" => "BILLING.SUBSCRIPTION.EXPIRED"
+				],
+				[
+					"name" => "PAYMENT.SALE.COMPLETED"
 				]
 			]
 		];

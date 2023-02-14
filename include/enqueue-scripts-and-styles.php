@@ -49,13 +49,13 @@ function va_sheltered_animals_styles_and_scripts() {
 	);
 
 	$translation = [
-		'ajaxURL' => admin_url('admin-ajax.php'),
-		'successfulSubscription' => __('You subscription was successful. Thank you.','virtual-adoptions'),
-		'canNotBeEmpty' => __('Field can not be empty','virtual-adoption'),
-		'passNoMatch' => __('Passwords did not matched','virtual-adoption'),
-		'confirmCancellation' => __('Are you sure you want to cancel the support?','virtual-adoption'),
+		'ajaxURL'                => admin_url( 'admin-ajax.php' ),
+		'successfulSubscription' => __( 'You subscription was successful. Thank you.', 'virtual-adoptions' ),
+		'canNotBeEmpty'          => __( 'Field can not be empty', 'virtual-adoption' ),
+		'passNoMatch'            => __( 'Passwords did not matched', 'virtual-adoption' ),
+		'confirmCancellation'    => __( 'Are you sure you want to cancel the support?', 'virtual-adoption' ),
 	];
-	wp_localize_script('sheltered-animal', 'vaL10N', $translation);
+	wp_localize_script( 'sheltered-animal', 'vaL10N', $translation );
 
 }
 
@@ -65,8 +65,8 @@ add_action( 'wp_enqueue_scripts', 'va_sheltered_animals_styles_and_scripts' );
 function aw_include_script() {
 
 	$screen = get_current_screen();
-	$pages = ['settings_page_va_settings', 'edit-kind-of-animal'];
-	if ( empty( $screen->id ) || !in_array($screen->id, $pages)  ) {
+	$pages  = [ 'settings_page_va_settings', 'edit-kind-of-animal' ];
+	if ( $screen !== null && ( empty( $screen->id ) || ! in_array( $screen->id, $pages ) ) ) {
 		return;
 	}
 

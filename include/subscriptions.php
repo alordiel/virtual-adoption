@@ -200,27 +200,62 @@ function va_change_subscription_status_from_paypal( string $paypal_subscription_
 	global $wpdb;
 	$sql     = "SELECT post_id, ID FROM {$wpdb->prefix}va_subscriptions WHERE paypal_id = %s";
 	$details = $wpdb->get_row( $wpdb->prepare( $sql, $paypal_subscription_id ) );
-	if (empty($details)) {
+	if ( empty( $details ) ) {
 		//TODO log error
-		dbga('Not found subscription with ID: ' . $paypal_subscription_id);
+		dbga( 'Not found subscription with ID: ' . $paypal_subscription_id );
 	}
 
 	// Update the wp_post related to that subscription
 	$wpdb->update(
 		$wpdb->prefix . 'posts',
-		['post_status' => $status],
-		['ID' => $details->post_id],
-		['%s'],
-		['%d']
+		[ 'post_status' => $status ],
+		[ 'ID' => $details->post_id ],
+		[ '%s' ],
+		[ '%d' ]
 	);
 	// Update the wp_va_subscriptions table with the details
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
-		['status' => $status],
-		['ID' => $details->ID],
-		['%s'],
-		['%d']
+		[ 'status' => $status ],
+		[ 'ID' => $details->ID ],
+		[ '%s' ],
+		[ '%d' ]
 	);
 
 	// TODO may be send notification email to the subscriber that the subscription was cancelled
+}
+
+
+/**
+ * Checks the data received from the PayPal Payment.Sale.Completed event and checks if there is a subscription with that ID
+ * If it there is a subscription it will return an array with the subscription's ID and the number of cycles
+ *
+ * @param array $payment_data
+ *
+ * @return array returns an empty array if nothing found, else - an associative array with 'subscription_id' and 'number_of_cycles'
+ */
+function va_check_if_payment_is_for_subscription( array $payment_data ): array {
+	$subscription_id = ! empty( $payment_data['billing_agreement_id'] ) ? $payment_data['billing_agreement_id'] : '';
+	if ( $subscription_id === '' ) {
+		return [];
+	}
+
+	// check if we have such a subscription in our DB
+	global $wpdb;
+	$sql          = "SELECT ID FROM {$wpdb->prefix}va_subscriptions WHERE paypal_id = %s";
+	$subscription = $wpdb->get_var( $wpdb->prepare( $sql, $subscription_id ) );
+	if ( empty( $subscription ) ) {
+		return [];
+	}
+
+	// get details from PayPal for the current subscriptions and check if we have the number of completed cycles
+	$subscription_details = (new VA_PayPal())->get_subscription_details($subscription_id);
+	if ($subscription_details === [] || empty($subscription_details['billing_info']['cycle_executions'][0]['cycles_completed'])) {
+		return [];
+	}
+
+	return [
+		'subscription_id'  => $payment_data['billing_agreement_id'],
+		'number_of_cycles' => (int) $subscription_details['billing_info']['cycle_executions'][0]['cycles_completed'],
+	];
 }
