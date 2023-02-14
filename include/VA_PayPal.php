@@ -149,13 +149,13 @@ class VA_PayPal {
 	 * @param float $price
 	 * @param string $currency
 	 *
-	 * @return array|mixed
+	 * @return array
 	 */
-	public function create_subscription_plan( string $product_id, string $name, float $price, string $currency ) {
+	public function create_subscription_plan( string $product_id, string $name, float $price, string $currency ): array {
 		$data = array(
 			'product_id'          => $product_id,
 			'name'                => $name,
-			'description'         => 'For virtual adoption of poor animal from the shelter',
+			'description'         => 'For virtual adoption of an animal from the shelter',
 			'status'              => 'ACTIVE',
 			'billing_cycles'      =>
 				array(
@@ -233,12 +233,12 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
 		];
 
-		return $this->curl_executor( $options, 200, true );
+		return $this->curl_executor( $options, 200 );
 	}
 
 
 	/**
-	 * Deactivates given PayPal plan by PayPal plan ID
+	 * Deactivates given PayPal's plan by PayPal plan ID
 	 * Documentation: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
 	 *
 	 * @param string $plan_id
@@ -270,7 +270,7 @@ class VA_PayPal {
 	 * @param string $subscription_id
 	 * @param string $reason
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function cancel_subscription( string $subscription_id, string $reason ): void {
 
@@ -309,7 +309,7 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header(),
 		];
 
-		$result = $this->curl_executor( $options, 200, true );
+		$result = $this->curl_executor( $options, 200 );
 		if ( $result === [] ) {
 			dbga( $this->error );
 
@@ -406,11 +406,13 @@ class VA_PayPal {
 		$verify_result   = openssl_verify( $signature, base64_decode( $details['transmission_sig'] ), $pub_key_details['key'], $details['auth_algo'] );
 		// 1 => successful verification
 		if ( $verify_result === 0 ) {
-			$this->get_error = __( 'Signature is incorrect', 'virtual-adoptions' );
+			$this->error = __( 'Signature is incorrect', 'virtual-adoptions' );
 
 			return false;
-		} elseif ( $verify_result === - 1 ) {
-			$this->get_error = __( 'Error during signature check.', 'virtual-adoptions' );
+		}
+
+		if ( $verify_result === - 1 ) {
+			$this->error = __( 'Error during signature check.', 'virtual-adoptions' );
 
 			return false;
 		}
@@ -455,7 +457,7 @@ class VA_PayPal {
 			CURLOPT_HTTPHEADER     => $this->get_curl_header( true ),
 		];
 
-		$result = $this->curl_executor( $options, 201, true );
+		$result = $this->curl_executor( $options, 201 );
 
 		if ( $result === [] ) {
 			return '';

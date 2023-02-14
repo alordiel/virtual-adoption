@@ -18,19 +18,23 @@ add_action( 'rest_api_init', 'register_paypal_webhook' );
 /**
  * Callback of the PayPal webhook, will check first if the request is verified by PayPal and then proceed
  * with the actual event
+ *
+ * https://developer.paypal.com/api/rest/webhooks/event-names/#subscriptions
  */
 function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Request $request ) {
 	$entityBody = file_get_contents( 'php://input' );
+	$data = json_decode( $entityBody, ARRAY_A );
+	dbga( $data );
 	if ( ! validate_paypal_request( $request, $entityBody ) ) {
 		return new WP_Error( '401', esc_html__( 'Not Authorized', 'virtual-adoptions' ), array( 'status' => 401 ) );
 	}
 
 	$data = json_decode( $entityBody, ARRAY_A );
-
+	dbga( $data );
 	switch ( $data['event_type'] ) {
 		case  'BILLING.SUBSCRIPTION.CANCELLED':
 		case  'BILLING.SUBSCRIPTION.EXPIRED':
-
+		case  'BILLING.SUBSCRIPTION.SUSPENDED':
 			if ( ! empty( $data['resource']['plan_id'] ) ) {
 				va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-cancelled' );
 			} else {
@@ -38,7 +42,9 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 				dbga( $data );
 			}
 			break;
+
 		case  'BILLING.SUBSCRIPTION.RE-ACTIVATED':
+		case  'BILLING.SUBSCRIPTION.ACTIVATED':
 			if ( ! empty( $data['resource']['plan_id'] ) ) {
 				va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-active' );
 			} else {
@@ -46,8 +52,8 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 				dbga( $data );
 			}
 			break;
+
 		case  'PAYMENT.SALE.COMPLETED':
-			dbga( $data );
 			if ( ! empty( $data['resource'] ) ) {
 				$subscriptions_new_data = va_check_if_payment_is_for_subscription( $data['resource'] );
 				if ( $subscriptions_new_data === [] ) {
@@ -66,7 +72,9 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 				dbga( $data );
 			}
 			break;
+
 		default:
+			// strange case where another event has hit our webhook
 			dbga( $data );
 	}
 
