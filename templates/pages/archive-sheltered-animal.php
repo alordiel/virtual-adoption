@@ -1,7 +1,7 @@
 <?php
 get_header();
 
-$va_settings = get_option( 'va-settings' );
+$va_settings  = get_option( 'va-settings' );
 $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 ?>
 	<div class="sheltered-animals-archive">
@@ -15,7 +15,11 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 				difference. ','virtual-adoptions')?></p>
 		</div>
 
-		<?php require_once( VA_ABS . '/templates/parts/select-kind-of-animal.php' ); ?>
+		<?php
+		if ( ! empty( $va_settings['general']['enable-categories'] ) && $va_settings['general']['enable-categories'] === 'on' ) {
+			require_once( VA_ABS . '/templates/parts/select-kind-of-animal.php' );
+		}
+		?>
 
 		<h3 class="text-center"><?php _e('Choose your sponsor animal','virtual-adoptions')?></h3>
 
@@ -24,12 +28,12 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 			<?php if ( have_posts() ) :
 				$adopted_animals = va_get_list_of_adopted_animals();
 				while ( have_posts() ) : the_post();
-					$post_id         = get_the_ID();
-					$the_title       = get_the_title();
-					$age             = get_post_meta( $post_id, 'animals-age', true );
-					$sheltered_for   = get_post_meta( $post_id, 'sheltered-years', true );
-					$animal_link     = get_the_permalink();
-					$image           = get_the_post_thumbnail_url( $post_id, 'medium' );
+					$post_id       = get_the_ID();
+					$the_title     = get_the_title();
+					$age           = get_post_meta( $post_id, 'animals-age', true );
+					$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
+					$animal_link   = get_the_permalink();
+					$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
 					include( VA_ABS . '/templates/parts/animal-card.php' );
 				endwhile;
 			else:

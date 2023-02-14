@@ -1,62 +1,53 @@
 <?php
-$selected = 'all';
-$site_url = site_url();
-$settings = get_option('va-settings');
-
-if ( is_tax( 'kind-of-animal' )) {
-	$selected = va_get_the_current_selected_kind($settings);
+/**
+ * @var array $va_settings
+ */
+if ( is_post_type_archive( 'sheltered-animal' ) ) {
+	$selected = 'all';
+} else {
+	global $wp;
+	$request_args = explode( '/', $wp->request );
+	$selected     = end( $request_args );
 }
-
-$category_link = [
-	'dogs'   => !empty($settings['animal-terms']['dogs'])  ? get_term_link($settings['animal-terms']['dogs']) : '',
-	'horses' => !empty($settings['animal-terms']['horses'])  ? get_term_link($settings['animal-terms']['horses']) : '',
-	'cats'   => !empty($settings['animal-terms']['cats'])  ? get_term_link($settings['animal-terms']['cats']) : '',
-	'other'  => !empty($settings['animal-terms']['other'])  ? get_term_link($settings['animal-terms']['other']) : '',
-	'all'    => get_post_type_archive_link('sheltered-animal'),
-];
-
+$terms                    = get_terms( 'kind-of-animal' );
+$image_id                 = (int) $va_settings['general']['all-animals-logo'];
+$all_categories_image_url = '';
+if ( ! empty( $image_id ) ) {
+	$all_categories_image_url = wp_get_attachment_image_url( $image_id, 'medium' );
+}
 ?>
 <div class="list-of-kind-of-animals">
-	<h3><?php _e('Select category','virtual-adoptions'); ?></h3>
-	<div class="kind-of-animal-logo <?php echo $selected === 'dogs' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['dogs'] ?>" title="<?php _e( 'View all dogs', 'virtual-adoption' ); ?>">
-			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/dog.png"
-				 alt="<?php _e( 'Dogs', 'virtual-adoption' ) ?>">
-			<?php _e( 'Dogs', 'virtual-adoption' ) ?>
-		</a>
-	</div>
-	<div class="kind-of-animal-logo <?php echo $selected === 'horses' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['horses'] ?>"
-		   title="<?php _e( 'View all horses', 'virtual-adoption' ); ?>">
-			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/horse.png"
-				 alt="<?php _e( 'Horses', 'virtual-adoption' ) ?>">
-			<?php _e( 'Horses', 'virtual-adoption' ) ?>
+	<h3>Select category</h3>
 
-		</a>
-	</div>
-	<div class="kind-of-animal-logo <?php echo $selected === 'cats' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['cats'] ?>" title="<?php _e( 'View all cats', 'virtual-adoption' ); ?>">
-			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/cat.png"
-				 alt="<?php _e( 'Cats', 'virtual-adoption' ) ?>">
-			<?php _e( 'Cats', 'virtual-adoption' ) ?>
-		</a>
-	</div>
-	<div class="kind-of-animal-logo <?php echo $selected === 'farm-animals' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['other'] ?>"
-		   title="<?php _e( 'View all farm animals', 'virtual-adoption' ); ?>">
-			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/farm.png"
-				 alt="<?php _e( 'Other', 'virtual-adoption' ) ?>">
-			<?php _e( 'Other', 'virtual-adoption' ) ?>
+	<?php if ( ! empty( $terms ) ) : ?>
+		<?php foreach ( $terms as $term ) : ?>
 
-		</a>
-	</div>
+			<?php
+			$image_id  = get_term_meta( $term->term_id, 'featured-image', true );
+			$image_url = '';
+			if ( ! empty( $image_id ) ) {
+				$image_url = wp_get_attachment_image_url( $image_id, 'medium' );
+			}
+			?>
+
+			<div class="kind-of-animal-logo <?php echo $selected === $term->slug ? 'selected-logo' : ''; ?>">
+				<a href="<?php echo get_term_link( $term->term_id ); ?>">
+					<?php if ( ! empty( $image_url ) ): ?>
+						<img src="<?php echo $image_url; ?>" alt="<?php echo $term->name; ?>">
+					<?php endif; ?>
+					<?php echo $term->name; ?>
+				</a>
+			</div>
+		<?php endforeach; ?>
+	<?php endif; ?>
+
 	<div class="kind-of-animal-logo <?php echo $selected === 'all' ? 'selected-logo' : ''; ?>">
-		<a href="<?php echo $category_link['all'] ?>"
-		   title="<?php _e( 'View all animals', 'virtual-adoption' ); ?>">
-			<img src="<?php echo VA_URL; ?>/assets/images/animal-logos/all.png"
-				 alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
+		<a href="<?php echo get_post_type_archive_link( 'sheltered-animal' ) ?>"
+		   title="<?php _e( 'View all', 'virtual-adoption' ); ?>">
+			<?php if ( ! empty( $all_categories_image_url ) ): ?>
+				<img src="<?php echo $all_categories_image_url; ?>" alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
+			<?php endif; ?>
 			<?php _e( 'All', 'virtual-adoption' ) ?>
-
 		</a>
 	</div>
 

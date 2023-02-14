@@ -60,3 +60,27 @@ function va_sheltered_animals_styles_and_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'va_sheltered_animals_styles_and_scripts' );
+
+
+function aw_include_script() {
+
+	$screen = get_current_screen();
+	$pages = ['settings_page_va_settings', 'edit-kind-of-animal'];
+	if ( empty( $screen->id ) || !in_array($screen->id, $pages)  ) {
+		return;
+	}
+
+	if ( ! did_action( 'wp_enqueue_media' ) ) {
+		wp_enqueue_media();
+	}
+
+	wp_enqueue_script(
+		'va_admin_scripts',
+		VA_URL . '/assets/build/js/va-admin-scripts.js',
+		[ 'jquery' ],
+		filemtime( VA_ABS . '/assets/build/js/va-admin-scripts.js' ),
+		true
+	);
+}
+
+add_action( 'admin_enqueue_scripts', 'aw_include_script' );
