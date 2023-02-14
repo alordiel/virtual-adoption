@@ -102,6 +102,10 @@ class VA_PayPal {
 			return;
 		}
 
+		$message = "PayPAl Authentication fail \n\r";
+		$message .= json_encode( $result );
+		va_log_report( 'error.log', $message );
+
 		$this->error = 'There was issue with the PayPal response';
 	}
 
@@ -311,7 +315,6 @@ class VA_PayPal {
 
 		$result = $this->curl_executor( $options, 200 );
 		if ( $result === [] ) {
-			dbga( $this->error );
 
 			return [
 				'amount'   => 0,
@@ -352,12 +355,20 @@ class VA_PayPal {
 		if ( curl_errno( $curl ) ) {
 			$this->error = 'ERROR: ' . $http_code;
 			curl_close( $curl );
+			$message = "CURL execution error $http_code \n\r";
+			$message .= json_encode( $options );
+			va_log_report( 'error.log', $message );
+
 
 			return [];
 		}
 
 		// Check for the expected code - created successfully
 		if ( $http_code !== $expected_code ) {
+			$message = "API Issue: $http_code instead of $expected_code \n\r";
+			$message .= $response;
+			va_log_report( 'error.log', $message );
+
 			$response    = json_decode( $response );
 			$this->error = 'ERROR: ' . $http_code . ' ' . $response->message;
 
@@ -374,7 +385,9 @@ class VA_PayPal {
 		// Checks if the response was parsed correctly
 		if ( $data === null ) {
 			$this->error = __( 'ERROR: Could not parse PayPal response. Check error.log for response.', 'virtual-donations' );
-			dbga( $response );
+			$message     = "Could not parse PayPal response \n\r";
+			$message     .= json_encode( $response );
+			va_log_report( 'error.log', $message );
 
 			return [];
 		}
@@ -405,14 +418,27 @@ class VA_PayPal {
 		$pub_key_details = openssl_pkey_get_details( $public_key );
 		$verify_result   = openssl_verify( $signature, base64_decode( $details['transmission_sig'] ), $pub_key_details['key'], $details['auth_algo'] );
 		// 1 => successful verification
+
 		if ( $verify_result === 0 ) {
 			$this->error = __( 'Signature is incorrect', 'virtual-adoptions' );
+			$message     = "WEBHOOK VERIFICATION FAILED - incorrect signature \n\r";
+			$message     .= "Signature: $signature" . "\n\r";
+			$message     .= "Public key: " . json_encode( $public_key ) . "\n\r";
+			$message     .= "Public key details: " . json_encode( $pub_key_details ) . "\n\r";
+			$message     .= json_encode( $details['body'] ) . "\n\r";
+			va_log_report( 'error.log', $message );
 
 			return false;
 		}
 
 		if ( $verify_result === - 1 ) {
 			$this->error = __( 'Error during signature check.', 'virtual-adoptions' );
+			$message     = "WEBHOOK VERIFICATION FAILED - verification process gave error \n\r";
+			$message     .= "Signature: $signature" . "\n\r";
+			$message     .= "Public key: " . json_encode( $public_key ) . "\n\r";
+			$message     .= "Public key details: " . json_encode( $pub_key_details ) . "\n\r";
+			$message     .= json_encode( $details['body'] ) . "\n\r";
+			va_log_report( 'error.log', $message );
 
 			return false;
 		}

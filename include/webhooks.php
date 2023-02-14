@@ -35,8 +35,9 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 			if ( ! empty( $data['resource']['plan_id'] ) ) {
 				va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-cancelled' );
 			} else {
-				// TODO LOG the event
-				dbga( $data );
+				$message = "FAILED PayPal even: BILLING.SUBSCRIPTION.CANCELLED \n\r";
+				$message .= json_encode($data);
+				va_log_report( 'error.log', $message );
 			}
 			break;
 
@@ -45,8 +46,9 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 			if ( ! empty( $data['resource']['plan_id'] ) ) {
 				va_change_subscription_status_from_paypal( $data['resource']['id'], 'va-active' );
 			} else {
-				// TODO LOG the event
-				dbga( $data );
+				$message = "FAILED PayPal even: BILLING.SUBSCRIPTION.ACTIVATED \n\r";
+				$message .= json_encode($data);
+				va_log_report( 'error.log', $message );
 			}
 			break;
 
@@ -65,14 +67,17 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 					[ '%s' ]
 				);
 			} else {
-				// TODO LOG the event
-				dbga( $data );
+				$message = "FAILED PayPal even: PAYMENT.SALE.COMPLETED \n\r";
+				$message .= json_encode($data);
+				va_log_report( 'error.log', $message );
 			}
 			break;
 
 		default:
 			// strange case where another event has hit our webhook
-			dbga( $data );
+			$message = "UNKNOWN EVENT \n\r";
+			$message .= json_encode($data);
+			va_log_report( 'error.log', $message );
 	}
 
 	return new WP_REST_Response( [ 'status' => 'Success' ], 200 );
@@ -93,6 +98,9 @@ function validate_paypal_request( WP_REST_Request $request, string $data ): bool
 	// Validates if we have the needed request headers
 	foreach ( $headers_list as $header ) {
 		if ( empty( $headers[ $header ][0] ) ) {
+			$message = "MISSING HEADER \n\r";
+			$message .= json_encode($headers);
+			va_log_report( 'error.log', $message );
 			return false;
 		}
 	}

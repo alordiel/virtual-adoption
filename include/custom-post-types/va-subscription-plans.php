@@ -143,8 +143,8 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 
 			// checks for error during initialization (authentication of PayPal)
 			if ( $VA_paypal->get_error() !== '' ) {
-				dbga( $VA_paypal->get_error() );
-
+				$message = $VA_paypal->get_error() . "\n\r";
+				va_log_report( 'error.log', $message );
 				return;
 			}
 
@@ -155,8 +155,8 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 				if ( ! empty( $product ) ) {
 					update_post_meta( $post_id, 'paypal_product_id', $paypal_product_id );
 				} else {
-					dbga( $VA_paypal->get_error() );
-
+					$message = $VA_paypal->get_error() . "\n\r";
+					va_log_report( 'error.log', $message );
 					return;
 				}
 			}
@@ -167,7 +167,8 @@ function va_save_subscription_plan_meta( int $post_id, WP_Post $post ) {
 				if ( ! empty( $subscription_plan ) ) {
 					update_post_meta( $post_id, 'paypal_plan_id', $subscription_plan['id'] );
 				} else {
-					dbga( $VA_paypal->get_error() );
+					$message = $VA_paypal->get_error() . "\n\r";
+					va_log_report( 'error.log', $message );
 				}
 			}
 		}
@@ -219,7 +220,8 @@ function va_deactivate_subscription_plan_on_trashing_plan( int $post_id ) {
 	$VA_paypal = new VA_PayPal();
 	$VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'deactivate' );
 	if ( $VA_paypal->get_error() ) {
-		dbga( $VA_paypal->get_error() );
+		$message = $VA_paypal->get_error() . "\n\r";
+		va_log_report( 'error.log', $message );
 	}
 }
 
@@ -241,7 +243,7 @@ function va_reactivate_plan_when_post_restored_from_trash( int $post_id, string 
 		return;
 	}
 
-	// check if we have connected PayPal plan to our post
+	// check if we have connected PayPal's plan to our post
 	$paypal_plan_id = get_post_meta( $post_id, 'paypal_plan_id', true );
 	if ( empty( $paypal_plan_id ) ) {
 		return;
@@ -249,10 +251,7 @@ function va_reactivate_plan_when_post_restored_from_trash( int $post_id, string 
 
 	// reactivate the PayPal subscription plan
 	$VA_paypal = new VA_PayPal();
-	$result    = $VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'activate' );
-	if ( $result === false ) {
-		dbga( $VA_paypal->get_error() );
-	}
+	$VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'activate' );
 }
 
 add_action( 'untrash_post', 'va_reactivate_plan_when_post_restored_from_trash', 10, 2 );

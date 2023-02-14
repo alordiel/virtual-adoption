@@ -201,8 +201,9 @@ function va_change_subscription_status_from_paypal( string $paypal_subscription_
 	$sql     = "SELECT post_id, ID FROM {$wpdb->prefix}va_subscriptions WHERE paypal_id = %s";
 	$details = $wpdb->get_row( $wpdb->prepare( $sql, $paypal_subscription_id ) );
 	if ( empty( $details ) ) {
-		//TODO log error
-		dbga( 'Not found subscription with ID: ' . $paypal_subscription_id );
+		$message = 'Not found subscription with ID: ' . $paypal_subscription_id . "\n\r";
+		va_log_report( 'error.log', $message );
+		return;
 	}
 
 	// Update the wp_post related to that subscription

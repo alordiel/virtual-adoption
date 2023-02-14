@@ -1,12 +1,14 @@
 <?php
-/**
- * @noinspection ForgottenDebugOutputInspection
- * Internal use only, for debugging purposes
- */
-function dbga( $arg ) {
-	error_log( print_r( $arg, true ) );
+// It is possible for another of my plugins to be activated and this function to be already declared
+if ( ! function_exists( 'dbga' ) ) {
+	/**
+	 * @noinspection ForgottenDebugOutputInspection
+	 * Internal use only, for debugging purposes
+	 */
+	function dbga( $arg ) {
+		error_log( print_r( $arg, true ) );
+	}
 }
-
 /**
  * an obfuscation of the id
  *
@@ -192,16 +194,16 @@ function va_get_subscription_by_post_id( int $post_id ): array {
  * @return void
  */
 function va_create_log_files() {
-	$log_directory = VA_UPLOADS_ABS.'/virtual-adoptions';
+	$log_directory = VA_UPLOADS_ABS . '/virtual-adoptions';
 	if ( ! mkdir( $log_directory, 755 ) && ! is_dir( $log_directory ) ) {
 		throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $log_directory ) );
 	}
 
-	$error_file = fopen(VA_UPLOADS_ABS . '/virtual-adoptions/errors.log', 'wb' );
-	fclose($error_file);
+	$error_file = fopen( VA_UPLOADS_ABS . '/virtual-adoptions/errors.log', 'wb' );
+	fclose( $error_file );
 
-	$success_message = fopen(VA_UPLOADS_ABS . '/virtual-adoptions/success.log', 'wb' );
-	fclose($success_message);
+	$success_message = fopen( VA_UPLOADS_ABS . '/virtual-adoptions/success.log', 'wb' );
+	fclose( $success_message );
 }
 
 
@@ -214,8 +216,8 @@ function va_create_log_files() {
  * @return void
  */
 function va_log_report( string $file_name, string $message ): void {
-    $file         = VA_UPLOADS_ABS . '/virtual-adoptions/' . $file_name;
-    $file_handler = fopen( $file, 'ab' );
-    fwrite( $file_handler,  "\n"  . $message . "\n");
-    fclose( $file_handler );
-  }
+	$file         = VA_UPLOADS_ABS . '/virtual-adoptions/' . $file_name;
+	$file_handler = fopen( $file, 'ab' );
+	fwrite( $file_handler, "\n" . $message . "\n" );
+	fclose( $file_handler );
+}
