@@ -222,8 +222,6 @@ function va_change_subscription_status_from_paypal( string $paypal_subscription_
 		[ '%s' ],
 		[ '%d' ]
 	);
-
-	// TODO may be send notification email to the subscriber that the subscription was cancelled
 }
 
 

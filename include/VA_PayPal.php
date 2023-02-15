@@ -292,6 +292,10 @@ class VA_PayPal {
 		];
 
 		$this->curl_executor( $options, 204, false );
+		if ($this->error !== '') {
+			va_log_report( 'error.log', "Error during cancellation of subscription with ID $subscription_id. Message: $this->error \n\r" );
+		}
+		va_log_report( 'success.log', "Successfully cancelled subscription with ID: $subscription_id \n\r" );
 	}
 
 

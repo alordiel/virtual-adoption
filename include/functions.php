@@ -9,6 +9,8 @@ if ( ! function_exists( 'dbga' ) ) {
 		error_log( print_r( $arg, true ) );
 	}
 }
+
+
 /**
  * an obfuscation of the id
  *

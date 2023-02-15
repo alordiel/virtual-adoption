@@ -40,6 +40,7 @@ function va_subscriptions_plans_post_type() {
 
 add_action( 'init', 'va_subscriptions_plans_post_type' );
 
+
 /**
  * Register meta box for subscription's details. There is no metadata that is being saved with this meta box.
  */
@@ -54,6 +55,7 @@ function va_meta_info_about_subscription_plans() {
 }
 
 add_action( 'add_meta_boxes', 'va_meta_info_about_subscription_plans' );
+
 
 /**
  * Function to display the details of the subscription in the admin
@@ -223,6 +225,7 @@ function va_deactivate_subscription_plan_on_trashing_plan( int $post_id ) {
 		$message = $VA_paypal->get_error() . "\n\r";
 		va_log_report( 'error.log', $message );
 	}
+	va_log_report( 'success.log', "Successfully deactivated PayPal plan with ID: $paypal_plan_id \n\r" );
 }
 
 add_action( 'wp_trash_post', 'va_deactivate_subscription_plan_on_trashing_plan' );
@@ -252,6 +255,7 @@ function va_reactivate_plan_when_post_restored_from_trash( int $post_id, string 
 	// reactivate the PayPal subscription plan
 	$VA_paypal = new VA_PayPal();
 	$VA_paypal->change_active_state_of_subscription_plan( $paypal_plan_id, 'activate' );
+	va_log_report( 'success.log', "Successfully activated PayPal plan with ID: $paypal_plan_id \n\r" );
 }
 
 add_action( 'untrash_post', 'va_reactivate_plan_when_post_restored_from_trash', 10, 2 );
