@@ -1,3 +1,6 @@
+/**
+ * Adds the built-in module for adding media files
+ */
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('featured-image-button').addEventListener('click', function (e) {
     e.preventDefault();
