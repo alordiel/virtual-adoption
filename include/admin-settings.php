@@ -1,6 +1,10 @@
 <?php
 
-add_action( 'admin_menu', 'ee_add_settings_page' );
+/**
+ * Adding the Virtual Adoption's settings menu to the Settings in the admin panel
+ *
+ * @return void
+ */
 function ee_add_settings_page() {
 	add_submenu_page( 'options-general.php',
 		__( 'Virtual Adoptions', 'virtual-adoption' ),
@@ -9,7 +13,13 @@ function ee_add_settings_page() {
 		'va_settings',
 		'va_admin_settings_page' );
 }
+add_action( 'admin_menu', 'ee_add_settings_page' );
 
+/**
+ * HTML and settings form for the virtual adoption's settings and tweaks
+ *
+ * @return void
+ */
 function va_admin_settings_page() {
 	?>
 
@@ -315,7 +325,16 @@ function va_admin_settings_page() {
 	<?php
 }
 
-function va_get_selected_options_for_the_admin_settings_by_page( $pages, $page_id ): string {
+
+/**
+ * Builds a string of HTML <option> tags from the list of pages (and marks the selected on if there is match between the page and selected one)
+ *
+ * @param array $pages
+ * @param int $page_id
+ *
+ * @return string
+ */
+function va_get_selected_options_for_the_admin_settings_by_page( array $pages, int $page_id ): string {
 	$options = "<option value='0'>- select -</option>";
 	foreach ( $pages as $page ) {
 		$selected = ( $page_id !== 0 && $page_id === $page->ID ) ? 'selected="selected"' : '';
