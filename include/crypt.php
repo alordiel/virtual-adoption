@@ -13,23 +13,24 @@ function va_encrypt_data( string $data ): string {
 	return base64_encode( $encrypted . '::' . $iv );
 }
 
-function va_decrypt_data( string $data ) {
+function va_decrypt_data( string $paypal_secret ) {
 	$key = va_get_salt_key();
 	// Remove the base64 encoding from our key
 	$encryption_key = base64_decode( $key );
 	// To decrypt, split the encrypted data from our IV - our unique separator used was "::"
-	[ $encrypted_data, $iv ] = explode( '::', base64_decode( $data ), 2 );
+	[ $encrypted_data, $iv ] = explode( '::', base64_decode( $paypal_secret ), 2 );
 
 	return openssl_decrypt( $encrypted_data, 'aes-256-cbc', $encryption_key, 0, $iv );
 }
 
 function va_get_salt_key(): string {
-	$va_settings       = get_option( 'va-settings' );
-	$secret_phrase_key = ! empty( $va_settings['phrase-key'] ) ? $va_settings['phrase-key'] : '';
+	$salt              = get_option( 'va-salt-phrase' );
+	$secret_phrase_key = ! empty( $salt ) ? $salt : '';
 	if ( $secret_phrase_key === '' ) {
-		$va_settings['phrase-key'] = base64_encode( openssl_random_pseudo_bytes( 32 ) );
-		update_option( 'va-settings', $va_settings );
+		$salt = base64_encode( openssl_random_pseudo_bytes( 32 ) );
+		update_option( 'va-salt-phrase', $salt );
 	}
 
-	return $va_settings['phrase-key'];
+	return $salt;
 }
+

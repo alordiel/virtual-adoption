@@ -1,5 +1,5 @@
 <?php
-// load templates name in page attributes
+// loads templates name in page attributes
 function va_register_template_pages( $templates ) {
 	$templates['va-donation-checkout.php']  = 'VirtualAdoption - Donation Checkout page';
 	$templates['va-thank-you-donation.php'] = 'VirtualAdoption - Thank you page';
@@ -11,7 +11,7 @@ function va_register_template_pages( $templates ) {
 
 add_filter( 'theme_page_templates', 'va_register_template_pages' );
 
-// load page templates
+// loads page templates
 function va_add_templates_pages( $template ) {
 	$template_slug = get_page_template_slug();
 	if ( $template_slug === 'va-donation-checkout.php' ) {

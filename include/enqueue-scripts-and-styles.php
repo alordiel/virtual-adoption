@@ -1,6 +1,6 @@
 <?php
 /*
- * Adds the styles and script files
+ * Adds the styles and script files (loaded only on the pages where they are needed)
  * */
 function va_sheltered_animals_styles_and_scripts() {
 	$template_page    = get_page_template_slug();
@@ -62,6 +62,12 @@ function va_sheltered_animals_styles_and_scripts() {
 add_action( 'wp_enqueue_scripts', 'va_sheltered_animals_styles_and_scripts' );
 
 
+/**
+ * Admin script for the settings page and the taxonomy - Kind of animal
+ * Mainly handles the "Add media" functionality
+ *
+ * @return void
+ */
 function aw_include_script() {
 
 	$screen = get_current_screen();

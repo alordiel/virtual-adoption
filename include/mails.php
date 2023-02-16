@@ -36,6 +36,12 @@ function va_send_admin_warning_email( string $content, string $subject ) {
 	wp_mail( $admin_email, $subject, $content, $headers );
 }
 
+
+/**
+ * generates an array with e-mail headers for content-type (html) and  "From" header
+ *
+ * @return string[]
+ */
 function va_get_email_headers(): array {
 
 	return [

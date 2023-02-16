@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Matches the page templates to their origins (or replacing the original template with the one from the plugin)
+ *
+ * @param $template
+ *
+ * @return mixed
+ */
 function va_sheltered_animals_template_loader( $template ) {
 
 	if ( is_singular( 'sheltered-animal' ) ) {

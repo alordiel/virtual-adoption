@@ -84,6 +84,14 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 }
 
 
+/**
+ * Sends some data for validation to the VA_PayPal object
+ *
+ * @param WP_REST_Request $request
+ * @param string $data
+ *
+ * @return bool
+ */
 function validate_paypal_request( WP_REST_Request $request, string $data ): bool {
 	$headers = $request->get_headers();
 	// List of the needed headers

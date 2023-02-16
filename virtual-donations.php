@@ -43,17 +43,19 @@ require_once( VA_ABS . '/include/admin-dashboard-widget.php' );
 
 
 /**
- * Activate the plugin.
+ * Functions to execute on activation of the plugin.
  */
 function va_plugin_activated() {
 
-	// Trigger our function that registers the custom post type plugin.
+	// Registers the custom post type plugin.
 	if ( ! post_type_exists( 'sheltered-animal' ) ) {
 		va_sheltered_animals();
 		sheltered_animal_taxonomy();
 		va_register_meta_boxes();
 		va_subscription_post_type();
 	}
+
+	// Checks if we have all the required pages and if not - it will create them
 	$va_settings = get_option( 'va-settings' );
 	if ( empty( $va_settings['page']['checkout'] ) ) {
 		va_create_template_page( 'checkout' );
@@ -70,9 +72,9 @@ function va_plugin_activated() {
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
 
-	va_create_subscription_tables();
-	va_create_log_files();
-	va_custom_post_status_for_subscriptions();
+	va_create_subscription_tables(); // Adds the DataBase
+	va_create_log_files(); // Adds 2 files in wp-uploads/virtual-adoptions for reporting purposes
+	va_custom_post_status_for_subscriptions(); // Adds custom post statuses for the custom post type subscriptions
 }
 
 register_activation_hook( __FILE__, 'va_plugin_activated' );

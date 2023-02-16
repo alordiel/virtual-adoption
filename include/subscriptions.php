@@ -204,6 +204,14 @@ function va_paypal_cancel_subscription( array $subscription, string $reason ) {
 }
 
 
+/**
+ * Used from the webhook. If the subscription status changes on the PayPal it will hit the webhook and will call this function to update the DB with the made changes
+ *
+ * @param string $paypal_subscription_id
+ * @param string $status
+ *
+ * @return void
+ */
 function va_change_subscription_status_from_paypal( string $paypal_subscription_id, string $status ) {
 	global $wpdb;
 	$sql     = "SELECT post_id, ID FROM {$wpdb->prefix}va_subscriptions WHERE paypal_id = %s";
