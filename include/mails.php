@@ -18,7 +18,7 @@ function va_send_confirmation_email( WP_Post $post ) {
 		$content              = sprintf( __( "Hello, \n You have successfully subscribed for virtual adoption of %s. \n You can manage your subscriptions from <a href='%s'>this</a> link. \n Thank you for your support. \n \n Kind regards, \n ARS team.", 'virtual-adoption' ), $animal->post_title, $manage_subscriptions );
 	}
 
-	$headers = '';
+	$headers = va_get_email_headers();
 	wp_mail( $user->user_email, $subject, $content, $headers );
 }
 
@@ -32,7 +32,17 @@ function va_send_confirmation_email( WP_Post $post ) {
  */
 function va_send_admin_warning_email( string $content, string $subject ) {
 	$admin_email = get_bloginfo( 'admin_email' );
-	$headers     = '';
+	$headers     = va_get_email_headers();
 	wp_mail( $admin_email, $subject, $content, $headers );
 }
+
+function va_get_email_headers(): array {
+
+	return [
+		'Content-Type: text/html; charset=UTF-8',
+		'From: ' . get_bloginfo( 'name' ) . ' <' . get_bloginfo( 'admin_email' ) . '>'
+	];
+
+}
+
 
