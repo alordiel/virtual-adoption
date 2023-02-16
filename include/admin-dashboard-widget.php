@@ -38,12 +38,12 @@ function dashboard_widget_function() {
 	<p><?php echo sprintf( __( 'Cancelled subscriptions: %d', 'virtual-adoptions' ), $status_cancelled ); ?></p>
 	<p><?php echo sprintf( __( 'Total monthly donations: %s EUR', 'virtual-adoptions' ), $total_donations ); ?></p>
 	<p id="report-link" style="display:<?php echo (file_exists($report_link_abs)) ? 'block' : 'none'; ?>">
-		<a href="<?php echo $report_link_url; ?>" rel="noopener nofollow noreferrer" target="_blank">
+		<a href="<?php echo $report_link_url; ?>" rel="noopener nofollow noreferrer" target="_blank" class="hidden" download="subscribers-report.csv">
 			<?php _e( 'Download the last generated report', 'virtual-adoptions' ) ?>
 		</a>
 	</p>
 	<p>
-		<input type="button" name="va-donations-report" class="button-secondary" value="Generate report"
+		<input type="button" name="va-donations-report" class="button-secondary" value="Get full report"
 			   id="va-donations-report">
 	</p>
 	<script>
@@ -60,10 +60,10 @@ function dashboard_widget_function() {
 						if (response.status === 0) {
 							alert(response.message);
 						} else {
-							alert(response.message);
 							const linkParagraph = document.getElementById('report-link');
 							linkParagraph.style.display = 'block';
 							linkParagraph.children[0].href = response.url;
+							linkParagraph.children[0].click();
 						}
 					},
 					error: (error) => {
