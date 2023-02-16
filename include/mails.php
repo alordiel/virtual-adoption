@@ -11,7 +11,7 @@ function va_send_confirmation_email( WP_Post $post ) {
 		$subject = __( 'Error with the current subscription', 'virtual-adoption' );
 		$content = sprintf( __( "Hello, \n We had issues with finding entry with ID %d, please send this message to our admin. \n Thank you.", 'virtual-adoption' ), $post->ID );
 	} else {
-		$va_settings         = get_option( 'va-settings' );
+		$va_settings          = get_option( 'va-settings' );
 		$manage_subscriptions = get_permalink( $va_settings['page']['my-subscriptions'] );
 		$animal               = get_post( $details['sponsored_animal_id'] );
 		$subject              = __( 'Successful virtual adoption', 'virtual-adoption' );
@@ -21,3 +21,18 @@ function va_send_confirmation_email( WP_Post $post ) {
 	$headers = '';
 	wp_mail( $user->user_email, $subject, $content, $headers );
 }
+
+/**
+ * Sends emails to the admin email which is used in Settings -> General
+ *
+ * @param string $content
+ * @param string $subject
+ *
+ * @return void
+ */
+function va_send_admin_warning_email( string $content, string $subject ) {
+	$admin_email = get_bloginfo( 'admin_email' );
+	$headers     = '';
+	wp_mail( $admin_email, $subject, $content, $headers );
+}
+

@@ -59,7 +59,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 			'status'               => 'va-active',
 			'period_type'          => 'monthly',
 			'currency'             => $plan_details['currency'],
-			'completed_cycles'     => 0,
+			'completed_cycles'     => 1,
 			'next_due'             => date( "Y-m-d", strtotime( "+1 month" ) ),
 			'post_id'              => $post_id,
 			'email_for_updates'    => $email,
