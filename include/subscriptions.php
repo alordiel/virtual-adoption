@@ -18,27 +18,35 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 			'message' => __( 'It seems that you are not logged in. Please log in first.', 'virtual-adoption' )
 		];
 	}
-	$animal  = get_post( $animal_id );
-	$title   = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
-	$post_id = wp_insert_post( [
-		'status'      => 'va-pending-payment',
+	$VA_paypal    = new VA_PayPal();
+	$plan_details = $VA_paypal->get_subscription_plan_details( $paypal['plan_id'] );
+	$animal       = get_post( $animal_id );
+	$title        = $user->first_name . ' ' . $user->last_name . ' - ' . $animal->post_title;
+	$post_id      = wp_insert_post( [
+		'status'      => 'va-active',
 		'post_type'   => 'va-subscription',
 		'post_title'  => $title,
 		'post_author' => $user->ID,
 		'post_status' => 'va-active',
 	], true );
 
-	if ( $post_id === 0 ) {
-		return [
-			'status'  => 'error',
-			'message' => __( 'Creating the subscription entry failed', 'virtual-adoption' )
+	if ( $post_id === 0 || is_wp_error( $post_id ) ) {
+		$message = is_wp_error( $post_id ) ? $post_id->get_error_message() : __( 'Creating the subscription entry failed', 'virtual-adoption' );
+		$data    = [
+			'error_message'        => $message,
+			'user_id'              => $user->ID,
+			'sponsored_animal_id'  => $animal_id,
+			'amount'               => $plan_details['amount'],
+			'next_due'             => date( "Y-m-d", strtotime( "+1 month" ) ),
+			'email_for_updates'    => $email,
+			'paypal_id'            => $paypal['subscription_id'],
+			'subscription_plan_id' => $paypal['plan_id'],
 		];
-	}
+		va_record_error_with_creating_wp_post_( $data, 'wp_post entry not created for a new subscription' );
 
-	if ( is_wp_error( $post_id ) ) {
 		return [
 			'status'  => 'error',
-			'message' => $post_id->get_error_message()
+			'message' => $message
 		];
 	}
 
@@ -46,31 +54,30 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 		$email = $user->user_email;
 	}
 
-	$VA_paypal    = new VA_PayPal();
-	$plan_details = $VA_paypal->get_subscription_plan_details( $paypal['plan_id'] );
-
+	$subscription_data = [
+		'user_id'              => $user->ID,
+		'sponsored_animal_id'  => $animal_id,
+		'amount'               => $plan_details['amount'],
+		'status'               => 'va-active',
+		'period_type'          => 'monthly',
+		'currency'             => $plan_details['currency'],
+		'completed_cycles'     => 1,
+		'next_due'             => date( "Y-m-d", strtotime( "+1 month" ) ),
+		'post_id'              => $post_id,
+		'email_for_updates'    => $email,
+		'paypal_id'            => $paypal['subscription_id'],
+		'subscription_plan_id' => $paypal['plan_id'],
+	];
 	global $wpdb;
 	$insert_status = $wpdb->insert(
 		$wpdb->prefix . 'va_subscriptions',
-		[
-			'user_id'              => $user->ID,
-			'sponsored_animal_id'  => $animal_id,
-			'amount'               => $plan_details['amount'],
-			'status'               => 'va-active',
-			'period_type'          => 'monthly',
-			'currency'             => $plan_details['currency'],
-			'completed_cycles'     => 1,
-			'next_due'             => date( "Y-m-d", strtotime( "+1 month" ) ),
-			'post_id'              => $post_id,
-			'email_for_updates'    => $email,
-			'paypal_id'            => $paypal['subscription_id'],
-			'subscription_plan_id' => $paypal['plan_id'],
-		],
+		$subscription_data,
 		[ '%d', '%d', '%f', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s' ],
 	);
 
 	if ( $insert_status === false ) {
-		wp_delete_post( $post_id );
+		$subject = "wp_va_subscriptions entry wasn't created";
+		va_record_error_with_creating_wp_post_( $subscription_data, $subject );
 
 		return [
 			'status'  => 'error',
@@ -80,6 +87,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 
 	$subscription_id = $wpdb->insert_id;
 	update_post_meta( $post_id, 'subscription_id', $subscription_id );
+	va_log_report( 'success.log', "New subscription created: \n\r" . json_encode( $subscription_data ) );
 
 	return [
 		'status'          => 'success',
@@ -203,6 +211,7 @@ function va_change_subscription_status_from_paypal( string $paypal_subscription_
 	if ( empty( $details ) ) {
 		$message = 'Not found subscription with ID: ' . $paypal_subscription_id . "\n\r";
 		va_log_report( 'error.log', $message );
+
 		return;
 	}
 

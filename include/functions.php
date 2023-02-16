@@ -198,7 +198,7 @@ function va_get_subscription_by_post_id( int $post_id ): array {
 function va_create_log_files() {
 	$log_directory = VA_UPLOADS_ABS . '/virtual-adoptions';
 	if ( ! mkdir( $log_directory, 755 ) && ! is_dir( $log_directory ) ) {
-		throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $log_directory ) );
+		throw new RuntimeException( sprintf( 'Directory "%s" was not created', $log_directory ) );
 	}
 
 	$error_file = fopen( VA_UPLOADS_ABS . '/virtual-adoptions/errors.log', 'wb' );
@@ -222,4 +222,21 @@ function va_log_report( string $file_name, string $message ): void {
 	$file_handler = fopen( $file, 'ab' );
 	fwrite( $file_handler, "\n" . $message . "\n" );
 	fclose( $file_handler );
+}
+
+/**
+ * Used to store an error in the error.log and to notify with email the admin
+ * Used when the creation of the wp_post entry for a new subscription fails
+ * At this point we have the PayPal subscription ID but no WP entry, which must be created manually
+ *
+ * @param array $data
+ * @param string $subject
+ *
+ * @return void
+ */
+function va_record_error_with_creating_wp_post_( array $data, string $subject ) {
+	$message = json_encode( $data, JSON_NUMERIC_CHECK );
+	$message .= " \n\r You will need to add this data manually into the DB";
+	va_send_admin_warning_email( $message, $subject );
+	va_log_report( 'error.log', $subject . "\n\r" . $message );
 }
