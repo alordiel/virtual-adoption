@@ -67,7 +67,9 @@ if ( $user_id !== 0 ) {
 			<?php the_content(); ?>
 		</div>
 
-		<?php include( VA_ABS . '/templates/parts/how-it-works.php' ); ?>
+		<div class="how-it-works-wrapper">
+			<?php include( VA_ABS . '/templates/parts/how-it-works.php' ); ?>
+		</div>
 
 		<div class="text-center">
 			<?php
