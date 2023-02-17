@@ -33,6 +33,7 @@ if ( is_user_logged_in() ) {
 
 get_header();
 ?>
+<div class="va-container">
 	<div class="vir-adopt-login">
 		<form method="post">
 			<p>
@@ -64,6 +65,7 @@ get_header();
 			</p>
 		</form>
 	</div>
+</div>
 <?php
 get_footer();
 

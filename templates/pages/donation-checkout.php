@@ -9,53 +9,55 @@ if ( ! empty( $_GET['aid'] ) ) {
 }
 $va_settings = get_option( 'va-settings' );
 ?>
-	<div class="sheltered-animals-archive">
-		<?php
-		if ( $post_id !== 0 ) {
-			include_once( VA_ABS . '/templates/parts/checkout-form.php' );
-		} else {
-			$animals = get_posts( [
-				'post_type'        => 'sheltered-animal',
-				'posts_per_page'   => 9,
-				'suppress_filters' => false,
-			] );
-			if ( empty( $animals ) ) {
-				include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
+	<div class="va-container">
+		<div class="sheltered-animals-archive">
+			<?php
+			if ( $post_id !== 0 ) {
+				include_once( VA_ABS . '/templates/parts/checkout-form.php' );
 			} else {
-				?>
-				<div class="intro-text">
-					<h2><?php _e('Choose your sponsor animal','virtual-adoptions')?></h2>
-					<p><?php _e('You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
-				as little as 5.00 EUR per month.','virtual-adoptions')?></p>
-				</div>
-				<div class="list-of-animals">
-					<?php
-					$sponsor_link = get_permalink( $va_settings['page']['checkout'] );
-					$adopted_animals = va_get_list_of_adopted_animals();
-					foreach ( $animals as $animal ) {
-						// don't show already adopted animals
-						if ($adopted_animals !== [] && in_array($animal->ID, $adopted_animals)) {
-							continue;
-						}
-						$post_id = $animal->ID;
-						$age           = get_post_meta( $post_id, 'animals-age', true );
-						$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
-						$animal_link   = get_the_permalink( $post_id );
-						$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
-						$the_title     = $animal->post_title;
-						include( VA_ABS . '/templates/parts/animal-card.php');
-					}
+				$animals = get_posts( [
+					'post_type'        => 'sheltered-animal',
+					'posts_per_page'   => 9,
+					'suppress_filters' => false,
+				] );
+				if ( empty( $animals ) ) {
+					include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
+				} else {
 					?>
-				</div>
-				<div class="blue-button-wrap">
-					<a href="<?php echo get_post_type_archive_link( 'sheltered-animal' ) ?>" class="blue-button">
-						<?php _e('View all animals','virtual-adoptions')?>
-					</a>
-				</div>
-				<?php
+					<div class="intro-text">
+						<h2><?php _e( 'Choose your sponsor animal', 'virtual-adoptions' ) ?></h2>
+						<p><?php _e( 'You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
+				as little as 5.00 EUR per month.', 'virtual-adoptions' ) ?></p>
+					</div>
+					<div class="list-of-animals">
+						<?php
+						$sponsor_link    = get_permalink( $va_settings['page']['checkout'] );
+						$adopted_animals = va_get_list_of_adopted_animals();
+						foreach ( $animals as $animal ) {
+							// don't show already adopted animals
+							if ( $adopted_animals !== [] && in_array( $animal->ID, $adopted_animals ) ) {
+								continue;
+							}
+							$post_id       = $animal->ID;
+							$age           = get_post_meta( $post_id, 'animals-age', true );
+							$sheltered_for = get_post_meta( $post_id, 'sheltered-years', true );
+							$animal_link   = get_the_permalink( $post_id );
+							$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
+							$the_title     = $animal->post_title;
+							include( VA_ABS . '/templates/parts/animal-card.php' );
+						}
+						?>
+					</div>
+					<div class="blue-button-wrap">
+						<a href="<?php echo get_post_type_archive_link( 'sheltered-animal' ) ?>" class="blue-button">
+							<?php _e( 'View all animals', 'virtual-adoptions' ) ?>
+						</a>
+					</div>
+					<?php
+				}
 			}
-		}
-		?>
+			?>
+		</div>
 	</div>
 <?php
 get_footer();
