@@ -163,7 +163,7 @@ function va_sheltered_animal_save_meta( int $post_id ) {
 
 }
 
-add_action( 'save_post_sheltered_animal', 'va_sheltered_animal_save_meta' );
+add_action( 'save_post_sheltered-animal', 'va_sheltered_animal_save_meta' );
 
 
 /**
