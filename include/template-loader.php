@@ -8,17 +8,16 @@
  * @return mixed
  */
 function va_sheltered_animals_template_loader( $template ) {
-
 	if ( is_singular( 'sheltered-animal' ) ) {
-		return require( VA_ABS . '/templates/pages/single-sheltered-animal.php');
+		return  VA_ABS . '/templates/pages/single-sheltered-animal.php';
 	}
 
 	if ( is_archive() && is_post_type_archive( 'sheltered-animal' ) ) {
-		return require( VA_ABS . '/templates/pages/archive-sheltered-animal.php');
+		return  VA_ABS . '/templates/pages/archive-sheltered-animal.php';
 	}
 
 	if( is_tax( 'kind-of-animal' ) ) {
-		return require( VA_ABS . '/templates/pages/taxonomy-kind-of-animal.php');
+		return  VA_ABS . '/templates/pages/taxonomy-kind-of-animal.php';
 	}
 
 	return $template;
