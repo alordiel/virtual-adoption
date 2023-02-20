@@ -45,12 +45,13 @@ $subscriptions = get_posts( [
 					$image          = get_the_post_thumbnail_url( $details->sponsored_animal_id, 'medium' );
 					$is_cancelled   = $details->status === 'va-cancelled' || $paypal_details['status'] === 'CANCELLED';
 					$cancelled_date = '';
+
 					if ( $paypal_details['status'] === 'CANCELLED' ) {
 						$next_due       = '';
-						$cancelled_date = $details->cancellation_date;
+						$cancelled_date = date( 'Y-m-d', strtotime( $details->cancellation_date ) );
 						$status         = __( 'Cancelled', 'virtual-adoptions' );
 					} else {
-						$next_due = $paypal_details['billing_info']['next_billing_time'];
+						$next_due = date( 'Y-m-d', strtotime( $paypal_details['billing_info']['next_billing_time'] ) );
 						$status   = va_get_verbose_subscription_status( $details->status );
 					}
 					?>
@@ -71,7 +72,9 @@ $subscriptions = get_posts( [
 							</p>
 						<?php else : ?>
 							<p>
-								<?php echo sprintf( __( 'Cancelled on %s', 'virtual-adoptions' ), $cancelled_date ); ?>
+								<small>
+									<?php echo sprintf( __( 'Cancelled on %s', 'virtual-adoptions' ), $cancelled_date ); ?>
+								</small>
 							</p>
 						<?php endif; ?>
 
