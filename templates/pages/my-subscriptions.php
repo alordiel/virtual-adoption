@@ -43,6 +43,7 @@ $subscriptions = get_posts( [
 					$animal         = get_post( $details->sponsored_animal_id );
 					$paypal_details = $VA_paypal->get_subscription_details( $details->paypal_id );
 					$image          = get_the_post_thumbnail_url( $details->sponsored_animal_id, 'medium' );
+					$is_cancelled   = $details->status === 'va-cancelled' || $paypal_details['status'] === 'CANCELLED';
 					if ( $paypal_details['status'] === 'CANCELLED' ) {
 						$next_due = '';
 						$status   = __( 'Cancelled', 'virtual-adoptions' );
@@ -61,7 +62,7 @@ $subscriptions = get_posts( [
 						<p>
 							<?php echo __( 'Monthly donation', 'virtual-adoption' ) . ': ' . $details->amount . ' ' . $details->currency ?>
 						</p>
-						<?php if ( ! empty( $next_due ) ) : ?>
+						<?php if ( ! empty( $next_due ) && ! $is_cancelled ) : ?>
 							<p class="next-due-date">
 								<?php echo __( 'Next payment', 'virtual-adoption' ) . ': ' . $next_due ?>
 							</p>
@@ -71,7 +72,7 @@ $subscriptions = get_posts( [
 						</p>
 						<p class="card-actions">
 							<?php
-							if ( $details->status === 'va-active' && $paypal_details['status'] !== 'CANCELLED' ) {
+							if ( $details->status === 'va-active' && ! $is_cancelled ) {
 								?>
 								<a href="#" class="cancel-button" data-post-id="<?php echo $post_id ?>">
 									<?php _e( 'Cancel subscription', 'virtual-adoption' ) ?>
@@ -79,15 +80,6 @@ $subscriptions = get_posts( [
 										<path
 											d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/>
 									</svg>
-								</a>
-								<?php
-							} elseif ( $details->status === 'va-cancelled' || $paypal_details['status'] === 'CANCELLED' ) {
-								$settings      = get_option( 'va-settings' );
-								$encrypted_key = va_encode_id( $details->sponsored_animal_id );
-								$re_adopt_link = get_permalink( $settings['page']['checkout'] ) . '?aid=' . $encrypted_key;
-								?>
-								<a href="<?php echo $re_adopt_link; ?>">
-									<?php _e( 'Re-adopt', 'virtual-donations' ); ?>
 								</a>
 								<?php
 							}
