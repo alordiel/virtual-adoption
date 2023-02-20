@@ -274,9 +274,9 @@ class VA_PayPal {
 	 * @param string $subscription_id
 	 * @param string $reason
 	 *
-	 * @return void
+	 * @return bool true on success, false on fail
 	 */
-	public function cancel_subscription( string $subscription_id, string $reason ): void {
+	public function cancel_subscription( string $subscription_id, string $reason ): bool {
 
 		$options = [
 			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/:$subscription_id/cancel",
@@ -292,10 +292,14 @@ class VA_PayPal {
 		];
 
 		$this->curl_executor( $options, 204, false );
-		if ($this->error !== '') {
+		if ( $this->error !== '' ) {
 			va_log_report( 'error.log', "Error during cancellation of subscription with ID $subscription_id. Message: $this->error \n\r" );
+
+			return false;
 		}
-		va_log_report( 'success.log', "Successfully cancelled subscription with ID: $subscription_id \n\r" );
+		va_log_report( 'success.log', "Successfully cancelled subscription with ID: $subscription_id \n\r Reason: $reason" );
+
+		return true;
 	}
 
 

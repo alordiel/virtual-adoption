@@ -167,6 +167,12 @@ function va_get_sponsored_animal_details_by_subscription( int $subscription_post
  * @return string
  */
 function va_cancel_va_subscription_entry( int $post_id ): string {
+	$subscription = va_get_subscription_by_post_id( $post_id );
+	$result       = va_paypal_cancel_subscription( $subscription, 'Subscription was cancelled by the user' );
+
+	if ($result === false) {
+		return __('Failed to cancel from PayPal.', 'virtual-adoptions');
+	}
 
 	$post_update = wp_update_post( [
 		'ID'          => $post_id,
@@ -196,11 +202,11 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
  * @param array $subscription
  * @param string $reason
  *
- * @return void
+ * @return bool
  */
-function va_paypal_cancel_subscription( array $subscription, string $reason ) {
+function va_paypal_cancel_subscription( array $subscription, string $reason ): bool {
 	$VA_paypal = new VA_PayPal();
-	$VA_paypal->cancel_subscription( $subscription['paypal_id'], $reason );
+	return $VA_paypal->cancel_subscription( $subscription['paypal_id'], $reason );
 }
 
 
