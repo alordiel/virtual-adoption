@@ -42,7 +42,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 			'paypal_id'            => $paypal['subscription_id'],
 			'subscription_plan_id' => $paypal['plan_id'],
 		];
-		va_record_error_with_creating_wp_post_( $data, 'wp_post entry not created for a new subscription' );
+		va_record_error_with_creating_wp_post( $data, 'wp_post entry not created for a new subscription' );
 
 		return [
 			'status'  => 'error',
@@ -77,7 +77,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 
 	if ( $insert_status === false ) {
 		$subject = "wp_va_subscriptions entry wasn't created";
-		va_record_error_with_creating_wp_post_( $subscription_data, $subject );
+		va_record_error_with_creating_wp_post( $subscription_data, $subject );
 
 		return [
 			'status'  => 'error',

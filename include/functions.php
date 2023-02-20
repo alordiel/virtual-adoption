@@ -235,7 +235,7 @@ function va_log_report( string $file_name, string $message ): void {
  *
  * @return void
  */
-function va_record_error_with_creating_wp_post_( array $data, string $subject ) {
+function va_record_error_with_creating_wp_post( array $data, string $subject ) {
 	$message = json_encode( $data, JSON_NUMERIC_CHECK );
 	$message .= " \n\r You will need to add this data manually into the DB";
 	va_send_admin_warning_email( $message, $subject );
