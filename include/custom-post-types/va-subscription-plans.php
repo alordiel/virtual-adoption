@@ -47,7 +47,7 @@ add_action( 'init', 'va_subscriptions_plans_post_type' );
 function va_meta_info_about_subscription_plans() {
 	add_meta_box(
 		'subscription-plan',
-		__( 'Subscription plan details', 'virtual-adoption' ),
+		__( 'Subscription plan details', 'virtual-adoptions' ),
 		'va_subscription_plan_details',
 		'va-subscription-plan',
 		'normal'
@@ -76,16 +76,16 @@ function va_subscription_plan_details( WP_Post $post ) {
 	<div>
 		<?php if ( $paypal_test ) : ?>
 			<div style="background-color: #fd5f5f;border: 2px solid #790707; padding: 10px 20px">
-				<p><?php _e( 'PayPal is set in test mode. Check the plugin\'s settings, as well as your paypal developer\'s account. Creating a new subscription in sandbox mode will reflect only the test business account and not the live account.', 'virtual-adoption' ); ?></p>
+				<p><?php _e( 'PayPal is set in test mode. Check the plugin\'s settings, as well as your paypal developer\'s account. Creating a new subscription in sandbox mode will reflect only the test business account and not the live account.', 'virtual-adoptions' ); ?></p>
 			</div>
 		<?php endif; ?>
 		<p>
-			<label><?php _e( 'Plan cost', 'virtual-adoption' ) ?>:
+			<label><?php _e( 'Plan cost', 'virtual-adoptions' ) ?>:
 				<input type="number" value="<?php echo $plan_costs; ?>" name="plan-cost" style="width: 150px;">
 			</label> <br>
-			<label><?php _e( 'Currency', 'virtual-adoption' ) ?>:
+			<label><?php _e( 'Currency', 'virtual-adoptions' ) ?>:
 				<select name="plan-currency">
-					<option><?php _e( '-- Select currency --', 'virtual-adoption' ) ?></option>
+					<option><?php _e( '-- Select currency --', 'virtual-adoptions' ) ?></option>
 					<option <?php echo $currency === 'eur' ? 'selected' : '' ?> value="eur">EUR</option>
 					<option <?php echo $currency === 'usd' ? 'selected' : '' ?> value="usd">USD</option>
 					<option <?php echo $currency === 'gbp' ? 'selected' : '' ?> value="gbp">GBP</option>
@@ -94,17 +94,17 @@ function va_subscription_plan_details( WP_Post $post ) {
 		</p>
 		<br>
 		<p>
-			<label><?php _e( 'PayPal product ID', 'virtual-adoption' ); ?>:<br>
+			<label><?php _e( 'PayPal product ID', 'virtual-adoptions' ); ?>:<br>
 				<input type="text" readonly value="<?php echo $paypal_product_id; ?>" style="width: 300px;">
 			</label>
 		</p>
 		<p>
-			<label><?php _e( 'PayPal subscription plan ID', 'virtual-adoption' ); ?>:<br>
+			<label><?php _e( 'PayPal subscription plan ID', 'virtual-adoptions' ); ?>:<br>
 				<input type="text" readonly value="<?php echo $paypal_plan_id; ?>" style="width: 300px;">
 			</label>
 		</p>
 		<div style="background-color: #d7cca1;border: 2px solid gray; padding: 10px 20px">
-			<p><?php _e( 'Once you have created a plan, and it got its PayPal product and subscription ID it is not possible to change the amount. You may update the amount here, but this will not update the PayPal subscription plan and you will have to do this manually. Moving the current plan to trash will deactivate the plan on PayPal and will also cancel the subscriptions that were made with it. You can restore it later from the the trash, which will reactivate the PayPal plan, but will NOT resubscribe the old subscribers to it.', 'virtual-adoption' ) ?></p>
+			<p><?php _e( 'Once you have created a plan, and it got its PayPal product and subscription ID it is not possible to change the amount. You may update the amount here, but this will not update the PayPal subscription plan and you will have to do this manually. Moving the current plan to trash will deactivate the plan on PayPal and will also cancel the subscriptions that were made with it. You can restore it later from the the trash, which will reactivate the PayPal plan, but will NOT resubscribe the old subscribers to it.', 'virtual-adoptions' ) ?></p>
 		</div>
 	</div>
 	<?php wp_nonce_field( 'va-subscription-plan-meta', 'va-power-dog' ); ?>

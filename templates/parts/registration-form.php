@@ -4,42 +4,42 @@
  */
 ?>
 <p>
-	<?php _e( "First we need to create an account for you, so you can manage your monthly support. <br> Please fill in the details below.", 'virtual-adoption' ); ?>
+	<?php _e( "First we need to create an account for you, so you can manage your monthly support. <br> Please fill in the details below.", 'virtual-adoptions' ); ?>
 	<br>
-	<?php _e("After the registration you will be automatically logged in and you can proceed with the virtual adoption.",'virtual-adoption') ?>
+	<?php _e("After the registration you will be automatically logged in and you can proceed with the virtual adoption.",'virtual-adoptions') ?>
 </p>
 <p>
 	<label for="first-name">
 		<input id="first-name" name="first-name" type="text"
-			   placeholder="<?php _e( 'First name', 'virtual-adoption' ); ?>">
+			   placeholder="<?php _e( 'First name', 'virtual-adoptions' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="last-name">
 		<input id="last-name" name="last-name" type="text"
-			   placeholder="<?php _e( 'Last name', 'virtual-adoption' ); ?>">
+			   placeholder="<?php _e( 'Last name', 'virtual-adoptions' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="email">
 		<input id="email" name="email" type="email"
-			   placeholder="<?php _e( 'Email', 'virtual-adoption' ); ?>">
+			   placeholder="<?php _e( 'Email', 'virtual-adoptions' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="password">
 		<input id="password" name="password" type="password"
-			   placeholder="<?php _e( 'Password', 'virtual-adoption' ); ?>">
+			   placeholder="<?php _e( 'Password', 'virtual-adoptions' ); ?>">
 		<small></small>
 	</label>
 </p>
 <p>
 	<label for="re-password">
 		<input id="re-password" name="re-password"
-			   type="password" placeholder="<?php _e( 'Confirm Password', 'virtual-adoption' ); ?>">
+			   type="password" placeholder="<?php _e( 'Confirm Password', 'virtual-adoptions' ); ?>">
 		<small></small>
 	</label>
 </p>
@@ -50,7 +50,7 @@
 			<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
 		</span>
 		<small id="terms-error"  class="alert-danger hidden">
-			<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
+			<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoptions' ); ?>
 		</small>
 	</label>
 	<input type="hidden" name="terms-field" value="1">

@@ -15,7 +15,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 	if ( $user === null ) {
 		return [
 			'status'  => 'error',
-			'message' => __( 'It seems that you are not logged in. Please log in first.', 'virtual-adoption' )
+			'message' => __( 'It seems that you are not logged in. Please log in first.', 'virtual-adoptions' )
 		];
 	}
 	$VA_paypal    = new VA_PayPal();
@@ -31,7 +31,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 	], true );
 
 	if ( $post_id === 0 || is_wp_error( $post_id ) ) {
-		$message = is_wp_error( $post_id ) ? $post_id->get_error_message() : __( 'Creating the subscription entry failed', 'virtual-adoption' );
+		$message = is_wp_error( $post_id ) ? $post_id->get_error_message() : __( 'Creating the subscription entry failed', 'virtual-adoptions' );
 		$data    = [
 			'error_message'        => $message,
 			'user_id'              => $user->ID,
@@ -81,7 +81,7 @@ function va_create_new_donation_subscription( int $animal_id, array $paypal, str
 
 		return [
 			'status'  => 'error',
-			'message' => __( 'Creating the subscription entry failed', 'virtual-adoption' )
+			'message' => __( 'Creating the subscription entry failed', 'virtual-adoptions' )
 		];
 	}
 

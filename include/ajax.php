@@ -9,16 +9,16 @@ function va_create_new_donation_subscription_ajax() {
 	check_ajax_referer( 'va-taina', 'security' );
 
 	if ( empty( $_POST['animalID'] ) || empty( $_POST['donationAmount'] ) ) {
-		va_json_response( 0, __( 'Missing some data.', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'Missing some data.', 'virtual-adoptions' ) );
 	}
 
 	if ( $_POST['acceptedTerms'] !== 'true' ) {
-		va_json_response( 0, __( 'You need to accept our terms and conditions.', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'You need to accept our terms and conditions.', 'virtual-adoptions' ) );
 	}
 
 	$donation_amount = (float) $_POST['donationAmount'];
 	if ( $donation_amount <= 0.00 ) {
-		va_json_response( 0, __( 'There is problem with the donation amount.', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'There is problem with the donation amount.', 'virtual-adoptions' ) );
 	}
 
 	// Check if animal exists
@@ -27,7 +27,7 @@ function va_create_new_donation_subscription_ajax() {
 
 	// Check if the animal's ID is not faked
 	if ( empty( $the_animal ) || $the_animal->post_type !== 'sheltered-animal' || $the_animal->post_status !== 'publish' ) {
-		va_json_response( 0, __( 'We do not have record of that animal', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'We do not have record of that animal', 'virtual-adoptions' ) );
 	}
 
 	// Checks the Gift email if given and if valid
@@ -66,11 +66,11 @@ function va_register_new_user() {
 	check_ajax_referer( 'va-taina', 'security' );
 
 	if ( empty( $_POST['pass'] ) || empty( $_POST['email'] ) || empty( $_POST['firstName'] ) || empty( $_POST['lastName'] ) ) {
-		va_json_response( 0, __( 'There is an empty field from your form. Please check all the fields', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'There is an empty field from your form. Please check all the fields', 'virtual-adoptions' ) );
 	}
 
 	if (  empty( $_POST['terms'] ) || $_POST['terms'] !== 'true' ) {
-		va_json_response( 0, __( 'You need to accept the terms in order to continue.', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'You need to accept the terms in order to continue.', 'virtual-adoptions' ) );
 	}
 
 	$user_data = [
@@ -100,7 +100,7 @@ function va_cancel_subscription_ajax() {
 	check_ajax_referer( 'va-taina', 'security' );
 
 	if ( empty( $_POST['post_id'] ) ) {
-		va_json_response( 0, __( 'No subscription ID.', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'No subscription ID.', 'virtual-adoptions' ) );
 	}
 
 	// Check if the current user is the author (creator) of the requested for cancellation subscription
@@ -108,7 +108,7 @@ function va_cancel_subscription_ajax() {
 	$post_exist = "SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_author = %d";
 	$user_id    = get_current_user_id();
 	if ( empty( $wpdb->get_var( $wpdb->prepare( $post_exist, $_POST['post_id'], $user_id ) ) ) ) {
-		va_json_response( 0, __( 'This subscription does not belong to you!', 'virtual-adoption' ) );
+		va_json_response( 0, __( 'This subscription does not belong to you!', 'virtual-adoptions' ) );
 	}
 
 	$result = va_cancel_va_subscription_entry( $_POST['post_id'] );
@@ -119,8 +119,8 @@ function va_cancel_subscription_ajax() {
 	va_log_report('success.log', "Successfully cancelled subscription ({$_POST['post_id']}) by owner ( User: $user_id)");
 
 	va_json_response( 1, '', [
-		'message' => __( 'Successfully cancelled.', 'virtual-adoption' ),
-		'status'  => __( 'Cancelled', 'virtual-adoption' )
+		'message' => __( 'Successfully cancelled.', 'virtual-adoptions' ),
+		'status'  => __( 'Cancelled', 'virtual-adoptions' )
 	] );
 }
 

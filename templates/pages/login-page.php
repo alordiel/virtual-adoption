@@ -5,7 +5,7 @@
 $error = '';
 if ( ! empty( $_POST['login-submit'] ) && ! is_user_logged_in() ) {
 	if ( ! empty( $_POST['email'] ) && ! is_email( $_POST['email'] ) ) {
-		$error = __( 'Invalid email', 'virtual-adoption' );
+		$error = __( 'Invalid email', 'virtual-adoptions' );
 	}
 	if ( ! empty( $_POST['email'] ) && ! empty( $_POST['password'] ) ) {
 		$credentials = array(
@@ -22,7 +22,7 @@ if ( ! empty( $_POST['login-submit'] ) && ! is_user_logged_in() ) {
 		}
 
 	} else {
-		$error = __( 'Please enter email and password', 'virtual-adoption' );
+		$error = __( 'Please enter email and password', 'virtual-adoptions' );
 	}
 }
 
@@ -37,18 +37,18 @@ get_header();
 	<div class="vir-adopt-login">
 		<form method="post">
 			<p>
-				<label for="email"><?php _e( 'Email', 'virtual-adoption' ); ?></label><br>
+				<label for="email"><?php _e( 'Email', 'virtual-adoptions' ); ?></label><br>
 				<input type="email" name="email" id="email"
 					   value="<?php echo ! empty( $_POST['email'] ) ? $_POST['email'] : '' ?>" autofocus>
 			</p>
 
 			<div>
-				<label for="user_pass"><?php _e( 'Password', 'virtual-adoption' ); ?></label><br>
+				<label for="user_pass"><?php _e( 'Password', 'virtual-adoptions' ); ?></label><br>
 				<input type="password" name="password" id="user_pass" value="">
 			</div>
 			<p>
 				<input name="remember-me" type="checkbox" id="remember-me" value="forever">
-				<label for="remember-me"><?php _e( 'Remember Me', 'virtual-adoption' ); ?></label>
+				<label for="remember-me"><?php _e( 'Remember Me', 'virtual-adoptions' ); ?></label>
 			</p>
 
 			<?php if ( $error !== '' ): ?>
@@ -61,7 +61,7 @@ get_header();
 
 			<p class="submit">
 				<input type="submit" name="login-submit" id="login-submit" class="button button-primary"
-					   value="<?php _e( 'Log in', 'virtual-adoption' ); ?>">
+					   value="<?php _e( 'Log in', 'virtual-adoptions' ); ?>">
 			</p>
 		</form>
 	</div>

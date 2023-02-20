@@ -7,8 +7,8 @@
  */
 function ee_add_settings_page() {
 	add_submenu_page( 'options-general.php',
-		__( 'Virtual Adoptions', 'virtual-adoption' ),
-		__( 'Virtual Adoptions', 'virtual-adoption' ),
+		__( 'Virtual Adoptions', 'virtual-adoptions' ),
+		__( 'Virtual Adoptions', 'virtual-adoptions' ),
 		'manage_options',
 		'va_settings',
 		'va_admin_settings_page' );
@@ -24,12 +24,12 @@ add_action( 'admin_menu', 'ee_add_settings_page' );
 function va_admin_settings_page() {
 	?>
 
-	<h1><?php _e( 'Virtual Adoptions settings', 'virtual-adoption' ) ?></h1>
+	<h1><?php _e( 'Virtual Adoptions settings', 'virtual-adoptions' ) ?></h1>
 
 	<?php
 
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'virtual-adoption' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'virtual-adoptions' ) );
 	}
 
 	$va_settings    = get_option( 'va-settings' );
@@ -76,7 +76,7 @@ function va_admin_settings_page() {
 
 		update_option( 'va-settings', $va_settings );
 
-		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoption' ) . '</strong></p></div>';
+		echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'virtual-adoptions' ) . '</strong></p></div>';
 	}
 
 	$pages = get_posts( [
@@ -280,10 +280,10 @@ function va_admin_settings_page() {
 
 		<p class="submit">
 			<input type="submit" name="submit" class="button-primary"
-				   value="<?php _e( 'Save Changes', 'virtual-adoption' ) ?>"/>
+				   value="<?php _e( 'Save Changes', 'virtual-adoptions' ) ?>"/>
 
 			<input type="button" name="test-api" class="button-secondary"
-				   value="<?php _e( 'Test PayPal connection', 'virtual-adoption' ) ?>" id="test-api">
+				   value="<?php _e( 'Test PayPal connection', 'virtual-adoptions' ) ?>" id="test-api">
 		</p>
 		<?php wp_nonce_field( 'va-taina', 'va-security' ); ?>
 	</form>

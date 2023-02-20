@@ -8,25 +8,25 @@
 add_action( 'init', 'va_sheltered_animals' );
 function va_sheltered_animals() {
 	$labels = array(
-		'name'               => _x( 'Sheltered animals', 'post type general name', 'virtual-adoption' ),
-		'singular_name'      => _x( 'Sheltered animal', 'post type singular name', 'virtual-adoption' ),
-		'menu_name'          => _x( 'Sheltered animals', 'admin menu', 'virtual-adoption' ),
-		'name_admin_bar'     => _x( 'Sheltered animal', 'add new on admin bar', 'virtual-adoption' ),
-		'add_new'            => _x( 'Add New', 'Sheltered animal', 'virtual-adoption' ),
-		'add_new_item'       => __( 'Add New', 'virtual-adoption' ),
-		'new_item'           => __( 'New sheltered animal', 'virtual-adoption' ),
-		'edit_item'          => __( 'Edit sheltered animal', 'virtual-adoption' ),
-		'view_item'          => __( 'View sheltered animal', 'virtual-adoption' ),
-		'all_items'          => __( 'All sheltered animals', 'virtual-adoption' ),
-		'search_items'       => __( 'Search sheltered animals', 'virtual-adoption' ),
-		'parent_item_colon'  => __( 'Parent sheltered animals:', 'virtual-adoption' ),
-		'not_found'          => __( 'No sheltered animal found.', 'virtual-adoption' ),
-		'not_found_in_trash' => __( 'No sheltered animal found in Trash.', 'virtual-adoption' )
+		'name'               => _x( 'Sheltered animals', 'post type general name', 'virtual-adoptions' ),
+		'singular_name'      => _x( 'Sheltered animal', 'post type singular name', 'virtual-adoptions' ),
+		'menu_name'          => _x( 'Sheltered animals', 'admin menu', 'virtual-adoptions' ),
+		'name_admin_bar'     => _x( 'Sheltered animal', 'add new on admin bar', 'virtual-adoptions' ),
+		'add_new'            => _x( 'Add New', 'Sheltered animal', 'virtual-adoptions' ),
+		'add_new_item'       => __( 'Add New', 'virtual-adoptions' ),
+		'new_item'           => __( 'New sheltered animal', 'virtual-adoptions' ),
+		'edit_item'          => __( 'Edit sheltered animal', 'virtual-adoptions' ),
+		'view_item'          => __( 'View sheltered animal', 'virtual-adoptions' ),
+		'all_items'          => __( 'All sheltered animals', 'virtual-adoptions' ),
+		'search_items'       => __( 'Search sheltered animals', 'virtual-adoptions' ),
+		'parent_item_colon'  => __( 'Parent sheltered animals:', 'virtual-adoptions' ),
+		'not_found'          => __( 'No sheltered animal found.', 'virtual-adoptions' ),
+		'not_found_in_trash' => __( 'No sheltered animal found in Trash.', 'virtual-adoptions' )
 	);
 
 	$args = array(
 		'labels'              => $labels,
-		'description'         => __( 'Description.', 'virtual-adoption' ),
+		'description'         => __( 'Description.', 'virtual-adoptions' ),
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'show_ui'             => true,
@@ -82,7 +82,7 @@ function sheltered_animal_taxonomy() {
 function va_register_meta_boxes() {
 	add_meta_box(
 		'sheltered-animal-meta',
-		__( 'Animal\'s details', 'virtual-adoption' ),
+		__( 'Animal\'s details', 'virtual-adoptions' ),
 		'va_sheltered_animal_details',
 		'sheltered-animal',
 		'side'
@@ -103,26 +103,26 @@ function va_sheltered_animal_details( WP_Post $post ) {
 	?>
 	<p>
 		<label>
-			<?php _e( 'Age of the animal (years)', 'virtual-adoption' ); ?>
+			<?php _e( 'Age of the animal (years)', 'virtual-adoptions' ); ?>
 			<input type="text" value="<?php echo $age; ?>" name="animals-age">
 		</label>
 	</p>
 	<p>
 		<label>
-			<?php _e( 'Years spent in the shelter', 'virtual-adoption' ); ?>
+			<?php _e( 'Years spent in the shelter', 'virtual-adoptions' ); ?>
 			<input type="text" name="sheltered-years" value="<?php echo $sheltered_for ?>">
 		</label>
 	</p>
 	<p>
 		<label>
-			<?php _e( 'Sex of the animal', 'virtual-adoption' ); ?> <br>
+			<?php _e( 'Sex of the animal', 'virtual-adoptions' ); ?> <br>
 			<select name="animals-sex">
 				<option value=""></option>
 				<option value="male" <?php echo $sex === 'male' ? 'selected="selected"' : ''; ?>>
-					<?php _e( 'Male', 'virtual-adoption' ) ?>
+					<?php _e( 'Male', 'virtual-adoptions' ) ?>
 				</option>
 				<option value="female" <?php echo $sex === 'female' ? 'selected="selected"' : ''; ?>>
-					<?php _e( 'Female', 'virtual-adoption' ) ?>
+					<?php _e( 'Female', 'virtual-adoptions' ) ?>
 				</option>
 			</select>
 		</label>

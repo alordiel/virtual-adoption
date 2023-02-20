@@ -43,11 +43,11 @@ if ( ! empty( $image_id ) ) {
 
 	<div class="kind-of-animal-logo <?php echo $selected === 'all' ? 'selected-logo' : ''; ?>">
 		<a href="<?php echo get_post_type_archive_link( 'sheltered-animal' ) ?>"
-		   title="<?php _e( 'View all', 'virtual-adoption' ); ?>">
+		   title="<?php _e( 'View all', 'virtual-adoptions' ); ?>">
 			<?php if ( ! empty( $all_categories_image_url ) ): ?>
-				<img src="<?php echo $all_categories_image_url; ?>" alt="<?php _e( 'All', 'virtual-adoption' ) ?>">
+				<img src="<?php echo $all_categories_image_url; ?>" alt="<?php _e( 'All', 'virtual-adoptions' ) ?>">
 			<?php endif; ?>
-			<?php _e( 'All', 'virtual-adoption' ) ?>
+			<?php _e( 'All', 'virtual-adoptions' ) ?>
 		</a>
 	</div>
 

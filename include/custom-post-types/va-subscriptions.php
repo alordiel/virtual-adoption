@@ -282,7 +282,7 @@ add_action( 'wp_trash_post', 'va_change_status_when_post_is_trashed' );
 function va_meta_info_about_subscription() {
 	add_meta_box(
 		'subscription-info',
-		__( 'Subscription\'s details', 'virtual-adoption' ),
+		__( 'Subscription\'s details', 'virtual-adoptions' ),
 		'va_subscription_admin_details',
 		'va-subscription',
 		'normal'
@@ -306,37 +306,37 @@ function va_subscription_admin_details( WP_Post $post ) {
 	?>
 	<div>
 		<p>
-			<strong><?php _e('Sponsor\'s name', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Sponsor\'s name', 'virtual-adoptions') ?>:</strong>
 			<a href="/wp-admin/user-edit.php?user_id=<?php echo $user->ID  ?>">
 				<?php echo $user->first_name . ' ' . $user->last_name; ?>
 			</a>
 		</p>
 		<p>
-			<strong><?php _e('Sponsor\'s email', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Sponsor\'s email', 'virtual-adoptions') ?>:</strong>
 			<a href="mailto:<?php echo $user->user_email  ?>">
 				<?php echo $user->user_email; ?>
 			</a>
 		</p>
 		<p>
-			<strong><?php _e('Sponsored animal', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Sponsored animal', 'virtual-adoptions') ?>:</strong>
 			<a href="<?php echo get_permalink($supported_animal->ID);  ?>">
 				<?php echo $supported_animal->post_title; ?>
 			</a>
 		</p>
 		<p>
-			<strong><?php _e('Start date', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Start date', 'virtual-adoptions') ?>:</strong>
 			<?php echo $subscription_details['start_date']; ?>
 		</p>
 		<p>
-			<strong><?php _e('Subscription amount', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Subscription amount', 'virtual-adoptions') ?>:</strong>
 			<?php echo (float) $subscription_details['amount'] . ' ' . $subscription_details['currency']?>
 		</p>
 		<p>
-			<strong><?php _e('Number of monthly payments', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Number of monthly payments', 'virtual-adoptions') ?>:</strong>
 			<?php echo $subscription_details['completed_cycles']; ?>
 		</p>
 		<p>
-			<strong><?php _e('Total ', 'virtual-adoption') ?>:</strong>
+			<strong><?php _e('Total ', 'virtual-adoptions') ?>:</strong>
 			<?php echo $total . ' ' . $subscription_details['currency']; ?>
 		</p>
 	</div>

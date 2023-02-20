@@ -52,7 +52,7 @@ if ( empty( $sheltered_animal ) ) {
 					<div class="animal-profile-imag" style="background-image: url('<?php echo $image; ?>')"></div>
 					<div class="animal-details">
 						<h5><?php echo $name ?></h5>
-						<span><strong><?php _e( 'Age', 'virtual-adoption' ) ?>:</strong> <?php echo $age ?></span>
+						<span><strong><?php _e( 'Age', 'virtual-adoptions' ) ?>:</strong> <?php echo $age ?></span>
 					</div>
 				</div>
 			<?php endif; ?>
@@ -63,7 +63,7 @@ if ( empty( $sheltered_animal ) ) {
 					<?php include_once 'registration-form.php'; ?>
 				</div>
 			<?php else : ?>
-				<h4><strong><?php _e( 'Choose sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
+				<h4><strong><?php _e( 'Choose sponsorship amount per month', 'virtual-adoptions' ) ?></strong></h4>
 				<div class="donation-amounts">
 					<?php
 					foreach ( $plans as $plan ) {
@@ -82,13 +82,13 @@ if ( empty( $sheltered_animal ) ) {
 					<p>
 						<label for="gift-donation">
 							<input name="gift-donation" id="gift-donation" type="checkbox">
-							<?php _e( 'This will be a gift', 'virtual-adoption' ) ?>
+							<?php _e( 'This will be a gift', 'virtual-adoptions' ) ?>
 						</label>
 					</p>
 					<p class="email-gift">
 						<label for="email-gift">
 							<input id="email-gift" name="email-gift" type="email"
-								   placeholder="<?php _e( "Gift receiver's email", 'virtual-adoption' ); ?>">
+								   placeholder="<?php _e( "Gift receiver's email", 'virtual-adoptions' ); ?>">
 						</label><br>
 						<small><?php _e( 'The updates about the selected animal will be sent to that email.' ) ?></small>
 					</p>
@@ -107,16 +107,16 @@ if ( empty( $sheltered_animal ) ) {
 
 					<!-- Error messages -->
 					<div id='terms-error' class="alert-danger hidden">
-						<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
+						<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoptions' ); ?>
 					</div>
 					<div id="subscription-plan-error" class="alert-danger hidden">
-						<?php _e( 'You need to select a monthly donation amount', 'virtual-adoption' ); ?>
+						<?php _e( 'You need to select a monthly donation amount', 'virtual-adoptions' ); ?>
 					</div>
 					<div id="gift-email-error" class="alert-danger hidden">
-						<?php _e( 'Missing gift email.', 'virtual-adoption' ); ?>
+						<?php _e( 'Missing gift email.', 'virtual-adoptions' ); ?>
 					</div>
 					<div id="missing-animal-error" class="alert-danger hidden">
-						<?php _e( 'No animal was selected for donation.', 'virtual-adoption' ); ?>
+						<?php _e( 'No animal was selected for donation.', 'virtual-adoptions' ); ?>
 					</div>
 
 

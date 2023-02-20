@@ -25,7 +25,7 @@ $subscriptions = get_posts( [
 		<?php
 		if ( ! empty( $subscriptions ) ) {
 			?>
-			<h5><?php _e( 'This is the list of your subscriptions', 'virtual-adoption' ); ?></h5>
+			<h5><?php _e( 'This is the list of your subscriptions', 'virtual-adoptions' ); ?></h5>
 			<div class="manage-my-subscriptions">
 				<?php
 				global $wpdb;
@@ -34,7 +34,7 @@ $subscriptions = get_posts( [
 					$sql     = "SELECT * FROM {$wpdb->prefix}va_subscriptions WHERE post_id = $subscription->ID";
 					$details = $wpdb->get_row( $sql );
 					if ( empty( $details ) ) {
-						echo sprintf( __( 'We are missing details for subscription with ID %d', 'virtual-adoption' ), $subscription->ID );
+						echo sprintf( __( 'We are missing details for subscription with ID %d', 'virtual-adoptions' ), $subscription->ID );
 						echo '<br>';
 						continue;
 					}
@@ -57,18 +57,18 @@ $subscriptions = get_posts( [
 					?>
 					<div class="my-sponsored-animal-card card-id-<?php echo $post_id ?>">
 						<div class="animal-card-image" style="background-image: url('<?php echo $image; ?>')"></div>
-						<p><?php _e( 'Name', 'virtual-adoption' ) ?>:
+						<p><?php _e( 'Name', 'virtual-adoptions' ) ?>:
 							<a href="<?php echo get_permalink( $animal->ID ) ?>">
 								<?php echo $animal->post_title; ?>
 							</a>
 						</p>
 						<p>
-							<?php echo __( 'Monthly donation', 'virtual-adoption' ) . ': ' . $details->amount . ' ' . $details->currency ?>
+							<?php echo __( 'Monthly donation', 'virtual-adoptions' ) . ': ' . $details->amount . ' ' . $details->currency ?>
 						</p>
 
 						<?php if ( ! empty( $next_due ) && ! $is_cancelled ) : ?>
 							<p class="next-due-date">
-								<?php echo __( 'Next payment', 'virtual-adoption' ) . ': ' . $next_due ?>
+								<?php echo __( 'Next payment', 'virtual-adoptions' ) . ': ' . $next_due ?>
 							</p>
 						<?php else : ?>
 							<p>
@@ -80,7 +80,7 @@ $subscriptions = get_posts( [
 
 						<?php if ( ! $is_cancelled ) : ?>
 							<p class="subscription-status">
-								<?php echo __( 'Subscription status', 'virtual-adoption' ) . ': ' . $status ?>
+								<?php echo __( 'Subscription status', 'virtual-adoptions' ) . ': ' . $status ?>
 							</p>
 						<?php endif; ?>
 						<p class="card-actions">
@@ -88,7 +88,7 @@ $subscriptions = get_posts( [
 							if ( $details->status === 'va-active' && ! $is_cancelled ) {
 								?>
 								<a href="#" class="cancel-button" data-post-id="<?php echo $post_id ?>">
-									<?php _e( 'Cancel subscription', 'virtual-adoption' ) ?>
+									<?php _e( 'Cancel subscription', 'virtual-adoptions' ) ?>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 										<path
 											d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/>
@@ -107,7 +107,7 @@ $subscriptions = get_posts( [
 			$animal_archive_link = get_post_type_archive_link( 'sheltered-animal' );
 			?>
 			<h5>
-				<?php echo sprintf( __( 'No subscriptions found. You can check our animals waiting for your sponsorship <a href="%s">here</a>.', 'virtual-adoption' ), $animal_archive_link ) ?>
+				<?php echo sprintf( __( 'No subscriptions found. You can check our animals waiting for your sponsorship <a href="%s">here</a>.', 'virtual-adoptions' ), $animal_archive_link ) ?>
 			</h5>
 			<?php
 		}
