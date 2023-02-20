@@ -15,7 +15,7 @@
 <div class="animal-card" style="width: 18rem;">
 	<div class="animal-card-image" style="background-image: url('<?php echo $image; ?>')"></div>
 	<div class="wave-cover">
-		<div style="transform: rotate(0deg);">
+		<div style="transform: rotate(0deg); height: 41px;">
 			<svg viewBox="0 0 1920 230" xmlns="http://www.w3.org/2000/svg">
 				<path
 					d="M1920 0c-50.119 6.74-112.734 24.88-187.373 56.686-421.528 179.505-624.385 250.33-1571.311 42.354C107.818 87.295 53.9 78.197 0 71.457V300h1920V0Z"
