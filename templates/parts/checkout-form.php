@@ -39,30 +39,33 @@ if ( empty( $sheltered_animal ) ) {
 				'subscription_paypal_id' => $meta['paypal_plan_id'][0]
 			];
 		}
+	} else {
+		_e( 'No subscription plans are found.', 'virtual-donations' );
+		get_footer();
+		exit();
 	}
 	?>
 	<div class="checkout-container">
 		<div class="checkout-donation-list">
-			<?php if ($user->ID !== 0) : ?>
-			<div class="single-donation-block">
-				<div class="animal-profile-imag" style="background-image: url('<?php echo $image; ?>')"></div>
-				<div class="animal-details">
-					<h5><?php echo $name ?></h5>
-					<span><strong><?php _e( 'Age', 'virtual-adoption' ) ?>:</strong> <?php echo $age ?></span>
+			<?php if ( $user->ID !== 0 ) : ?>
+				<div class="single-donation-block">
+					<div class="animal-profile-imag" style="background-image: url('<?php echo $image; ?>')"></div>
+					<div class="animal-details">
+						<h5><?php echo $name ?></h5>
+						<span><strong><?php _e( 'Age', 'virtual-adoption' ) ?>:</strong> <?php echo $age ?></span>
+					</div>
 				</div>
-			</div>
 			<?php endif; ?>
 		</div>
 		<div class="contact-details">
-		    <?php if ( $user->ID === 0 ) : ?>
-			<div class="registration-form">
-				<?php include_once 'registration-form.php'; ?>
-			</div>
-			<?php  else :  ?>
-			<h4><strong><?php _e( 'Choose sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
-			<div class="donation-amounts">
-				<?php
-				if ( $plans !== [] ) {
+			<?php if ( $user->ID === 0 ) : ?>
+				<div class="registration-form">
+					<?php include_once 'registration-form.php'; ?>
+				</div>
+			<?php else : ?>
+				<h4><strong><?php _e( 'Choose sponsorship amount per month', 'virtual-adoption' ) ?></strong></h4>
+				<div class="donation-amounts">
+					<?php
 					foreach ( $plans as $plan ) {
 						?>
 						<label>
@@ -72,59 +75,56 @@ if ( empty( $sheltered_animal ) ) {
 						</label>
 						<?php
 					}
-				} else {
-					_e( 'No subscription plans are found.', 'virtual-donations' );
-				}
-				?>
+					?>
+				</div>
 
-			</div>
-
-			<div class="contact-details">
-				<p>
-					<label for="gift-donation">
-						<input name="gift-donation" id="gift-donation" type="checkbox">
-						<?php _e( 'This will be a gift', 'virtual-adoption' ) ?>
-					</label>
-				</p>
-				<p class="email-gift">
-					<label for="email-gift">
-						<input id="email-gift" name="email-gift" type="email"
-							   placeholder="<?php _e( "Gift receiver's email", 'virtual-adoption' ); ?>">
-					</label><br>
-					<small><?php _e( 'The updates about the selected animal will be sent to that email.' ) ?></small>
-				</p>
-			</div>
-			<div class="donation-payment-methods">
+				<div class="contact-details">
+					<p>
+						<label for="gift-donation">
+							<input name="gift-donation" id="gift-donation" type="checkbox">
+							<?php _e( 'This will be a gift', 'virtual-adoption' ) ?>
+						</label>
+					</p>
+					<p class="email-gift">
+						<label for="email-gift">
+							<input id="email-gift" name="email-gift" type="email"
+								   placeholder="<?php _e( "Gift receiver's email", 'virtual-adoption' ); ?>">
+						</label><br>
+						<small><?php _e( 'The updates about the selected animal will be sent to that email.' ) ?></small>
+					</p>
+				</div>
+				<div class="donation-payment-methods">
 					<p class="form-row">
 						<label for="terms">
 							<input type="checkbox" name="terms" id="terms">
 							<span>
-								<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
-							</span>&nbsp;<abbr class="required" title="<?php _e('Required field.', 'virtual-adoptions');?>">*</abbr>
+							<?php echo sprintf( __( 'I have read and agree to the website <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>', 'virtual-adoptions' ), $terms_page ); ?>
+						</span>&nbsp;<abbr class="required"
+										   title="<?php _e( 'Required field.', 'virtual-adoptions' ); ?>">*</abbr>
 						</label>
 						<input type="hidden" name="terms-field" value="1">
 					</p>
 
-				<!-- Error messages -->
-				<div id='terms-error' class="alert-danger hidden">
-					<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
-				</div>
-				<div id="subscription-plan-error" class="alert-danger hidden">
-					<?php _e( 'You need to select a monthly donation amount', 'virtual-adoption' ); ?>
-				</div>
-				<div id="gift-email-error" class="alert-danger hidden">
-					<?php _e( 'Missing gift email.', 'virtual-adoption' ); ?>
-				</div>
-				<div id="missing-animal-error" class="alert-danger hidden">
-					<?php _e( 'No animal was selected for donation.', 'virtual-adoption' ); ?>
-				</div>
+					<!-- Error messages -->
+					<div id='terms-error' class="alert-danger hidden">
+						<?php _e( 'You need to accept the terms and conditions.', 'virtual-adoption' ); ?>
+					</div>
+					<div id="subscription-plan-error" class="alert-danger hidden">
+						<?php _e( 'You need to select a monthly donation amount', 'virtual-adoption' ); ?>
+					</div>
+					<div id="gift-email-error" class="alert-danger hidden">
+						<?php _e( 'Missing gift email.', 'virtual-adoption' ); ?>
+					</div>
+					<div id="missing-animal-error" class="alert-danger hidden">
+						<?php _e( 'No animal was selected for donation.', 'virtual-adoption' ); ?>
+					</div>
 
 
-				<div id="paypal-button-container"></div>
-				<input type="hidden" id="plan-id">
-				<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
-				<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
-			</div>
+					<div id="paypal-button-container"></div>
+					<input type="hidden" id="plan-id">
+					<input type="hidden" id="animal-id" value="<?php echo $_GET['aid'] ?>">
+					<?php wp_nonce_field( 'va-taina', 'turbo-security' ); ?>
+				</div>
 			<?php endif; ?>
 		</div>
 	</div>
