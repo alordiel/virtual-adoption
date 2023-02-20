@@ -22,11 +22,9 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 			}
 			?>
 
-			<?php
-			if(is_tax('kind-of-animal')) {
-				echo term_description();
-			}
-			?>
+			<?php if ( is_tax( 'kind-of-animal' ) ) { ?>
+				<div class="va-term-description"> <?php echo term_description(); ?> </div>
+			<?php } ?>
 
 			<h3 class="text-center"><?php _e( 'Choose your sponsor animal', 'virtual-adoptions' ) ?></h3>
 
