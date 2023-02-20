@@ -21,6 +21,7 @@ function va_create_subscription_tables() {
     								`period_type` VARCHAR(255) NOT NULL ,
     								`completed_cycles` INT NOT NULL DEFAULT '1' ,
     								`start_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    								`cancellation_date` DATETIME NULL DEFAULT NULL,
     								`next_due` DATETIME NOT NULL ,
     								`post_id` INT(16) NOT NULL ,
     								`email_for_updates` VARCHAR(255) NOT NULL,
