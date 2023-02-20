@@ -13,6 +13,7 @@ function ee_add_settings_page() {
 		'va_settings',
 		'va_admin_settings_page' );
 }
+
 add_action( 'admin_menu', 'ee_add_settings_page' );
 
 /**
@@ -59,7 +60,7 @@ function va_admin_settings_page() {
 			'client_id'  => $_POST['paypal-client-id'],
 			'secret'     => va_encrypt_data( $_POST['paypal-secret-key'] ),
 			'test'       => isset( $_POST['paypal-test-env'] ) ? 'true' : '',
-			'webhook_id' => $has_webhook_id ?  $va_settings['payment-methods']['paypal']['webhook_id'] : 0,
+			'webhook_id' => $has_webhook_id ? $va_settings['payment-methods']['paypal']['webhook_id'] : 0,
 		];
 
 		$va_settings['general'] = [
@@ -83,7 +84,7 @@ function va_admin_settings_page() {
 		'posts_per_page' => - 1,
 	] );
 
-	$enable_categories   = $va_settings['general']['enable-categories'] === 'on' ? 'checked' : '';
+	$enable_categories   = ( ! empty( $va_settings['general']['enable-categories'] ) && $va_settings['general']['enable-categories'] === 'on' ) ? 'checked' : '';
 	$checkout_page_id    = ! empty( $va_settings['page']['checkout'] ) ? $va_settings['page']['checkout'] : 0;
 	$thank_you_page_id   = ! empty( $va_settings['page']['thank-you'] ) ? $va_settings['page']['thank-you'] : 0;
 	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
@@ -100,7 +101,7 @@ function va_admin_settings_page() {
 	$terms_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $terms_page_id );
 
 	// Image for the "All animals"
-	$image_id  = (int) $va_settings['general']['all-animals-logo'];
+	$image_id  = ! empty( $va_settings['general']['all-animals-logo'] ) ? (int) $va_settings['general']['all-animals-logo'] : 0;
 	$image_url = '';
 	if ( ! empty( $image_id ) ) {
 		$image_url = wp_get_attachment_image_url( $image_id, 'medium' );
