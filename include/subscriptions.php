@@ -182,7 +182,7 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
 		$wpdb->prefix . 'va_subscriptions',
 		[ 'status' => 'va-cancelled' ],
 		[ 'post_id' => $post_id ],
-		[ '%d' ],
+		[ '%s' ],
 		[ '%d' ]
 	);
 

@@ -116,6 +116,8 @@ function va_cancel_subscription_ajax() {
 		va_json_response( 0, $result );
 	}
 
+	va_log_report('success.log', "Successfully cancelled subscription ({$_POST['post_id']}) by owner ( User: $user_id)");
+
 	va_json_response( 1, '', [
 		'message' => __( 'Successfully cancelled.', 'virtual-adoption' ),
 		'status'  => __( 'Cancelled', 'virtual-adoption' )
