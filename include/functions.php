@@ -201,7 +201,7 @@ function va_create_log_files() {
 		throw new RuntimeException( sprintf( 'Directory "%s" was not created', $log_directory ) );
 	}
 
-	$error_file = fopen( VA_UPLOADS_ABS . '/virtual-adoptions/errors.log', 'wb' );
+	$error_file = fopen( VA_UPLOADS_ABS . '/virtual-adoptions/error.log', 'wb' );
 	fclose( $error_file );
 
 	$success_message = fopen( VA_UPLOADS_ABS . '/virtual-adoptions/success.log', 'wb' );
