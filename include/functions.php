@@ -220,7 +220,8 @@ function va_create_log_files() {
 function va_log_report( string $file_name, string $message ): void {
 	$file         = VA_UPLOADS_ABS . '/virtual-adoptions/' . $file_name;
 	$file_handler = fopen( $file, 'ab' );
-	fwrite( $file_handler, "\n" . $message . "\n" );
+	$date         = date('m/d/Y h:i:s a', time());
+	fwrite( $file_handler, "\n\r" . $date . "\n\r" . $message . "\n\r" );
 	fclose( $file_handler );
 }
 
