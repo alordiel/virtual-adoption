@@ -189,7 +189,7 @@ add_filter( 'post_row_actions', 'remove_quick_edit', 10, 2 );
  * @param WP_Post $post Post object.
  */
 function va_change_of_subscription_post_status( string $new_status, string $old_status, WP_Post $post ) {
-	if ( $old_status === $new_status ) {
+	if ( $old_status === $new_status || $post->post_type !== 'sheltered-animal' ) {
 		return;
 	}
 
