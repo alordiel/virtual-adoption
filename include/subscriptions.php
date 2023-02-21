@@ -168,7 +168,7 @@ function va_get_sponsored_animal_details_by_subscription( int $subscription_post
  */
 function va_cancel_va_subscription_entry( int $post_id ): string {
 	$subscription = va_get_subscription_by_post_id( $post_id );
-	$result       = va_paypal_cancel_subscription( $subscription, 'Subscription was cancelled by the user' );
+	$result       = va_paypal_cancel_subscription( $subscription, 'Subscription was cancelled by the user from the web site.' );
 
 	if ($result === false) {
 		return __('Failed to cancel from PayPal.', 'virtual-adoptions');
