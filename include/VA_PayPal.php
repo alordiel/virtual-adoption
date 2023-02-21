@@ -252,7 +252,7 @@ class VA_PayPal {
 	 */
 	public function change_active_state_of_subscription_plan( string $plan_id, string $action ): void {
 		$options = [
-			CURLOPT_URL            => $this->paypal_url . $this->plans_url . "/:$plan_id/$action",
+			CURLOPT_URL            => $this->paypal_url . $this->plans_url . "/$plan_id/$action",
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
 			CURLOPT_MAXREDIRS      => 10,
@@ -279,7 +279,7 @@ class VA_PayPal {
 	public function cancel_subscription( string $subscription_id, string $reason ): bool {
 
 		$options = [
-			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/:$subscription_id/cancel",
+			CURLOPT_URL            => $this->paypal_url . $this->subscription_url . "/$subscription_id/cancel",
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING       => '',
 			CURLOPT_MAXREDIRS      => 10,

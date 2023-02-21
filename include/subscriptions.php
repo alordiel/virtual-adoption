@@ -205,8 +205,7 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
  * @return bool
  */
 function va_paypal_cancel_subscription( array $subscription, string $reason ): bool {
-	$VA_paypal = new VA_PayPal();
-	return $VA_paypal->cancel_subscription( $subscription['paypal_id'], $reason );
+	return ( new VA_PayPal() )->cancel_subscription( $subscription['paypal_id'], $reason );
 }
 
 
