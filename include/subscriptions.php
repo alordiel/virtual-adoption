@@ -170,8 +170,8 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
 	$subscription = va_get_subscription_by_post_id( $post_id );
 	$result       = va_paypal_cancel_subscription( $subscription, 'Subscription was cancelled by the user from the web site.' );
 
-	if ($result === false) {
-		return __('Failed to cancel from PayPal.', 'virtual-adoptions');
+	if ( $result === false ) {
+		return __( 'Failed to cancel from PayPal.', 'virtual-adoptions' );
 	}
 
 	$post_update = wp_update_post( [
@@ -186,9 +186,12 @@ function va_cancel_va_subscription_entry( int $post_id ): string {
 	global $wpdb;
 	$wpdb->update(
 		$wpdb->prefix . 'va_subscriptions',
-		[ 'status' => 'va-cancelled' ],
+		[
+			'status'           => 'va-cancelled',
+			'cancellation_date' => date( "Y-m-d" ),
+		],
 		[ 'post_id' => $post_id ],
-		[ '%s' ],
+		[ '%s', '%s' ],
 		[ '%d' ]
 	);
 
