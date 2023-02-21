@@ -20,7 +20,7 @@ $subscriptions = get_posts( [
 	'post_status'   => 'any',
 	'post_author'   => $user_id,
 	'orderby'       => 'post_date',
-	'order'         => 'ASC',
+	'order'         => 'DESC',
 ] );
 ?>
 	<div class="va-container">
