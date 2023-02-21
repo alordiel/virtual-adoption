@@ -41,17 +41,20 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 						$image         = get_the_post_thumbnail_url( $post_id, 'medium' );
 						include( VA_ABS . '/templates/parts/animal-card.php' );
 					endwhile;
-					the_posts_pagination( array(
-						'mid_size'  => 2,
-						'prev_text' => __( 'Previous Page', 'virtual-adoptions' ),
-						'next_text' => __( 'Next Page', 'virtual-adoptions' ),
-					) );
 				else:
 					include_once( VA_ABS . '/templates/parts/no-animals-found.php' );
 				endif;
 				?>
 			</div>
-
+			<div class="page-navigation">
+				<?php
+				the_posts_pagination( array(
+					'mid_size'  => 2,
+					'prev_text' => __( 'Previous Page', 'virtual-adoptions' ),
+					'next_text' => __( 'Next Page', 'virtual-adoptions' ),
+				) );
+				?>
+			</div>
 			<?php include_once( VA_ABS . '/templates/parts/how-it-works.php' ); ?>
 
 		</div>
