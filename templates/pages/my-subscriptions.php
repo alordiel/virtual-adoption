@@ -18,7 +18,9 @@ $subscriptions = get_posts( [
 	'post_type'     => 'va-subscription',
 	'post_per_page' => - 1,
 	'post_status'   => 'any',
-	'post_author'   => $user_id
+	'post_author'   => $user_id,
+	'orderby'       => 'post_date',
+	'order'         => 'ASC',
 ] );
 ?>
 	<div class="va-container">
