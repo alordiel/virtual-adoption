@@ -32,6 +32,7 @@ function va_subscriptions_plans_post_type() {
 		'exclude_from_search' => true,
 		'has_archive'         => false,
 		'hierarchical'        => false,
+		'menu_icon'           => 'dashicons-pets',
 		'menu_position'       => null,
 		'supports'            => array( 'title' )
 	);

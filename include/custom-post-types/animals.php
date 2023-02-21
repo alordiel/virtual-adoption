@@ -39,6 +39,7 @@ function va_sheltered_animals() {
 		'has_archive'         => true,
 		'hierarchical'        => false,
 		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-pets',
 		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'page-attributes' )
 	);
 	register_post_type( 'sheltered-animal', $args );
