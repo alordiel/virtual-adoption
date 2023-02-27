@@ -69,7 +69,7 @@ function va_register_new_user() {
 		va_json_response( 0, __( 'There is an empty field from your form. Please check all the fields', 'virtual-adoptions' ) );
 	}
 
-	if (  empty( $_POST['terms'] ) || $_POST['terms'] !== 'true' ) {
+	if ( empty( $_POST['terms'] ) || $_POST['terms'] !== 'true' ) {
 		va_json_response( 0, __( 'You need to accept the terms in order to continue.', 'virtual-adoptions' ) );
 	}
 
@@ -116,7 +116,7 @@ function va_cancel_subscription_ajax() {
 		va_json_response( 0, $result );
 	}
 
-	va_log_report('success.log', "Successfully cancelled subscription ({$_POST['post_id']}) by owner ( User: $user_id)");
+	va_log_report( 'success.log', "Successfully cancelled subscription ({$_POST['post_id']}) by owner ( User: $user_id)" );
 
 	va_json_response( 1, '', [
 		'message' => __( 'Successfully cancelled.', 'virtual-adoptions' ),
@@ -151,7 +151,7 @@ function va_generate_monthly_report() {
 	$report_link_abs .= 'monthly-report.csv'; // adds the actual file
 
 	global $wpdb;
-	$sql           = "SELECT subs.amount, subs.currency, subs.status, subs.start_date, subs.completed_cycles, animals.post_title animal_name,
+	$sql           = "SELECT subs.amount, subs.currency, subs.status, subs.start_date, subs.cancellation_date ,subs.completed_cycles, animals.post_title animal_name,
        			      umeta1.meta_value first_name, umeta2.meta_value last_name, users.user_email owner_email,
        			      subs.email_for_updates gift_email
 						FROM {$wpdb->prefix}va_subscriptions subs
@@ -178,16 +178,17 @@ function va_generate_monthly_report() {
 	// Start writing in a csv file
 	$output  = fopen( $report_link_abs, 'wb' );
 	$headers = [
-		'First Name',
-		'Last Name',
-		'Email',
-		'Gifted Email',
-		'Animal Name',
-		'Donated Amount',
-		'Currency',
-		'Status',
-		'Completed cycles',
-		'Start date'
+		__( 'First Name', 'virtual-adoptions' ),
+		__( 'Last Name', 'virtual-adoptions' ),
+		__( 'Email', 'virtual-adoptions' ),
+		__( 'Gifted Email', 'virtual-adoptions' ),
+		__( 'Animal Name', 'virtual-adoptions' ),
+		__( 'Donated Amount', 'virtual-adoptions' ),
+		__( 'Currency', 'virtual-adoptions' ),
+		__( 'Status', 'virtual-adoptions' ),
+		__( 'Completed cycles', 'virtual-adoptions' ),
+		__( 'Start date', 'virtual-adoptions' ),
+		__( 'Cancellation date', 'virtual-adoptions' ),
 	];
 	fputcsv( $output, $headers );
 	foreach ( $subscriptions as $subscription ) {
@@ -201,7 +202,8 @@ function va_generate_monthly_report() {
 			$subscription->currency,
 			$subscription->status,
 			$subscription->completed_cycles,
-			$subscription->start_date
+			$subscription->start_date,
+			$subscription->cancellation_date,
 		];
 		fputcsv( $output, $row );
 	}
