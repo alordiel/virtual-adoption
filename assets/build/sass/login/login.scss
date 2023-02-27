@@ -32,8 +32,28 @@
 }
 
 
-.page-template-va-login-page  .va-container {
+.page-template-va-login-page .va-container {
   margin-top: 40px;
   margin-bottom: 30px;
   clear: both; // Because of some themes still using floating instead of flex-box
+}
+
+
+.message-box {
+  display: none;
+  margin-bottom: 10px;
+  color: #fff;
+  padding: 5px 10px;
+
+  &.error-message {
+    display: block;
+    border: 1px solid #681b1b;
+    background-color: #c67777;
+  }
+
+  &.success-message {
+    display: block;
+    border: 1px solid #197931;
+    background-color: #268835;
+  }
 }

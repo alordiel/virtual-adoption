@@ -5,6 +5,7 @@
  * @property passNoMatch string
  * @property ajaxURL string
  * @property confirmCancellation string
+ * @property noEmail string
  */
 
 // Payment and checkout page scripts
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+
   // Adds the registration functionality
   if (document.getElementById('register-user') !== null) {
     document.getElementById('register-user').addEventListener('click', function (element) {
@@ -117,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }).render('#paypal-button-container');
   }
 
-
   // Cancelling subscription (fired from My-subscriptions page)
   if (document.querySelector('.cancel-button') !== null) {
     document.querySelectorAll('.cancel-button').forEach((element) => {
@@ -125,12 +126,12 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const cancellationButton = e.target;
         // check if it is not already clicked
-        if (cancellationButton.classList.contains('disable-action') ) {
+        if (cancellationButton.classList.contains('disable-action')) {
           return;
         }
 
         if (!confirm(vaL10N.confirmCancellation)) {
-          return ;
+          return;
         }
 
         const postData = {
@@ -138,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
           security: document.getElementById('turbo-security').value,
           action: 'va_cancel_subscription_ajax',
         };
-        
+
         // disable the link
         cancellationButton.classList.add('disable-action');
 
@@ -157,6 +158,64 @@ document.addEventListener('DOMContentLoaded', function () {
         return false; // since this is clicked link, always return false
       });
     });
+  }
+
+  if (document.querySelector('.vir-adopt-login') !== null) {
+    // Handles the displaying and hiding the "Lost password" form.
+    const lostPassForm = document.getElementById('lost-password-block');
+    const loginForm = document.getElementById('login-block');
+
+    document.getElementById('go-to-reset-password').addEventListener('click', function (e) {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      lostPassForm.style.display = 'block';
+    });
+
+    document.getElementById('go-back-to-login').addEventListener('click', function (e) {
+      e.preventDefault();
+      lostPassForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+
+    // Sending request for resetting the password
+    document.getElementById('submit-reset-password').addEventListener('click', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('user_login').value;
+      const messageBox = document.querySelector('.message-box');
+
+      clearMessageBox(messageBox);
+
+      if (email === '') {
+        messageBox.innerText = vaL10N.noEmail;
+        messageBox.classList.add('error-message')
+        return;
+      }
+
+      sendResetPasswordEmail(email, messageBox)
+    })
+  }
+
+  function sendResetPasswordEmail(email, messageBox) {
+
+    const data = {
+      email,
+      action: "va_reset_users_password",
+      security: document.getElementById('login-security').value,
+    };
+
+    makeAjaxCall(data)
+      .then((success) => {
+        messageBox.innerText = success.message;
+        messageBox.classList.add('success-message');
+      }).catch((error) => {
+      messageBox.innerText = error;
+      messageBox.classList.add('error-message');
+    });
+  }
+
+  function clearMessageBox(messageBox) {
+    clearMessageBox.classList = ['message-box'];
+    clearMessageBox.innerText = '';
   }
 
   // Used to validate the contact fields when a non-logged in user is adding a donation

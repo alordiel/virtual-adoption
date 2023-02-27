@@ -36,6 +36,29 @@ function va_send_admin_warning_email( string $content, string $subject ) {
 	wp_mail( $admin_email, $subject, $content, $headers );
 }
 
+/**
+ * Sends email with link for resetting user's password;
+ *
+ * @param WP_User $user
+ *
+ * @return void
+ */
+function va_send_reset_password_mail( WP_User $user ) {
+	$user_id   = $user->ID;
+	$site_name = get_option( 'blogname' );
+	$user_info = get_userdata( $user_id );
+	$unique    = get_password_reset_key( $user_info );
+	$link      = network_site_url( "wp-login.php?action=rp&key=$unique&login=" . rawurlencode( $user_info->user_login ), 'login' );
+	$subject   = "[$site_name] " . __( "Reset Password Link", 'virtual-adoptions' );
+	$message   = '<p>' . sprintf( __( 'Dear %s,', 'virtual-adoptions' ), ucfirst( $user_info->first_name ) ) . '</p>';
+	$message   .= '<p>' . __( 'Someone requested password reset for your account.', 'virtual-adoptions' ) . '<br>';
+	$message   .= __( 'If this was a mistake, just ignore this email and nothing will happen.', 'virtual-adoptions' ) . '<br>';
+	$message   .= __( 'To reset your password, visit the following address:', 'virtual-adoptions' ) . '<br></p>';
+	$message   .= "<p><a href='$link'>" . $link . '</a></p>';
+	$message   .= '<p>Kind Regards</p>';
+	$headers   = va_get_email_headers();
+	wp_mail( $user->user_email, $subject, $message, $headers );
+}
 
 /**
  * generates an array with e-mail headers for content-type (html) and  "From" header
@@ -50,5 +73,3 @@ function va_get_email_headers(): array {
 	];
 
 }
-
-

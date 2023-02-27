@@ -254,3 +254,28 @@ function va_test_paypal_api_connection() {
 }
 
 add_action( 'wp_ajax_va_test_paypal_api_connection', 'va_test_paypal_api_connection' );
+
+
+/**
+ * Function for resetting passwords.
+ *
+ * @return void
+ */
+function va_reset_users_password() {
+	check_ajax_referer( 'va-login-form-nonce', 'security' );
+
+	if ( empty( $_POST['email'] ) || ! is_email( $_POST['email'] ) || ! email_exists( $_POST['email'] ) ) {
+		va_json_response( 0, __( 'Email not recognized or not found', 'virtual-adoptions' ) );
+	}
+
+	$user = get_user_by( 'email', sanitize_text_field( $_POST['email'] ) );
+
+	if ( $user instanceof WP_User && $user->ID !== 0 ) {
+		va_send_reset_password_mail( $user );
+		va_json_response( 1, __( 'An email with link to reset you password was sent.', 'virtual-adoptions' ) );
+	}
+
+	va_json_response( 0, __( 'Email not recognized or not found', 'virtual-adoptions' ) );
+}
+
+add_action( 'wp_ajax_nopriv_va_reset_users_password', 'va_reset_users_password' );
