@@ -51,7 +51,7 @@ function va_handle_paypal_webhook_triggered_on_subscription_change( WP_REST_Requ
 				va_log_report( 'error.log', $message );
 			}
 			break;
-
+		// Case is triggered when the subscription is automatically renewed
 		case  'PAYMENT.SALE.COMPLETED':
 			if ( ! empty( $data['resource'] ) ) {
 				$subscriptions_new_data = va_check_if_payment_is_for_subscription( $data['resource'] );
