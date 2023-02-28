@@ -129,7 +129,7 @@ function va_create_new_user_and_login( array $user_data ): string {
 		'user_email' => $user_data['email'],
 		'first_name' => $user_data['first_name'],
 		'last_name'  => $user_data['last_name'],
-		'role'       => 'virtual-adopter'
+		'role'       => 'virtual-adopter',
 	] );
 
 	if ( is_wp_error( $user_id ) ) {

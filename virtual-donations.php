@@ -75,6 +75,9 @@ function va_plugin_activated() {
 	va_create_subscription_tables(); // Adds the DataBase
 	va_create_log_files(); // Adds 2 files in wp-uploads/virtual-adoptions for reporting purposes
 	va_custom_post_status_for_subscriptions(); // Adds custom post statuses for the custom post type subscriptions
+
+	// Add custom role for virtual adopters
+	add_role( 'virtual-adopter', 'Virtual Adopter',  get_role( 'subscriber' )->capabilities );
 }
 
 register_activation_hook( __FILE__, 'va_plugin_activated' );
