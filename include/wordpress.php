@@ -32,7 +32,7 @@ add_filter( 'page_template', 'va_add_templates_pages' );
 
 /* Remove the "Dashboard" from the admin menu for non-admin users */
 function va_wp_remove_dashboard_for_non_admins () {
-    global $current_user, $menu, $submenu;
+    global $current_user, $menu;
     get_currentuserinfo();
 
     if( ! in_array( 'administrator', $current_user->roles ) ) {
