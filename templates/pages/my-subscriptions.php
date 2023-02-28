@@ -22,8 +22,13 @@ $subscriptions = get_posts( [
 	'orderby'       => 'post_date',
 	'order'         => 'DESC',
 ] );
+$edit_profile =  get_edit_profile_url();
 ?>
-	<div class="va-container">
+	<div class="va-container" style="padding-top: 20px">
+		<p>
+			<?php echo  sprintf(__('You can edit your profile form <a href="%s">here</a>.','virtual-adoptions'), $edit_profile)?>
+		</p>
+
 		<?php
 		if ( ! empty( $subscriptions ) ) {
 			?>
