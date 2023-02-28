@@ -28,3 +28,31 @@ function va_add_templates_pages( $template ) {
 }
 
 add_filter( 'page_template', 'va_add_templates_pages' );
+
+
+/* Remove the "Dashboard" from the admin menu for non-admin users */
+function va_wp_remove_dashboard_for_non_admins () {
+    global $current_user, $menu, $submenu;
+    get_currentuserinfo();
+
+    if( ! in_array( 'administrator', $current_user->roles ) ) {
+        reset( $menu );
+        $page = key( $menu );
+        while( ( __( 'Dashboard' ) != $menu[$page][0] ) && next( $menu ) ) {
+            $page = key( $menu );
+        }
+        if( __( 'Dashboard' ) == $menu[$page][0] ) {
+            unset( $menu[$page] );
+        }
+        reset($menu);
+        $page = key($menu);
+        while ( ! $current_user->has_cap( $menu[$page][1] ) && next( $menu ) ) {
+            $page = key( $menu );
+        }
+        if ( preg_match( '#wp-admin/?(index.php)?$#', $_SERVER['REQUEST_URI'] ) &&
+            ( 'index.php' != $menu[$page][2] ) ) {
+                wp_redirect( get_option( 'siteurl' ) . '/wp-admin/edit.php');
+        }
+    }
+}
+add_action('admin_menu', 'va_wp_remove_dashboard_for_non_admins');
