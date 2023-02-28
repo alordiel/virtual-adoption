@@ -28,6 +28,10 @@ if ( ! empty( $_POST['login-submit'] ) && ! is_user_logged_in() ) {
 
 
 if ( is_user_logged_in() ) {
+	if ( ! empty( $_GET['redirect-to'] ) ) {
+		wp_redirect( $_GET['redirect-to'] );
+		exit();
+	}
 	wp_redirect( get_post_type_archive_link( 'sheltered-animal' ) );
 }
 
@@ -95,7 +99,7 @@ get_header();
 			</div>
 		</div>
 	</div>
-	<?php wp_nonce_field( 'va-login-form-nonce', 'login-security' ); ?>
+<?php wp_nonce_field( 'va-login-form-nonce', 'login-security' ); ?>
 <?php
 get_footer();
 

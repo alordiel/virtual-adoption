@@ -13,6 +13,7 @@ if ( empty( $sheltered_animal ) ) {
 	$name       = $sheltered_animal->post_title;
 	$user       = wp_get_current_user();
 	$terms_page = get_the_permalink( $va_settings['page']['terms'] );
+	$login_page = get_the_permalink( $va_settings['page']['login'] );
 
 
 	$subscription_plans = get_posts( [
