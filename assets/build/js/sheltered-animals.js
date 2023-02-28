@@ -192,6 +192,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       sendResetPasswordEmail(email, messageBox)
+    });
+
+    // prevent submitting of the login form when the `enter` key is pressed on password-reset-form
+    document.getElementById('user_login').addEventListener('keydown', function (e) {
+      if (e.code === 'Enter') {
+        e.preventDefault();
+        document.getElementById('submit-reset-password').click();
+      }
     })
   }
 
