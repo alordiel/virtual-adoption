@@ -1,0 +1,720 @@
+# Copyright (C) 2023 Alexander Vasilev
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Virtual Adoption 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/virtual-adoptions\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-03-01T15:26:31+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.0-alpha-dc3beef\n"
+"X-Domain: virtual-adoptions\n"
+
+#. Plugin Name of the plugin
+msgid "Virtual Adoption"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/alordiel/virtual-adiption"
+msgstr ""
+
+#. Description of the plugin
+msgid "This plugin creates the options add animals from your shelter for virtual adoption. The payment is done on monthly bases by PayPal."
+msgstr ""
+
+#. Author of the plugin
+msgid "Alexander Vasilev"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://timelinedev.com/"
+msgstr ""
+
+#: include/admin-dashboard-widget.php:36
+msgid "Active subscriptions: %d"
+msgstr ""
+
+#: include/admin-dashboard-widget.php:37
+msgid "Pending subscriptions: %d"
+msgstr ""
+
+#: include/admin-dashboard-widget.php:38
+msgid "Cancelled subscriptions: %d"
+msgstr ""
+
+#: include/admin-dashboard-widget.php:39
+msgid "Total monthly donations: %s EUR"
+msgstr ""
+
+#: include/admin-dashboard-widget.php:42
+msgid "Download the last generated report"
+msgstr ""
+
+#: include/admin-settings.php:10
+#: include/admin-settings.php:11
+msgid "Virtual Adoptions"
+msgstr ""
+
+#: include/admin-settings.php:27
+msgid "Virtual Adoptions settings"
+msgstr ""
+
+#: include/admin-settings.php:32
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: include/admin-settings.php:79
+msgid "Settings saved."
+msgstr ""
+
+#: include/admin-settings.php:123
+msgid "Enable if you have different kind of animals (like cats, dogs, etc)."
+msgstr ""
+
+#: include/admin-settings.php:130
+msgid "Image for \"All animals\""
+msgstr ""
+
+#: include/admin-settings.php:140
+#: include/custom-post-types/animals.php:195
+msgid "Upload image"
+msgstr ""
+
+#: include/admin-settings.php:144
+#: include/custom-post-types/animals.php:199
+msgid "Remove image"
+msgstr ""
+
+#: include/admin-settings.php:283
+msgid "Save Changes"
+msgstr ""
+
+#: include/admin-settings.php:286
+msgid "Test PayPal connection"
+msgstr ""
+
+#: include/admin-settings.php:299
+#: include/ajax.php:233
+msgid "The PayPal client ID and secret key can not be empty."
+msgstr ""
+
+#: include/ajax.php:12
+msgid "Missing some data."
+msgstr ""
+
+#: include/ajax.php:16
+msgid "You need to accept our terms and conditions."
+msgstr ""
+
+#: include/ajax.php:21
+msgid "There is problem with the donation amount."
+msgstr ""
+
+#: include/ajax.php:30
+msgid "We do not have record of that animal"
+msgstr ""
+
+#: include/ajax.php:69
+msgid "There is an empty field from your form. Please check all the fields"
+msgstr ""
+
+#: include/ajax.php:73
+msgid "You need to accept the terms in order to continue."
+msgstr ""
+
+#: include/ajax.php:103
+msgid "No subscription ID."
+msgstr ""
+
+#: include/ajax.php:111
+msgid "This subscription does not belong to you!"
+msgstr ""
+
+#: include/ajax.php:122
+msgid "Successfully cancelled."
+msgstr ""
+
+#: include/ajax.php:123
+#: include/functions.php:169
+#: templates/pages/my-subscriptions.php:59
+msgid "Cancelled"
+msgstr ""
+
+#: include/ajax.php:181
+msgid "First Name"
+msgstr ""
+
+#: include/ajax.php:182
+msgid "Last Name"
+msgstr ""
+
+#: include/ajax.php:183
+#: templates/pages/login-page.php:45
+#: templates/parts/registration-form.php:34
+msgid "Email"
+msgstr ""
+
+#: include/ajax.php:184
+msgid "Gifted Email"
+msgstr ""
+
+#: include/ajax.php:185
+msgid "Animal Name"
+msgstr ""
+
+#: include/ajax.php:186
+msgid "Donated Amount"
+msgstr ""
+
+#: include/ajax.php:187
+#: include/custom-post-types/va-subscription-plans.php:87
+msgid "Currency"
+msgstr ""
+
+#: include/ajax.php:188
+msgid "Status"
+msgstr ""
+
+#: include/ajax.php:189
+msgid "Completed cycles"
+msgstr ""
+
+#: include/ajax.php:190
+#: include/custom-post-types/va-subscriptions.php:328
+msgid "Start date"
+msgstr ""
+
+#: include/ajax.php:191
+msgid "Cancellation date"
+msgstr ""
+
+#: include/ajax.php:268
+#: include/ajax.php:278
+msgid "Email not recognized or not found"
+msgstr ""
+
+#: include/ajax.php:275
+msgid "An email with link to reset you password was sent."
+msgstr ""
+
+#: include/custom-post-types/animals.php:11
+msgctxt "post type general name"
+msgid "Sheltered animals"
+msgstr ""
+
+#: include/custom-post-types/animals.php:12
+msgctxt "post type singular name"
+msgid "Sheltered animal"
+msgstr ""
+
+#: include/custom-post-types/animals.php:13
+msgctxt "admin menu"
+msgid "Sheltered animals"
+msgstr ""
+
+#: include/custom-post-types/animals.php:14
+msgctxt "add new on admin bar"
+msgid "Sheltered animal"
+msgstr ""
+
+#: include/custom-post-types/animals.php:15
+msgctxt "Sheltered animal"
+msgid "Add New"
+msgstr ""
+
+#: include/custom-post-types/animals.php:16
+msgid "Add New"
+msgstr ""
+
+#: include/custom-post-types/animals.php:17
+msgid "New sheltered animal"
+msgstr ""
+
+#: include/custom-post-types/animals.php:18
+msgid "Edit sheltered animal"
+msgstr ""
+
+#: include/custom-post-types/animals.php:19
+msgid "View sheltered animal"
+msgstr ""
+
+#: include/custom-post-types/animals.php:20
+msgid "All sheltered animals"
+msgstr ""
+
+#: include/custom-post-types/animals.php:21
+msgid "Search sheltered animals"
+msgstr ""
+
+#: include/custom-post-types/animals.php:22
+msgid "Parent sheltered animals:"
+msgstr ""
+
+#: include/custom-post-types/animals.php:23
+msgid "No sheltered animal found."
+msgstr ""
+
+#: include/custom-post-types/animals.php:24
+msgid "No sheltered animal found in Trash."
+msgstr ""
+
+#: include/custom-post-types/animals.php:29
+msgid "Description."
+msgstr ""
+
+#: include/custom-post-types/animals.php:86
+msgid "Animal's details"
+msgstr ""
+
+#: include/custom-post-types/animals.php:107
+msgid "Age of the animal (years)"
+msgstr ""
+
+#: include/custom-post-types/animals.php:113
+msgid "Years spent in the shelter"
+msgstr ""
+
+#: include/custom-post-types/animals.php:119
+msgid "Sex of the animal"
+msgstr ""
+
+#: include/custom-post-types/animals.php:123
+msgid "Male"
+msgstr ""
+
+#: include/custom-post-types/animals.php:126
+msgid "Female"
+msgstr ""
+
+#: include/custom-post-types/animals.php:187
+msgid "Image"
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:51
+msgid "Subscription plan details"
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:80
+msgid "PayPal is set in test mode. Check the plugin's settings, as well as your paypal developer's account. Creating a new subscription in sandbox mode will reflect only the test business account and not the live account."
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:84
+msgid "Plan cost"
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:89
+msgid "-- Select currency --"
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:98
+msgid "PayPal product ID"
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:103
+msgid "PayPal subscription plan ID"
+msgstr ""
+
+#: include/custom-post-types/va-subscription-plans.php:108
+msgid "Once you have created a plan, and it got its PayPal product and subscription ID it is not possible to change the amount. You may update the amount here, but this will not update the PayPal subscription plan and you will have to do this manually. Moving the current plan to trash will deactivate the plan on PayPal and will also cancel the subscriptions that were made with it. You can restore it later from the the trash, which will reactivate the PayPal plan, but will NOT resubscribe the old subscribers to it."
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:286
+msgid "Subscription's details"
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:310
+msgid "Sponsor's name"
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:316
+msgid "Sponsor's email"
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:322
+msgid "Sponsored animal"
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:332
+msgid "Subscription amount"
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:336
+msgid "Number of monthly payments"
+msgstr ""
+
+#: include/custom-post-types/va-subscriptions.php:340
+msgid "Total "
+msgstr ""
+
+#: include/enqueue-scripts-and-styles.php:53
+msgid "You subscription was successful. Thank you."
+msgstr ""
+
+#: include/enqueue-scripts-and-styles.php:54
+msgid "Field can not be empty"
+msgstr ""
+
+#: include/enqueue-scripts-and-styles.php:55
+msgid "Email field can not be empty"
+msgstr ""
+
+#: include/enqueue-scripts-and-styles.php:56
+msgid "Passwords did not matched"
+msgstr ""
+
+#: include/enqueue-scripts-and-styles.php:57
+msgid "Are you sure you want to cancel the support?"
+msgstr ""
+
+#: include/functions.php:50
+msgid "Donation checkout"
+msgstr ""
+
+#: include/functions.php:55
+msgid "Virtual adopt - Thank you"
+msgstr ""
+
+#: include/functions.php:60
+msgid "Manage my adopted animals"
+msgstr ""
+
+#: include/functions.php:65
+msgid "Login"
+msgstr ""
+
+#: include/functions.php:120
+msgid "Not valid email"
+msgstr ""
+
+#: include/functions.php:123
+msgid "There is already an user with that email"
+msgstr ""
+
+#: include/functions.php:165
+msgid "Pending"
+msgstr ""
+
+#: include/functions.php:167
+msgid "Active"
+msgstr ""
+
+#: include/mails.php:11
+msgid "Error with the current subscription"
+msgstr ""
+
+#: include/mails.php:12
+msgid ""
+"Hello, \n"
+" We had issues with finding entry with ID %d, please send this message to our admin. \n"
+" Thank you."
+msgstr ""
+
+#: include/mails.php:17
+msgid "Successful virtual adoption"
+msgstr ""
+
+#: include/mails.php:18
+msgid ""
+"Hello, \n"
+" You have successfully subscribed for virtual adoption of %s. \n"
+" You can manage your subscriptions from <a href='%s'>this</a> link. \n"
+" Thank you for your support. \n"
+" \n"
+" Kind regards, \n"
+" ARS team."
+msgstr ""
+
+#: include/mails.php:52
+msgid "Reset Password Link"
+msgstr ""
+
+#: include/mails.php:53
+msgid "Dear %s,"
+msgstr ""
+
+#: include/mails.php:54
+msgid "Someone requested password reset for your account."
+msgstr ""
+
+#: include/mails.php:55
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+
+#: include/mails.php:56
+msgid "To reset your password, visit the following address:"
+msgstr ""
+
+#: include/subscriptions.php:18
+msgid "It seems that you are not logged in. Please log in first."
+msgstr ""
+
+#: include/subscriptions.php:34
+#: include/subscriptions.php:84
+msgid "Creating the subscription entry failed"
+msgstr ""
+
+#: include/subscriptions.php:174
+msgid "Failed to cancel from PayPal."
+msgstr ""
+
+#: include/VA_PayPal.php:355
+msgid "Options for cURL not stored correctly."
+msgstr ""
+
+#: include/VA_PayPal.php:431
+msgid "Signature is incorrect"
+msgstr ""
+
+#: include/VA_PayPal.php:443
+msgid "Error during signature check."
+msgstr ""
+
+#: include/webhooks.php:27
+msgid "Not Authorized"
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:10
+msgid "Sponsor animals from \"The Farm\""
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:11
+#: templates/pages/donation-checkout.php:29
+msgid ""
+"You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for\n"
+"\t\t\t\tas little as 5.00 EUR per month."
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:13
+msgid ""
+"With more than 120 animals in our care at any one time, your support helps us gives every single one the\n"
+"\t\t\t\tvery best care possible. While most of them find a loving new home within about six weeks, some need a\n"
+"\t\t\t\tlot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of\n"
+"\t\t\t\tdifference. "
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:29
+#: templates/pages/donation-checkout.php:28
+msgid "Choose your sponsor animal"
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:53
+msgid "Previous Page"
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:54
+msgid "Next Page"
+msgstr ""
+
+#: templates/pages/donation-checkout.php:53
+msgid "View all animals"
+msgstr ""
+
+#: templates/pages/login-page.php:8
+msgid "Invalid email"
+msgstr ""
+
+#: templates/pages/login-page.php:25
+msgid "Please enter email and password"
+msgstr ""
+
+#: templates/pages/login-page.php:51
+#: templates/parts/registration-form.php:41
+msgid "Password"
+msgstr ""
+
+#: templates/pages/login-page.php:56
+msgid "Remember Me"
+msgstr ""
+
+#: templates/pages/login-page.php:69
+msgid "Log in"
+msgstr ""
+
+#: templates/pages/login-page.php:74
+#: templates/pages/login-page.php:75
+msgid "Lost your password?"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:29
+msgid "You can edit your profile form <a href=\"%s\">here</a>."
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:35
+msgid "This is the list of your subscriptions"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:44
+msgid "We are missing details for subscription with ID %d"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:67
+#: templates/pages/single-sheltered-animal.php:30
+msgid "Name"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:73
+msgid "Monthly donation"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:78
+msgid "Next payment"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:83
+msgid "Cancelled on %s"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:90
+msgid "Subscription status"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:98
+msgid "Cancel subscription"
+msgstr ""
+
+#: templates/pages/my-subscriptions.php:117
+msgid "No subscriptions found. You can check our animals waiting for your sponsorship <a href=\"%s\">here</a>."
+msgstr ""
+
+#: templates/pages/single-sheltered-animal.php:38
+#: templates/parts/animal-card.php:37
+#: templates/parts/checkout-form.php:56
+msgid "Age"
+msgstr ""
+
+#: templates/pages/single-sheltered-animal.php:46
+#: templates/parts/animal-card.php:46
+msgid "In the shelter"
+msgstr ""
+
+#: templates/pages/single-sheltered-animal.php:55
+msgid "Sex"
+msgstr ""
+
+#: templates/parts/adopted-animal.php:7
+msgid "You have this animal in your adoption list. You can check your supported animals <a href=\"\">here</a>."
+msgstr ""
+
+#: templates/parts/animal-card.php:52
+#: templates/parts/sponsor-me-button.php:9
+msgid "Sponsor me"
+msgstr ""
+
+#: templates/parts/animal-card.php:56
+msgid "Adopted"
+msgstr ""
+
+#: templates/parts/animal-card.php:60
+msgid "Read my story"
+msgstr ""
+
+#: templates/parts/checkout-form.php:67
+msgid "Choose sponsorship amount per month"
+msgstr ""
+
+#: templates/parts/checkout-form.php:86
+msgid "This will be a gift"
+msgstr ""
+
+#: templates/parts/checkout-form.php:92
+msgid "Gift receiver's email"
+msgstr ""
+
+#: templates/parts/checkout-form.php:102
+#: templates/parts/registration-form.php:56
+msgid "I have read and agree to the website <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">terms and conditions</a>"
+msgstr ""
+
+#: templates/parts/checkout-form.php:104
+msgid "Required field."
+msgstr ""
+
+#: templates/parts/checkout-form.php:111
+#: templates/parts/registration-form.php:59
+msgid "You need to accept the terms and conditions."
+msgstr ""
+
+#: templates/parts/checkout-form.php:114
+msgid "You need to select a monthly donation amount"
+msgstr ""
+
+#: templates/parts/checkout-form.php:117
+msgid "Missing gift email."
+msgstr ""
+
+#: templates/parts/checkout-form.php:120
+msgid "No animal was selected for donation."
+msgstr ""
+
+#: templates/parts/how-it-works.php:7
+msgid "How it works?"
+msgstr ""
+
+#: templates/parts/how-it-works.php:16
+msgid "Pick an animal to sponsor"
+msgstr ""
+
+#: templates/parts/how-it-works.php:17
+msgid "Choose an animal who appeals most to you, or a animal with a story that tugs simply at your heartstrings."
+msgstr ""
+
+#: templates/parts/how-it-works.php:29
+msgid "Set up your sponsorship"
+msgstr ""
+
+#: templates/parts/how-it-works.php:30
+msgid "Tell us how much you'd like to give. For gift sponsorships we'll just need to know who to send animal's updates too. Payment is done securely through PayPal."
+msgstr ""
+
+#: templates/parts/how-it-works.php:41
+msgid "Receive regular updates"
+msgstr ""
+
+#: templates/parts/how-it-works.php:42
+msgid "You, or your giftee, will receive updates from your chosen sponsored animal three times a year."
+msgstr ""
+
+#: templates/parts/no-animals-found.php:1
+msgid "Sorry, no animals were found for sponsoring."
+msgstr ""
+
+#: templates/parts/registration-form.php:12
+msgid "We need to create an account for you, so you can manage your monthly support."
+msgstr ""
+
+#: templates/parts/registration-form.php:14
+msgid "If you already have an account please log in from <a href=\"%s\">here</a>"
+msgstr ""
+
+#: templates/parts/registration-form.php:20
+msgid "First name"
+msgstr ""
+
+#: templates/parts/registration-form.php:27
+msgid "Last name"
+msgstr ""
+
+#: templates/parts/registration-form.php:48
+msgid "Confirm Password"
+msgstr ""
+
+#: templates/parts/registration-form.php:69
+msgid "Sign up"
+msgstr ""
+
+#: templates/parts/registration-form.php:73
+msgid "After the registration you will be automatically logged in and you can proceed with the virtual adoption."
+msgstr ""
+
+#: templates/parts/select-kind-of-animal.php:46
+msgid "View all"
+msgstr ""
+
+#: templates/parts/select-kind-of-animal.php:48
+#: templates/parts/select-kind-of-animal.php:50
+msgid "All"
+msgstr ""
