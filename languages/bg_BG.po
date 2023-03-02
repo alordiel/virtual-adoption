@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Virtual Adoption 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/virtual-"
 "adoptions\n"
-"POT-Creation-Date: 2023-03-02T10:16:34+00:00\n"
-"PO-Revision-Date: 2023-03-02 12:27+0200\n"
+"POT-Creation-Date: 2023-03-02T10:25:51+00:00\n"
+"PO-Revision-Date: 2023-03-02 13:21+0200\n"
 "Last-Translator: Aleksandar Vasilev <alexanader.vasilev@protonmail.com>\n"
 "Language-Team: \n"
 "Language: bg_BG\n"
@@ -18,18 +18,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Plugin Name of the plugin
-msgid "Virtual Adoption"
+#: include/admin-settings.php:10 include/admin-settings.php:11
+msgid "Virtual Adoptions"
 msgstr "Виртуални осиновявания"
 
 #. Plugin URI of the plugin
-msgid "https://github.com/alordiel/virtual-adiption"
-msgstr "https://github.com/alordiel/virtual-adiption"
+msgid "https://github.com/alordiel/virtual-adiptions"
+msgstr "https://github.com/alordiel/virtual-adiptionс"
 
 #. Description of the plugin
 msgid ""
-"This plugin creates the options add animals from your shelter for virtual "
+"This plugin creates the options to add animals from your shelter for virtual "
 "adoption. The payment is done on monthly bases by PayPal."
 msgstr ""
+"Разширението създава възможност за добавяне на животни от приюти и тяхното "
+"виртуално осиновяване, чрез месечен абонамент. Плащанията се извършват през "
+"PayPal."
 
 #. Author of the plugin
 msgid "Alexander Vasilev"
@@ -59,10 +63,6 @@ msgstr "Общо дарения:  %s EUR"
 msgid "Download the last generated report"
 msgstr "Изтеглете обобщен доклад"
 
-#: include/admin-settings.php:10 include/admin-settings.php:11
-msgid "Virtual Adoptions"
-msgstr "Виртуални осиновявания"
-
 #: include/admin-settings.php:27
 msgid "Virtual Adoptions settings"
 msgstr "Настройки на виртуални осиновявания"
@@ -73,15 +73,17 @@ msgstr "Нямате права за достъп до тази страница
 
 #: include/admin-settings.php:79
 msgid "Settings saved."
-msgstr ""
+msgstr "Настройките са запазени."
 
 #: include/admin-settings.php:123
 msgid "Enable if you have different kind of animals (like cats, dogs, etc)."
 msgstr ""
+"Активирайте тази настройка ако имате различни видове животни (кучета, котки, "
+"коне и др.)."
 
 #: include/admin-settings.php:130
 msgid "Image for \"All animals\""
-msgstr ""
+msgstr "Изображение за \"Всички животни\""
 
 #: include/admin-settings.php:140 include/custom-post-types/animals.php:195
 msgid "Upload image"
@@ -248,7 +250,7 @@ msgstr "Потърси"
 
 #: include/custom-post-types/animals.php:22
 msgid "Parent sheltered animals:"
-msgstr ""
+msgstr "Родителска публикация:"
 
 #: include/custom-post-types/animals.php:23
 msgid "No sheltered animal found."
@@ -300,6 +302,10 @@ msgid ""
 "paypal developer's account. Creating a new subscription in sandbox mode will "
 "reflect only the test business account and not the live account."
 msgstr ""
+"PayPal е в тестови режим. Ако създадете дарителски план, то той ще се добави "
+"в sandbox-а на PayPal акаунта ви. За да промените това трябва да изключите "
+"тестовия режим от настройките на разширението и от настройките на PayPal "
+"акаунта на разработчика (developer's account)."
 
 #: include/custom-post-types/va-subscription-plans.php:84
 msgid "Plan cost"
@@ -327,90 +333,98 @@ msgid ""
 "can restore it later from the the trash, which will reactivate the PayPal "
 "plan, but will NOT resubscribe the old subscribers to it."
 msgstr ""
+"След като сте създали дарителски план и той е получил своето ID на продукта "
+"и абонамента в PayPal, не е възможно да промените сумата. Можете да "
+"актуализирате сумата тук, но това няма да актуализира абонаментния план в "
+"PayPal и ще трябва да направите това ръчно. Преместването на текущия план в "
+"кошче ще деактивира плана в PayPal и също така ще отмени абонаментите, които "
+"са били направени с него. Можете да го възстановите по-късно от кошчето, "
+"което ще активира отново плана в PayPal, но НЯМА да реактивира старите "
+"дарители."
 
 #: include/custom-post-types/va-subscriptions.php:286
 msgid "Subscription's details"
-msgstr ""
+msgstr "Данни за абонамента"
 
 #: include/custom-post-types/va-subscriptions.php:310
 msgid "Sponsor's name"
-msgstr ""
+msgstr "Име на спонсора"
 
 #: include/custom-post-types/va-subscriptions.php:316
 msgid "Sponsor's email"
-msgstr ""
+msgstr "Имейл на спонсора"
 
 #: include/custom-post-types/va-subscriptions.php:322
 msgid "Sponsored animal"
-msgstr ""
+msgstr "Осиновено животно"
 
 #: include/custom-post-types/va-subscriptions.php:332
 msgid "Subscription amount"
-msgstr ""
+msgstr "Сума на дарението"
 
 #: include/custom-post-types/va-subscriptions.php:336
 msgid "Number of monthly payments"
-msgstr ""
+msgstr "Брой месечни плащания"
 
 #: include/custom-post-types/va-subscriptions.php:340
 msgid "Total "
-msgstr ""
+msgstr "Общо"
 
 #: include/enqueue-scripts-and-styles.php:53
 msgid "You subscription was successful. Thank you."
-msgstr ""
+msgstr "Вашето дарение беше успешно. Благодарим ви."
 
 #: include/enqueue-scripts-and-styles.php:54
 msgid "Field can not be empty"
-msgstr ""
+msgstr "Полето не може да бъде празно"
 
 #: include/enqueue-scripts-and-styles.php:55
 msgid "Email field can not be empty"
-msgstr ""
+msgstr "Полето за имейл не може да бъде празно"
 
 #: include/enqueue-scripts-and-styles.php:56
 msgid "Passwords did not matched"
-msgstr ""
+msgstr "Паролите не съвпадат"
 
 #: include/enqueue-scripts-and-styles.php:57
 msgid "Are you sure you want to cancel the support?"
-msgstr ""
+msgstr "Сигурни ли сте, че искате да прекратите месечното дарение?"
 
 #: include/functions.php:50
 msgid "Donation checkout"
-msgstr ""
+msgstr "Поръчка на план"
 
 #: include/functions.php:55
 msgid "Virtual adopt - Thank you"
-msgstr ""
+msgstr "Виртуално осиновяване - Благодарим ви"
 
 #: include/functions.php:60
 msgid "Manage my adopted animals"
-msgstr ""
+msgstr "Управление на месечните дарения"
 
 #: include/functions.php:65
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: include/functions.php:120
 msgid "Not valid email"
-msgstr ""
+msgstr "Невалиден имейл"
 
 #: include/functions.php:123
 msgid "There is already an user with that email"
-msgstr ""
+msgstr "Вече съществува потребител с този имейл"
 
 #: include/functions.php:165
 msgid "Pending"
-msgstr ""
+msgstr "В изчакване"
 
 #: include/functions.php:167
 msgid "Active"
-msgstr ""
+msgstr "Активен"
 
 #: include/mails.php:11
 msgid "Error with the current subscription"
-msgstr ""
+msgstr "Грешка с текущия абонамент"
 
 #: include/mails.php:12
 msgid ""
@@ -419,10 +433,14 @@ msgid ""
 "our admin. \n"
 " Thank you."
 msgstr ""
+"Здравейте,\n"
+"Възникна грешка с намирането на текущия елемент с ID %d, моля изпратете това "
+"съобщение до нашите администратори.\n"
+"Благодарим ви."
 
 #: include/mails.php:17
 msgid "Successful virtual adoption"
-msgstr ""
+msgstr "Успешно виртуално осиновяване"
 
 #: include/mails.php:18
 msgid ""
@@ -437,51 +455,53 @@ msgstr ""
 
 #: include/mails.php:52
 msgid "Reset Password Link"
-msgstr ""
+msgstr "Линк за нулиране на паролата"
 
 #: include/mails.php:53
 msgid "Dear %s,"
-msgstr ""
+msgstr "Здравейте %s,"
 
 #: include/mails.php:54
 msgid "Someone requested password reset for your account."
-msgstr ""
+msgstr "Някой е поискал нулиране на паролата за вашия акаунт."
 
 #: include/mails.php:55
 msgid "If this was a mistake, just ignore this email and nothing will happen."
 msgstr ""
+"Ако това е грешка, просто игнорирайте този имейл и нищо няма да се случи."
 
 #: include/mails.php:56
 msgid "To reset your password, visit the following address:"
-msgstr ""
+msgstr "За да нулирате паролата си, посетете следния адрес:"
 
 #: include/subscriptions.php:18
 msgid "It seems that you are not logged in. Please log in first."
 msgstr ""
+":Изглежда, че не сте влезли в системата. Моля, първо влезте в системата."
 
 #: include/subscriptions.php:34 include/subscriptions.php:84
 msgid "Creating the subscription entry failed"
-msgstr ""
+msgstr "Създаването на абонамента е неуспешно"
 
 #: include/subscriptions.php:174
 msgid "Failed to cancel from PayPal."
-msgstr ""
+msgstr "Проблем при прекратяването на абонамента от PayPal."
 
 #: include/VA_PayPal.php:355
 msgid "Options for cURL not stored correctly."
-msgstr ""
+msgstr "Грешка при настройките на cURL."
 
 #: include/VA_PayPal.php:431
 msgid "Signature is incorrect"
-msgstr ""
+msgstr "Невалиден подпис"
 
 #: include/VA_PayPal.php:443
 msgid "Error during signature check."
-msgstr ""
+msgstr "Грешка при проверка на подписа."
 
 #: include/webhooks.php:27
 msgid "Not Authorized"
-msgstr ""
+msgstr "Достъпа отказан"
 
 #: templates/pages/archive-sheltered-animal.php:10
 msgid "Sponsor animals from \"The Farm\""
@@ -505,7 +525,7 @@ msgstr ""
 #: templates/pages/archive-sheltered-animal.php:25
 #: templates/pages/donation-checkout.php:28
 msgid "Choose your sponsor animal"
-msgstr ""
+msgstr "Изберете животно за виртуално осиновяване"
 
 #: templates/pages/archive-sheltered-animal.php:49
 msgid "Previous Page"
@@ -610,16 +630,12 @@ msgid "Sex"
 msgstr "Пол"
 
 #: templates/parts/adopted-animal.php:7
-#, fuzzy
-#| msgid ""
-#| "You have this animal in your adoption list. You can check your supported "
-#| "animals <a href=\"\">here</a>."
 msgid ""
 "You have this animal in your adoption list. You can check your supported "
 "animals <a href=\"%s\">here</a>."
 msgstr ""
 "Това животно вече в списъка ви с виртуално осиновявания. Може да видите "
-"списъка си <a href=\"\">тук</a>."
+"списъка си <a href=\"%s\">тук</a>."
 
 #: templates/parts/animal-card.php:52 templates/parts/sponsor-me-button.php:9
 msgid "Sponsor me"
@@ -706,27 +722,29 @@ msgstr ""
 
 #: templates/parts/how-it-works.php:41
 msgid "Receive regular updates"
-msgstr ""
+msgstr "Получавайте новости"
 
 #: templates/parts/how-it-works.php:42
 msgid ""
 "You, or your giftee, will receive updates from your chosen sponsored animal "
 "three times a year."
 msgstr ""
+"Вие или посочен от вас имейл ще получава периодично имейли с новости около "
+"виртуално осиновеното животно."
 
 #: templates/parts/no-animals-found.php:1
 msgid "Sorry, no animals were found for sponsoring."
-msgstr ""
+msgstr "Няма намерени животни за спонсорство."
 
 #: templates/parts/registration-form.php:12
 msgid ""
 "We need to create an account for you, so you can manage your monthly support."
-msgstr ""
+msgstr "Трябва да ви създадем акаунт за да може да управлявате вашите дарения."
 
 #: templates/parts/registration-form.php:14
 msgid ""
 "If you already have an account please log in from <a href=\"%s\">here</a>"
-msgstr ""
+msgstr "Ако вече имате акаунт може да влезете от <a href=\"%s\">тук</a>"
 
 #: templates/parts/registration-form.php:20
 msgid "First name"
@@ -760,3 +778,6 @@ msgstr "Виж всички"
 #: templates/parts/select-kind-of-animal.php:50
 msgid "All"
 msgstr "Всички"
+
+#~ msgid "Virtual Adoption"
+#~ msgstr "Виртуални осиновявания"
