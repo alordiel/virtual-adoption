@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2023-03-01T15:33:14+00:00\n"
-"PO-Revision-Date: 2023-03-01 17:41+0200\n"
+"PO-Revision-Date: 2023-03-02 12:16+0200\n"
 "X-Generator: Poedit 2.3\n"
 "X-Domain: virtual-adoptions\n"
 "Last-Translator: Aleksandar Vasilev <alexanader.vasilev@protonmail.com>\n"
@@ -23,7 +23,7 @@ msgstr "Виртуални осиновявания"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/alordiel/virtual-adiption"
-msgstr ""
+msgstr "https://github.com/alordiel/virtual-adiption"
 
 #. Description of the plugin
 msgid ""
@@ -37,7 +37,7 @@ msgstr "Александър Василев"
 
 #. Author URI of the plugin
 msgid "https://timelinedev.com/"
-msgstr ""
+msgstr "https://timelinedev.com/"
 
 #: include/admin-dashboard-widget.php:36
 msgid "Active subscriptions: %d"
@@ -69,7 +69,7 @@ msgstr "Настройки на виртуални осиновявания"
 
 #: include/admin-settings.php:32
 msgid "You do not have sufficient permissions to access this page."
-msgstr "Нямате "
+msgstr "Нямате права за достъп до тази страница."
 
 #: include/admin-settings.php:79
 msgid "Settings saved."
@@ -85,166 +85,166 @@ msgstr ""
 
 #: include/admin-settings.php:140 include/custom-post-types/animals.php:195
 msgid "Upload image"
-msgstr ""
+msgstr "Кажи изображение"
 
 #: include/admin-settings.php:144 include/custom-post-types/animals.php:199
 msgid "Remove image"
-msgstr ""
+msgstr "Премахни изображение"
 
 #: include/admin-settings.php:283
 msgid "Save Changes"
-msgstr ""
+msgstr "Запази промените"
 
 #: include/admin-settings.php:286
 msgid "Test PayPal connection"
-msgstr ""
+msgstr "Тест на връзката с PayPal"
 
 #: include/admin-settings.php:299 include/ajax.php:233
 msgid "The PayPal client ID and secret key can not be empty."
-msgstr ""
+msgstr "Полетата за PayPal client ID и  secret key не трябва да са празни."
 
 #: include/ajax.php:12
 msgid "Missing some data."
-msgstr ""
+msgstr "Липсват данни."
 
 #: include/ajax.php:16
 msgid "You need to accept our terms and conditions."
-msgstr ""
+msgstr "Трябва да приемете нашите условия за ползване."
 
 #: include/ajax.php:21
 msgid "There is problem with the donation amount."
-msgstr ""
+msgstr "Има проблем със сумата на дарението."
 
 #: include/ajax.php:30
 msgid "We do not have record of that animal"
-msgstr ""
+msgstr "Нямаме данни за това животно."
 
 #: include/ajax.php:69
 msgid "There is an empty field from your form. Please check all the fields"
-msgstr ""
+msgstr "Някои от полетата са празни. Моля попълнете ги."
 
 #: include/ajax.php:73
 msgid "You need to accept the terms in order to continue."
-msgstr ""
+msgstr "Трябва да приемете нашите условия за ползване."
 
 #: include/ajax.php:103
 msgid "No subscription ID."
-msgstr ""
+msgstr "Няма ID на абонамента."
 
 #: include/ajax.php:111
 msgid "This subscription does not belong to you!"
-msgstr ""
+msgstr "Това дарение не записано към твоя акаунт."
 
 #: include/ajax.php:122
 msgid "Successfully cancelled."
-msgstr ""
+msgstr "Месечното дарение е прекратено."
 
 #: include/ajax.php:123 include/functions.php:169
 #: templates/pages/my-subscriptions.php:59
 msgid "Cancelled"
-msgstr ""
+msgstr "Прекратено"
 
 #: include/ajax.php:181
 msgid "First Name"
-msgstr ""
+msgstr "Име"
 
 #: include/ajax.php:182
 msgid "Last Name"
-msgstr ""
+msgstr "Фамилия"
 
 #: include/ajax.php:183 templates/pages/login-page.php:45
 #: templates/parts/registration-form.php:34
 msgid "Email"
-msgstr ""
+msgstr "Имейл"
 
 #: include/ajax.php:184
 msgid "Gifted Email"
-msgstr ""
+msgstr "Имейл на получател"
 
 #: include/ajax.php:185
 msgid "Animal Name"
-msgstr ""
+msgstr "Име на животно"
 
 #: include/ajax.php:186
 msgid "Donated Amount"
-msgstr ""
+msgstr "Сума на дарението"
 
 #: include/ajax.php:187 include/custom-post-types/va-subscription-plans.php:87
 msgid "Currency"
-msgstr ""
+msgstr "Валува"
 
 #: include/ajax.php:188
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: include/ajax.php:189
 msgid "Completed cycles"
-msgstr ""
+msgstr "Завършени месечни плащания"
 
 #: include/ajax.php:190 include/custom-post-types/va-subscriptions.php:328
 msgid "Start date"
-msgstr ""
+msgstr "Начална дата"
 
 #: include/ajax.php:191
 msgid "Cancellation date"
-msgstr ""
+msgstr "Дата на прекратяване"
 
 #: include/ajax.php:268 include/ajax.php:278
 msgid "Email not recognized or not found"
-msgstr ""
+msgstr "Имейлът не е намерен или не е валиден"
 
 #: include/ajax.php:275
 msgid "An email with link to reset you password was sent."
-msgstr ""
+msgstr "Успешно беше изпратен имейл с линк за нулиране на паролата ви."
 
 #: include/custom-post-types/animals.php:11
 msgctxt "post type general name"
 msgid "Sheltered animals"
-msgstr ""
+msgstr "Приютени животни"
 
 #: include/custom-post-types/animals.php:12
 msgctxt "post type singular name"
 msgid "Sheltered animal"
-msgstr ""
+msgstr "Приютено животно"
 
 #: include/custom-post-types/animals.php:13
 msgctxt "admin menu"
 msgid "Sheltered animals"
-msgstr ""
+msgstr "Приютени животни"
 
 #: include/custom-post-types/animals.php:14
 msgctxt "add new on admin bar"
 msgid "Sheltered animal"
-msgstr ""
+msgstr "Приютено животно"
 
 #: include/custom-post-types/animals.php:15
 msgctxt "Sheltered animal"
 msgid "Add New"
-msgstr ""
+msgstr "Добави"
 
 #: include/custom-post-types/animals.php:16
 msgid "Add New"
-msgstr ""
+msgstr "Добави"
 
 #: include/custom-post-types/animals.php:17
 msgid "New sheltered animal"
-msgstr ""
+msgstr "Ново животно"
 
 #: include/custom-post-types/animals.php:18
 msgid "Edit sheltered animal"
-msgstr ""
+msgstr "Редактирай"
 
 #: include/custom-post-types/animals.php:19
 msgid "View sheltered animal"
-msgstr ""
+msgstr "Виж"
 
 #: include/custom-post-types/animals.php:20
 msgid "All sheltered animals"
-msgstr ""
+msgstr "Всички животни"
 
 #: include/custom-post-types/animals.php:21
 msgid "Search sheltered animals"
-msgstr ""
+msgstr "Потърси"
 
 #: include/custom-post-types/animals.php:22
 msgid "Parent sheltered animals:"
@@ -252,47 +252,47 @@ msgstr ""
 
 #: include/custom-post-types/animals.php:23
 msgid "No sheltered animal found."
-msgstr ""
+msgstr "Няма намерени животни"
 
 #: include/custom-post-types/animals.php:24
 msgid "No sheltered animal found in Trash."
-msgstr ""
+msgstr "Няма намерени животни в кофата"
 
 #: include/custom-post-types/animals.php:29
 msgid "Description."
-msgstr ""
+msgstr "Описание"
 
 #: include/custom-post-types/animals.php:86
 msgid "Animal's details"
-msgstr ""
+msgstr "Детайли за животното"
 
 #: include/custom-post-types/animals.php:107
 msgid "Age of the animal (years)"
-msgstr ""
+msgstr "Възраст на животното (години)"
 
 #: include/custom-post-types/animals.php:113
 msgid "Years spent in the shelter"
-msgstr ""
+msgstr "Години прекарани в приюта"
 
 #: include/custom-post-types/animals.php:119
 msgid "Sex of the animal"
-msgstr ""
+msgstr "Пол"
 
 #: include/custom-post-types/animals.php:123
 msgid "Male"
-msgstr ""
+msgstr "Мъжко"
 
 #: include/custom-post-types/animals.php:126
 msgid "Female"
-msgstr ""
+msgstr "Женско"
 
 #: include/custom-post-types/animals.php:187
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
 #: include/custom-post-types/va-subscription-plans.php:51
 msgid "Subscription plan details"
-msgstr ""
+msgstr "Дарителски план"
 
 #: include/custom-post-types/va-subscription-plans.php:80
 msgid ""
@@ -303,19 +303,19 @@ msgstr ""
 
 #: include/custom-post-types/va-subscription-plans.php:84
 msgid "Plan cost"
-msgstr ""
+msgstr "Стойност на плана"
 
 #: include/custom-post-types/va-subscription-plans.php:89
 msgid "-- Select currency --"
-msgstr ""
+msgstr "-- Избери валута --"
 
 #: include/custom-post-types/va-subscription-plans.php:98
 msgid "PayPal product ID"
-msgstr ""
+msgstr "PayPal  - продуктово ID"
 
 #: include/custom-post-types/va-subscription-plans.php:103
 msgid "PayPal subscription plan ID"
-msgstr ""
+msgstr "PayPal ID на абонаментен план"
 
 #: include/custom-post-types/va-subscription-plans.php:108
 msgid ""
@@ -513,126 +513,130 @@ msgstr ""
 
 #: templates/pages/archive-sheltered-animal.php:53
 msgid "Previous Page"
-msgstr ""
+msgstr "Предишна страница"
 
 #: templates/pages/archive-sheltered-animal.php:54
 msgid "Next Page"
-msgstr ""
+msgstr "Следваща страница"
 
 #: templates/pages/donation-checkout.php:53
 msgid "View all animals"
-msgstr ""
+msgstr "Виж всички животни"
 
 #: templates/pages/login-page.php:8
 msgid "Invalid email"
-msgstr ""
+msgstr "Невалиден имейл"
 
 #: templates/pages/login-page.php:25
 msgid "Please enter email and password"
-msgstr ""
+msgstr "Моля въведете имейл и парола"
 
 #: templates/pages/login-page.php:51 templates/parts/registration-form.php:41
 msgid "Password"
-msgstr ""
+msgstr "Парола"
 
 #: templates/pages/login-page.php:56
 msgid "Remember Me"
-msgstr ""
+msgstr "Запомни ме"
 
 #: templates/pages/login-page.php:69
 msgid "Log in"
-msgstr ""
+msgstr "Вход"
 
 #: templates/pages/login-page.php:74 templates/pages/login-page.php:75
 msgid "Lost your password?"
-msgstr ""
+msgstr "Забравена парола?"
 
 #: templates/pages/my-subscriptions.php:29
 msgid "You can edit your profile form <a href=\"%s\">here</a>."
-msgstr ""
+msgstr "Може да редактирате профила си <a href=\"%s\">от тук</a>."
 
 #: templates/pages/my-subscriptions.php:35
 msgid "This is the list of your subscriptions"
-msgstr ""
+msgstr "Това е списъка с вашите виртуално осиновени животни"
 
 #: templates/pages/my-subscriptions.php:44
 msgid "We are missing details for subscription with ID %d"
-msgstr ""
+msgstr "Нямаме данни за елемент с ID %d"
 
 #: templates/pages/my-subscriptions.php:67
 #: templates/pages/single-sheltered-animal.php:30
 msgid "Name"
-msgstr ""
+msgstr "Име"
 
 #: templates/pages/my-subscriptions.php:73
 msgid "Monthly donation"
-msgstr ""
+msgstr "Месечно плащане"
 
 #: templates/pages/my-subscriptions.php:78
 msgid "Next payment"
-msgstr ""
+msgstr "Следващо плащане"
 
 #: templates/pages/my-subscriptions.php:83
 msgid "Cancelled on %s"
-msgstr ""
+msgstr "Спряна на %s"
 
 #: templates/pages/my-subscriptions.php:90
 msgid "Subscription status"
-msgstr ""
+msgstr "Статус"
 
 #: templates/pages/my-subscriptions.php:98
 msgid "Cancel subscription"
-msgstr ""
+msgstr "Прекрати дарението"
 
 #: templates/pages/my-subscriptions.php:117
 msgid ""
 "No subscriptions found. You can check our animals waiting for your "
 "sponsorship <a href=\"%s\">here</a>."
 msgstr ""
+"Няма намерени дарения. Може да намерите животно, което да подкрепите на "
+"този  <a href=\"%s\">линк</a>."
 
 #: templates/pages/single-sheltered-animal.php:38
 #: templates/parts/animal-card.php:37 templates/parts/checkout-form.php:56
 msgid "Age"
-msgstr ""
+msgstr "Възраст"
 
 #: templates/pages/single-sheltered-animal.php:46
 #: templates/parts/animal-card.php:46
 msgid "In the shelter"
-msgstr ""
+msgstr "В приюта от"
 
 #: templates/pages/single-sheltered-animal.php:55
 msgid "Sex"
-msgstr ""
+msgstr "Пол"
 
 #: templates/parts/adopted-animal.php:7
 msgid ""
 "You have this animal in your adoption list. You can check your supported "
 "animals <a href=\"\">here</a>."
 msgstr ""
+"Това животно вече в списъка ви с виртуално осиновявания. Може да видите "
+"списъка си <a href=\"\">тук</a>."
 
 #: templates/parts/animal-card.php:52 templates/parts/sponsor-me-button.php:9
 msgid "Sponsor me"
-msgstr ""
+msgstr "Подкрепи"
 
 #: templates/parts/animal-card.php:56
 msgid "Adopted"
-msgstr ""
+msgstr "Осиновено от вас"
 
 #: templates/parts/animal-card.php:60
 msgid "Read my story"
-msgstr ""
+msgstr "Прочети историята ми"
 
 #: templates/parts/checkout-form.php:67
 msgid "Choose sponsorship amount per month"
-msgstr ""
+msgstr "Измери месечно дарение"
 
 #: templates/parts/checkout-form.php:86
 msgid "This will be a gift"
-msgstr ""
+msgstr "Това дарение ще е подарък"
 
 #: templates/parts/checkout-form.php:92
 msgid "Gift receiver's email"
-msgstr ""
+msgstr "Имейл на получателя"
 
 #: templates/parts/checkout-form.php:102
 #: templates/parts/registration-form.php:56
@@ -640,45 +644,47 @@ msgid ""
 "I have read and agree to the website <a href=\"%s\" target=\"_blank\" rel="
 "\"noopener noreferrer\">terms and conditions</a>"
 msgstr ""
+"Прочетох и се съгласявам с <a href=\"%s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">правилата и условията</a> за ползване"
 
 #: templates/parts/checkout-form.php:104
 msgid "Required field."
-msgstr ""
+msgstr "Задължително поле."
 
 #: templates/parts/checkout-form.php:111
 #: templates/parts/registration-form.php:59
 msgid "You need to accept the terms and conditions."
-msgstr ""
+msgstr "Трябва да приемете нашите правила и условия за ползване на сайта."
 
 #: templates/parts/checkout-form.php:114
 msgid "You need to select a monthly donation amount"
-msgstr ""
+msgstr "Трябва да изберете сума на месечното дарение"
 
 #: templates/parts/checkout-form.php:117
 msgid "Missing gift email."
-msgstr ""
+msgstr "Липсва имейл на получателя."
 
 #: templates/parts/checkout-form.php:120
 msgid "No animal was selected for donation."
-msgstr ""
+msgstr "Няма избрано животно за виртуално осиновяване"
 
 #: templates/parts/how-it-works.php:7
 msgid "How it works?"
-msgstr ""
+msgstr "Как работи?"
 
 #: templates/parts/how-it-works.php:16
 msgid "Pick an animal to sponsor"
-msgstr ""
+msgstr "Избери животно за виртуално осиновяване"
 
 #: templates/parts/how-it-works.php:17
 msgid ""
 "Choose an animal who appeals most to you, or a animal with a story that tugs "
 "simply at your heartstrings."
-msgstr ""
+msgstr "Изберете животинче, което най вие харесало или искате да подкрепите"
 
 #: templates/parts/how-it-works.php:29
 msgid "Set up your sponsorship"
-msgstr ""
+msgstr "Изберете сума на дарение"
 
 #: templates/parts/how-it-works.php:30
 msgid ""
@@ -686,6 +692,10 @@ msgid ""
 "to know who to send animal's updates too. Payment is done securely through "
 "PayPal."
 msgstr ""
+"Изберете с каква сума бихте искали да подпомогнете животинката. Може да "
+"изберете дарението ви бъде като подарък, за някой ваш близък, трябва само да "
+"оставите неин/негов имейл. Плащането се извършва чрез PayPal на веднъж в "
+"месеца."
 
 #: templates/parts/how-it-works.php:41
 msgid "Receive regular updates"
@@ -713,31 +723,33 @@ msgstr ""
 
 #: templates/parts/registration-form.php:20
 msgid "First name"
-msgstr ""
+msgstr "Име"
 
 #: templates/parts/registration-form.php:27
 msgid "Last name"
-msgstr ""
+msgstr "Фамилия"
 
 #: templates/parts/registration-form.php:48
 msgid "Confirm Password"
-msgstr ""
+msgstr "Повторете паролата"
 
 #: templates/parts/registration-form.php:69
 msgid "Sign up"
-msgstr ""
+msgstr "Регистрация"
 
 #: templates/parts/registration-form.php:73
 msgid ""
 "After the registration you will be automatically logged in and you can "
 "proceed with the virtual adoption."
 msgstr ""
+"След регистрацията ще бъдете автоматично логнати и ще можете да продължите с "
+"процеса по виртуалното осиновяване."
 
 #: templates/parts/select-kind-of-animal.php:46
 msgid "View all"
-msgstr ""
+msgstr "Виж всички"
 
 #: templates/parts/select-kind-of-animal.php:48
 #: templates/parts/select-kind-of-animal.php:50
 msgid "All"
-msgstr ""
+msgstr "Всички"

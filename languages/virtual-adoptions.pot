@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-01T15:33:14+00:00\n"
+"POT-Creation-Date: 2023-03-02T10:18:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.0-alpha-dc3beef\n"
+"X-Generator: WP-CLI 2.8.0-alpha-cc8527a\n"
 "X-Domain: virtual-adoptions\n"
 
 #. Plugin Name of the plugin
@@ -482,31 +482,30 @@ msgid "Sponsor animals from \"The Farm\""
 msgstr ""
 
 #: templates/pages/archive-sheltered-animal.php:11
-#: templates/pages/donation-checkout.php:29
-msgid ""
-"You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for\n"
-"\t\t\t\tas little as 5.00 EUR per month."
+msgid "You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one  as little as 5.00 EUR per month."
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:13
-msgid ""
-"With more than 120 animals in our care at any one time, your support helps us gives every single one the\n"
-"\t\t\t\tvery best care possible. While most of them find a loving new home within about six weeks, some need a\n"
-"\t\t\t\tlot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of\n"
-"\t\t\t\tdifference. "
+#: templates/pages/archive-sheltered-animal.php:12
+msgid "With more than 120 animals in our care at any one time, your support helps us gives every single one the very best care possible. While most of them find a loving new home within about six weeks, some need a lot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of difference. "
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:29
+#: templates/pages/archive-sheltered-animal.php:25
 #: templates/pages/donation-checkout.php:28
 msgid "Choose your sponsor animal"
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:53
+#: templates/pages/archive-sheltered-animal.php:49
 msgid "Previous Page"
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:54
+#: templates/pages/archive-sheltered-animal.php:50
 msgid "Next Page"
+msgstr ""
+
+#: templates/pages/donation-checkout.php:29
+msgid ""
+"You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for\n"
+"\t\t\t\tas little as 5.00 EUR per month."
 msgstr ""
 
 #: templates/pages/donation-checkout.php:53
@@ -596,7 +595,7 @@ msgid "Sex"
 msgstr ""
 
 #: templates/parts/adopted-animal.php:7
-msgid "You have this animal in your adoption list. You can check your supported animals <a href=\"\">here</a>."
+msgid "You have this animal in your adoption list. You can check your supported animals <a href=\"%s\">here</a>."
 msgstr ""
 
 #: templates/parts/animal-card.php:52
