@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Virtual Adoption 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/virtual-"
 "adoptions\n"
-"POT-Creation-Date: 2023-03-02T10:25:51+00:00\n"
-"PO-Revision-Date: 2023-03-02 13:21+0200\n"
+"POT-Creation-Date: 2023-03-02T12:23:40+00:00\n"
+"PO-Revision-Date: 2023-03-02 14:28+0200\n"
 "Last-Translator: Aleksandar Vasilev <alexanader.vasilev@protonmail.com>\n"
 "Language-Team: \n"
 "Language: bg_BG\n"
@@ -24,7 +24,7 @@ msgstr "Виртуални осиновявания"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/alordiel/virtual-adiptions"
-msgstr "https://github.com/alordiel/virtual-adiptionс"
+msgstr "https://github.com/alordiel/virtual-adiptions"
 
 #. Description of the plugin
 msgid ""
@@ -71,37 +71,37 @@ msgstr "Настройки на виртуални осиновявания"
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Нямате права за достъп до тази страница."
 
-#: include/admin-settings.php:79
+#: include/admin-settings.php:80
 msgid "Settings saved."
 msgstr "Настройките са запазени."
 
-#: include/admin-settings.php:123
+#: include/admin-settings.php:126
 msgid "Enable if you have different kind of animals (like cats, dogs, etc)."
 msgstr ""
 "Активирайте тази настройка ако имате различни видове животни (кучета, котки, "
 "коне и др.)."
 
-#: include/admin-settings.php:130
+#: include/admin-settings.php:133
 msgid "Image for \"All animals\""
 msgstr "Изображение за \"Всички животни\""
 
-#: include/admin-settings.php:140 include/custom-post-types/animals.php:195
+#: include/admin-settings.php:143 include/custom-post-types/animals.php:195
 msgid "Upload image"
 msgstr "Кажи изображение"
 
-#: include/admin-settings.php:144 include/custom-post-types/animals.php:199
+#: include/admin-settings.php:147 include/custom-post-types/animals.php:199
 msgid "Remove image"
 msgstr "Премахни изображение"
 
-#: include/admin-settings.php:283
+#: include/admin-settings.php:300
 msgid "Save Changes"
 msgstr "Запази промените"
 
-#: include/admin-settings.php:286
+#: include/admin-settings.php:303
 msgid "Test PayPal connection"
 msgstr "Тест на връзката с PayPal"
 
-#: include/admin-settings.php:299 include/ajax.php:233
+#: include/admin-settings.php:316 include/ajax.php:233
 msgid "The PayPal client ID and secret key can not be empty."
 msgstr "Полетата за PayPal client ID и  secret key не трябва да са празни."
 
@@ -119,11 +119,11 @@ msgstr "Има проблем със сумата на дарението."
 
 #: include/ajax.php:30
 msgid "We do not have record of that animal"
-msgstr "Нямаме данни за това животно."
+msgstr "Нямаме данни за това животно"
 
 #: include/ajax.php:69
 msgid "There is an empty field from your form. Please check all the fields"
-msgstr "Някои от полетата са празни. Моля попълнете ги."
+msgstr "Някои от полетата са празни. Моля попълнете ги"
 
 #: include/ajax.php:73
 msgid "You need to accept the terms in order to continue."
@@ -135,7 +135,7 @@ msgstr "Няма ID на абонамента."
 
 #: include/ajax.php:111
 msgid "This subscription does not belong to you!"
-msgstr "Това дарение не записано към твоя акаунт."
+msgstr "Това дарение не записано към твоя акаунт!"
 
 #: include/ajax.php:122
 msgid "Successfully cancelled."
@@ -254,15 +254,15 @@ msgstr "Родителска публикация:"
 
 #: include/custom-post-types/animals.php:23
 msgid "No sheltered animal found."
-msgstr "Няма намерени животни"
+msgstr "Няма намерени животни."
 
 #: include/custom-post-types/animals.php:24
 msgid "No sheltered animal found in Trash."
-msgstr "Няма намерени животни в кофата"
+msgstr "Няма намерени животни в кофата."
 
 #: include/custom-post-types/animals.php:29
 msgid "Description."
-msgstr "Описание"
+msgstr "Описание."
 
 #: include/custom-post-types/animals.php:86
 msgid "Animal's details"
@@ -368,7 +368,7 @@ msgstr "Брой месечни плащания"
 
 #: include/custom-post-types/va-subscriptions.php:340
 msgid "Total "
-msgstr "Общо"
+msgstr "Общо "
 
 #: include/enqueue-scripts-and-styles.php:53
 msgid "You subscription was successful. Thank you."
@@ -450,8 +450,14 @@ msgid ""
 " Thank you for your support. \n"
 " \n"
 " Kind regards, \n"
-" ARS team."
 msgstr ""
+"Здравейте,\n"
+"Успешно извършихте виртуално осиновяване на %s. \n"
+"Може да управлявате вашите виртуални осиновявания от <a href='%s'>този линк</"
+"a>. \n"
+"Благодарим ви за подкрепата.\n"
+"\n"
+"Поздрави,\n"
 
 #: include/mails.php:52
 msgid "Reset Password Link"
@@ -477,7 +483,7 @@ msgstr "За да нулирате паролата си, посетете сл�
 #: include/subscriptions.php:18
 msgid "It seems that you are not logged in. Please log in first."
 msgstr ""
-":Изглежда, че не сте влезли в системата. Моля, първо влезте в системата."
+"Изглежда, че не сте влезли в системата. Моля, първо влезте в системата."
 
 #: include/subscriptions.php:34 include/subscriptions.php:84
 msgid "Creating the subscription entry failed"
@@ -503,46 +509,19 @@ msgstr "Грешка при проверка на подписа."
 msgid "Not Authorized"
 msgstr "Достъпа отказан"
 
-#: templates/pages/archive-sheltered-animal.php:10
-msgid "Sponsor animals from \"The Farm\""
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:11
-msgid ""
-"You could sponsor an animal in our care, or to gift a sponsorship to a "
-"friend or loved one  as little as 5.00 EUR per month."
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:12
-msgid ""
-"With more than 120 animals in our care at any one time, your support helps "
-"us gives every single one the very best care possible. While most of them "
-"find a loving new home within about six weeks, some need a lot of care and "
-"love from us, as no one want to adopt them. Your support for these animals "
-"can make the world of difference. "
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:25
-#: templates/pages/donation-checkout.php:28
+#: templates/pages/archive-sheltered-animal.php:28
 msgid "Choose your sponsor animal"
 msgstr "Изберете животно за виртуално осиновяване"
 
-#: templates/pages/archive-sheltered-animal.php:49
+#: templates/pages/archive-sheltered-animal.php:52
 msgid "Previous Page"
 msgstr "Предишна страница"
 
-#: templates/pages/archive-sheltered-animal.php:50
+#: templates/pages/archive-sheltered-animal.php:53
 msgid "Next Page"
 msgstr "Следваща страница"
 
-#: templates/pages/donation-checkout.php:29
-msgid ""
-"You could sponsor an animal in our care, or to gift a sponsorship to a "
-"friend or loved one for\n"
-"\t\t\t\tas little as 5.00 EUR per month."
-msgstr ""
-
-#: templates/pages/donation-checkout.php:53
+#: templates/pages/donation-checkout.php:51
 msgid "View all animals"
 msgstr "Виж всички животни"
 
@@ -689,7 +668,7 @@ msgstr "Липсва имейл на получателя."
 
 #: templates/parts/checkout-form.php:120
 msgid "No animal was selected for donation."
-msgstr "Няма избрано животно за виртуално осиновяване"
+msgstr "Няма избрано животно за виртуално осиновяване."
 
 #: templates/parts/how-it-works.php:7
 msgid "How it works?"
@@ -703,7 +682,7 @@ msgstr "Избери животно за виртуално осиновяван
 msgid ""
 "Choose an animal who appeals most to you, or a animal with a story that tugs "
 "simply at your heartstrings."
-msgstr "Изберете животинче, което най вие харесало или искате да подкрепите"
+msgstr "Изберете животинче, което най вие харесало или искате да подкрепите."
 
 #: templates/parts/how-it-works.php:29
 msgid "Set up your sponsorship"

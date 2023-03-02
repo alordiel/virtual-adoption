@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-02T10:25:51+00:00\n"
+"POT-Creation-Date: 2023-03-02T12:23:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.0-alpha-cc8527a\n"
+"X-Generator: WP-CLI 2.8.0-alpha-0e4508c\n"
 "X-Domain: virtual-adoptions\n"
 
 #. Plugin Name of the plugin
@@ -64,37 +64,37 @@ msgstr ""
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: include/admin-settings.php:79
+#: include/admin-settings.php:80
 msgid "Settings saved."
 msgstr ""
 
-#: include/admin-settings.php:123
+#: include/admin-settings.php:126
 msgid "Enable if you have different kind of animals (like cats, dogs, etc)."
 msgstr ""
 
-#: include/admin-settings.php:130
+#: include/admin-settings.php:133
 msgid "Image for \"All animals\""
 msgstr ""
 
-#: include/admin-settings.php:140
+#: include/admin-settings.php:143
 #: include/custom-post-types/animals.php:195
 msgid "Upload image"
 msgstr ""
 
-#: include/admin-settings.php:144
+#: include/admin-settings.php:147
 #: include/custom-post-types/animals.php:199
 msgid "Remove image"
 msgstr ""
 
-#: include/admin-settings.php:283
+#: include/admin-settings.php:300
 msgid "Save Changes"
 msgstr ""
 
-#: include/admin-settings.php:286
+#: include/admin-settings.php:303
 msgid "Test PayPal connection"
 msgstr ""
 
-#: include/admin-settings.php:299
+#: include/admin-settings.php:316
 #: include/ajax.php:233
 msgid "The PayPal client ID and secret key can not be empty."
 msgstr ""
@@ -422,7 +422,7 @@ msgid ""
 " Thank you for your support. \n"
 " \n"
 " Kind regards, \n"
-" ARS team."
+""
 msgstr ""
 
 #: include/mails.php:52
@@ -474,38 +474,19 @@ msgstr ""
 msgid "Not Authorized"
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:10
-msgid "Sponsor animals from \"The Farm\""
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:11
-msgid "You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one  as little as 5.00 EUR per month."
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:12
-msgid "With more than 120 animals in our care at any one time, your support helps us gives every single one the very best care possible. While most of them find a loving new home within about six weeks, some need a lot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of difference. "
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:25
-#: templates/pages/donation-checkout.php:28
+#: templates/pages/archive-sheltered-animal.php:28
 msgid "Choose your sponsor animal"
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:49
+#: templates/pages/archive-sheltered-animal.php:52
 msgid "Previous Page"
 msgstr ""
 
-#: templates/pages/archive-sheltered-animal.php:50
+#: templates/pages/archive-sheltered-animal.php:53
 msgid "Next Page"
 msgstr ""
 
-#: templates/pages/donation-checkout.php:29
-msgid ""
-"You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for\n"
-"\t\t\t\tas little as 5.00 EUR per month."
-msgstr ""
-
-#: templates/pages/donation-checkout.php:53
+#: templates/pages/donation-checkout.php:51
 msgid "View all animals"
 msgstr ""
 
