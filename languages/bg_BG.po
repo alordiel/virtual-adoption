@@ -5,17 +5,17 @@ msgstr ""
 "Project-Id-Version: Virtual Adoption 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/virtual-"
 "adoptions\n"
+"POT-Creation-Date: 2023-03-02T10:16:34+00:00\n"
+"PO-Revision-Date: 2023-03-02 12:27+0200\n"
+"Last-Translator: Aleksandar Vasilev <alexanader.vasilev@protonmail.com>\n"
 "Language-Team: \n"
+"Language: bg_BG\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-01T15:33:14+00:00\n"
-"PO-Revision-Date: 2023-03-02 12:16+0200\n"
 "X-Generator: Poedit 2.3\n"
 "X-Domain: virtual-adoptions\n"
-"Last-Translator: Aleksandar Vasilev <alexanader.vasilev@protonmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: bg_BG\n"
 
 #. Plugin Name of the plugin
 msgid "Virtual Adoption"
@@ -488,36 +488,39 @@ msgid "Sponsor animals from \"The Farm\""
 msgstr ""
 
 #: templates/pages/archive-sheltered-animal.php:11
+msgid ""
+"You could sponsor an animal in our care, or to gift a sponsorship to a "
+"friend or loved one  as little as 5.00 EUR per month."
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:12
+msgid ""
+"With more than 120 animals in our care at any one time, your support helps "
+"us gives every single one the very best care possible. While most of them "
+"find a loving new home within about six weeks, some need a lot of care and "
+"love from us, as no one want to adopt them. Your support for these animals "
+"can make the world of difference. "
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:25
+#: templates/pages/donation-checkout.php:28
+msgid "Choose your sponsor animal"
+msgstr ""
+
+#: templates/pages/archive-sheltered-animal.php:49
+msgid "Previous Page"
+msgstr "Предишна страница"
+
+#: templates/pages/archive-sheltered-animal.php:50
+msgid "Next Page"
+msgstr "Следваща страница"
+
 #: templates/pages/donation-checkout.php:29
 msgid ""
 "You could sponsor an animal in our care, or to gift a sponsorship to a "
 "friend or loved one for\n"
 "\t\t\t\tas little as 5.00 EUR per month."
 msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:13
-msgid ""
-"With more than 120 animals in our care at any one time, your support helps "
-"us gives every single one the\n"
-"\t\t\t\tvery best care possible. While most of them find a loving new home "
-"within about six weeks, some need a\n"
-"\t\t\t\tlot of care and love from us, as no one want to adopt them. Your "
-"support for these animals can make the world of\n"
-"\t\t\t\tdifference. "
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:29
-#: templates/pages/donation-checkout.php:28
-msgid "Choose your sponsor animal"
-msgstr ""
-
-#: templates/pages/archive-sheltered-animal.php:53
-msgid "Previous Page"
-msgstr "Предишна страница"
-
-#: templates/pages/archive-sheltered-animal.php:54
-msgid "Next Page"
-msgstr "Следваща страница"
 
 #: templates/pages/donation-checkout.php:53
 msgid "View all animals"
@@ -607,9 +610,13 @@ msgid "Sex"
 msgstr "Пол"
 
 #: templates/parts/adopted-animal.php:7
+#, fuzzy
+#| msgid ""
+#| "You have this animal in your adoption list. You can check your supported "
+#| "animals <a href=\"\">here</a>."
 msgid ""
 "You have this animal in your adoption list. You can check your supported "
-"animals <a href=\"\">here</a>."
+"animals <a href=\"%s\">here</a>."
 msgstr ""
 "Това животно вече в списъка ви с виртуално осиновявания. Може да видите "
 "списъка си <a href=\"\">тук</a>."

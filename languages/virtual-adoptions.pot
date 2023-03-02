@@ -2,28 +2,30 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Virtual Adoption 1.1.0\n"
+"Project-Id-Version: Virtual Adoptions 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/virtual-adoptions\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-02T10:18:50+00:00\n"
+"POT-Creation-Date: 2023-03-02T10:25:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.0-alpha-cc8527a\n"
 "X-Domain: virtual-adoptions\n"
 
 #. Plugin Name of the plugin
-msgid "Virtual Adoption"
+#: include/admin-settings.php:10
+#: include/admin-settings.php:11
+msgid "Virtual Adoptions"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://github.com/alordiel/virtual-adiption"
+msgid "https://github.com/alordiel/virtual-adiptions"
 msgstr ""
 
 #. Description of the plugin
-msgid "This plugin creates the options add animals from your shelter for virtual adoption. The payment is done on monthly bases by PayPal."
+msgid "This plugin creates the options to add animals from your shelter for virtual adoption. The payment is done on monthly bases by PayPal."
 msgstr ""
 
 #. Author of the plugin
@@ -52,11 +54,6 @@ msgstr ""
 
 #: include/admin-dashboard-widget.php:42
 msgid "Download the last generated report"
-msgstr ""
-
-#: include/admin-settings.php:10
-#: include/admin-settings.php:11
-msgid "Virtual Adoptions"
 msgstr ""
 
 #: include/admin-settings.php:27

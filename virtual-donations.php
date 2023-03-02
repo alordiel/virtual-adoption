@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       Virtual Adoption
- * Plugin URI:        https://github.com/alordiel/virtual-adiption
- * Description:       This plugin creates the options add animals from your shelter for virtual adoption. The payment is done on monthly bases by PayPal.
+ * Plugin Name:       Virtual Adoptions
+ * Plugin URI:        https://github.com/alordiel/virtual-adiptions
+ * Description:       This plugin creates the options to add animals from your shelter for virtual adoption. The payment is done on monthly bases by PayPal.
  * Version:           1.1.0
  * Requires at least: 5.9.1
  * Requires PHP:      7.4.0
@@ -10,7 +10,7 @@
  * Author URI:        https://timelinedev.com/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       virtual-adoption
+ * Text Domain:       virtual-adoptions
  * Domain Path:       /languages/
  */
 
