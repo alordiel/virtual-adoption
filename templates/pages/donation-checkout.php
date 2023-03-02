@@ -25,9 +25,7 @@ $va_settings = get_option( 'va-settings' );
 				} else {
 					?>
 					<div class="intro-text">
-						<h2><?php _e( 'Choose your sponsor animal', 'virtual-adoptions' ) ?></h2>
-						<p><?php _e( 'You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one for
-				as little as 5.00 EUR per month.', 'virtual-adoptions' ) ?></p>
+						<?php echo get_the_content(); ?>
 					</div>
 					<div class="list-of-animals">
 						<?php

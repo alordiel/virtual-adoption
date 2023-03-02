@@ -54,6 +54,7 @@ function va_admin_settings_page() {
 			'my-subscriptions' => (int) $_POST['my-subscriptions-page'],
 			'login'            => (int) $_POST['login-page'],
 			'terms'            => (int) $_POST['terms-page'],
+			'intro'            => (int) $_POST['intro-page'],
 		];
 
 		$va_settings['payment-methods']['paypal'] = [
@@ -90,6 +91,7 @@ function va_admin_settings_page() {
 	$my_subscriptions_id = ! empty( $va_settings['page']['my-subscriptions'] ) ? $va_settings['page']['my-subscriptions'] : 0;
 	$login_page_id       = ! empty( $va_settings['page']['login'] ) ? $va_settings['page']['login'] : 0;
 	$terms_page_id       = ! empty( $va_settings['page']['terms'] ) ? $va_settings['page']['terms'] : 0;
+	$intro_page_id       = ! empty( $va_settings['page']['intro'] ) ? $va_settings['page']['intro'] : 0;
 	$paypal_client_id    = ! empty( $va_settings['payment-methods']['paypal']['client_id'] ) ? $va_settings['payment-methods']['paypal']['client_id'] : '';
 	$paypal_secret       = ! empty( $va_settings['payment-methods']['paypal']['secret'] ) ? va_decrypt_data( $va_settings['payment-methods']['paypal']['secret'] ) : '';
 	$paypal_is_test      = ! empty( $va_settings['payment-methods']['paypal']['test'] );
@@ -99,6 +101,7 @@ function va_admin_settings_page() {
 	$my_subscriptions_page = va_get_selected_options_for_the_admin_settings_by_page( $pages, $my_subscriptions_id );
 	$login_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $login_page_id );
 	$terms_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $terms_page_id );
+	$intro_page            = va_get_selected_options_for_the_admin_settings_by_page( $pages, $intro_page_id );
 
 	// Image for the "All animals"
 	$image_id  = ! empty( $va_settings['general']['all-animals-logo'] ) ? (int) $va_settings['general']['all-animals-logo'] : 0;
@@ -228,6 +231,20 @@ function va_admin_settings_page() {
 				<td>
 					<select name="terms-page" id="terms-page">
 						<?php echo $terms_page ?>
+					</select>
+				</td>
+			</tr>
+			<!-- Organization's "Introduction" Page -->
+			<tr>
+				<th>
+					<label
+						for="intro-page">
+						<?php _e( "Organization's short description page", "virtual-adoption" ); ?>
+					</label>
+				</th>
+				<td>
+					<select name="intro-page" id="intro-page">
+						<?php echo $intro_page ?>
 					</select>
 				</td>
 			</tr>

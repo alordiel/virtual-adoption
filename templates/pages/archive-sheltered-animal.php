@@ -7,9 +7,12 @@ $sponsor_link = get_permalink( $va_settings['page']['checkout'] );
 	<div class="va-container">
 		<div class="sheltered-animals-archive">
 			<div class="intro-text">
-				<h2><?php _e( 'Sponsor animals from "The Farm"', 'virtual-adoptions' ) ?></h2>
-				<p><?php _e( 'You could sponsor an animal in our care, or to gift a sponsorship to a friend or loved one  as little as 5.00 EUR per month.', 'virtual-adoptions' ); ?></p>
-				<p><?php _e( 'With more than 120 animals in our care at any one time, your support helps us gives every single one the very best care possible. While most of them find a loving new home within about six weeks, some need a lot of care and love from us, as no one want to adopt them. Your support for these animals can make the world of difference. ', 'virtual-adoptions' ); ?></p>
+				<?php
+				if ( ! empty( $va_settings['page']['intro'] ) ) {
+					$intro_post = get_post( $va_settings['page']['intro'] );
+					echo apply_filters( 'the_content', $intro_post->post_content );
+				};
+				?>
 			</div>
 
 			<?php
